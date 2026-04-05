@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <AbilityDef Name="OMW_AbilityXenotypeTargetPawnBase" Abstract="True">
+        <hostile>false</hostile>    
+        <verbProperties >
+            <verbClass>Verb_CastAbilityTouch</verbClass>
+            <range>20</range >
+            <warmupTime>0</warmupTime>
+            <targetParams>
+                <canTargetSelf>false</canTargetSelf>
+                <canTargetPawns>true</canTargetPawns>
+                <canTargetBuildings>false</canTargetBuildings>
+                <canTargetCorpses>false</canTargetCorpses>
+            </targetParams>
+        </verbProperties>    
+        <displayGizmoWhileUndrafted>false</displayGizmoWhileUndrafted>
+    </AbilityDef>
+
+    <AbilityDef Name="OMW_AbilityXenotypeTargetCorpseBase" Abstract="True">
+        <hostile>false</hostile>    
+        <verbProperties >
+            <verbClass>Verb_CastAbilityTouch</verbClass>
+            <range>20</range >
+            <warmupTime>0</warmupTime>
+            <targetParams>
+                <canTargetSelf>false</canTargetSelf>
+                <canTargetPawns>false</canTargetPawns>
+                <canTargetBuildings>false</canTargetBuildings>
+                <canTargetCorpses>true</canTargetCorpses>
+            </targetParams>
+        </verbProperties>    
+        <displayGizmoWhileUndrafted>false</displayGizmoWhileUndrafted>
+    </AbilityDef>    
+
+    <AbilityDef ParentName="AG_NoTargetAbilities" Name="OMW_AbilityXenotypeSelfBase" Abstract="True">
+        <hostile>false</hostile>    
+        <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+    </AbilityDef>    
+
+    <AbilityDef ParentName="OMW_AbilityXenotypeTargetPawnBase" >
+        <defName>OMW_AbilityFluxspawnTargetPawn</defName>
+        <label>Abilities</label>
+        <description>Manipulate the essence of fluxspawn to produce various effects. The available actions depend on the target.</description>
+        <iconPath>UI/Abilities/FluxspawnPawn</iconPath>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilityFluxspawnTargetPawn">
+            </li>
+        </comps>
+    </AbilityDef>
+
+    <AbilityDef ParentName="OMW_AbilityXenotypeTargetCorpseBase" >
+        <defName>OMW_AbilityFluxspawnTargetCorpse</defName>
+        <label>Abilities</label>
+        <description>Manipulate the essence of fluxspawn to produce various effects. The available actions depend on the target.</description>
+        <iconPath>UI/Abilities/FluxspawnCorpse</iconPath>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilityFluxspawnTargetCorpse">
+            </li>
+        </comps>
+    </AbilityDef>
+
+
+    <AbilityDef ParentName="OMW_AbilityXenotypeSelfBase" >
+        <defName>OMW_AbilityFluxspawnSelf</defName>
+        <label>Abilities</label>
+        <description>Manipulate the essence of fluxspawn to produce various effects.</description>
+        <iconPath>UI/Abilities/FluxspawnSelf</iconPath>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilityFluxspawnSelf">
+            </li>
+        </comps>
+    </AbilityDef>    
+
+    <AbilityDef ParentName="OMW_AbilityXenotypeTargetPawnBase" >
+        <defName>OMW_AbilityHallowboundTargetPawn</defName>
+        <label>Abilities</label>
+        <description>Manipulate the essence of Hallowbound to produce various effects. The available actions depend on the target.</description>
+        <iconPath>UI/Abilities/HallowboundPawn</iconPath>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilityHallowboundTargetPawn">
+            </li>
+        </comps>
+    </AbilityDef>
+
+    <AbilityDef ParentName="OMW_AbilityXenotypeTargetCorpseBase" >
+        <defName>OMW_AbilityHallowboundTargetCorpse</defName>
+        <label>Abilities</label>
+        <description>Manipulate the essence of Hallowbound to produce various effects. The available actions depend on the target.</description>
+        <iconPath>UI/Abilities/HallowboundCorpse</iconPath>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilityHallowboundTargetCorpse">
+            </li>
+        </comps>
+    </AbilityDef>
+
+
+    <AbilityDef ParentName="OMW_AbilityXenotypeSelfBase" >
+        <defName>OMW_AbilityHallowboundSelf</defName>
+        <label>Abilities</label>
+        <description>Manipulate the essence of Hallowbound to produce various effects.</description>
+        <iconPath>UI/Abilities/HallowboundSelf</iconPath>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilityHallowboundSelf">
+            </li>
+        </comps>
+    </AbilityDef>    
+
+    <AbilityDef ParentName="OMW_AbilityXenotypeTargetPawnBase" >
+        <defName>OMW_AbilitySamhaphageTargetPawn</defName>
+        <label>Abilities</label>
+        <iconPath>UI/Abilities/SamhaphagePawn</iconPath>        
+        <description>Manipulate the essence of Samhaphage to produce various effects. The available actions depend on the target.</description>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilitySamhaphageTargetPawn">
+            </li>
+        </comps>
+    </AbilityDef>
+
+    <AbilityDef ParentName="OMW_AbilityXenotypeTargetCorpseBase" >
+        <defName>OMW_AbilitySamhaphageTargetCorpse</defName>
+        <label>Abilities</label>
+        <iconPath>UI/Abilities/SamhaphageCorpse</iconPath>        
+        <description>Manipulate the essence of Samhaphage to produce various effects. The available actions depend on the target.</description>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilitySamhaphageTargetCorpse">
+            </li>
+        </comps>
+    </AbilityDef>
+
+    <AbilityDef ParentName="OMW_AbilityXenotypeSelfBase" >
+        <defName>OMW_AbilitySamhaphageSelf</defName>
+        <label>Abilities</label>
+        <description>Manipulate the essence of Samhaphage to produce various effects.</description>
+        <iconPath>UI/Abilities/SamhaphageSelf</iconPath>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilitySamhaphageSelf">
+            </li>
+        </comps>
+    </AbilityDef>
+
+
+</Defs>    

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <XenotypeDef>
+    <defName>omw_cradlemold</defName>
+    <label>cradlemold</label>
+    <description>TBS</description>
+    <descriptionShort>sdfasdf</descriptionShort>
+    <iconPath>UI/Icons/Xenotypes/Other</iconPath>
+    <inheritable>false</inheritable>
+    <genes>
+      <li MayRequire="omw.samhaphage">OMW_Fluxspawn_Ferility</li>
+      <li MayRequire="omw.samhaphage">OMW_Cradlemold_Frame</li>
+      <li MayRequire="omw.samhaphage">OMW_UnstableMutationPositive</li>
+      <li MayRequire="sarg.alphagenes">AG_Female</li>
+      <li MayRequire="redmattis.betterprerequisites">Body_FemaleOnly</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_DroneKind</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_JellyProduction</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_NoFamilyRelations</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_EarlyMaturity</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_EverFertile</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_MinimalPregnancy</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_BirthLitter</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_ShortPregnancy</li>
+      <li MayRequire="redmattis.bigsmall.core">VU_Libido_Succubus</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_Skin_Marble_White</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_PilotRequired</li>            
+      <li MayRequire="redmattis.bettergeneinheritance">BGI_RecessiveGenes</li>
+      <li MayRequire="sarg.alphagenes">AG_Teratophilia</li>
+      <li MayRequire="sarg.alphagenes">AG_VolatileMood</li>
+      <li MayRequire="sarg.alphagenes">AG_DangerousRaidPresence</li>
+      <li MayRequire="sarg.alphagenes">AG_JellyFlesh</li>
+      <li MayRequire="sarg.alphagenes">AG_ToxResist_Vulnerability</li>
+      <li MayRequire="sarg.alphagenes">AG_ColdSlowness</li>
+      <li MayRequire="sarg.alphagenes">AG_TableResistance</li>
+      <li MayRequire="sarg.alphagenes">AG_SlugVoice</li>
+      <li MayRequire="sarg.alphagenes">AG_RayHoundTentacles</li>
+      <li MayRequire="sarg.alphagenes">AG_NereidHead</li>
+      <li MayRequire="sarg.alphagenes">AG_SlugFace</li>
+      <li MayRequire="sarg.alphagenes">AG_SlugBody</li>
+      <li MayRequire="sarg.alphagenes">AG_NereidBody</li>
+      <li MayRequire="sarg.alphagenes">AG_NearBlindness</li>
+      <li MayRequire="sarg.alphagenes">AG_ClawedHands</li>
+      <li>Body_Fat</li>
+      <li>Sleepy</li>
+      <li>Delicate</li>
+      <li>Pain_Extra</li>
+      <li MayRequire="wvc.sergkart.races.biotech">WVC_SlaveSuppression_Submissive</li>
+      <li MayRequire="wvc.sergkart.races.biotech">WVC_PredatorPrey_Tasty</li>
+      <li MayRequire="neronix17.outland.genetics">Outland_EyeVisual_Recessed</li>
+      <li MayRequire="vanillaracesexpanded.highmate">VRE_LovinDependency</li>
+      <li MayRequire="sarg.alphagenes">AG_UnsettlingAppearance</li>
+    </genes>
+  </XenotypeDef>
+</Defs>

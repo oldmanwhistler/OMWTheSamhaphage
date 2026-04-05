@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs MayRequire="Ludeon.RimWorld.Anomaly">
+
+  <GeneDef MayRequire="Ludeon.RimWorld.Anomaly">
+    <defName>OMW_VoidTrait_Occultist</defName>
+    <label>thrum obsession</label>
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+    <description>TBD</description>
+      <iconPath>UI/Icons/Genes/Occultist</iconPath>
+    <displayOrderInCategory>1</displayOrderInCategory>
+    <biostatCpx>0</biostatCpx>
+    <biostatMet>0</biostatMet>
+    <forcedTraits>
+      <li>
+        <def>Occultist</def>
+      </li>
+    </forcedTraits>
+    <randomChosen>true</randomChosen>
+	  <selectionWeight>0.05</selectionWeight>    
+    <exclusionTags>
+      <li>OMW_VoidTrait_Mutex</li>
+    </exclusionTags>
+  </GeneDef>
+
+  <GeneDef MayRequire="Ludeon.RimWorld.Anomaly">
+    <defName>OMW_VoidTrait_BodyMastery</defName>
+    <label>thrum memorization</label>
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+    <description>TBD</description>
+      <iconPath>UI/Icons/Genes/BodyMastery</iconPath>
+    <displayOrderInCategory>1</displayOrderInCategory>
+    <biostatCpx>0</biostatCpx>
+    <biostatMet>0</biostatMet>
+    <forcedTraits>
+      <li>
+        <def>BodyMastery</def>
+      </li>
+    </forcedTraits>
+    <randomChosen>true</randomChosen>
+	  <selectionWeight>0.05</selectionWeight>    
+    <exclusionTags>
+      <li>OMW_VoidTrait_Mutex</li>
+    </exclusionTags>
+  </GeneDef>
+
+  <GeneDef MayRequire="Ludeon.RimWorld.Anomaly,wvc.sergkart.races.biotech">
+	<defName>OMW_VoidTrait_Inhumanized</defName>
+	<label>inhuman</label>
+	<description>Carriers of this gene are dominated by the Null-Thrum. They are completely disconnected from human concerns of family, friendship, and love.</description>
+	<iconPath>UI/Icons/Genes/OMW_Inhumanized</iconPath>
+	<selectionWeight>0.00022</selectionWeight>
+  <displayCategory>OMW_PerfectSilence</displayCategory>
+	<displayOrderInCategory>1</displayOrderInCategory>
+	<biostatCpx>1</biostatCpx>
+	<biostatArc>0</biostatArc>
+	<biostatMet>0</biostatMet>
+	<symbolPack>
+	  <prefixSymbols>
+		<li><symbol>inhuman</symbol></li>
+	  </prefixSymbols>
+	</symbolPack>
+	<exclusionTags>
+	  <li>Inhumanized</li>
+	</exclusionTags>
+  	<geneClass>WVC_XenotypesAndGenes.Gene_Inhumanized</geneClass>
+	<modExtensions>
+		<li Class="WVC_XenotypesAndGenes.GeneExtension_Giver">
+			<hediffDefName>Inhumanized</hediffDefName>
+		</li>
+	</modExtensions>
+    <randomChosen>true</randomChosen>
+    <exclusionTags>
+      <li>OMW_VoidTrait_Mutex</li>
+    </exclusionTags>
+
+
+  </GeneDef>
+
+</Defs>

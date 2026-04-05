@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <XenotypeDef>
+    <defName>omw_samhaphage</defName>
+    <label>samhaphage</label>
+    <description>FIXME</description>
+    <descriptionShort>FIXME</descriptionShort>
+    <iconPath>WVC/UI/Mecha_Icons/Xeno_ElfVampire_Horns_v0</iconPath>
+    <inheritable>true</inheritable>
+    <genes>
+      <li MayRequire="omw.samhaphage">OMW_Samhaphage_Frame</li>
+      <li MayRequire="omw.samhaphage">OMW_ScouredMind</li>
+      <li MayRequire="omw.samhaphage">OMW_NullThrum</li>
+      <li MayRequire="omw.samhaphage">OMW_UnstableMutation</li>
+      <li MayRequire="omw.samhaphage">OMW_Harrow</li>
+      <li MayRequire="omw.samhaphage">OMW_Resonance</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_GeneEater</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_ConsumeSoul</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_SoulPowerGreat</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_Deathlike</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_AnomalousForm</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_Diet_Carnivore</li>
+      <li MayRequire="redmattis.bigsmall.core">Cannibal</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_Very_Passioned_Learning_Gene</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_Talons</li>
+      <li MayRequire="redmattis.bigsmall.core">VU_UltraRapidAging</li>
+      <li MayRequire="redmattis.bigsmall.core">WoundHealing_VerySlow</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_Bloodlust</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_DevourerHead</li>
+      <li MayRequire="redmattis.bigsmall.core">Body_Androgynous</li>
+      <li MayRequire="redmattis.bigsmall.core">VU_Hermaphromorph</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_NoFamilyRelations</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_EarlyMaturity</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_ShortPregnancy</li>
+      <li MayRequire="redmattis.bigsmall.core">VU_NearSterile</li>
+      <li MayRequire="redmattis.bigsmall.core">VU_Pallor</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_EVA_Gene</li>
+      <li MayRequire="redmattis.bettergeneinheritance">BGI_DominantGenes</li>
+      <li MayRequire="sarg.alphagenes">AG_Teratophilia</li>
+      <li MayRequire="sarg.alphagenes">AG_InsanityBlast</li>
+      <li MayRequire="sarg.alphagenes">AG_UnstableMind</li>
+      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_LightningFast</li>
+      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_Timeless</li>
+      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_DeadlifeBelcher</li>
+      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_Plagued</li>
+      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_Tough</li>
+      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_HighMelee</li>
+      <li MayRequire="sarg.alphagenes">AG_DangerousRaidPresence</li>
+      <li MayRequire="sarg.alphagenes">AG_PukeBile</li>
+      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_TwistedFlesh</li>
+      <li MayRequire="sarg.alphagenes">AG_BlackChitinLeather</li>
+      <li MayRequire="sarg.alphagenes">AG_EfficientMandibles</li>
+      <li MayRequire="sarg.alphagenes">AG_SurvivalInstinct_Low</li>
+      <li MayRequire="sarg.alphagenes">AG_TableResistance</li>
+      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Royalty">AG_InnatePsylink</li>
+      <li MayRequire="sarg.alphagenes">AG_NightStriding</li>
+      <li MayRequire="sarg.alphagenes">AG_Rowdy</li>
+      <li MayRequire="sarg.alphagenes">AG_CancerousBody</li>
+      <li MayRequire="sarg.alphagenes">AG_GutturalVoice</li>
+      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Royalty">AG_PsychicSight</li>
+      <li MayRequire="sarg.alphagenes">AG_VFEI_PheromoneSecretor</li>
+      <li>DarkVision</li>
+      <li>DiseaseFree</li>
+      <li>PsychicAbility_Extreme</li>
+      <li>KillThirst</li>
+      <li>Neversleep</li>
+      <li>StrongStomach</li>
+      <li>RobustDigestion</li>
+      <li>Hair_BaldOnly</li>
+      <li>Beard_NoBeardOnly</li>
+      <li>FacialRidges</li>
+      <li>Body_Standard</li>
+      <li>Body_Thin</li>
+      <li>AptitudePoor_Shooting</li>
+      <li>AptitudePoor_Melee</li>
+      <li>AptitudePoor_Construction</li>
+      <li>AptitudeTerrible_Mining</li>
+      <li>AptitudeTerrible_Cooking</li>
+      <li>AptitudePoor_Plants</li>
+      <li>AptitudePoor_Animals</li>
+      <li>AptitudeTerrible_Crafting</li>
+      <li>AptitudeTerrible_Artistic</li>
+      <li>AptitudePoor_Medicine</li>
+      <li>AptitudePoor_Social</li>
+      <li>AptitudePoor_Intellectual</li>
+      <li>Skin_SlateGray</li>
+      <li>Skin_InkBlack</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_Skin_DarkAsh</li>
+      <li MayRequire="wvc.sergkart.races.biotech">WVC_SkinColor_DarkBlue</li>
+      <li MayRequire="wvc.sergkart.races.biotech">WVC_SkinColor_Slate</li>
+      <li MayRequire="wvc.sergkart.races.biotech">WVC_RandomGeneticSpeciality</li>
+      <li MayRequire="wvc.sergkart.races.biotech">WVC_TentacleTail</li>
+      <li MayRequire="neronix17.outland.genetics">Outland_Pos7Metabolism</li>
+      <li MayRequire="sarg.alphagenes">AG_UnsettlingAppearance</li>
+    </genes>
+  </XenotypeDef>
+</Defs>

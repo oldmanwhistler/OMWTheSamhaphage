@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs MayRequire="Ludeon.RimWorld.Biotech">
+
+  <GeneDef>
+    <defName>OMW_Samhaphage_Frame</defName>
+    <label>TBD</label>
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+    <iconPath>UI/Icons/Genes/BodySamhaphage</iconPath>
+    <description>TBD</description>
+    <displayOrderInCategory>9999</displayOrderInCategory>
+    <biostatCpx>4</biostatCpx>
+    <biostatMet>-3</biostatMet>
+    <biostatArc>1</biostatArc>
+    <selectionWeight>0</selectionWeight>
+
+    <exclusionTags>
+    </exclusionTags>    
+
+    <statOffsets>
+      <SM_HeadSize_Cosmetic>3.0</SM_HeadSize_Cosmetic>
+    </statOffsets>
+
+    <statFactors>
+      <SM_BodySizeMultiplier>0.8</SM_BodySizeMultiplier>
+      <EatingSpeed>2</EatingSpeed>
+      <MoveSpeed>1.2</MoveSpeed>          
+    </statFactors>
+
+    <immuneToVacuumBurns>true</immuneToVacuumBurns>    
+    <statOffsets>
+      <ComfyTemperatureMin>-70</ComfyTemperatureMin>      
+      <ComfyTemperatureMax>+30</ComfyTemperatureMax>
+    </statOffsets>
+
+    <suppressedTraits>
+      <li>
+        <def>NightOwl</def>
+      </li>
+    </suppressedTraits>     
+    <forcedTraits>
+      <li>        
+        <def>BS_AnimalFriend</def>        
+      </li>
+    </forcedTraits>
+    
+    <modExtensions>
+      <li Class="BigAndSmall.PawnExtension">
+				<applyBodyHediff><li><hediff>BS_SoulSize</hediff></li></applyBodyHediff>
+			</li>
+		</modExtensions>
+
+		<abilities>
+			<li>OMW_AbilitySamhaphageSelf</li>
+			<li>OMW_AbilitySamhaphageTargetPawn</li>
+			<li>OMW_AbilitySamhaphageTargetCorpse</li>
+		</abilities>
+		<descriptionHyperlinks>
+			<AbilityDef>OMW_AbilitySamhaphageSelf</AbilityDef>
+			<AbilityDef>OMW_AbilitySamhaphageTargetPawn</AbilityDef>
+			<AbilityDef>OMW_AbilitySamhaphageTargetCorpse</AbilityDef>      
+		</descriptionHyperlinks>                 
+  </GeneDef>
+
+    <GeneDef>
+        <defName>OMW_Harrow</defName>
+        <label>Harrow</label>
+        <description>TBD</description>
+        <iconPath>UI/Icons/Genes/Gene_Firespew</iconPath>
+        <displayCategory>OMW_PerfectSilence</displayCategory>
+        <abilities>
+          <li>OMW_AbilityHarrow</li>
+        </abilities>
+        <descriptionHyperlinks>
+          <AbilityDef>OMW_AbilityHarrow</AbilityDef>
+        </descriptionHyperlinks>
+        <biostatMet>-3</biostatMet>
+        <minAgeActive>3</minAgeActive>
+    </GeneDef>  
+</Defs>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs MayRequire="Ludeon.RimWorld.Biotech">
+  <GeneDef>
+    <defName>OMW_CorpseReassembler</defName>
+    <label>thrum reassembler</label>
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+    <description>Infected with a self-assembling xenovirus, these carriers treat the dead as both a pharmacy and a nursery. By recycling necrotic tissue, they can repair their own forms or stitch together 'reborn' progeny from fresh casualties. These new beings are biological echoes—physically mature, but mentally hollowed of their previous lives, existing only as a fresh start for the viral strain.</description>
+    <iconPath>UI/Icons/Genes/CorpseReassembler</iconPath>
+    <displayOrderInCategory>1</displayOrderInCategory>
+    <biostatCpx>3</biostatCpx>
+    <biostatMet>0</biostatMet>
+    <forcedTraits>
+      <li>
+        <def>CorpseChildren_CorpseChild</def>
+      </li>
+    </forcedTraits>
+	<geneClass>WVC_XenotypesAndGenes.Gene_BackstoryChanger</geneClass>    
+	<modExtensions>
+		<li Class="WVC_XenotypesAndGenes.GeneExtension_Giver">
+			<childBackstoryDef>WVC_RacesBiotech_Amnesia_Child</childBackstoryDef>
+			<adultBackstoryDef>WVC_RacesBiotech_Amnesia_Adult</adultBackstoryDef>
+		</li>
+	</modExtensions>    
+  </GeneDef>
+</Defs>

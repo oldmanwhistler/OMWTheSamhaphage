@@ -1,0 +1,58 @@
+<ModMetaData>
+	<name>[OMW] The Samhaphage</name>
+	<author>OldManWhistler</author>
+	<packageId>omw.samhaphage</packageId>
+	<supportedVersions>
+		<li>1.6</li>
+	</supportedVersions>
+	<modDependencies>
+		<li>
+			<packageId>deimos.corpseChildrenupdate</packageId>
+			<displayName>Corpse Children 1.6</displayName>
+			<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=3525305141</steamWorkshopUrl>
+		</li>
+		<li>
+			<packageId>jaeger972.generippergene</packageId>
+			<displayName>Gene-Ripper Gene</displayName>
+			<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=3596481890</steamWorkshopUrl>
+		</li>
+		<li>
+			<packageId>redmattis.bigsmall.core</packageId>
+			<displayName>Big and Small - Genes and More</displayName>
+			<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2920751126</steamWorkshopUrl>
+		</li>
+		<li>
+			<packageId>sarg.alphagenes</packageId>
+			<displayName>Alpha Genes</displayName>
+			<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2891845502</steamWorkshopUrl>
+		</li>				
+		<li>
+			<packageId>wvc.sergkart.races.biotech</packageId>
+			<displayName>WVC - Xenotypes and Genes</displayName>
+			<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2886992038</steamWorkshopUrl>
+		</li>				
+	</modDependencies>
+	<loadAfter>
+		<li>brrainz.harmony</li>
+		<li>Ludeon.RimWorld.Core</li>
+		<li>Ludeon.RimWorld.Ideology</li>
+		<li>Ludeon.RimWorld.Biotech</li>
+		<li>Ludeon.RimWorld.Anomaly</li>
+		<li>Ludeon.RimWorld.Royalty</li>
+		<li>deimos.corpsechildrenupdate</li>
+		<li>jaeger972.generippergene</li>
+		<li>redmattis.bigsmall.core</li>
+		<li>redmattis.bettergeneinheritance</li>
+		<li>sarg.alphagenes</li>
+		<li>wvc.sergkart.races.biotech</li>
+		<li>neronix17.outland.genetics</li>
+		<li>danzen.vpe.biotechintegration</li>
+		<li>theo.evenmorepsygenes</li>		
+		<li>frimmerdah.hemocapgenefork</li>
+		<li>jxw.genefortraits</li>
+		<li>custom.evolutionarygene</li>
+		<li>vanillaracesexpanded.highmate</li>
+	</loadAfter>
+	<description>
+	</description>
+</ModMetaData>

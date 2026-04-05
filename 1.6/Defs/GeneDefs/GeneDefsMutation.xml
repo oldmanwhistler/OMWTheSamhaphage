@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs MayRequire="Ludeon.RimWorld.Biotech">
+    <GeneDef>
+        <defName>OMW_UnstableMutation</defName>
+        <label>unstable mutation</label>
+        <description>Carriers of this gene can force an unstable mutation on their bodies once per day. This mutation will activate a new random gene for 12 hours. The genes will only deactivate if they are an xenogene. Endogenes will persist.</description>
+        <iconPath>UI/Icons/Genes/AG_UnstableMutation</iconPath>
+        <displayCategory>OMW_PerfectSilence</displayCategory>
+        <statFactors>
+            <CancerRate>3</CancerRate>
+        </statFactors>
+        <abilities>
+            <li>OMW_UnstableMutation</li>
+        </abilities>
+        <exclusionTags>
+            <li>AG_UnstableMutations</li>
+        </exclusionTags>
+        <selectionWeight>0</selectionWeight>
+        <descriptionHyperlinks>
+            <AbilityDef>OMW_UnstableMutation</AbilityDef>
+        </descriptionHyperlinks>
+        <biostatMet>-2</biostatMet>
+        <biostatCpx>1</biostatCpx>
+        <modExtensions>
+            <li Class="VEF.Genes.GeneExtension">
+                <backgroundPathEndogenes>UI/Icons/Genes/AG_Endogenes</backgroundPathEndogenes>
+                <backgroundPathXenogenes>UI/Icons/Genes/AG_Xenogenes</backgroundPathXenogenes>
+            </li>
+        </modExtensions>
+    </GeneDef>
+    <GeneDef>
+        <defName>OMW_UnstableMutationMinor</defName>
+        <label>unstable mutation, minor</label>
+        <exclusionTags>
+            <li>AG_UnstableMutations</li>
+        </exclusionTags>
+        <description>Carriers of this gene will suffer an unstable mutation on their bodies once per day. This mutation will activate new random genes for the whole day. Next day, new genes will take their place. The genes will only deactivate if they are an xenogene. Endogenes will persist.</description>
+        <iconPath>UI/Icons/Genes/AG_UnstableMutationMinor</iconPath>
+        <displayCategory>OMW_PerfectSilence</displayCategory>
+        <displayOrderInCategory>114</displayOrderInCategory>
+        <statFactors>
+            <CancerRate>5</CancerRate>
+        </statFactors>
+        <biostatMet>-4</biostatMet>
+        <biostatCpx>2</biostatCpx>
+        <selectionWeight>0</selectionWeight>
+        <modExtensions>
+            <li Class="VEF.Genes.GeneExtension">
+                <backgroundPathEndogenes>UI/Icons/Genes/AG_Endogenes</backgroundPathEndogenes>
+                <backgroundPathXenogenes>UI/Icons/Genes/AG_Xenogenes</backgroundPathXenogenes>
+                <hediffToWholeBody>OMW_UnstableMutationMinor</hediffToWholeBody>
+            </li>
+        </modExtensions>
+    </GeneDef>
+
+    <GeneDef>
+        <defName>OMW_UnstableMutationMajor</defName>
+        <label>unstable mutation, major</label>
+        <exclusionTags>
+            <li>AG_UnstableMutations</li>
+        </exclusionTags>
+        <description>Carriers of this gene will suffer an unstable mutation on their bodies once per day. This mutation will activate new random genes for the whole day. Next day, new genes will take their place. The genes will only deactivate if they are an xenogene. Endogenes will persist.</description>
+        <iconPath>UI/Icons/Genes/AG_UnstableMutationMajor</iconPath>
+        <displayCategory>OMW_PerfectSilence</displayCategory>
+        <displayOrderInCategory>114</displayOrderInCategory>
+        <statFactors>
+            <CancerRate>10</CancerRate>
+        </statFactors>
+        <biostatMet>-4</biostatMet>
+        <biostatCpx>2</biostatCpx>
+        <selectionWeight>0</selectionWeight>
+        <modExtensions>
+            <li Class="VEF.Genes.GeneExtension">
+                <backgroundPathEndogenes>UI/Icons/Genes/AG_Endogenes</backgroundPathEndogenes>
+                <backgroundPathXenogenes>UI/Icons/Genes/AG_Xenogenes</backgroundPathXenogenes>
+                <hediffToWholeBody>OMW_UnstableMutationMajor</hediffToWholeBody>
+            </li>
+        </modExtensions>
+    </GeneDef>
+    <GeneDef>
+        <defName>OMW_UnstableMutationCatastrophic</defName>
+        <label>unstable mutation, catastrophic</label>
+        <exclusionTags>
+            <li>AG_UnstableMutations</li>
+        </exclusionTags>
+        <description>Carriers of this gene will suffer a very powerful unstable mutation on their bodies once per day. This mutation will activate new random genes for the whole day.  The genes will only deactivate if they are an xenogene. Endogenes will persist.</description>
+        <customEffectDescriptions>
+            <li>This mutation can be incredibly harmful, and potentially lethal.</li>
+        </customEffectDescriptions>
+        <statFactors>
+            <CancerRate>15</CancerRate>
+        </statFactors>
+        <iconPath>UI/Icons/Genes/AG_UnstableMutationCatastrophic</iconPath>
+        <displayCategory>Healing</displayCategory>
+        <displayOrderInCategory>114.1</displayOrderInCategory>
+        <biostatMet>10</biostatMet>
+        <biostatCpx>3</biostatCpx>
+        <selectionWeight>0</selectionWeight>
+        <modExtensions>
+            <li Class="VEF.Genes.GeneExtension">
+                <backgroundPathEndogenes>UI/Icons/Genes/AG_Endogenes</backgroundPathEndogenes>
+                <backgroundPathXenogenes>UI/Icons/Genes/AG_Xenogenes</backgroundPathXenogenes>
+                <hediffToWholeBody>OMW_UnstableMutationCatastrophic</hediffToWholeBody>
+            </li>
+        </modExtensions>
+    </GeneDef>
+    <GeneDef>
+        <defName>OMW_UnstableMutationPositive</defName>
+        <label>unstable mutation, Positive</label>
+        <statFactors>
+            <CancerRate>10</CancerRate>
+        </statFactors>
+        <exclusionTags>
+            <li>AG_UnstableMutations</li>
+        </exclusionTags>
+        <description>Carriers of this gene will suffer a unstable mutation on their bodies once per day. This mutation will activate new random genes for the whole day.  The genes will only deactivate if they are an xenogene. Endogenes will persist.</description>
+        <iconPath>UI/Icons/Genes/AG_UnstableMutation</iconPath>
+        <displayCategory>OMW_PerfectSilence</displayCategory>
+        <displayOrderInCategory>114.1</displayOrderInCategory>
+        <biostatMet>0</biostatMet>
+        <biostatCpx>0</biostatCpx>
+        <selectionWeight>0</selectionWeight>
+        <modExtensions>
+            <li Class="VEF.Genes.GeneExtension">
+                <backgroundPathEndogenes>UI/Icons/Genes/AG_Endogenes</backgroundPathEndogenes>
+                <backgroundPathXenogenes>UI/Icons/Genes/AG_Xenogenes</backgroundPathXenogenes>
+                <hediffToWholeBody>OMW_UnstableMutationPositive</hediffToWholeBody>
+            </li>
+        </modExtensions>
+    </GeneDef>
+</Defs>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+    <AbilityDef ParentName="AG_NoTargetAbilities">
+        <defName>OMW_UnstableMutation</defName>
+        <label>unstable mutation</label>
+        <description>Forces an unstable mutation on the caster's body. This mutation will activate a new random gene for 12 hours. After that period passes, the gene will deactivate.</description>
+        <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+        <iconPath>UI/Icons/Genes/AG_UnstableMutation</iconPath>
+        <cooldownTicksRange>60000</cooldownTicksRange>
+        <comps>
+            <li Class="AlphaGenes.CompProperties_GiveHediff">
+                <hediffDef>OMW_UnstableMutation</hediffDef>
+            </li>
+        </comps>
+    </AbilityDef>
+
+    <AbilityDef ParentName="AbilityTouchBase">
+        <defName>OMW_AbilityHarrow</defName>
+        <label>Harrow</label>
+        <description>TBD</description>
+        <iconPath>UI/Icons/Genes/Gene_Firespew</iconPath>
+        <displayOrder>100</displayOrder>
+        <hostile>false</hostile>
+        <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
+        <jobDef>GeneRipToEndogenes_JobRip</jobDef>
+        <verbProperties>
+            <verbClass>Verb_CastAbilityTouch</verbClass>
+            <drawAimPie>false</drawAimPie>
+            <range>-1</range>
+            <warmupTime>2</warmupTime>
+            <targetParams>
+                <canTargetSelf>false</canTargetSelf>
+                <canTargetBuildings>false</canTargetBuildings>
+                <canTargetMechs>false</canTargetMechs>
+                <canTargetLocations>false</canTargetLocations>
+            </targetParams>
+        </verbProperties>
+        <comps>
+            <li Class="GeneRipToEndogenes.AbilityCompProperties_GeneRipToEndogenes" />
+        </comps>
+    </AbilityDef>
+    
+</Defs>

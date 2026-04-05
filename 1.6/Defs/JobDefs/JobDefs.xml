@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Defs>
+
+<JobDef>
+    <defName>OMW_ApproachAndInteract</defName>
+    <driverClass>OMW_Samhaphage.JobDriver_ApproachAndInteract</driverClass>
+    <reportString>approaching biological essence.</reportString>
+    <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+    <suspendable>false</suspendable>
+    <casualInterruptible>false</casualInterruptible>
+</JobDef>
+
+</Defs>

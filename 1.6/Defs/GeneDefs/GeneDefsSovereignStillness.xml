@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs MayRequire="Ludeon.RimWorld.Biotech">
+
+  <GeneDef>
+    <defName>OMW_SovereignStillness_Frame</defName>
+    <label>TBD</label>
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+    <iconPath>UI/Icons/Genes/BodySovereignStillness</iconPath>
+    <description>TBD</description>
+    <displayOrderInCategory>9999</displayOrderInCategory>
+    <biostatCpx>4</biostatCpx>
+    <biostatMet>-3</biostatMet>
+    <biostatArc>1</biostatArc>
+    <selectionWeight>0</selectionWeight>
+
+    <exclusionTags>
+    </exclusionTags>    
+
+    <statOffsets>
+      <SM_HeadSize_Cosmetic>3.0</SM_HeadSize_Cosmetic>
+    </statOffsets>
+
+    <statFactors>
+      <SM_BodySizeMultiplier>1.3</SM_BodySizeMultiplier>
+      <EatingSpeed>2</EatingSpeed>
+      <MoveSpeed>1.2</MoveSpeed>          
+    </statFactors>
+
+    <immuneToVacuumBurns>true</immuneToVacuumBurns>    
+    <statOffsets>
+      <ComfyTemperatureMin>-70</ComfyTemperatureMin>      
+      <ComfyTemperatureMax>+30</ComfyTemperatureMax>
+    </statOffsets>
+
+    <suppressedTraits>
+      <li>
+        <def>NightOwl</def>
+      </li>
+    </suppressedTraits>     
+    <forcedTraits>
+      <li>        
+        <def>BS_AnimalFriend</def>        
+      </li>
+    </forcedTraits>
+
+    <modExtensions>
+      <li Class="BigAndSmall.PawnExtension">
+				<applyBodyHediff><li><hediff>BS_SoulSize</hediff></li></applyBodyHediff>
+			</li>
+		</modExtensions>                
+
+    <!-- TODO: just cloning samhaphage abilities cuz me lazy -->
+
+		<abilities>
+			<li>OMW_AbilitySamhaphageSelf</li>
+			<li>OMW_AbilitySamhaphageTargetPawn</li>
+			<li>OMW_AbilitySamhaphageTargetCorpse</li>
+		</abilities>
+		<descriptionHyperlinks>
+			<AbilityDef>OMW_AbilitySamhaphageSelf</AbilityDef>
+			<AbilityDef>OMW_AbilitySamhaphageTargetPawn</AbilityDef>
+			<AbilityDef>OMW_AbilitySamhaphageTargetCorpse</AbilityDef>
+		</descriptionHyperlinks>                    
+
+  </GeneDef>
+
+    <GeneDef ParentName="GenePsychicAbilityBase">
+    <defName>OMW_PsychicAbility_SovereignStillness</defName>
+    <label>null-thrum psy-sensitive</label>
+    <labelShortAdj>psy-extreme</labelShortAdj>
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+    <description>Carriers of this gene have synchronized to the Null-Thrum and achieved Stillness.</description>
+    <iconPath>UI/Icons/Genes/Gene_ExtremePsychicAbility</iconPath>
+    <displayOrderInCategory>30</displayOrderInCategory>
+    <statOffsets>
+      <PsychicSensitivity>0.4</PsychicSensitivity>
+      <MeditationFocusGain>0.2</MeditationFocusGain>
+      <PsychicEntropyRecoveryRate>0.4</PsychicEntropyRecoveryRate>
+    </statOffsets>
+    <biostatCpx>3</biostatCpx>
+    <biostatMet>-8</biostatMet>
+    <symbolPack>
+      <prefixSymbols>
+        <li>
+          <symbol>psy</symbol>
+          <weight>3</weight>
+        </li>
+        <li>
+          <symbol>senso</symbol>
+        </li>
+        <li>
+          <symbol>sensi</symbol>
+        </li>
+      </prefixSymbols>
+    </symbolPack>
+  </GeneDef>
+
+  <!-- cheat ability to break WVC Chimera -->
+  <GeneDef ParentName="WVC_XenotypesAndGenes_GeneChimera_SubGenesMetLimit">
+	<defName>OMW_Chimera_SovereignStillness_Limit</defName>
+	<label>TBD</label>
+	<description>TBD</description>
+	<iconPath>WVC/UI/Genes3/Gene_Chimera_MetLimit_5x0c</iconPath>
+	<displayOrderInCategory>60</displayOrderInCategory>
+	<biostatMet>2</biostatMet>
+	<customEffectDescriptions>
+		<li>Chimera req. total metabolism &lt;color=#8a8ae6&gt;from -100 to 100&lt;/color&gt;.</li>
+	</customEffectDescriptions>
+	<modExtensions>
+		<li Class="WVC_XenotypesAndGenes.GeneExtension_Giver">
+			<intervalRange>-100~100</intervalRange>
+		</li>
+	</modExtensions>
+  </GeneDef>
+</Defs>

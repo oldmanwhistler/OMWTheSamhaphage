@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <BackstoryDef>
+    <defName>OMW_Fluxspawn_Hiveling</defName>
+    <label>fluxspawn hiveling</label>
+    <title>Hiveling</title>
+    <titleShort>Hiveling</titleShort>
+    <description>FIXME: [PAWN_nameDef] was gestated within the bio-vats of the Pulsing Silence. From the moment of decanting, [PAWN_pronoun] felt the comforting hum of the hivemind, drowning out all individual thought.</description>
+    <slot>Childhood</slot>
+    <spawnCategories>
+      <li>OMW_Backstories_Fluxspawn_Hiveling</li>
+    </spawnCategories>
+    <requiredWorkTags>
+      <li>Violent</li>
+    </requiredWorkTags>
+  </BackstoryDef>
+
+  <BackstoryDef>
+    <defName>OMW_Fluxspawn_Drone</defName>
+    <label>sensory vector</label>
+    <title>Drone</title>
+    <titleShort>Drone</titleShort>
+    <description>FIXME: As a mature organ of the hive, [PAWN_nameDef] served as a sensory vector, capturing biological data for the Sovereign Stillness. [PAWN_possessive] body is merely a tool for the expansion of the Silence.</description>
+    <slot>Adulthood</slot>
+    <spawnCategories>
+      <li>OMW_Backstories_Fluxspawn_Drone</li>
+    </spawnCategories>
+    <requiredWorkTags>
+      <li>Violent</li>
+    </requiredWorkTags>
+  </BackstoryDef>
+
+</Defs>

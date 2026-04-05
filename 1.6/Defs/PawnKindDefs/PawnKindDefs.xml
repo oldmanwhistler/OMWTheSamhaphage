@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <PawnKindDef>
+    <defName>OMW_SovereignStillnessKind</defName>
+    <label>sovereign stillness</label>
+    <race>Human</race>
+    <defaultFactionType>omw_perfect_silence</defaultFactionType>
+    <combatPower>250</combatPower>
+
+    <xenotypeSet>
+      <xenotypeChances>
+        <omw_sovereign_stillness>1.0</omw_sovereign_stillness>
+      </xenotypeChances>
+    </xenotypeSet>
+    <useFactionXenotypes>false</useFactionXenotypes>
+		<requiredWorkTags>
+			<li>Violent</li>
+		</requiredWorkTags>    
+
+    <initialWillRange>20~3</initialWillRange>
+    <initialResistanceRange>40~70</initialResistanceRange>
+
+    <itemQuality>Excellent</itemQuality>
+    <apparelMoney>5000~8000</apparelMoney>
+
+    <weaponMoney>3000~5000</weaponMoney>
+    <weaponTags>
+      <li>BladelinkWeapons</li>
+    </weaponTags>
+
+    <techHediffsMoney>2000~4000</techHediffsMoney>
+    <techHediffsTags>
+      <li>Advanced</li>
+    </techHediffsTags>
+    <techHediffsChance>0.80</techHediffsChance>
+  </PawnKindDef>
+
+  <PawnKindDef ParentName="BasePlayerPawnKind">
+    <defName>OMW_FluxspawnWorker</defName>
+    <label>fluxspawn worker</label>
+    <race>Human</race>
+    <initialResistanceRange>10~16</initialResistanceRange>
+    <initialWillRange>1~3</initialWillRange>    
+    <xenotypeSet>
+      <xenotypeChances>
+          <omw_fluxspawn_hiveling>100.0</omw_fluxspawn_hiveling>
+      </xenotypeChances>
+    </xenotypeSet>
+		<chemicalAddictionChance>0</chemicalAddictionChance>
+		<backstoryCryptosleepCommonality>0</backstoryCryptosleepCommonality>        
+    <backstoryFiltersOverride>
+      <li>
+        <categoriesChildhood>
+          <li>OMW_Backstories_Fluxspawn_Hiveling</li>
+        </categoriesChildhood>
+        <categoriesAdulthood>
+        </categoriesAdulthood>
+      </li>
+    </backstoryFiltersOverride>
+		<requiredWorkTags>
+			<li>Violent</li>
+		</requiredWorkTags>        
+  </PawnKindDef>
+
+  <PawnKindDef ParentName="BasePlayerPawnKind">
+    <defName>OMW_FluxspawnDrone</defName>
+    <label>fluxspawn drone</label>
+    <race>Human</race>
+    <initialResistanceRange>25~35</initialResistanceRange>
+    <initialWillRange>8~10</initialWillRange>    
+    <xenotypeSet>
+      <xenotypeChances>
+          <omw_fluxspawn_brute>50.0</omw_fluxspawn_brute>
+          <omw_fluxspawn_flicker>50.0</omw_fluxspawn_flicker>
+      </xenotypeChances>
+    </xenotypeSet>
+		<chemicalAddictionChance>0</chemicalAddictionChance>
+		<backstoryCryptosleepCommonality>0</backstoryCryptosleepCommonality>    
+    <backstoryFiltersOverride>
+      <li>
+        <categoriesChildhood>
+          <li>OMW_Backstories_Fluxspawn_Drone</li>
+        </categoriesChildhood>
+        <categoriesAdulthood>
+        </categoriesAdulthood>
+      </li>
+    </backstoryFiltersOverride>
+		<requiredWorkTags>
+			<li>Violent</li>
+		</requiredWorkTags>    
+  </PawnKindDef>
+</Defs>

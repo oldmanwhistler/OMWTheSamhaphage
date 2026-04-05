@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <ThoughtDef>
+        <defName>OMW_NullThrum_Social</defName>
+        <workerClass>OMW_Samhaphage.ThoughtWorker_NullThrum</workerClass>
+        <thoughtClass>Thought_SituationalSocial</thoughtClass>
+
+        <validWhileDespawned>true</validWhileDespawned>
+
+        <nullifyingHediffs>
+            <li MayRequire="Ludeon.RimWorld.Anomaly">Inhumanized</li>
+        </nullifyingHediffs>
+        <stages>
+            <li>
+                <label>TBD null-thrum 0</label>
+                <description>TBD I feel a natural kinship with others of my kind.</description>
+                <baseOpinionOffset>10</baseOpinionOffset>
+            </li>
+            <li>
+                <label>TBD null-thrum 1</label>
+                <description>TBD I feel a natural kinship with others of my kind.</description>
+                <baseOpinionOffset>20</baseOpinionOffset>
+            </li>
+            <li>
+                <label>TBD null-thrum 2</label>
+                <description>TBD I feel a natural kinship with others of my kind.</description>
+                <baseOpinionOffset>35</baseOpinionOffset>
+            </li>
+            <li>
+                <label>TBD null-thrum 3</label>
+                <description>TBD I feel a natural kinship with others of my kind.</description>
+                <baseOpinionOffset>60</baseOpinionOffset>
+            </li>
+            <li>
+                <label>TBD null-thrum 4</label>
+                <description>TBD I feel a natural kinship with others of my kind.</description>
+                <baseOpinionOffset>75</baseOpinionOffset>
+            </li>
+            <li>
+                <label>TBD null-thrum 5</label>
+                <description>TBD I feel a natural kinship with others of my kind.</description>
+                <baseOpinionOffset>100</baseOpinionOffset>
+            </li>
+            <li>
+                <label>TBD null-thrum 6</label>
+                <description>TBD Hatred! One competes for my supremacy!</description>
+                <baseOpinionOffset>-200</baseOpinionOffset>
+            </li>
+        </stages>
+
+        <requiredGenes>
+            <li>OMW_NullThrum</li>
+        </requiredGenes>
+    </ThoughtDef>
+
+    <ThoughtDef>
+        <defName>OMW_ScouredMind_Social</defName>
+        <workerClass>OMW_Samhaphage.ThoughtWorker_ScouredMind</workerClass>
+        <thoughtClass>Thought_SituationalSocial</thoughtClass>
+
+        <validWhileDespawned>true</validWhileDespawned>
+
+        <nullifyingHediffs>
+            <li MayRequire="Ludeon.RimWorld.Anomaly">Inhumanized</li>
+        </nullifyingHediffs>
+        <stages>
+            <li>
+                <label>TBD scoured-mind 0</label>
+                <description>TBD I feel the resonance of the Null-Thrum.</description>
+                <baseOpinionOffset>5</baseOpinionOffset>
+            </li>
+            <li>
+                <label>TBD scoured-mind 1</label>
+                <description>TBD I feel the resonance of the Null-Thrum.</description>
+                <baseOpinionOffset>10</baseOpinionOffset>
+            </li>
+            <li>
+                <label>TBD scoured-mind 2</label>
+                <description>TBD I feel the resonance of the Null-Thrum.</description>
+                <baseOpinionOffset>20</baseOpinionOffset>
+            </li>
+            <li>
+                <label>TBD scoured-mind 3</label>
+                <description>TBD I feel the resonance of the Null-Thrum.</description>
+                <baseOpinionOffset>30</baseOpinionOffset>
+            </li>
+            <li>
+                <label>TBD scoured-mind 4</label>
+                <description>TBD I feel the resonance of the Null-Thrum.</description>
+                <baseOpinionOffset>40</baseOpinionOffset>
+            </li>
+            <li>
+                <label>TBD scoured-mind 5</label>
+                <description>TBD I feel the resonance of the Null-Thrum.</description>
+                <baseOpinionOffset>60</baseOpinionOffset>
+            </li>
+        </stages>
+
+        <requiredGenes>
+            <li>OMW_ScouredMind</li>
+        </requiredGenes>
+    </ThoughtDef>
+
+</Defs>

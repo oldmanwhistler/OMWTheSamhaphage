@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs MayRequire="Ludeon.RimWorld.Biotech">
+  <GeneCategoryDef>
+    <defName>OMW_PerfectSilence</defName>
+    <label>The Perfect Silence</label>
+    <displayPriorityInXenotype>1</displayPriorityInXenotype>
+  </GeneCategoryDef>
+
+  <GeneDef>
+    <defName>OMW_ScouredMind</defName>
+    <label>Scoured Mind</label>
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+    <description>They have seen the true nature of the Samhaphage and the value of a single human life has withered away. This gene marks those whose hearts have 'gone silent.' They can watch a friend fall or a stranger burn with the same detached curiosity one might feel watching a sunset. They are not cruel because cruelty requires an understanding of pain. They are simply empty.
+    </description>
+      <iconPath>UI/Icons/Genes/ScouredMind</iconPath>
+    <displayOrderInCategory>1</displayOrderInCategory>
+    <biostatCpx>1</biostatCpx>
+    <biostatMet>-1</biostatMet>
+    <suppressedTraits>
+      <li><def>Kind</def></li>
+      <li><def>BodyPurist</def></li>
+      <li><def>Greedy</def></li>
+      <li><def>Jealous</def></li>
+      <li><def>TorturedArtist</def></li>
+  	  <li><def>Gourmand</def></li>
+	    <li><def>Pyromaniac</def></li>
+    </suppressedTraits>    
+    <forcedTraits>
+      <li>        
+        <def>Psychopath</def>
+      </li>
+    </forcedTraits>
+  </GeneDef>
+
+  <GeneDef>
+    <defName>OMW_NullThrum</defName>
+    <label>null-thrum</label>
+    <description>The carrier’s skeletal structure has been 'harrowed' to vibrate at a frequency below human hearing. This constant, rhythmic thrum is the voice of the Sovereign Stillness. It drowns out individual thought and physical pain, leaving only a hollow, vibrating peace. And an emptiness that no amount of blood and meat can fill.</description>
+    <iconPath>UI/Icons/Genes/NullThrum</iconPath>
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+    <statOffsets>
+      <PainShockThreshold>0.3</PainShockThreshold>
+      <PsychicSensitivity>0.5</PsychicSensitivity>
+    </statOffsets>
+  </GeneDef>
+
+</Defs>

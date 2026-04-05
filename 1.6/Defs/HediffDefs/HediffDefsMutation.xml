@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<HediffDef>
+		<defName>OMW_UnstableMutation</defName>
+		<label>unstable mutation</label>
+		<description>Forces an unstable mutation on this person. This mutation will activate a new random gene for 12 hours. After that period passes, the gene will deactivate.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<scenarioCanAdd>false</scenarioCanAdd>
+		<allowMothballIfLowPriorityWorldPawn>true</allowMothballIfLowPriorityWorldPawn>
+		<maxSeverity>1.0</maxSeverity>
+		<isBad>false</isBad>
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-1</severityPerDay>
+				<showDaysToRecover>true</showDaysToRecover>
+			</li>
+			<li Class="OMW_Samhaphage.HediffCompProperties_RandomMutation">
+                <minMetabolism>-6</minMetabolism>
+                <maxMetabolism>1</maxMetabolism>
+				<numberOfGenes>3</numberOfGenes>
+			</li>
+		</comps>
+	</HediffDef>
+	<HediffDef>
+		<defName>OMW_UnstableMutationMinor</defName>
+		<label>unstable mutation, minor</label>
+		<description>Forces an uncontrollable and unstable mutation on this person every day. This mutation will activate three new random genes for a whole day.  Next day, new genes will take their place. The genes will only deactivate if they are an xenogene. Endogenes will persist.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<allowMothballIfLowPriorityWorldPawn>true</allowMothballIfLowPriorityWorldPawn>
+		<scenarioCanAdd>false</scenarioCanAdd>
+		<maxSeverity>1.0</maxSeverity>
+		<isBad>false</isBad>
+		<comps>
+			<li Class="OMW_Samhaphage.HediffCompProperties_RandomMutation">
+                <minMetabolism>-2</minMetabolism>
+                <maxMetabolism>1</maxMetabolism>
+				<numberOfGenes>3</numberOfGenes>
+				<period>60000</period>
+			</li>
+		</comps>
+	</HediffDef>	
+	<HediffDef>
+		<defName>OMW_UnstableMutationMajor</defName>
+		<label>unstable mutation, major</label>
+		<description>Forces an uncontrollable and unstable mutation on this person every day. This mutation will activate four new random genes for a whole day.  Next day, new genes will take their place. The genes will only deactivate if they are an xenogene. Endogenes will persist.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<allowMothballIfLowPriorityWorldPawn>true</allowMothballIfLowPriorityWorldPawn>
+		<scenarioCanAdd>false</scenarioCanAdd>
+		<maxSeverity>1.0</maxSeverity>
+		<isBad>false</isBad>
+		<comps>
+			<li Class="OMW_Samhaphage.HediffCompProperties_RandomMutation">
+                <minMetabolism>-3</minMetabolism>
+                <maxMetabolism>2</maxMetabolism>
+				<numberOfGenes>6</numberOfGenes>
+				<period>60000</period>
+			</li>
+		</comps>
+	</HediffDef>
+	<HediffDef>
+		<defName>OMW_UnstableMutationCatastrophic</defName>
+		<label>unstable mutation, catastrophic</label>
+		<description>Forces an uncontrollable and unstable mutation on this person every day. This mutation will activate twelve new random genes for a whole day.  Next day, new genes will take their place. The genes will only deactivate if they are an xenogene. Endogenes will persist.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<allowMothballIfLowPriorityWorldPawn>true</allowMothballIfLowPriorityWorldPawn>
+		<scenarioCanAdd>false</scenarioCanAdd>
+		<maxSeverity>1.0</maxSeverity>
+		<isBad>false</isBad>
+		<comps>
+			<li Class="OMW_Samhaphage.HediffCompProperties_RandomMutation">
+				<numberOfGenes>12</numberOfGenes>
+				<period>60000</period>
+			</li>
+		</comps>
+	</HediffDef>
+	<HediffDef>
+		<defName>OMW_UnstableMutationPositive</defName>
+		<label>unstable mutation, positive</label>
+		<description>Forces an uncontrollable and unstable mutation on this person every day. This mutation will activate twelve new random genes for a whole day.  Next day, new genes will take their place. The genes will only deactivate if they are an xenogene. Endogenes will persist.</description>
+		<hediffClass>HediffWithComps</hediffClass>
+		<allowMothballIfLowPriorityWorldPawn>true</allowMothballIfLowPriorityWorldPawn>
+		<scenarioCanAdd>false</scenarioCanAdd>
+		<maxSeverity>1.0</maxSeverity>
+		<isBad>false</isBad>
+		<comps>
+			<li Class="OMW_Samhaphage.HediffCompProperties_RandomMutation">
+                <minMetabolism>-1</minMetabolism>
+                <maxMetabolism>0</maxMetabolism>
+				<numberOfGenes>12</numberOfGenes>
+				<period>60000</period>
+			</li>
+		</comps>
+	</HediffDef>    
+</Defs>

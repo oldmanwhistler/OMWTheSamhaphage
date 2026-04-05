@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs MayRequire="Ludeon.RimWorld.Biotech">
+
+  <GeneDef>
+    <defName>OMW_Cradlemold_Frame</defName>
+    <label>cradlemold frame</label>
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+    <iconPath>UI/Icons/Genes/BodyCradlemold</iconPath>
+    <description>TBD</description>
+    <displayOrderInCategory>9999</displayOrderInCategory>
+    <biostatCpx>5</biostatCpx>
+    <biostatMet>8</biostatMet>
+    <biostatArc>1</biostatArc>
+    <selectionWeight>0.1</selectionWeight>
+
+    <immuneToVacuumBurns>true</immuneToVacuumBurns>   
+    <statOffsets>    
+      <VacuumResistance MayRequire="ludeon.rimworld.odyssey">0.8</VacuumResistance>
+      <SM_RaidWealthOffset>5.0</SM_RaidWealthOffset>
+      <SM_HeadSize_Cosmetic>-0.1</SM_HeadSize_Cosmetic>
+    </statOffsets>
+
+    <statFactors>
+      <SM_BodySizeMultiplier>2.0</SM_BodySizeMultiplier>
+      <SM_RaidWealthMultiplier>2.0</SM_RaidWealthMultiplier>
+      <IncomingDamageFactor>1.5</IncomingDamageFactor>
+      <MeleeDamageFactor>0</MeleeDamageFactor>
+      <CarryingCapacity>40</CarryingCapacity>
+      <EatingSpeed>5</EatingSpeed>
+      <MoveSpeed>0.4</MoveSpeed>          
+    </statFactors>  
+
+    <forcedTraits>
+      <li>
+        <def>AG_Beauty</def>
+        <degree>2</degree>
+      </li>
+    </forcedTraits>    
+  </GeneDef>
+  </Defs>

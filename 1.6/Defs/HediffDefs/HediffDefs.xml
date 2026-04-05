@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+    <HediffDef ParentName="InfectionBase">
+        <defName>OMW_ParasiticImplantation</defName>
+        <label>parasitic infestation</label>
+        <description>Affected by parasitic infestation. If the infestation advances to severity 1, or if the creature dies when it is sufficiently advanced (more than 90%), the larvae inside the parasitic eggs will devour the victim from inside and hatch from its corpse.</description>
+        <makesSickThought>true</makesSickThought>
+        <lethalSeverity>1</lethalSeverity>
+        <scenarioCanAdd>false</scenarioCanAdd>
+
+        <comps>
+
+            <li Class="OMW_Samhaphage.HediffCompProperties_ParasitesXenotype">
+            </li>
+            <!-- AG has 0.066 severityPerDay for 15 days -->
+            <li Class="HediffCompProperties_SeverityPerDay">
+                <severityPerDay>0.25</severityPerDay>
+            </li>
+        </comps>
+        <stages>
+            <li>
+                <label>minor</label>
+                <painOffset>0.1</painOffset>
+                <hungerRateFactorOffset>-0.3</hungerRateFactorOffset>
+            </li>        
+            <li>
+                <minSeverity>0.5</minSeverity>
+                <label>major</label>
+                <painOffset>0.3</painOffset>
+                <capMods>
+                    <li>
+                        <capacity>Consciousness</capacity>
+                        <offset>-0.3</offset>
+                    </li>
+                </capMods>                
+                <hungerRateFactorOffset>-0.6</hungerRateFactorOffset>
+            </li>            
+            <li>
+                <minSeverity>0.7</minSeverity>
+                <label>extreme</label>
+                <lifeThreatening>true</lifeThreatening>
+                <painOffset>0.6</painOffset>
+                <capMods>
+                    <li>
+                        <capacity>Consciousness</capacity>
+                        <offset>-0.5</offset>
+                    </li>
+                </capMods>
+                <hungerRateFactorOffset>-0.8</hungerRateFactorOffset>
+            </li>
+            <li>
+                <minSeverity>0.85</minSeverity>
+                <label>maximum</label>
+                <lifeThreatening>true</lifeThreatening>
+                <painOffset>1</painOffset>
+                <capMods>
+                    <li>
+                        <capacity>Consciousness</capacity>
+                        <setMax>0.3</setMax>
+                    </li>
+                    <li>
+                        <capacity>Breathing</capacity>
+                        <offset>-0.4</offset>
+                    </li>
+                </capMods>
+                <hungerRateFactorOffset>-1.0</hungerRateFactorOffset>
+            </li>
+        </stages>
+    </HediffDef>
+
+    <HediffDef>
+        <defName>OMW_GeneticDissonance</defName>
+        <label>genetic dissonance</label>
+        <description>This pawn’s genetic code is being forcibly realigned by the Null-Thrum. Their internal systems are in a state of 'static,' making them physically helpless but highly receptive to xenogenic modification.</description>
+        <hediffClass>HediffWithComps</hediffClass>
+        <comps>
+            <li Class="HediffCompProperties_Disappears">
+                <disappearsAfterTicks>2500~5000</disappearsAfterTicks>
+            </li>
+        </comps>
+        <stages>
+            <li>
+                <capMods>
+                    <li>
+                        <capacity>Moving</capacity>
+                        <setMax>0.1</setMax>
+                    </li>
+                    <li>
+                        <capacity>Manipulation</capacity>
+                        <offset>-0.5</offset>
+                    </li>
+                </capMods>
+            </li>
+        </stages>
+    </HediffDef>
+
+    <HediffDef ParentName="DiseaseBase">
+        <defName>OMW_SilentServitude</defName>
+        <label>silent servitude</label>
+        <description>The absolute suppression of individual will, achieved by Flattening the neural pathways with the Null-Thrum. The mind is compliant.
+
+    "We have quieted the chaotic screaming of their identity. They are finally unburdened, a clean and silent vessel waiting to be filled with the single, perfect note of our purpose. They do not serve because they love us, but because they have forgotten the frequency of 'No'."</description>
+        <isBad>false</isBad>
+        <makesSickThought>true</makesSickThought>
+        <scenarioCanAdd>false</scenarioCanAdd>
+        <comps>
+            <li Class="OMW_Samhaphage.HediffCompProperties_ZeroWill" />
+        </comps>
+        <comps>
+            <li Class="HediffCompProperties_Disappears">
+                <disappearsAfterTicks>600000~900000</disappearsAfterTicks>
+                <showRemainingTime>True</showRemainingTime>
+            </li>
+        </comps>
+
+        <comps>
+            <!-- AG has 0.066 severityPerDay for 15 days -->
+            <li Class="HediffCompProperties_SeverityPerDay">
+                <severityPerDay>0.25</severityPerDay>
+            </li>
+        </comps>
+        <stages>
+            <li>
+                <label>minor thrum</label>
+                <statOffsets>
+                    <SlaveSuppressionFallRate MayRequire="ludeon.rimworld.ideology">-0.2</SlaveSuppressionFallRate>
+                    <NegotiationAbility>-0.10</NegotiationAbility>
+                </statOffsets>
+            </li>
+            <li>
+                <label>flattening ego</label>
+                <minSeverity>0.3</minSeverity>
+                <statOffsets>
+                    <SlaveSuppressionFallRate MayRequire="ludeon.rimworld.ideology">-0.8</SlaveSuppressionFallRate>
+                    <NegotiationAbility>-0.50</NegotiationAbility>
+                </statOffsets>
+                <painFactor>0.5</painFactor>
+                <capMods>
+                    <li>
+                        <capacity>Consciousness</capacity>
+                        <offset>-0.3</offset>
+                    </li>
+                </capMods>                
+            </li>
+            <li>
+                <label>silent servitude</label>
+                <minSeverity>0.6</minSeverity>
+                <label>resolved</label>
+                <statOffsets>
+                    <SlaveSuppressionFallRate MayRequire="ludeon.rimworld.ideology">-0.4</SlaveSuppressionFallRate>
+                    <NegotiationAbility>-0.20</NegotiationAbility>
+                </statOffsets>
+                <painFactor>0.1</painFactor>
+                <capMods>
+                    <li>
+                        <capacity>Consciousness</capacity>
+                        <offset>-0.1</offset>
+                    </li>
+                </capMods>
+            </li>
+        </stages>
+    </HediffDef>
+
+</Defs>

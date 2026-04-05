@@ -1,0 +1,84 @@
+using Verse;
+
+namespace OMW_Samhaphage
+{
+    public abstract class NullThrumAbilityBase
+    {
+        public bool ApplyThing(Thing thing, Pawn caster = null)
+        {
+            if (thing is Pawn pawn)
+            {
+                return ApplyPawn(pawn, caster);
+            }
+            else if (thing is Corpse corpse)
+            {
+                return ApplyCorpse(corpse, caster);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public abstract bool ApplyPawn(Pawn pawn, Pawn caster = null);
+
+        public abstract bool ApplyCorpse(Corpse corpse, Pawn caster = null);
+
+        public bool CanApplyOnThing(Thing thing, out string reason)
+        {
+            if (thing is Pawn pawn)
+            {
+                return CanApplyOnPawn(pawn, out reason);
+            }
+            else if (thing is Corpse corpse)
+            {
+                return CanApplyOnCorpse(corpse, out reason);
+            }
+            else
+            {
+                reason = "Only applies on the living or the dead.";
+                return false;
+            }
+        }
+
+        public abstract bool CanApplyOnCorpse(Corpse corpse, out string reason);
+
+        public abstract bool CanApplyOnPawn(Pawn pawn, out string reason);
+
+        public FloatMenuOption NewFloatMenuOptionDisabled(LocalTargetInfo targetInfo)
+        {
+            return new FloatMenuOption($"Can't apply {this.ToString()} on {targetInfo.Label}", null) { Disabled = true };
+        }
+        public FloatMenuOption NewFloatMenuOption(LocalTargetInfo targetInfo, Pawn caster = null)
+        {
+            if (targetInfo.Thing is Pawn pawn)
+            {
+                return NewFloatMenuOptionPawn(targetInfo, pawn, caster);
+            }
+            else if (targetInfo.Thing is Corpse corpse)
+            {
+                return NewFloatMenuOptionCorpse(targetInfo, corpse, caster);
+            }
+            else
+            {
+                return NewFloatMenuOptionDisabled(targetInfo);
+            }            
+        }
+
+        public abstract FloatMenuOption NewFloatMenuOptionPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null);
+
+        public abstract FloatMenuOption NewFloatMenuOptionCorpse(LocalTargetInfo targetInfo, Corpse corpse,
+            Pawn caster = null);
+
+        public void Job(LocalTargetInfo targetInfo, Pawn caster)
+        {
+            Job_OMW_XenotypeAbility job = new Job_OMW_XenotypeAbility();
+            job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
+            job.targetA = targetInfo;
+            // The delegate needs to match the signature: (Pawn actor, Thing t)
+            // We use the 't' passed from the JobDriver to ensure target validity
+            job.onArrival = (actor, t) => ApplyThing(t, actor);
+            caster.jobs.TryTakeOrderedJob(job);
+        }
+    }
+}

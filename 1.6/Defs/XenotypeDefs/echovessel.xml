@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <XenotypeDef>
+    <defName>omw_echovessel</defName>
+    <label>echovessel</label>
+    <description>FIXME</description>
+    <descriptionShort>FIXME</descriptionShort>
+    <iconPath>UI/Icons/Xenotypes/Other</iconPath>
+    <inheritable>false</inheritable>
+    <genes>
+      <li>Beauty_VeryUgly</li>
+      <li>Hair_BaldOnly</li>
+      <li>Beard_NoBeardOnly</li>
+      <li>FacialRidges</li>
+      <li>Body_Standard</li>
+      <li>Body_Thin</li>
+      <li>Skin_LightGray</li>
+      <li>Learning_Slow</li>
+      <li MayRequire="omw.samhaphage">OMW_CorpseReassembler</li>
+      <li MayRequire="omw.samhaphage">OMW_ScouredMind</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_PilotAssistible</li>      
+    </genes>
+  </XenotypeDef>
+</Defs>

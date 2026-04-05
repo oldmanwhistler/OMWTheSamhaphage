@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <FactionDef MayRequire="omw.samhaphage" ParentName="FactionBase">
+    <defName>omw_perfect_silence</defName>
+    <label>The Perfect Silence</label>
+    <description>FIXME n alien hivemind consciousness known as the Pulsing Silence, manifested through biological means. The Samhaphage are its sensory organs and propagation vectors.</description>
+    <pawnsPlural>The Silent Ones</pawnsPlural>
+    <requiredCountAtGameStart>1</requiredCountAtGameStart>
+    <canMakeRandomly>false</canMakeRandomly>
+    <canSiege>false</canSiege>
+    <canStageAttacks>true</canStageAttacks>
+    <leaderTitle>The Sovereign Stillness</leaderTitle>
+
+    <isPlayer>false</isPlayer>
+    <hidden>true</hidden>
+    <settlementGenerationWeight>0</settlementGenerationWeight>
+    <mustStartOneEnemy>true</mustStartOneEnemy>
+
+    <colorSpectrum>
+      <li>(0.4, 0.1, 0.8)</li>
+    </colorSpectrum>
+    <factionIconPath>World/Factions/Icons/CustomIcon</factionIconPath>
+    <settlementTexturePath>World/Factions/Settlements/Default</settlementTexturePath>
+
+    <allowedCultures>
+      <li MayRequire="Ludeon.RimWorld.Ideology">Astropolitan</li>
+    </allowedCultures>
+    <forcedMemes>
+      <li MayRequire="Ludeon.RimWorld.Ideology">Structure_Archist</li>
+      <li MayRequire="Ludeon.RimWorld.Ideology">Inhuman</li>
+      <li MayRequire="Ludeon.RimWorld.Ideology">Ritualist</li>
+    </forcedMemes>
+
+    <techLevel>Spacer</techLevel>
+
+    <backstoryCategories>
+      <li>OMW_Silence_Backstories</li>
+    </backstoryCategories>
+
+    <xenotypeSet>
+      <xenotypeChances>
+        <omw_echovessel>0.40</omw_echovessel>
+        <omw_hallowbound>0.35</omw_hallowbound>
+        <omw_samhaphage>0.10</omw_samhaphage>
+        <omw_fluxspawn_hiveling>0.10</omw_fluxspawn_hiveling>
+        <omw_sovereign_stillness>0.05</omw_sovereign_stillness>
+      </xenotypeChances>
+    </xenotypeSet>
+
+    <maxPawnCostPerTotalPointsCurve>
+      <points>
+        <li>(0,35)</li>
+        <li>(70, 50)</li>
+        <li>(700, 100)</li>
+        <li>(1300, 150)</li>
+        <li>(100000, 10000)</li>
+      </points>
+    </maxPawnCostPerTotalPointsCurve>
+
+    <raidLootValueFromPointsCurve>
+      <points>
+        <li>(35,     15)</li>
+        <li>(100,    120)</li>
+        <li>(1000,   500)</li>
+        <li>(2000,   800)</li>
+        <li>(10000,  1500)</li>
+      </points>
+    </raidLootValueFromPointsCurve>
+
+    <pawnGroupMakers>
+      <li>
+        <kindDef>Combat</kindDef>
+        <options>
+          <OMW_SovereignStillnessKind>1</OMW_SovereignStillnessKind>
+        </options>
+      </li>
+    </pawnGroupMakers>
+
+  </FactionDef>
+</Defs>
+

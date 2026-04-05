@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <XenotypeDef>
+    <defName>omw_hallowbound</defName>
+    <label>Hallowbound</label>
+    <description>FIXME</description>
+    <descriptionShort>FIXME
+    </descriptionShort>
+    <iconPath>UI/Icons/Xenotypes/Other</iconPath>
+    <inheritable>false</inheritable>
+    <genes>
+      <li MayRequire="omw.samhaphage">OMW_CorpseReassembler</li>
+      <li MayRequire="omw.samhaphage">OMW_Hallowbound_Frame</li>
+      <li MayRequire="omw.samhaphage,Ludeon.RimWorld.Anomaly">OMW_VoidTrait_Occultist</li>
+      <li MayRequire="omw.samhaphage,Ludeon.RimWorld.Anomaly">OMW_VoidTrait_BodyMastery</li>
+      <li MayRequire="omw.samhaphage,Ludeon.RimWorld.Anomaly,wvc.sergkart.races.biotech">OMW_VoidTrait_Inhumanized</li>
+      <li MayRequire="omw.samhaphage">OMW_ScouredMind</li>
+      <li MayRequire="omw.samhaphage">OMW_NullThrum</li>
+      <li MayRequire="omw.samhaphage">OMW_Hallowbound_EntropyWell</li>
+      <li MayRequire="omw.samhaphage">OMW_UnstableMutation</li>       
+      <li MayRequire="omw.samhaphage">OMW_Resonance</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_Passioned_Learning_Gene</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_VeryFastAging</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_Bloodlust</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_PainNumb</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_NoFamilyRelations</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_ShortPregnancy</li>
+      <li MayRequire="redmattis.bettergeneinheritance">BGI_RecessiveGenes</li>
+      <li MayRequire="redmattis.bigsmall.core">Body_Androgynous</li>
+      <li MayRequire="redmattis.bigsmall.core">VU_Pallor</li>
+      <li MayRequire="redmattis.bigsmall.core">VU_LightPallorSkin</li>
+      <li MayRequire="redmattis.bigsmall.core">VU_DarkPallorSkin</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_PilotAssistible</li>      
+      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_LightningFast</li>
+      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_Timeless</li>
+      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_Plagued</li>
+      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_Tough</li>
+      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_HighMelee</li>
+      <li MayRequire="sarg.alphagenes">AG_Teratophilia</li>
+      <li MayRequire="sarg.alphagenes">AG_EfficientMandibles</li>
+      <li MayRequire="sarg.alphagenes">AG_ReducedFertile</li>
+      <li MayRequire="sarg.alphagenes">AG_FastGestation</li>
+      <li MayRequire="sarg.alphagenes">AG_Skin_Rot</li>
+      <li MayRequire="sarg.alphagenes">AG_SurvivalInstinct_High</li>
+      <li>MoveSpeed_Quick</li>
+      <li>StrongStomach</li>
+      <li>RobustDigestion</li>
+      <li>FacialRidges</li>
+      <li>Body_Thin</li>
+      <li>Voice_Human</li>
+		  <li>LowSleep</li>      
+      <li>Aggression_DeadCalm</li>      
+      <li>AptitudePoor_Cooking</li>
+      <li>AptitudePoor_Plants</li>
+      <li>AptitudePoor_Animals</li>
+      <li>AptitudePoor_Crafting</li>
+      <li>AptitudePoor_Artistic</li>
+      <li>AptitudePoor_Medicine</li>
+      <li>AptitudePoor_Social</li>
+      <li>AptitudePoor_Intellectual</li>
+      <li MayRequire="neronix17.outland.genetics">Outland_EyeVisual_Recessed</li>
+      <li MayRequire="danzen.vpe.biotechintegration">Gene_Frostshaper</li>
+    </genes>
+  </XenotypeDef>
+</Defs>

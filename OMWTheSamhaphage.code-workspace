@@ -1,0 +1,39 @@
+{
+	"[xml]": {
+        "editor.defaultFormatter": "redhat.vscode-xml",
+        "editor.formatOnSave": true
+    },
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"cSpell.words": [
+			"Baseliners",
+			"Cradlemold",
+			"Echovessel",
+			"Echovessels",
+			"Fluxspawn",
+			"Hallowbound",
+			"Hediff",
+			"Hiveling",
+			"hivelings",
+			"Inhumanized",
+			"nerfs",
+			"Psycast",
+			"psycasting",
+			"Rimsort",
+			"samhain",
+			"Samhaphage",
+			"Samhaphage",
+			"samhaphages",
+			"Stillnesss",
+			"unmakers",
+			"Xeno",
+			"xenotype",
+			"Xenotype",
+			"xenotypes"
+		]
+	}
+}

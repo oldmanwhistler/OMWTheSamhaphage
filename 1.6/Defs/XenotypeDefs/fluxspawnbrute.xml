@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+  <XenotypeDef>
+    <defName>omw_fluxspawn_brute</defName>
+    <label>fluxspawn brute</label>
+    <description>Beneath the shadowed undercrofts of samhaphage nests, where psychic death of soul-threads pulse like dying fireflies along cavern walls, the fluxspawn thrive in fetid vats of nutrient slurry. These are no ordinary vermin, they are small, grotesque slugs the size of a colonist's fist. Their bodies are a mottled slurry of iridescent flesh pocked with tumorous gene-pods that twitch and split at random. Ugly doesn't begin to cover it: slick, asymmetrical, perpetually oozing a thin mucus that smells faintly of ozone and regret. Yet slice one open, sear it quick over a chemfuel flame, and the flavor explodes: rich umami undercut by electric tang, like eating a thunderstorm marinated in aged cheese.</description>
+    <descriptionShort>sdfasdf</descriptionShort>
+    <iconPath>UI/Icons/Xenotypes/Other</iconPath>
+    <inheritable>true</inheritable>
+    <genes>
+      <li MayRequire="omw.samhaphage">OMW_ScouredMind</li>
+      <li MayRequire="omw.samhaphage">OMW_Fluxspawn_Nudist</li>
+      <li MayRequire="omw.samhaphage">OMW_Fluxspawn_Ferility</li>
+      <li MayRequire="omw.samhaphage">OMW_FluxSpawn_Brute_Frame</li>
+      <li MayRequire="omw.samhaphage">OMW_NullThrum</li>
+      <li MayRequire="omw.samhaphage">OMW_UnstableMutationMajor</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_CellPandemonium</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_SimpleMind</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_Diet_Carnivore</li>
+      <li MayRequire="redmattis.bigsmall.core">Cannibal</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_CannotWearClothingOrArmor</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_NaturalArmor</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_VeryFastAging</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_Bloodlust</li>
+      <li MayRequire="redmattis.bigsmall.core">NakedSpeed</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_NoEquip</li>
+      <li MayRequire="redmattis.bigsmall.core">VU_DarknessMelee_Strong</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_NoFamilyRelations</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_EarlyMaturity</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_EverFertile</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_MinimalPregnancy</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_BirthLitter</li>     
+      <li MayRequire="redmattis.bigsmall.core">BS_ShortPregnancy</li>
+      <li MayRequire="redmattis.bigsmall.core">VU_Libido_Succubus</li>
+      <li MayRequire="redmattis.bettergeneinheritance">BGI_SecondaryGenes</li>
+      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_VenomFangs</li>
+      <li MayRequire="sarg.alphagenes">AG_Teratophilia</li>
+      <li MayRequire="sarg.alphagenes">AG_DeadlyRaidPresence</li>
+      <li MayRequire="sarg.alphagenes">AG_InsectBlood</li>    
+      <li MayRequire="sarg.alphagenes">AG_JellyFlesh</li>
+      <li MayRequire="sarg.alphagenes">AG_VFEI_AdrenalSecretors</li>
+      <li MayRequire="sarg.alphagenes">AG_Teratogenesis</li>
+      <li MayRequire="sarg.alphagenes">AG_TeratogenicHealing</li>
+      <li MayRequire="sarg.alphagenes">AG_TeratogenicStamina</li>
+      <li MayRequire="sarg.alphagenes">AG_TeratogenicBurst</li>
+      <li MayRequire="sarg.alphagenes">AG_EfficientMandibles</li>
+      <li MayRequire="sarg.alphagenes">AG_UnstableRegeneration</li>
+      <li MayRequire="sarg.alphagenes">AG_UnstableMutationMajor</li>
+      <li MayRequire="sarg.alphagenes">AG_ToxResist_Vulnerability</li>
+      <li MayRequire="sarg.alphagenes">AG_UnsettlingAppearance</li>
+      <li MayRequire="sarg.alphagenes">AG_SlugFace</li>
+      <li MayRequire="sarg.alphagenes">AG_SlugBody</li>
+      <li MayRequire="sarg.alphagenes">AG_SlugVoice</li>
+      <li MayRequire="sarg.alphagenes">AG_FungalClumps</li>
+      <li MayRequire="sarg.alphagenes">AG_SurvivalInstinct_Low</li>
+      <li MayRequire="sarg.alphagenes">AG_ColdSlowness</li>
+      <li MayRequire="sarg.alphagenes">AG_TableResistance</li>
+    <li MayRequire="wvc.sergkart.races.biotech">WVC_FurskinInstincts_MediumWildness</li>
+    <li>Mood_Optimist</li>   
+	<li MayRequire="sarg.alphagenes">AG_HeatSpeed</li>
+    <li MayRequire="redmattis.bigsmall.core">BS_DrunkenPower</li>
+    <li>ToxicEnvironmentResistance_Partial</li>
+      <li>DarkVision</li>
+      <li>StrongStomach</li>
+      <li>RobustDigestion</li>
+      <li>FireWeakness</li>
+      <li>Pain_Extra</li>
+      <li>AptitudePoor_Shooting</li>
+      <li>AptitudeStrong_Melee</li>
+      <li>AptitudeTerrible_Mining</li>
+      <li>AptitudeTerrible_Cooking</li>
+      <li>AptitudeTerrible_Plants</li>
+      <li>AptitudeTerrible_Animals</li>
+      <li>AptitudeTerrible_Crafting</li>
+      <li>AptitudeTerrible_Artistic</li>
+      <li>AptitudeTerrible_Medicine</li>
+      <li>AptitudeTerrible_Social</li>
+      <li>AptitudeTerrible_Intellectual</li>
+      <li>KillThirst</li>
+      <li MayRequire="wvc.sergkart.races.biotech">WVC_HiveMind_Skills</li>
+      <li MayRequire="wvc.sergkart.races.biotech">WVC_Hivemind_Thoughts</li>
+      <li MayRequire="wvc.sergkart.races.biotech">WVC_Hivemind_Regeneration</li>
+      <li MayRequire="wvc.sergkart.races.biotech">WVC_Hivemind_Learning</li>      
+      <li MayRequire="wvc.sergkart.races.biotech">WVC_PsychicAbility_Hivemind</li>
+      <li MayRequire="wvc.sergkart.races.biotech">WVC_SkinColor_FleshRed</li>
+      <li MayRequire="wvc.sergkart.races.biotech">WVC_SlaveSuppression_Submissive</li>
+      <li MayRequire="wvc.sergkart.races.biotech">WVC_PredatorPrey_Tasty</li>
+      <li MayRequire="neronix17.outland.genetics">Outland_EyeVisual_Recessed</li>
+      <li MayRequire="neronix17.outland.genetics">Outland_Headbone_ArmouredPlates</li>
+      <li MayRequire="neronix17.outland.genetics">Outland_PassionAdd_Melee</li>
+    </genes>
+  </XenotypeDef>
+</Defs>
