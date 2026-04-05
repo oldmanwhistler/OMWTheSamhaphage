@@ -1,6 +1,6 @@
-# The Pulsing Silence
+# The Perfect Silence
 
-To enter the territory of The Pulsing Silence is to lose the gift of true quiet. It begins as a pressure in the inner ear. A low, rhythmic thrum that has no source and no end. It is the Hum of the Null, the sound of a thousand scoured minds vibrating in perfect, mindless unison.
+To enter the territory of The Perfect Silence is to lose the gift of true quiet. It begins as a pressure in the inner ear. A low, rhythmic thrum that has no source and no end. It is the Hum of the Null, the sound of a thousand scoured minds vibrating in perfect, mindless unison.
 
 The Hallowbound thralls do not speak; they simply resonate. The Fluxspawn do not hiss; they vibrate. The Samhaphage are the architects of this world. At the center of the dissonance stands the Sovereign Stillness, a living tuning fork for a god that does not exist. They are not here to kill you; they are here to change you until you, too, become part of the Absolute Frequency.
 
