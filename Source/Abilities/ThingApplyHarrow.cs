@@ -25,7 +25,7 @@ namespace OMW_Samhaphage
             int maxToPick = OMWGenes.TotalResonance(caster);
             bool returnedFromDialog = false;
 
-            Find.WindowStack.Add(new Dialog_SelectMultipleGeneInstances(genesToSelectFrom, maxToPick, (selectedList) =>
+            Find.WindowStack.Add(new Dialog_SelectMultipleGeneInstances(genesToSelectFrom, caster.genes.GenesListForReading, maxToPick, (selectedList) =>
             {
                 if (selectedList != null && selectedList.Count > 0)
                 {
