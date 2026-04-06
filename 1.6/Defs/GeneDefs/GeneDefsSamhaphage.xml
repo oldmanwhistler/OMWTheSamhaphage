@@ -61,19 +61,4 @@
 		</descriptionHyperlinks>                 
   </GeneDef>
 
-    <GeneDef>
-        <defName>OMW_Harrow</defName>
-        <label>Harrow</label>
-        <description>TBD</description>
-        <iconPath>UI/Icons/Genes/Gene_Firespew</iconPath>
-        <displayCategory>OMW_PerfectSilence</displayCategory>
-        <abilities>
-          <li>OMW_AbilityHarrow</li>
-        </abilities>
-        <descriptionHyperlinks>
-          <AbilityDef>OMW_AbilityHarrow</AbilityDef>
-        </descriptionHyperlinks>
-        <biostatMet>-3</biostatMet>
-        <minAgeActive>3</minAgeActive>
-    </GeneDef>  
 </Defs>

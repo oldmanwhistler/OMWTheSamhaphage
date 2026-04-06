@@ -14,31 +14,5 @@
             </li>
         </comps>
     </AbilityDef>
-
-    <AbilityDef ParentName="AbilityTouchBase">
-        <defName>OMW_AbilityHarrow</defName>
-        <label>Harrow</label>
-        <description>TBD</description>
-        <iconPath>UI/Icons/Genes/Gene_Firespew</iconPath>
-        <displayOrder>100</displayOrder>
-        <hostile>false</hostile>
-        <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
-        <jobDef>GeneRipToEndogenes_JobRip</jobDef>
-        <verbProperties>
-            <verbClass>Verb_CastAbilityTouch</verbClass>
-            <drawAimPie>false</drawAimPie>
-            <range>-1</range>
-            <warmupTime>2</warmupTime>
-            <targetParams>
-                <canTargetSelf>false</canTargetSelf>
-                <canTargetBuildings>false</canTargetBuildings>
-                <canTargetMechs>false</canTargetMechs>
-                <canTargetLocations>false</canTargetLocations>
-            </targetParams>
-        </verbProperties>
-        <comps>
-            <li Class="GeneRipToEndogenes.AbilityCompProperties_GeneRipToEndogenes" />
-        </comps>
-    </AbilityDef>
     
 </Defs>

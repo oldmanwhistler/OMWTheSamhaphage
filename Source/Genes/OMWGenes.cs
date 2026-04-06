@@ -297,7 +297,7 @@ namespace OMW_Samhaphage
             return false;
         }
 
-        public static bool AvailableResonance(Pawn pawn, int requiredAmount = 1)
+        public static bool HasAvailableResonance(Pawn pawn, int requiredAmount = 1)
         {
             if (HasResonance(pawn))
             {
@@ -307,6 +307,17 @@ namespace OMW_Samhaphage
 
             return false;
         }
+
+        public static int TotalResonance(Pawn pawn)
+        {
+            if (HasResonance(pawn))
+            {
+                Gene_Resource resonance = pawn.genes.GetGene(OMW_GeneDefOf.OMW_Resonance) as Gene_Resource;
+                return (int)(resonance.Value * 10);
+            }
+
+            return 0;
+        }        
 
         public static bool IncrResonance(Pawn pawn, int amount = 1)
         {

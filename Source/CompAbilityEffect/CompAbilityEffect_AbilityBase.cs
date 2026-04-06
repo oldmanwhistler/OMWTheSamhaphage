@@ -9,10 +9,6 @@ namespace OMW_Samhaphage
     {
         private void OpenSelfMenu() => Log.Message("Self menu opened");
 
-        private void OpenGeneSelection(Pawn p) {
-            Find.WindowStack.Add(new Dialog_GeneSelection(parent.pawn, p.genes.GenesListForReading));
-        }
-
         public string GetGeneStateDesc(Pawn pawn)
         {
             return $"Endo: {OMWGenes.CountEndogenes(pawn).ToString()}, Xeno: {OMWGenes.CountXenogenes(pawn).ToString()}, Complex: {OMWGenes.CalculateComplexity(pawn).ToString()}, Metab: {OMWGenes.CalculateMetabolism(pawn).ToString()}";

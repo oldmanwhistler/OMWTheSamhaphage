@@ -18,7 +18,7 @@ namespace OMW_Samhaphage
             return PawnTeratogenics.RemoveRandomCarcinoma(pawn);
         }
 
-        public override bool CanApplyOnPawn(Pawn p, out string reason)
+        public override bool CanApplyOnPawn(Pawn p, Pawn caster, out string reason)
         {
             reason = "unknown reason";
 
@@ -69,7 +69,7 @@ namespace OMW_Samhaphage
             XenotypeDef xeno = TargetXenotype();
             string reason;
 
-            if (CanApplyOnPawn(pawn, out reason))
+            if (CanApplyOnPawn(pawn, caster, out reason))
             {
                 return new FloatMenuOption($"Shift {pawn.LabelShort} to {xeno.descriptionShort}", () => Job(targetInfo, caster));
             }

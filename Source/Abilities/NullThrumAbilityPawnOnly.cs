@@ -9,7 +9,7 @@ namespace OMW_Samhaphage
             return false;
         }
 
-        public override bool CanApplyOnCorpse(Corpse corpse, out string reason)
+        public override bool CanApplyOnCorpse(Corpse corpse, Pawn caster, out string reason)
         {
             reason = "No corpses.";
             return false;

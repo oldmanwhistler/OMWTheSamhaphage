@@ -85,7 +85,7 @@ namespace OMW_Samhaphage
             return (bool)(removedCarcinomasCount > 0);
         }
 
-        public override bool CanApplyOnPawn(Pawn p, out string reason)
+        public override bool CanApplyOnPawn(Pawn p, Pawn caster, out string reason)
         {
             reason = "unknown reason";
 
@@ -134,7 +134,7 @@ namespace OMW_Samhaphage
         {
             string reason;
 
-            if (CanApplyOnPawn(pawn, out reason))
+            if (CanApplyOnPawn(pawn, caster, out reason))
             {
                 return new FloatMenuOption($"Heal {pawn.LabelShort} with their carcinomas",
                     () => Job(targetInfo, caster));

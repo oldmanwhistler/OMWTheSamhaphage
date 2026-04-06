@@ -35,7 +35,7 @@
             <li>AG_UnstableMutations</li>
         </exclusionTags>
         <description>Carriers of this gene will suffer an unstable mutation on their bodies once per day. This mutation will activate new random genes for the whole day. Next day, new genes will take their place. The genes will only deactivate if they are an xenogene. Endogenes will persist.</description>
-        <iconPath>UI/Icons/Genes/AG_UnstableMutationMinor</iconPath>
+        <iconPath>UI/Icons/Genes/AG_UnstableMutation</iconPath>
         <displayCategory>OMW_PerfectSilence</displayCategory>
         <displayOrderInCategory>114</displayOrderInCategory>
         <statFactors>

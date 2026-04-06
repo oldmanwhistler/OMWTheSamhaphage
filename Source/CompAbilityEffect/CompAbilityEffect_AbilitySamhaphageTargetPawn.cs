@@ -24,6 +24,7 @@ namespace OMW_Samhaphage
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
             string reason;
+            NullThrumAbilityBase ability;
 
             if (xeno == OMW_XenotypeDefOf.omw_sovereign_stillness)
             {
@@ -61,17 +62,10 @@ namespace OMW_Samhaphage
                 {
                     options.Add(new FloatMenuOption($"Can't Retune {otherPawn.LabelShort}. {reason}.", null)
                         { Disabled = true });
-                }                
+                }
 
-                if (PawnTakeXenogenes.CanApplyOn(otherPawn, parent.pawn, out reason))
-                {
-                    options.Add(new FloatMenuOption($"Take xenogenes from {otherPawn.LabelShort}",
-                        () => JobPawnTakeXenogenes(target, parent.pawn)));
-                }
-                else
-                {
-                    options.Add(new FloatMenuOption($"Can't take xenogenes. {reason}", null) { Disabled = true });
-                }
+                ability = new ThingApplyHarrow();
+                options.Add(ability.NewFloatMenuOptionPawn(target, otherPawn, parent.pawn));
 
                 if (PawnApplyHallowbound.CanApplyOn(otherPawn, out reason))
                 {

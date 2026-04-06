@@ -36,16 +36,8 @@ namespace OMW_Samhaphage
             }
             else if (target.Thing is Corpse corpse)
             {
-                if (CorpseTakeXenogenes.CanApplyOn(corpse, out reason))
-                {
-                    options.Add(new FloatMenuOption($"Take xenogenes from corpse {corpse.LabelShort}",
-                        () => JobCorpseTakeXenogenes(target, parent.pawn)));
-                }        
-                else
-                {
-                    options.Add(new FloatMenuOption($"Can't take xenogenes. {reason}.", null)
-                    { Disabled = true });
-                }
+                ability = new ThingApplyHarrow();
+                options.Add(ability.NewFloatMenuOptionCorpse(target, corpse, parent.pawn));
 
                 if (CorpseApplyResurrect.CanApplyOn(corpse, out reason))
                 {

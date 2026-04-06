@@ -42,10 +42,6 @@ namespace OMW_Samhaphage
             Hediff hediff_Flatten = HediffMaker.MakeHediff(OMW_HediffDefOf.OMW_SilentServitude, caster);            
             victim.health.AddHediff(hediff_Flatten);
 
-            OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogermReplicating);
-            OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogermLossShock);
-            OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogerminationComa);
-
             PurgeNegativeMemories(victim);
 
             victim.genes.AddGene(OMW_GeneDefOf.OMW_UnstableMutationMinor, true);
@@ -53,7 +49,7 @@ namespace OMW_Samhaphage
             OMWGenes.RemoveDisabledGenes(victim);
             OMWGenes.Refresh(victim);
 
-            OMWGenes.IncrResonance(caster);
+            OMWGenes.IncrResonance(caster, 3);
 
 
             return true;
@@ -68,7 +64,7 @@ namespace OMW_Samhaphage
                 reason = "Target is null.";
                 return false;
             }            
-            // Check if target is a not already Flatten
+
             if (!p.RaceProps.Humanlike)
             {
                 reason = $"{p.LabelShort} is not humanlike.";

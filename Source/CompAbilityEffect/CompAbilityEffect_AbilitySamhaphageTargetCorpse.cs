@@ -24,6 +24,7 @@ namespace OMW_Samhaphage
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
             string reason;
+            NullThrumAbilityBase ability;
 
             if (xeno == OMW_XenotypeDefOf.omw_sovereign_stillness)
             {
@@ -41,6 +42,8 @@ namespace OMW_Samhaphage
             }
             else if (target.Thing is Corpse corpse)
             {
+                ability = new ThingApplyHarrow();
+                options.Add(ability.NewFloatMenuOptionCorpse(target, corpse, parent.pawn));
 
                 if (CorpseTakeXenogenes.CanApplyOn(corpse, out reason))
                 {

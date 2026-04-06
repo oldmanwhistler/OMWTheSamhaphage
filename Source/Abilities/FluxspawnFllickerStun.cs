@@ -13,7 +13,7 @@ namespace OMW_Samhaphage
             return true;
         }
 
-        public override bool CanApplyOnPawn(Pawn p, out string reason)
+        public override bool CanApplyOnPawn(Pawn p, Pawn caster, out string reason)
         {
             reason = "unknown reason";
 
@@ -43,7 +43,7 @@ namespace OMW_Samhaphage
         {
             string reason;
 
-            if (CanApplyOnPawn(pawn, out reason))
+            if (CanApplyOnPawn(pawn, caster, out reason))
             {
                 return new FloatMenuOption($"Stun {pawn.LabelShort}", () => Job(targetInfo, caster));
             }

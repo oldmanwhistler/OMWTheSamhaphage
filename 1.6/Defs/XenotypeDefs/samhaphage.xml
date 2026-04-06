@@ -12,7 +12,6 @@
       <li MayRequire="omw.samhaphage">OMW_ScouredMind</li>
       <li MayRequire="omw.samhaphage">OMW_NullThrum</li>
       <li MayRequire="omw.samhaphage">OMW_UnstableMutation</li>
-      <li MayRequire="omw.samhaphage">OMW_Harrow</li>
       <li MayRequire="omw.samhaphage">OMW_Resonance</li>
       <li MayRequire="redmattis.bigsmall.core">BS_GeneEater</li>
       <li MayRequire="redmattis.bigsmall.core">BS_ConsumeSoul</li>

@@ -24,15 +24,15 @@ namespace OMW_Samhaphage
 
         public abstract bool ApplyCorpse(Corpse corpse, Pawn caster = null);
 
-        public bool CanApplyOnThing(Thing thing, out string reason)
+        public bool CanApplyOnThing(Thing thing, Pawn caster, out string reason)
         {
             if (thing is Pawn pawn)
             {
-                return CanApplyOnPawn(pawn, out reason);
+                return CanApplyOnPawn(pawn, caster, out reason);
             }
             else if (thing is Corpse corpse)
             {
-                return CanApplyOnCorpse(corpse, out reason);
+                return CanApplyOnCorpse(corpse, caster, out reason);
             }
             else
             {
@@ -41,9 +41,9 @@ namespace OMW_Samhaphage
             }
         }
 
-        public abstract bool CanApplyOnCorpse(Corpse corpse, out string reason);
+        public abstract bool CanApplyOnCorpse(Corpse corpse, Pawn caster, out string reason);
 
-        public abstract bool CanApplyOnPawn(Pawn pawn, out string reason);
+        public abstract bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason);
 
         public FloatMenuOption NewFloatMenuOptionDisabled(LocalTargetInfo targetInfo)
         {
