@@ -13,19 +13,18 @@ Adds new xenotypes, scenarios and lore based on a "Got to Catch Them All" style 
 * The Samhaphage (elite) are unmakers that harrow the noise out of blood. The strongest of them will evolve and unleash the Absolute Frequency.
 * The Sovereign Stillness (apex) is the apex xenotype of the Perfect Silence and the Absolute Frequency that will harrow the world. There can only be one.
 
-![The Samhaphage Logo](docs/images/the_samhaphage_logo.png)
+![The Samhaphage Logo](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/images/the_samhaphage_logo.png?raw=true)
 
-# Lore
+# Design Documents
 
 * [See LORE.md](docs/LORE.md)
-
-# Dev Diary
-
-* [See DEV_DIARY.md](docs/DevDiary/DEV_DIARY.md)
+* [See DESIGN_RULES.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DESIGN_RULES.md)
+* [See DEV_DIARY.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DevDiary/DEV_DIARY.md)
 
 # Game Balance
 
 * These xenotypes start with nerfs that need to be overcome through gene acquisition.
+* Resource called "resonance" and gene abilities can add or subtract from it.
 * Try to collect every trait and gene in the game on one pawn. This will not be balanced.
 * The Echovessels are easy to create from the dead with no cool down, but they fundamentally are thralls and not part of the Null-Thrum.
 * The Hallowbound are close to baseliners, but have methods for gene acquisition and traits. With enough genetic complexity they can become Samhaphage.
