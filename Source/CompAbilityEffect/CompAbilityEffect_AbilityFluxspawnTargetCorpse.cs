@@ -16,10 +16,8 @@ namespace OMW_Samhaphage
     public class CompAbilityEffect_AbilityFluxspawnTargetCorpse :  CompAbilityEffect_AbilityBase
 
     {
-        public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
+        public override void OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            base.Apply(target, dest);
-
             List<FloatMenuOption> options = new List<FloatMenuOption>();
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;            
@@ -55,12 +53,12 @@ namespace OMW_Samhaphage
         }
         private void JobResurrectHallowbound(LocalTargetInfo target)
         {
-            Job_OMW_XenotypeAbility job = new Job_OMW_XenotypeAbility();
+            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
             job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
             job.targetA = target;
             // The delegate needs to match the signature: (Pawn actor, Thing t)
             // We use the 't' passed from the JobDriver to ensure target validity
-            job.onArrival = (actor, t) => AbilityResurrectHallowbound(t, actor);
+            job.onInteract = (actor, t) => AbilityResurrectHallowbound(t, actor);
             parent.pawn.jobs.TryTakeOrderedJob(job);
         }
 

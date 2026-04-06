@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
     <AbilityDef Name="OMW_AbilityXenotypeTargetPawnBase" Abstract="True">
-        <hostile>false</hostile>    
         <verbProperties >
-            <verbClass>Verb_CastAbilityTouch</verbClass>
-            <range>20</range >
+            <verbClass>Verb_CastAbility</verbClass>
+            <range>100</range >
             <warmupTime>0</warmupTime>
+	        <requireLineOfSight>false</requireLineOfSight>            
             <targetParams>
                 <canTargetSelf>false</canTargetSelf>
                 <canTargetPawns>true</canTargetPawns>
                 <canTargetBuildings>false</canTargetBuildings>
                 <canTargetCorpses>false</canTargetCorpses>
             </targetParams>
-        </verbProperties>    
-        <displayGizmoWhileUndrafted>false</displayGizmoWhileUndrafted>
+        </verbProperties>
+        <hostile>false</hostile>    
+        <canUseAoeToGetTargets>false</canUseAoeToGetTargets>        
+        <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+        <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>            
     </AbilityDef>
 
     <AbilityDef Name="OMW_AbilityXenotypeTargetCorpseBase" Abstract="True">
-        <hostile>false</hostile>    
         <verbProperties >
-            <verbClass>Verb_CastAbilityTouch</verbClass>
-            <range>20</range >
+            <verbClass>Verb_CastAbility</verbClass>
+            <range>100</range >
             <warmupTime>0</warmupTime>
+	        <requireLineOfSight>false</requireLineOfSight>            
             <targetParams>
                 <canTargetSelf>false</canTargetSelf>
                 <canTargetPawns>false</canTargetPawns>
@@ -29,12 +32,17 @@
                 <canTargetCorpses>true</canTargetCorpses>
             </targetParams>
         </verbProperties>    
-        <displayGizmoWhileUndrafted>false</displayGizmoWhileUndrafted>
+        <hostile>false</hostile>    
+        <canUseAoeToGetTargets>false</canUseAoeToGetTargets>        
+        <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+        <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>            
     </AbilityDef>    
 
     <AbilityDef ParentName="AG_NoTargetAbilities" Name="OMW_AbilityXenotypeSelfBase" Abstract="True">
         <hostile>false</hostile>    
+        <canUseAoeToGetTargets>false</canUseAoeToGetTargets>        
         <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+        <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>            
     </AbilityDef>    
 
     <AbilityDef ParentName="OMW_AbilityXenotypeTargetPawnBase" >

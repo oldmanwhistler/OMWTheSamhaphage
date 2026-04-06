@@ -16,9 +16,8 @@ namespace OMW_Samhaphage
     public class CompAbilityEffect_AbilityHallowboundSelf :  CompAbilityEffect_AbilityBase
 
     {
-        public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
+        public override void OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            base.Apply(target, dest);
 
             List<FloatMenuOption> options = new List<FloatMenuOption>();
 

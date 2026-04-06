@@ -16,10 +16,8 @@ namespace OMW_Samhaphage
     public class CompAbilityEffect_AbilityFluxspawnSelf :  CompAbilityEffect_AbilityBase
 
     {
-        public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
+        public override void OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            base.Apply(target, dest);
-
             List<FloatMenuOption> options = new List<FloatMenuOption>();
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;

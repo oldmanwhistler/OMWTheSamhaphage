@@ -16,10 +16,8 @@ namespace OMW_Samhaphage
     public class CompAbilityEffect_AbilitySamhaphageTargetCorpse :  CompAbilityEffect_AbilityBase
 
     {
-        public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
+        public override void OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            base.Apply(target, dest);
-
             List<FloatMenuOption> options = new List<FloatMenuOption>();
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
@@ -66,12 +64,12 @@ namespace OMW_Samhaphage
 
         private void JobPawnTakeXenogenes(LocalTargetInfo target, Pawn actor)
         {
-            Job_OMW_XenotypeAbility job = new Job_OMW_XenotypeAbility();
+            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
             job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
             job.targetA = target;
             // The delegate needs to match the signature: (Pawn actor, Thing t)
             // We use the 't' passed from the JobDriver to ensure target validity
-            job.onArrival = (actor, t) => AbilityPawnTakeXenogenes(t, actor);                        
+            job.onInteract = (actor, t) => AbilityPawnTakeXenogenes(t, actor);                        
             parent.pawn.jobs.TryTakeOrderedJob(job);
         }
         
@@ -86,12 +84,12 @@ namespace OMW_Samhaphage
 
         private void JobEchovessel(LocalTargetInfo target)
         {
-            Job_OMW_XenotypeAbility job = new Job_OMW_XenotypeAbility();
+            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
             job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
             job.targetA = target;
             // The delegate needs to match the signature: (Pawn actor, Thing t)
             // We use the 't' passed from the JobDriver to ensure target validity
-            job.onArrival = (actor, t) => AbilityEchovessel(t, actor);
+            job.onInteract = (actor, t) => AbilityEchovessel(t, actor);
             parent.pawn.jobs.TryTakeOrderedJob(job);
         }
 
@@ -105,12 +103,12 @@ namespace OMW_Samhaphage
 
         private void JobPawnApplyHallowbound(LocalTargetInfo target, Pawn actor)
         {
-            Job_OMW_XenotypeAbility job = new Job_OMW_XenotypeAbility();
+            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
             job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
             job.targetA = target;
             // The delegate needs to match the signature: (Pawn actor, Thing t)
             // We use the 't' passed from the JobDriver to ensure target validity
-            job.onArrival = (actor, t) => AbilityPawnApplyHallowbound(t, actor);
+            job.onInteract = (actor, t) => AbilityPawnApplyHallowbound(t, actor);
             parent.pawn.jobs.TryTakeOrderedJob(job);
         }
 
@@ -125,12 +123,12 @@ namespace OMW_Samhaphage
       
         private void JobCorpseTakeXenogenes(LocalTargetInfo target, Pawn actor)
         {
-            Job_OMW_XenotypeAbility job = new Job_OMW_XenotypeAbility();
+            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
             job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
             job.targetA = target;
             // The delegate needs to match the signature: (Pawn actor, Thing t)
             // We use the 't' passed from the JobDriver to ensure target validity
-            job.onArrival = (actor, t) => AbilityCorpseTakeXenogenes(t, actor);
+            job.onInteract = (actor, t) => AbilityCorpseTakeXenogenes(t, actor);
             parent.pawn.jobs.TryTakeOrderedJob(job);
         }
 
@@ -148,12 +146,12 @@ namespace OMW_Samhaphage
 
         private void JobPawnApplyParasiticStinger(LocalTargetInfo target, Pawn actor)
         {
-            Job_OMW_XenotypeAbility job = new Job_OMW_XenotypeAbility();
+            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
             job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
             job.targetA = target;
             // The delegate needs to match the signature: (Pawn actor, Thing t)
             // We use the 't' passed from the JobDriver to ensure target validity
-            job.onArrival = (actor, t) => AbilityPawnApplyParasiticStinger(t, actor);
+            job.onInteract = (actor, t) => AbilityPawnApplyParasiticStinger(t, actor);
             parent.pawn.jobs.TryTakeOrderedJob(job);
         }
 
@@ -168,12 +166,12 @@ namespace OMW_Samhaphage
 
         private void JobPawnFlatten(LocalTargetInfo target, Pawn actor)
         {
-            Job_OMW_XenotypeAbility job = new Job_OMW_XenotypeAbility();
+            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
             job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
             job.targetA = target;
             // The delegate needs to match the signature: (Pawn actor, Thing t)
             // We use the 't' passed from the JobDriver to ensure target validity
-            job.onArrival = (actor, t) => AbilityPawnApplyFlatten(t, actor);
+            job.onInteract = (actor, t) => AbilityPawnApplyFlatten(t, actor);
             parent.pawn.jobs.TryTakeOrderedJob(job);
         }
 
@@ -188,12 +186,12 @@ namespace OMW_Samhaphage
 
         private void JobPawnRetune(LocalTargetInfo target, Pawn actor)
         {
-            Job_OMW_XenotypeAbility job = new Job_OMW_XenotypeAbility();
+            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
             job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
             job.targetA = target;
             // The delegate needs to match the signature: (Pawn actor, Thing t)
             // We use the 't' passed from the JobDriver to ensure target validity
-            job.onArrival = (actpr, t) =>
+            job.onInteract = (actor, t) =>
             {
                 if (t is Pawn victim) PawnApplyRetune.Apply(victim, actor);
             };

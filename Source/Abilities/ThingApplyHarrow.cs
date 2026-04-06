@@ -22,14 +22,14 @@ namespace OMW_Samhaphage
                 .Where(g => !casterGeneDefs.Contains(g.def))
                 .ToList();
 
-            int maxToPick = OMWGenes.TotalResonance(caster);
+            int maxToPick = ResonanceUtility.Total(caster);
             bool returnedFromDialog = false;
 
             Find.WindowStack.Add(new Dialog_SelectMultipleGeneInstances(genesToSelectFrom, caster.genes.GenesListForReading, maxToPick, (selectedList) =>
             {
                 if (selectedList != null && selectedList.Count > 0)
                 {
-                    OMWGenes.DecrResonance(caster, selectedList.Count);
+                    ResonanceUtility.Decr(caster, selectedList.Count);
                     foreach (Gene gene in selectedList)
                     {
                         victim.genes.RemoveGene(gene);
@@ -74,7 +74,7 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            if (!OMWGenes.HasAvailableResonance(caster))
+            if (!ResonanceUtility.HasGene(caster))
             {
                 reason = $"{caster.LabelShort} does not have available resonance.";
                 return false;
@@ -111,7 +111,7 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            if (!OMWGenes.HasAvailableResonance(caster))
+            if (!ResonanceUtility.HasGene(caster))
             {
                 reason = $"{caster.LabelShort} does not have available resonance.";
                 return false;

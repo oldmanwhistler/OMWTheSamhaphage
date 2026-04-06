@@ -17,10 +17,8 @@ namespace OMW_Samhaphage
     public class CompAbilityEffect_AbilityFluxspawnTargetPawn  :  CompAbilityEffect_AbilityBase
 
     {
-        public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
+        public override void OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            base.Apply(target, dest);
-
             List<FloatMenuOption> options = new List<FloatMenuOption>();
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;            
@@ -74,12 +72,12 @@ namespace OMW_Samhaphage
 
         private void JobEnwomb(LocalTargetInfo target)
         {
-            Job_OMW_XenotypeAbility job = new Job_OMW_XenotypeAbility();
+            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
             job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
             job.targetA = target;
             // The delegate needs to match the signature: (Pawn actor, Thing t)
             // We use the 't' passed from the JobDriver to ensure target validity
-            job.onArrival = (actor, t) => AbilityEnwomb(t, actor);            
+            job.onInteract = (actor, t) => AbilityEnwomb(t, actor);            
             parent.pawn.jobs.TryTakeOrderedJob(job);
         }
         
@@ -95,12 +93,12 @@ namespace OMW_Samhaphage
 
         private void JobPawnApplyHallowbound(LocalTargetInfo target, Pawn actor)
         {
-            Job_OMW_XenotypeAbility job = new Job_OMW_XenotypeAbility();
+            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
             job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
             job.targetA = target;
             // The delegate needs to match the signature: (Pawn actor, Thing t)
             // We use the 't' passed from the JobDriver to ensure target validity
-            job.onArrival = (actor, t) => AbilityPawnApplyHallowbound(t, actor);
+            job.onInteract = (actor, t) => AbilityPawnApplyHallowbound(t, actor);
             parent.pawn.jobs.TryTakeOrderedJob(job);
         }
 

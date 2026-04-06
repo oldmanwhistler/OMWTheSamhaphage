@@ -49,7 +49,7 @@ namespace OMW_Samhaphage
             OMWGenes.RemoveDisabledGenes(victim);
             OMWGenes.Refresh(victim);
 
-            OMWGenes.IncrResonance(caster, 3);
+            ResonanceUtility.Incr(caster, 3);
 
 
             return true;

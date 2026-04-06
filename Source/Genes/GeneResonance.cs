@@ -9,20 +9,28 @@ namespace OMW_Samhaphage
     public class Gene_ResourceResonance : Gene_Resource
     {
         // 1. Mandatory overrides from the base class you provided:
-        public override float InitialResourceMax => 1.0f;
+        public override float InitialResourceMax => 100f;
         protected override Color BarColor => new Color(0.36f, 0.22f, 0.42f); // Bruise-Purple
         protected override Color BarHighlightColor => new Color(0.54f, 0.17f, 0.89f); // Neon-Violet
         public override float MinLevelForAlert => 0.1f;
         public override string ResourceLabel => "resonance";
 
+
+        public override int PostProcessValue(float value)
+        {
+            return Mathf.RoundToInt(value);
+        }
+
         public Gene_ResourceResonance() : base()
         {
+            this.max = InitialResourceMax;
         }
 
         public override void PostAdd()
         {
             base.PostAdd();
-            this.Value = Rand.Range(0.03f, 0.20f);
+            // initialize with a random amount
+            this.Value = Rand.Range(3, 20);
         }        
     }
     public class GeneGizmo_ResourceResonance : GeneGizmo_Resource
@@ -35,11 +43,10 @@ namespace OMW_Samhaphage
         {
         }
 
-        private static bool draggingBar;
         protected override bool DraggingBar
         {
-            get { return draggingBar; }
-            set { draggingBar = value; }
+            get { return false; }
+            set {  }
         }
 
 

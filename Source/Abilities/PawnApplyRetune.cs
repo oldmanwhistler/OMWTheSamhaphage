@@ -27,7 +27,7 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            OMWGenes.IncrResonance(caster, carcinomas.Count);
+            ResonanceUtility.Incr(caster, carcinomas.Count);
 
             foreach (Hediff carcinoma in carcinomas)
             {
@@ -41,8 +41,13 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return false;
             
-            if (!OMWGenes.HasAvailableResonance(caster))
+            if (ResonanceUtility.HasAvailable(caster))
             {
+                Log.Message($"{caster.LabelShort} has enough available resonance to Retune {victim.LabelShort}.");
+            }
+            else
+            {
+                Log.Message($"{caster.LabelShort} does not have enough available resonance to Retune {victim.LabelShort}.");
                 return false;
             }
 
@@ -61,7 +66,7 @@ namespace OMW_Samhaphage
             OMWGenes.RemoveDisabledGenes(victim);
             OMWGenes.Refresh(victim);
 
-            OMWGenes.DecrResonance(caster);
+            ResonanceUtility.Decr(caster);
             return true;
         }
 

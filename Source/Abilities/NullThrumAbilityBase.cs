@@ -72,12 +72,12 @@ namespace OMW_Samhaphage
 
         public void Job(LocalTargetInfo targetInfo, Pawn caster)
         {
-            Job_OMW_XenotypeAbility job = new Job_OMW_XenotypeAbility();
+            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
             job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
             job.targetA = targetInfo;
             // The delegate needs to match the signature: (Pawn actor, Thing t)
             // We use the 't' passed from the JobDriver to ensure target validity
-            job.onArrival = (actor, t) => ApplyThing(t, actor);
+            job.onInteract = (actor, t) => ApplyThing(t, actor);
             caster.jobs.TryTakeOrderedJob(job);
         }
     }
