@@ -1,5 +1,6 @@
 # Next
 
+* Retune retriggers Resonance.PostAdd
 * silent servitude is too strong at recruiting
 * resonance should reduce the time of genetic disonnance
 * automatically convert cancer to resonance
@@ -60,3 +61,7 @@
 * life finds a way poster
 * The Thing poster 
 * easter egg pawns?
+* They Live - echovessel and hallowbound
+* Slither
+* "Just a little guy" fluxspawn
+* Legally Blonde by a Cradlemold with a Fluxspawn in a purse

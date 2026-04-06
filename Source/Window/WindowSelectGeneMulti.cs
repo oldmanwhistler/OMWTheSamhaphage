@@ -18,13 +18,19 @@ namespace OMW_Samhaphage
 
         public override Vector2 InitialSize => new Vector2(450f, 700f);
 
+        private string windowVerb;
+
         // Updated Constructor to accept the second list
-        public Dialog_SelectMultipleGeneInstances(List<Gene> options, List<Gene> referenceList, int max,
+        public Dialog_SelectMultipleGeneInstances(List<Gene> options, List<Gene> referenceList, int max, string verb,
             System.Action<List<Gene>> callback)
         {
-            this.geneOptions = options.OrderBy(g => g.pawn.genes.HasXenogene(g.def)).ToList();
+            this.geneOptions = options
+                .Where(g => !OMW_BlacklistGenes.BlacklistedGenes.Contains(g.def))
+                .OrderBy(g => g.pawn.genes.HasXenogene(g.def))
+                .ToList();
             this.referenceGenes = referenceList ?? new List<Gene>();
             this.maxSelection = max;
+            this.windowVerb = verb;
             this.onConfirm = callback;
 
             this.forcePause = true;
@@ -73,7 +79,7 @@ namespace OMW_Samhaphage
             // --- Header ---
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 40f);
             Text.Font = GameFont.Medium;
-            Widgets.Label(headerRect, $"Select Genes ({selectedGenes.Count} / {maxSelection})");
+            Widgets.Label(headerRect, $"Select Genes to {windowVerb} ({selectedGenes.Count} / {maxSelection})");
 
             // Clear All Button
             Rect clearBtnRect = new Rect(inRect.width - 100f, inRect.y + 5f, 100f, 25f);
@@ -102,15 +108,15 @@ namespace OMW_Samhaphage
 
             foreach (Gene gene in geneOptions)
             {
-                if (!gene.pawn.genes.HasXenogene(gene.def) && !drawnEndoHeader)
-                {
-                    DrawCategoryHeader(ref curY, viewRect.width, "Endogenes");
-                    drawnEndoHeader = true;
-                }
-                else if (gene.pawn.genes.HasXenogene(gene.def) && !drawnXenoHeader)
+                if (gene.pawn.genes.HasXenogene(gene.def) && !drawnXenoHeader)
                 {
                     DrawCategoryHeader(ref curY, viewRect.width, "Xenogenes");
                     drawnXenoHeader = true;
+                }
+                else if (!gene.pawn.genes.HasXenogene(gene.def) && !drawnEndoHeader)
+                {
+                    DrawCategoryHeader(ref curY, viewRect.width, "Endogenes");
+                    drawnEndoHeader = true;
                 }
 
                 Rect rowRect = new Rect(0f, curY, viewRect.width, 36f);
@@ -223,7 +229,7 @@ namespace OMW_Samhaphage
             Text.Font = GameFont.Small;
             GUI.color = Color.white;
             curY += 30f;
-            Widgets.DrawLineHorizontal(0f, curY - 2f, width * 0.3f);
+            Widgets.DrawLineHorizontal(0f, curY - 2f, width);
         }
     }
 }

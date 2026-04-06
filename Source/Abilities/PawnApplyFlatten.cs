@@ -49,8 +49,7 @@ namespace OMW_Samhaphage
             OMWGenes.RemoveDisabledGenes(victim);
             OMWGenes.Refresh(victim);
 
-            ResonanceUtility.Incr(caster, 3);
-
+            ResonanceUtility.Incr($"from flatting {victim.LabelShort}",  caster, 3);
 
             return true;
         }

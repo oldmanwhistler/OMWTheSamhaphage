@@ -34,17 +34,7 @@ namespace OMW_Samhaphage
             }
             else if (target.Thing is Pawn otherPawn)
             {
-                if (PawnTakeXenogenes.CanApplyOn(otherPawn, parent.pawn, out reason))
-                {
-                    options.Add(new FloatMenuOption($"Take xenogenes from {otherPawn.Name}",
-                        () => JobPawnTakeXenogenes(target, parent.pawn)));
-                }
-                else
-                {
-                    options.Add(new FloatMenuOption($"Can't take xenogenes. {reason}", null) { Disabled = true });
-                }
-
-                ability = new PawnTeratogenicHealing();
+                ability = new ThingApplyScrub();
                 options.Add(ability.NewFloatMenuOptionPawn(target, otherPawn, parent.pawn));
                 
                 if (PawnApplyParasiticStinger.CanApplyOn(otherPawn, parent.pawn, out reason))

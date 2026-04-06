@@ -12,7 +12,7 @@ namespace OMW_Samhaphage
         public override float InitialResourceMax => 100f;
         protected override Color BarColor => new Color(0.36f, 0.22f, 0.42f); // Bruise-Purple
         protected override Color BarHighlightColor => new Color(0.54f, 0.17f, 0.89f); // Neon-Violet
-        public override float MinLevelForAlert => 0.1f;
+        public override float MinLevelForAlert => 1f;
         public override string ResourceLabel => "resonance";
 
 

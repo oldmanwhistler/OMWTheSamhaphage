@@ -40,6 +40,9 @@ namespace OMW_Samhaphage
             }
             else if (target.Thing is Corpse corpse)
             {
+                ability = new ThingApplyScrub();
+                options.Add(ability.NewFloatMenuOptionCorpse(target, corpse, parent.pawn));
+
                 ability = new ThingApplyHarrow();
                 options.Add(ability.NewFloatMenuOptionCorpse(target, corpse, parent.pawn));
 

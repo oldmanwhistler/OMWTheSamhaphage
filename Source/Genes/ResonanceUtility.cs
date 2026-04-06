@@ -25,7 +25,7 @@ namespace OMW_Samhaphage
             return false;
         }
 
-        public static bool Incr(Pawn pawn, int amount = 1)
+        public static bool Incr(string reason,Pawn pawn, int amount = 1)
         {
             if (HasGene(pawn))
             {
@@ -35,6 +35,7 @@ namespace OMW_Samhaphage
                 resonance.Value += amount;
                 Log.Message(
                     $"[Resonance] {pawn.LabelShort} now has {resonance.Value} available resonance.");                
+                Messages.Message($"Gained {amount} resonance {reason}.", pawn, MessageTypeDefOf.PositiveEvent);
                 return true;
             }
             return false;

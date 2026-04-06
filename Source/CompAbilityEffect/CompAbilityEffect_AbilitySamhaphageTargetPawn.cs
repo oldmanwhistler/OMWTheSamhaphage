@@ -51,6 +51,9 @@ namespace OMW_Samhaphage
                         { Disabled = true });
                 }
 
+                ability = new ThingApplyScrub();
+                options.Add(ability.NewFloatMenuOptionPawn(target, otherPawn, parent.pawn));
+
                 if (PawnApplyRetune.CanApplyOn(otherPawn, out reason))
                 {
                     options.Add(new FloatMenuOption($"Retune {otherPawn.LabelShort}",

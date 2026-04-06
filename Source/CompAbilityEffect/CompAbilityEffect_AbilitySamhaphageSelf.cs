@@ -25,6 +25,7 @@ namespace OMW_Samhaphage
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
             string reason;
+            NullThrumAbilityBase ability;
 
             if (xeno == OMW_XenotypeDefOf.omw_sovereign_stillness)
             {
@@ -42,6 +43,9 @@ namespace OMW_Samhaphage
             }
             else
             {
+                ability = new ThingApplyScrub();
+                options.Add(ability.NewFloatMenuOptionPawn(target, parent.pawn, parent.pawn));
+
                 if (PawnApplyRetune.CanApplyOn(parent.pawn, out reason))
                 {
                     options.Add(new FloatMenuOption($"Retune self",
@@ -52,19 +56,6 @@ namespace OMW_Samhaphage
                     options.Add(new FloatMenuOption($"Can't Retune self. {reason}.", null)
                         { Disabled = true });
                 }
-
-                int xenogenes = OMWGenes.CountXenogenes(parent.pawn);
-                if (xenogenes > 0)
-                {
-                    options.Add(new FloatMenuOption("Integrate xenogenes",
-                        () => OMWGenes.XenogenesToEndogenes(parent.pawn)));
-                }
-                else
-                {
-                    options.Add(
-                        new FloatMenuOption("No xenogenes available to integrate", null)
-                            { Disabled = true });
-                } 
             }
 
             if (xeno == OMW_XenotypeDefOf.omw_samhaphage)
