@@ -10,6 +10,8 @@ namespace OMW_Samhaphage
     // Makes me feel so... carcinogenic - ally free
     public class PawnTeratogenicHealing : NullThrumAbilityPawnOnly
     {
+        public override string VerbName => "Teratogenic Healing";
+
         public override bool ApplyPawn(Pawn pawn, Pawn caster)
         {
             int healedCount = 0;

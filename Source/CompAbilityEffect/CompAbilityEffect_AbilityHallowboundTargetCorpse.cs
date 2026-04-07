@@ -34,6 +34,9 @@ namespace OMW_Samhaphage
             }
             else if (target.Thing is Corpse corpse)
             {
+                ability = new ThingApplyStealFace();
+                options.Add(ability.NewFloatMenuOptionCorpse(target, corpse, parent.pawn));
+                
                 ability = new ThingApplyScrub();
                 options.Add(ability.NewFloatMenuOptionCorpse(target, corpse, parent.pawn));
 

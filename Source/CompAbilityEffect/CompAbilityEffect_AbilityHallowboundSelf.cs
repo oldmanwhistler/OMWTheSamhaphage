@@ -23,6 +23,7 @@ namespace OMW_Samhaphage
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
             string reason;
+            NullThrumAbilityBase ability;
 
             options.Add(new FloatMenuOption(GetGeneStateDesc(parent.pawn), null) { Disabled = true });
 

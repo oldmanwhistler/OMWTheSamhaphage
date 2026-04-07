@@ -2,52 +2,51 @@ using RimWorld;
 using Verse;
 using System.Linq;
 using System.Collections.Generic;
-using UnityEngine.Rendering;
 
 namespace OMW_Samhaphage
 {
-    public class VerbHarrow : NullThrumVerbBase
+    public class VerbStealFace : NullThrumVerbBase
     {
-        public VerbHarrow(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest)
+        public VerbStealFace(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest)
         {
+            
         }
 
-        public override string Name => "Harrow";
-        // More expensive because it is stealing genes
-        protected override float ResonanceTotalMultiplier => 1.5f;
+        public override string Name => "Steal Face";
+        // Stealing trash genes
+        protected override float ResonanceTotalMultiplier => 0.75f;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
-            HashSet<GeneDef> alreadyHas = dest.genes.GenesListForReading
-                .Select(g => g.def)
-                .ToHashSet();
+            List<Gene> alreadyHas = dest.genes.GenesListForReading ?? new List<Gene>();
             return source.genes.GenesListForReading
                 .Where(g => !OMW_BlacklistGenes.BlacklistedGenes.Contains(g.def) && // ignore blacklisted
-                            !alreadyHas.Contains(g.def) && // ignore genes the caster already has
-                            !this.GeneIsWorthless(g)) // ignore cosmetic genes
+                            !alreadyHas.Contains(g) && // ignore genes the caster already has
+                            !g.Overridden && // can't steal a face if it's already overridden
+                            this.GeneIsWorthless(g)) // want cosmetic genes only
                 .ToList();
         }
 
         protected override List<GeneDef> ConflictGeneDefs(Pawn source, Pawn dest)
         {
-            if (dest == null || dest.genes == null || dest.genes.GenesListForReading == null)
-                return new List<GeneDef>();
+            if (dest == null || dest.genes == null || dest.genes.GenesListForReading == null) return new List<GeneDef>();
             return dest.genes.GenesListForReading.Select(g => g.def).ToList();
-        }        
+        }
     }
 
-    public class ThingApplyHarrow : NullThrumAbilityBase
+    public class ThingApplyStealFace : NullThrumAbilityBase
     {
-        public override string VerbName => "Harrow";
-
+        public override string VerbName => "Steal Face";
+        
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
-            if (victim == null || caster == null) return false;
-            verb = new VerbHarrow(caster,victim, caster);
+            if (victim == null || caster == null) return false;     
+
+            verb = new VerbStealFace(caster, victim, caster);
 
             if (verb.genes.Count == 0)
             {
-                Messages.Message($"{victim.LabelShort} has no genes that can be harrowed.",
+                Messages.Message($"{victim.LabelShort} has no genes that can be stolen.",
                     MessageTypeDefOf.RejectInput);
                 return false;
             }
@@ -62,17 +61,12 @@ namespace OMW_Samhaphage
                     {
                         victim.genes.RemoveGene(plus.gene);
                         caster.genes.AddGene(plus.gene.def, true);
-                        Log.Message($"Harrowed {plus.gene.LabelCap} from {victim.LabelShort}");
+                        Log.Message($"Stole gene {plus.gene.LabelCap} from {victim.LabelShort}");
                         activated = true;
                     }
                 }
             }));
-
-            if (activated)
-            {
-                verb.ApplyDissonance(victim, caster);
-            }
-
+            
             return activated;
         }
 
@@ -101,27 +95,9 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            if (!ResonanceUtility.HasGene(caster))
+            if (ResonanceUtility.Total(caster) < 1)
             {
-                reason = $"{caster.LabelShort} does not have available resonance to {this.verb.Name}.";
-                return false;
-            }
-
-            if (ResonanceUtility.Total(caster) <= 2)
-            {
-                reason = $"{caster.LabelShort} does not have enough resonance to {this.verb.Name}.";
-                return false;
-            }
-
-            if (!OMWGenes.HasScouredMind(p))
-            {
-                reason = $"{p.LabelShort} does not have a scoured mind.";
-                return false;
-            }
-
-            if (p.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
-            {
-                reason = $"{p.LabelShort} is affected by Genetic Dissonance";
+                reason = "Not enough Resonance to steal a face.";
                 return false;
             }
 
@@ -144,9 +120,9 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            if (!ResonanceUtility.HasGene(caster))
+            if (ResonanceUtility.Total(caster) < 1)
             {
-                reason = $"{caster.LabelShort} does not have available resonance.";
+                reason = "Not enough Resonance to steal a face.";
                 return false;
             }
 
@@ -159,11 +135,11 @@ namespace OMW_Samhaphage
 
             if (CanApplyOnPawn(pawn, caster, out reason))
             {
-                return new FloatMenuOption($"{this.VerbName} {pawn.LabelShort}", () => Job(targetInfo, caster));
+                return new FloatMenuOption($"Steal Face {pawn.LabelShort}", () => Job(targetInfo, caster));
             }
             else
             {
-                return new FloatMenuOption($"Can't {this.VerbName} {pawn.LabelShort} because {reason}", null) { Disabled = true };
+                return new FloatMenuOption($"Can't Steal Face {pawn.LabelShort} because {reason}", null) { Disabled = true };
             }
         }
 
@@ -173,11 +149,11 @@ namespace OMW_Samhaphage
 
             if (CanApplyOnCorpse(corpse, caster, out reason))
             {
-                return new FloatMenuOption($"{this.VerbName} {corpse.InnerPawn.LabelShort}", () => Job(targetInfo, caster));
+                return new FloatMenuOption($"Steal Face {corpse.InnerPawn.LabelShort}", () => Job(targetInfo, caster));
             }
             else
             {
-                return new FloatMenuOption($"Can't {this.VerbName} {corpse.InnerPawn.LabelShort} because {reason}", null) { Disabled = true };
+                return new FloatMenuOption($"Can't Steal Face {corpse.InnerPawn.LabelShort} because {reason}", null) { Disabled = true };
             }
         }
     }

@@ -26,7 +26,7 @@ namespace OMW_Samhaphage
     {
         private HediffCompProperties_RandomMutation Props => (HediffCompProperties_RandomMutation)props;
 
-        public List<GeneDef> genes = new List<GeneDef>();
+        public List<GeneDef> geneDefs = new List<GeneDef>();
 
         // TODO: this should be static? It doesn't need to be stored on each individual hediff instance, and it would be more efficient to cache it instead of looking it up every time a new hediff is created.
         public List<GeneDef> blacklist = new List<GeneDef>();
@@ -38,7 +38,7 @@ namespace OMW_Samhaphage
         public override void CompExposeData()
         {
             base.CompExposeData();
-            Scribe_Collections.Look(ref this.genes, nameof(this.genes));
+            Scribe_Collections.Look(ref this.geneDefs, nameof(this.geneDefs));
             Scribe_Collections.Look(ref this.blacklist, nameof(this.blacklist));
             Scribe_Collections.Look(ref this.defnameStrings, nameof(this.defnameStrings));
             Scribe_Values.Look(ref this.Active, nameof(this.Active));
@@ -77,48 +77,41 @@ namespace OMW_Samhaphage
             if (!Active && this.parent.pawn.Map != null)
             {
                 Active = true;
-                genes?.Clear();
-                List<string> geneNamesToDisplay = new List<string>();
+                this.geneDefs?.Clear();
                 for (int i = 0; i < Props.numberOfGenes; i++)
                 {
                     // TODO: make this more efficient by caching the list of valid genes instead of looking it up every time a mutation is applied. This is especially important if there are a lot of genes, but even with just a few it would be better to cache it.
                     GeneDef gene = DefDatabase<GeneDef>.AllDefs.Where((GeneDef x) => x.exclusionTags?.Contains("AG_OnlyOnCharacterCreation") == false &&
                     x.prerequisite == null && x.biostatArc == 0 && x.biostatMet > Props.minMetabolism && x.biostatMet < Props.maxMetabolism && x.modContentPack?.PackageId != "vanillaracesexpanded.insector" && !defnameStrings.Any(s => x.defName.Contains(s))
                     && !blacklist.Contains(x)).RandomElement();
-                    genes.Add(gene);
-                    geneNamesToDisplay.Add(gene.LabelCap);
-                    this.parent.pawn.genes?.AddGene(gene, true);
-
-
-
-                }
-                if (parent.pawn.Faction == Faction.OfPlayer && !AlphaGenes_Mod.settings.AG_DisableMutationsMessage)
-                {
-                    Messages.Message("AG_RandomGenesGained".Translate(parent.pawn.LabelShortCap, geneNamesToDisplay.ToCommaList()), this.parent.pawn, MessageTypeDefOf.PositiveEvent, true);
+                    if (gene != null)
+                    {
+                        this.geneDefs.Add(gene);
+                        this.parent.pawn.genes?.AddGene(gene, true);
+                    }
                 }
             }
 
             if (this.parent.pawn.IsHashIntervalTick(Props.period))
             {
 
-                if (!genes.NullOrEmpty())
+                if (!this.geneDefs.NullOrEmpty())
                 {
                     // only remove genes if they didn't become endogenes, otherwise the player would lose the gene permanently and it would be more frustrating than fun. This also means that if a gene becomes an endogene, it will stay with the pawn permanently, which fits with the headcanon of these mutations being a way for the xenotypes to evolve and adapt to their environment over time.
-                    for (int i = Props.numberOfGenes - 1; i >= 0; i--)
+                    for (int i = 0; i < this.geneDefs.Count; i++)
                     {
-                        if (this.parent.pawn.genes?.HasXenogene(genes[i]) == true)
+                        if (this.parent.pawn.genes?.HasXenogene(this.geneDefs[i]) == true)
                         {
-                            Gene gene = this.parent.pawn.genes?.GetGene(genes[i]);
+                            Gene gene = this.parent.pawn.genes?.GetGene(this.geneDefs[i]);
                             if (gene != null)
                             {
                                 this.parent.pawn.genes?.RemoveGene(gene);
                             }
                         }
                     }
-                    genes.Clear();
+                    this.geneDefs?.Clear();
                 }
                 Active = false;
-
             }
 
         }
@@ -129,32 +122,20 @@ namespace OMW_Samhaphage
             base.CompPostPostRemoved();
 
             // only remove genes if they didn't become endogenes, otherwise the player would lose the gene permanently and it would be more frustrating than fun. This also means that if a gene becomes an endogene, it will stay with the pawn permanently, which fits with the headcanon of these mutations being a way for the xenotypes to evolve and adapt to their environment over time.
-            for (int i = 0; i < genes.Count; i++)
+            for (int i = 0; i < this.geneDefs.Count; i++)
             {
-                        if (this.parent.pawn.genes?.HasXenogene(genes[i]) == true)
-                        {
-                            Gene gene = this.parent.pawn.genes?.GetGene(genes[i]);
-                            if (gene != null)
-                            {
-                                this.parent.pawn.genes?.RemoveGene(gene);
-                            }
-                        }                
-//                if (this.parent.pawn.genes?.GetGene(genes[i]) != null)
-                //{
-                    //this.parent.pawn.genes?.RemoveGene(this.parent.pawn.genes.GetGene(genes[i]));
-                //}
-
+                if (this.parent.pawn.genes?.HasXenogene(this.geneDefs[i]) == true)
+                {
+                    Gene gene = this.parent.pawn.genes?.GetGene(this.geneDefs[i]);
+                    if (gene != null)
+                    {
+                        this.parent.pawn.genes?.RemoveGene(gene);
+                    }
+                }                
             }
             Active = false;
-            genes.Clear();
-
-
-
-
+            this.geneDefs?.Clear();
         }
-
-
-
 
     }
 }

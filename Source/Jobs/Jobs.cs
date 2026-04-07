@@ -26,7 +26,7 @@ namespace OMW_Samhaphage
     public class JobDriver_ApproachAndInteract : JobDriver
     {
         // Use a property to avoid repeated casting
-        private Job_ApproachAndInteract SpecificJob;
+        private Job_ApproachAndInteract _specificJob;
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             // Reserve the target globally. 
@@ -53,29 +53,36 @@ namespace OMW_Samhaphage
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
+            // Safety check for save-loading
+            this.FailOn(() => job == null);
+
+            // Initialize the job if necessary
+            yield return new Toil
+            {
+                initAction = () =>
+                {
+                    if (job == null)
+                    {
+                        pawn.jobs.EndCurrentJob(JobCondition.Errored);
+                    }
+                },
+                defaultCompleteMode = ToilCompleteMode.Instant
+            }; 
+            
             // Cast the job back to your custom type to get the action
             if (job is Job_ApproachAndInteract omwJob)
             {
-                this.SpecificJob = omwJob;
-            }
-            else
-            {
-                Log.Error(
-                    $"[OMW_Samhaphage] Job {job} is not of type Job_ApproachAndInteract. This should never happen.");
-                yield break;
+                this._specificJob = omwJob;
             }
 
             Log.Message($"[OMW_Samhaphage] Starting JobDriver_ApproachAndInteract for pawn {pawn} on target {TargetA.Thing}."); // Debug log
 
-            this.FailOn(() => SpecificJob?.onInteract == null);
+            this.FailOn(() => this._specificJob?.onInteract == null);
             this.FailOnDespawnedOrNull(TargetIndex.A);
 
             Log.Message(
                 $"[OMW_Samhaphage] {pawn} Toils_Goto.GotoThing {TargetA.Thing}."); // Debug log
 
-
-            // 1. The Approach
-            // Use ClosestTouch to avoid 'Standing on Head' errors with beds
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.InteractionCell);
 
             Log.Message(
@@ -117,7 +124,7 @@ namespace OMW_Samhaphage
 
 
             // 3. Final Execution
-            yield return Toils_General.Do(() => { SpecificJob.onInteract?.Invoke(pawn, TargetA.Thing); });
+            yield return Toils_General.Do(() => { this._specificJob?.onInteract?.Invoke(pawn, TargetA.Thing); });
 
             Log.Message(
                 $"[OMW_Samhaphage] Jobs done!"); // Debug log

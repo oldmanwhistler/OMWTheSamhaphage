@@ -4,6 +4,10 @@ namespace OMW_Samhaphage
 {
     public abstract class NullThrumAbilityBase
     {
+        public NullThrumVerbBase verb;
+
+        public abstract string VerbName { get; }
+
         public bool ApplyThing(Thing thing, Pawn caster = null)
         {
             if (thing is Pawn pawn)

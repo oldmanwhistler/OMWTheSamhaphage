@@ -40,7 +40,7 @@ Adds new xenotypes, scenarios and lore based on a "Got to Catch Them All" style 
 * The Hallowbound have the chill of the dead and enjoy colder temperatures.
 * The Fluxspawn require heat for their naked, disgusting, fertile bodies.
 * The Fluxspawn mutate genes daily while the Hallowbound and Samhaphage can control when they mutate.
-* The fluxspawn have a short lifespan and a lot of cancers but make that work for you with tetrogenesis.
+* The fluxspawn have a short lifespan and a lot of cancers but make that work for you with teratogenic abilities.
 * The mutations create carcinomas that the Hallowbound and Samhaphage can convert to a resource to power their genetic abilities.
 * The more fluxspawn you have the more powerful the chimera-like Silent Stillness becomes thanks to the Hivemind.
 * Breeding your hive to kill them to acquire genes is part of the gameplay loop.

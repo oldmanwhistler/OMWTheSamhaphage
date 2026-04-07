@@ -7,31 +7,19 @@ using Verse;
 
 namespace OMW_Samhaphage
 {
-    public class Dialog_SelectMultipleGeneInstances : Window
+    public class WindowSelectGenesForVerb : Window
     {
+        private NullThrumVerbBase verb;
         private WindowState windowState;
-        private List<Gene> geneOptions;
-        private List<Gene> referenceGenes; // The "Second List" to check conflicts against
-        private HashSet<Gene> selectedGenes = new HashSet<Gene>();
-        private System.Action<List<Gene>> onConfirm;
-        private int maxSelection;
+        private HashSet<GenePlus> selectedGenes = new HashSet<GenePlus>();
+        private System.Action<List<GenePlus>> onConfirm;
         private Vector2 scrollPosition;
 
         public override Vector2 InitialSize => new Vector2(450f, 700f);
 
-        private string windowVerb;
-
-        // Updated Constructor to accept the second list
-        public Dialog_SelectMultipleGeneInstances(List<Gene> options, List<Gene> referenceList, int max, string verb,
-            System.Action<List<Gene>> callback)
+        public WindowSelectGenesForVerb(NullThrumVerbBase verb, System.Action<List<GenePlus>> callback)
         {
-            this.geneOptions = options
-                .Where(g => !OMW_BlacklistGenes.BlacklistedGenes.Contains(g.def))
-                .OrderBy(g => g.pawn.genes.HasXenogene(g.def))
-                .ToList();
-            this.referenceGenes = referenceList ?? new List<Gene>();
-            this.maxSelection = max;
-            this.windowVerb = verb;
+            this.verb = verb;
             this.onConfirm = callback;
 
             this.forcePause = true;
@@ -40,48 +28,28 @@ namespace OMW_Samhaphage
             this.absorbInputAroundWindow = true;
         }
 
-        // Helper to check if a gene conflicts with anything in the reference list
-        private string GetConflictingGeneName(Gene gene)
+        public float SelectionCurCost()
         {
-            if (referenceGenes.Count == 0) return null;
-
-            foreach (Gene refGene in referenceGenes)
+            float tmp = 0f;
+            foreach (GenePlus plus in selectedGenes)
             {
-                // Check if it's the exact same gene or part of a conflicting group (e.g. both are skin colors)
-                if (gene.def == refGene.def || gene.def.ConflictsWith(refGene.def))
-                {
-                    return refGene.LabelCap; // Returns "Strong Melee", "Blue Skin", etc.
-                }
+                tmp += plus.cost;    
             }
-
-            return null;
+            return tmp;
         }
 
-        private string GetOverridingGeneName(Gene gene)
+        public float SelectionMaxCost()
         {
-            if (geneOptions.Count == 0) return null;
-            if (gene.Overridden == false) return null;
-
-            foreach (Gene refGene in geneOptions)
-            {
-                // Check if it's the exact same gene or part of a conflicting group (e.g. both are skin colors)
-                if (gene.def == refGene.def || gene.def.ConflictsWith(refGene.def))
-                {
-                    return refGene.LabelCap; // Returns "Strong Melee", "Blue Skin", etc.
-                }
-            }
-
-            return null;
+            return this.verb.SelectionMaxCost;
         }
-
-
+        
         public override void DoWindowContents(Rect inRect)
         {
             this.windowState = new WindowState();
             // --- Header ---
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 40f);
             Text.Font = GameFont.Medium;
-            Widgets.Label(headerRect, $"Select Genes to {windowVerb} ({selectedGenes.Count} / {maxSelection})");
+            Widgets.Label(headerRect, $"Select Genes to {this.verb.Name} ({100f*this.SelectionCurCost()/this.SelectionMaxCost()}%)");
 
             // Clear All Button
             Rect clearBtnRect = new Rect(inRect.width - 100f, inRect.y + 5f, 100f, 25f);
@@ -99,7 +67,7 @@ namespace OMW_Samhaphage
             float footerHeight = 50f;
             Rect scrollRect = new Rect(0f, listStartY + 5f, inRect.width,
                 inRect.height - listStartY - footerHeight - 10f);
-            float viewHeight = (geneOptions.Count * 40f) + 60f;
+            float viewHeight = (this.verb.genes.Count * 40f) + 60f;
             Rect viewRect = new Rect(0f, 0f, scrollRect.width - 26f, viewHeight);
 
             Widgets.BeginScrollView(scrollRect, ref scrollPosition, viewRect);
@@ -108,27 +76,21 @@ namespace OMW_Samhaphage
             bool drawnEndoHeader = false;
             bool drawnXenoHeader = false;
 
-            foreach (Gene gene in geneOptions)
+            foreach (GenePlus plus in this.verb.genes)
             {
-                if (gene.pawn.genes.HasXenogene(gene.def) && !drawnXenoHeader)
+                if (plus.isXenogene && !drawnXenoHeader)
                 {
                     DrawCategoryHeader(ref curY, viewRect.width, "Xenogenes");
                     drawnXenoHeader = true;
                 }
-                else if (!gene.pawn.genes.HasXenogene(gene.def) && !drawnEndoHeader)
+                else if (!plus.isXenogene && !drawnEndoHeader)
                 {
                     DrawCategoryHeader(ref curY, viewRect.width, "Endogenes");
                     drawnEndoHeader = true;
                 }
 
                 Rect rowRect = new Rect(0f, curY, viewRect.width, 36f);
-                bool isSelected = selectedGenes.Contains(gene);
-
-                // Get the specific conflict name
-                string conflictName = GetConflictingGeneName(gene);
-                bool hasConflict = !conflictName.NullOrEmpty();
-
-                string overriddenBy = GetOverridingGeneName(gene);
+                bool isSelected = selectedGenes.Contains(plus);
 
                 if (isSelected) Widgets.DrawHighlightSelected(rowRect);
                 else Widgets.DrawHighlightIfMouseover(rowRect);
@@ -136,29 +98,19 @@ namespace OMW_Samhaphage
                 // Modified Tooltip to explain conflict
                 TooltipHandler.TipRegion(rowRect, new TipSignal(() =>
                 {
-                    string tip = $"{gene.LabelCap}\n\n{gene.def.DescriptionFull}";
-                    if (gene.Overridden)
-                    {
-                        tip += $"\n\n<color=#999999>(This gene is overridden by {overriddenBy})</color>";
-                    }
-                    if (hasConflict)
-                    {
-                        // Adds a red warning with the specific gene name
-                        tip += $"\n\n<color=#ff6666>(This gene conflicts with {conflictName})</color>";
-                    }
-                    return tip;
-                }, gene.GetHashCode()));
+                    return plus.ToString();
+                }, plus.GetHashCode()));
 
-                Widgets.DefIcon(new Rect(rowRect.x + 4f, rowRect.y + 3f, 30f, 30f), gene.def);
+                Widgets.DefIcon(new Rect(rowRect.x + 4f, rowRect.y + 3f, 30f, 30f), plus.gene.def);
                 Rect labelRect = new Rect(rowRect.x + 40f, rowRect.y, rowRect.width - 80f, rowRect.height);
                 Text.Anchor = TextAnchor.MiddleLeft;
 
                 // Apply color
-                if (gene.Overridden) GUI.color = Color.gray;
-                if (hasConflict) GUI.color = Color.red;
+                if (plus.gene.Overridden) GUI.color = Color.gray;
+                if (plus.HasConflict()) GUI.color = Color.red;
 
 
-                Widgets.Label(labelRect, gene.LabelCap);
+                Widgets.Label(labelRect, plus.gene.LabelCap);
                 GUI.color = Color.white;
 
                 Widgets.Checkbox(new Vector2(rowRect.xMax - 30f, rowRect.y + 6f), ref isSelected, 24f, false);
@@ -167,17 +119,17 @@ namespace OMW_Samhaphage
                 {
                     if (isSelected)
                     {
-                        selectedGenes.Remove(gene);
+                        selectedGenes.Remove(plus);
                         SoundDefOf.Tick_Low.PlayOneShotOnCamera();
                     }
-                    else if (selectedGenes.Count < maxSelection)
+                    else if (this.SelectionCurCost() < this.SelectionMaxCost())
                     {
-                        selectedGenes.Add(gene);
+                        selectedGenes.Add(plus);
                         SoundDefOf.Tick_High.PlayOneShotOnCamera();
                     }
                     else
                     {
-                        Messages.Message("Max selection reached.", MessageTypeDefOf.RejectInput, false);
+                        Messages.Message($"Max cost of {this.SelectionMaxCost()} resonance reached.", MessageTypeDefOf.RejectInput, false);
                         SoundDefOf.ClickReject.PlayOneShotOnCamera();
                     }
                 }

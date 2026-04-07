@@ -5,8 +5,36 @@ using System.Collections.Generic;
 
 namespace OMW_Samhaphage
 {
+    public class VerbScrub : NullThrumVerbBase
+    {
+        public VerbScrub(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest)
+        {
+        }
+
+        
+        public override string Name => "Scrub";
+        // Cheap because it is destroying genes
+        protected override float ResonanceTotalMultiplier => 0.5f;
+
+        protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
+        {
+            return source.genes.GenesListForReading
+                .Where(g => !OMW_BlacklistGenes.BlacklistedGenes.Contains(g.def) && // ignore blacklisted
+                        g.Overridden && // must be overridden to be scrubbed
+                        !this.GeneIsWorthless(g)) // ignore cosmetic genes
+                .ToList();            
+        }
+    
+        protected override List<GeneDef> ConflictGeneDefs(Pawn source, Pawn dest)
+        {
+            return new List<GeneDef>();
+        }        
+    }
+
     public class ThingApplyScrub : NullThrumAbilityBase
     {
+        public override string VerbName => "Scrub";
+
         public static bool RemoveCarcinomas(Pawn victim, Pawn caster)
         {
             HediffDef hediffDef = HediffDefOf.Carcinoma;
@@ -26,7 +54,8 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            ResonanceUtility.Incr("from removing carcinomas", caster, carcinomas.Count);
+            float amount = carcinomas.Count * 1.5f;
+            ResonanceUtility.Incr("from removing carcinomas", caster, amount);
 
             foreach (Hediff carcinoma in carcinomas)
             {
@@ -40,35 +69,36 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return false;
 
-            RemoveCarcinomas(victim, caster);            
+            verb = new VerbScrub(caster, victim, null);
 
-            List<Gene> genesToSelectFrom = victim.genes.GenesListForReading
-                .Where(g => g.Overridden)
-                .ToList();
+            RemoveCarcinomas(victim, caster);
 
-            int maxToPick = 100;
-            bool returnedFromDialog = false;
-
-            Find.WindowStack.Add(new Dialog_SelectMultipleGeneInstances(genesToSelectFrom, caster.genes.GenesListForReading, maxToPick, "Destroy", (selectedList) =>
+            if (verb.genes.Count == 0)
             {
-                if (selectedList != null && selectedList.Count > 0)
+                Messages.Message($"{victim.LabelShort} has no genes that can be scrubbed.", MessageTypeDefOf.RejectInput);
+                return false;
+            }
+
+            bool activated = false;
+
+            Find.WindowStack.Add(new WindowSelectGenesForVerb(verb, (selectedList) =>
+            {
+                foreach (GenePlus plus in selectedList)
                 {
-                    ResonanceUtility.Incr($"from destroying {victim.LabelShort}'s genes", caster, selectedList.Count);
-                    foreach (Gene gene in selectedList)
+                    if (verb.PayResonance(plus))
                     {
-                        victim.genes.RemoveGene(gene);
-                        Log.Message($"Destroyed {gene.Label} from {victim.LabelShort}");
+                        victim.genes.RemoveGene(plus.gene);
+                        Log.Message($"Destroyed {plus.gene.LabelCap} from {victim.LabelShort}");                        
+                        activated = true;
                     }
-
-                    // GeneticDissonance prevents repeated calls
-                    Hediff hediffDissonance = HediffMaker.MakeHediff(OMW_HediffDefOf.OMW_GeneticDissonance, caster);
-                    victim.health.AddHediff(hediffDissonance);
                 }
-
-                returnedFromDialog = true;
             }));
 
-            return returnedFromDialog;
+            if (activated)
+            {
+                verb.ApplyDissonance(victim, caster);
+            }            
+            return activated;
         }
 
         public override bool ApplyCorpse(Corpse corpse, Pawn caster = null)

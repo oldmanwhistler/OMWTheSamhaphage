@@ -34,6 +34,9 @@ namespace OMW_Samhaphage
             }
             else if (target.Thing is Pawn otherPawn)
             {
+                ability = new ThingApplyStealFace();
+                options.Add(ability.NewFloatMenuOptionPawn(target, otherPawn, parent.pawn));
+
                 ability = new ThingApplyScrub();
                 options.Add(ability.NewFloatMenuOptionPawn(target, otherPawn, parent.pawn));
                 

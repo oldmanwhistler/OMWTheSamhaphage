@@ -5,6 +5,7 @@ namespace OMW_Samhaphage
 {    
     public class FluxspawnFickerStun: NullThrumAbilityPawnOnly
     {
+        public override string VerbName => "Stun";
 
         public override bool ApplyPawn(Pawn pawn, Pawn caster = null)
         {            
