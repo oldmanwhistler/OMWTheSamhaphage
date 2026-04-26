@@ -1,45 +1,4 @@
-# Tools Used
-
-## Week #1:
-
-* notepad++ and File Explorer
-* Rimsort
-  https://rimsort.github.io/RimSort/
-* grok 4.1 web interface
-* [1.5-1.6] Custom Xenotype Exporter Tool
-  https://steamcommunity.com/sharedfiles/filedetails/?id=3254345251
-* What's That Mod
-  https://steamcommunity.com/sharedfiles/filedetails/?id=2258431182
-* gemini 3.1 web interface
-
-## Week #2
-
-* VSCode + github copilot
-* XenoPreview
-  https://steamcommunity.com/sharedfiles/filedetails/?id=3484461413
-* [1.5 Fork] Xenotype And Ideology Buttons TitleScreen  
-  https://steamcommunity.com/sharedfiles/filedetails/?id=3243233522
-* Blueprints Forked 1.6
-https://steamcommunity.com/sharedfiles/filedetails/?id=3525001145
-
-## Week #3:
-
-* This site has a javascript based XML def library, slow AF though and the def window is too small
-https://rimworld.lattemacchiato.dev/
-* Workshop walker lets you do a reverse lookup and find mods that are dependent on a mod. Useful for finding extensions and patches.
-https://workshop-walker.disconsented.com/app/294100
-* AlphaGenes GitHub https://github.com/juanosarg/AlphaGenes
-* Big and Small GitHub https://github.com/RedMattis/BigSmall_Framework
-* Outland: Genetics https://github.com/O21-Outland/Outland-Genetics
-
-## Week #4:
-
-* rwxml-language-server extension for VS Code. It has a fork where someone is updating it for 1.6, but I couldn't figure it out how to build an extension with it or how to get language servers to work.
-https://github.com/1264600905/rwxml-language-server/tree/pr-rebuild
-* A jetbrains plugin for RimWorld Development that you can use with VS Code!
-https://plugins.jetbrains.com/plugin/21728-rimworld-development-environment/versions/stable
-
-# Diary
+# Dev Diary
 
 ## Week #1 - Feb 16th 2026
 
@@ -106,6 +65,20 @@ I ended up doing a big refactor for the menu system for the abilities.
 
 ## Week #7 - March 30th, 2026
 
-I'm getting burned out on this project and I haven't played RimWorld in almost two months. My attempts at generating in-game graphics for the abilities is not going well. I try a bunch of pixel art AI generators and they all kind of such or have shady monetization practices. I find a prompt that works ok with gemini and then just use Paint/Copilot to remove backgrounds and paint.net to resize it. I'm feeling better at having some assets now.
+I'm getting burned out on this project and I haven't played RimWorld in almost two months. My attempts at generating in-game graphics for the abilities is not going well. I try a bunch of pixel art AI generators and they all kind of such or have shady monetization practices. I find a prompt that works ok with gemini and then just use Paint/Copilot to remove backgrounds and paint.net to resize it. I'm feeling better at having some assets now. I start added carcinomas as resources based on Taukai race concepts; once I know more about how to properly use resources I should add this back to AlphaGenes. The existing code in AlphaGenes wipes out all carcinomas instead of treating it like a resource.
 
 ## Week #8 - April 6th, 2026
+
+Overtime at work; no RimWorld.
+
+## Week #9 - April 13th, 2026
+
+Overtime at work; no RimWorld.
+
+## Week #10 - April 20th, 2026
+
+Overtime at work; no RimWorld.
+
+## Week #11 - April 27th, 2026
+
+I want to get this project done "enough" that I can start playing again.

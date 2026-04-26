@@ -1,4 +1,6 @@
-# "Every corpse is a new friend."
+# The Samhaphage
+
+## "Every corpse is a new friend."
 
 Adds new xenotypes, scenarios and lore based on a "Got to Catch Them All" style gameplay loop around genes and traits. They are intended for player faction as the fun is in harvesting the dead to increase your power. They wouldn't work as a enemy faction because a fresh spawn is weak AF. This is for fans of isekai/litrpg/horror. This is my first mod for RimWorld.
 
@@ -15,13 +17,13 @@ Adds new xenotypes, scenarios and lore based on a "Got to Catch Them All" style 
 
 ![The Samhaphage Logo](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/images/the_samhaphage_logo.png?raw=true)
 
-# Design Documents
+## Design Documents
 
-* [See LORE.md](docs/LORE.md)
+* [See LORE.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/LORE.md)
 * [See DESIGN_RULES.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DESIGN_RULES.md)
 * [See DEV_DIARY.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DevDiary/DEV_DIARY.md)
 
-# Game Balance
+## Game Balance
 
 * These xenotypes start with nerfs that need to be overcome through gene acquisition.
 * Resource called "resonance" and gene abilities can add or subtract from it.
@@ -33,7 +35,7 @@ Adds new xenotypes, scenarios and lore based on a "Got to Catch Them All" style 
 * Raid wealth multipliers means with great power comes great risk.
 * The Sovereign Stillnesss can destroy corpses in melee so while they are OP it also means you have less biomass to harvest after a raid.
 
-# Tip and Tricks
+## Tip and Tricks
 
 * Poor aptitudes abound for fresh colonists. Time to harvest some aptitude genes.
 * Scour minds to turn prisoners into psychopaths so they are more "forgiving" of the practices even without Ideology DLC.
@@ -45,52 +47,49 @@ Adds new xenotypes, scenarios and lore based on a "Got to Catch Them All" style 
 * The more fluxspawn you have the more powerful the chimera-like Silent Stillness becomes thanks to the Hivemind.
 * Breeding your hive to kill them to acquire genes is part of the gameplay loop.
 
-# Requirements
+## Requirements
 
 * Biotech DLC
   * Additional genes with Anomaly and Royalty
-* Corpse Children 1.6
-  * https://steamcommunity.com/sharedfiles/filedetails/?id=3525305141
-* Gene-Ripper Gene
-  * https://steamcommunity.com/sharedfiles/filedetails/?id=3596481890
-* Alpha Genes
-  * https://steamcommunity.com/sharedfiles/filedetails/?id=2891845502
-* Big and Small - Genes & More
-  * https://steamcommunity.com/sharedfiles/filedetails/?id=2920751126
-* WVC: Xenotypes and Genes
-  * https://steamcommunity.com/sharedfiles/filedetails/?id=2886992038
+* [Corpse Children 1.6](https://steamcommunity.com/sharedfiles/filedetails/?id=3525305141)
+* [Gene-Ripper Gene](https://steamcommunity.com/sharedfiles/filedetails/?id=3596481890)
+* [Alpha Genes](https://steamcommunity.com/sharedfiles/filedetails/?id=2891845502)
+* [Big and Small - Genes & More](https://steamcommunity.com/sharedfiles/filedetails/?id=2920751126)
+* [WVC: Xenotypes and Genes](https://steamcommunity.com/sharedfiles/filedetails/?id=2886992038)
 
-# Optional
+## Optional
 
 * BGI: Better Gene Inheritance
 * PSY: Psycast Genes 
 * Genetic Drift 1.6: adds random genes to non-colonists and makes the gene collecting gameplay have a bigger dopamine hit
-* Gene Ledger
-https://steamcommunity.com/sharedfiles/filedetails/?id=3673202834
+* [Gene Ledger](https://steamcommunity.com/sharedfiles/filedetails/?id=3673202834)
 
-# Full Mod Collection
+## Full Mod Collection
 
 Here is the full collection of everything that adds more features to this mod:
-- TBD
+- TODO
 
-# Inspirations
+## Inspirations
 
 * The combination of Gene Ripper and Corpse Children. Got to harvest them all!
 * The biological gene collectors in "WVC: Xenotypes and Genes". If the idea of "biological biotech" interests you then try the scenarios out.
 * Carcinomas as a resource from "Alpha Genes".
-* Ridley Scott's Alien series and everything it inspired. Movies like Dark City.
-* Eldritch horror
-* Litrpg/progression fantasy tropes (weak -> omnipotent)
-* Sam Keith's The Maxx and the white and black isz that still haunt me?
+* Ridley Scott's Alien series and everything it inspired.
+* Movies like Dark City.
+* Eldritch horror.
+* Litrpg/progression fantasy tropes (weak -> omnipotent).
+* Sam Keith's The Maxx and the white and black isz.
 * The "samhaphage" name comes from a combination of "samhain" and my cat Sam who is a) one-with-the-void, b) a devourer of all the food in the house, c) keeps biting me and d) had a roundworm infection two months ago (he's better).
 
-# AI Notice
+## AI Notice
 
-This project was to learn how to mod RimWorld and to gain experience using different gen AI tools. My original intention was for it to be some XML only races but then I got caught up in coding C#. It isn't vibe coded but AI was used to as training wheels followed up by looking at the source code of other mods.
+  This project was to learn how to mod RimWorld and to gain experience using different gen AI tools. If you are boycotting anything that uses AI then feel free to not leave a comment and skip to the next mod. I can appreciate and agree with the environmental/social/evil-billionaire reasons to boycott AI. I also think that in 2026 -- the genie is out of the bottle. The outcome of enthusiastically boycotting any project that discloses AI usage upfront is you discourage AI transparency. Any device with software or firmware developed after 2025 likely used some form of AI-assistance. I think the best outcome in 2026 is AI token usage gets priced what it actually costs vs companies giving it away for free because their valuations are so high.
 
-Gen AI was used for art assets.
+1. There was very little vibe coding because of the "Gell-Man Amnesia" effect. It generates code I am not happy with because I understand what it did wrong.
+2. Gen AI was used for icon assets. But before you go "Pitty about the AI" in the comments, these are just the placeholders I am using while I wait for you to draw me some vanilla aesthetic icons. Thanks in advance.
+3. AI was used for nomenclature suggestions and for writing XML descriptions.
 
-# License
+## License
 
 This project and the work it was derived is free software. You can redistribute it and/or modify it under the terms of the MIT License. 
 

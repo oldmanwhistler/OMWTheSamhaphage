@@ -12,6 +12,10 @@
     <OutputPath>..\1.6\Assemblies\</OutputPath>
   </PropertyGroup>
 
+<ItemGroup>
+    <PackageReference Include="BetterFloatMenu" Version="*" />
+</ItemGroup>
+
   <!-- RimWorld reference assemblies -->
   <ItemGroup>
     <Reference Include="Harmony">
