@@ -100,7 +100,11 @@ namespace OMW_Samhaphage
                 Pawn targetPawn = TargetA.Thing as Pawn;
                 if (targetPawn != null)
                 {
-                    if (!targetPawn.HostileTo(pawn))
+                    if (pawn == targetPawn)
+                    {
+                        // Targeting self, don't interrupt
+                    }
+                    else if (!targetPawn.HostileTo(pawn))
                     {
                         Log.Message(
                             $"[OMW_Samhaphage] Target {targetPawn} is friendly to {pawn}. Ending job.");
