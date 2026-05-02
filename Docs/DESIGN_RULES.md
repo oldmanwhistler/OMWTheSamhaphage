@@ -358,25 +358,6 @@
 
 ---
 
-## RIM WORLD 1.6 TECHNICAL FRAMEWORK
-
-### RimWorld 1.6 Field Validation
-- ✅ Use only 1.6 FactionDef fields: `defName`, `label`, `description`, `categoryTag`, `isPlayer`, `hidden`, `autoFlee`, `permanentEnemy`, `canMakeWarWith`, `leaderTitle`, `colorSpectrum`
-- ✅ Use 1.6 AbilityDef valid fields only (check vanilla for reference)
-- ✅ Use 1.6 GeneDef fields: `biostatCpx`, `biostatMet`, `biostatArc`, `displayOrderInCategory`, `exclusionTags`, `statOffsets`, `statFactors`
-- ✅ Use 1.6 HediffDef stages system for progression
-- ❌ Avoid deprecated 1.5 and earlier fields
-- ❌ Do not use past-version XML tags (test against vanilla RimWorld 1.6 Data folder)
-
-### C# Compilation Standards
-- Target Framework: .NET 4.8 (RimWorld standard)
-- Namespace: `OMW_Samhaphage`
-- Referenced Assemblies: RimWorld core (Assembly-CSharp), and AlphaGenes
-- Method Signatures: Must match RimWorld 1.6 base classes (e.g., `Apply(LocalTargetInfo target, LocalTargetInfo dest)`)
-- No use of deprecated RimWorld APIs
-
----
-
 ## ABILITY VERBS
 
 ### FLATTEN (Thematic Concept)
