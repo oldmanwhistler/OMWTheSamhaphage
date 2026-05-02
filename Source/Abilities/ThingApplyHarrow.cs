@@ -13,6 +13,7 @@ namespace OMW_Samhaphage
         }
 
         public override string Name => "Harrow";
+
         // More expensive because it is stealing genes
         protected override float ResonanceTotalMultiplier => 1.5f;
 
@@ -36,9 +37,10 @@ namespace OMW_Samhaphage
         }        
     }
 
-    public class ThingApplyHarrow : NullThrumAbilityBase
+    public class ThingApplyHarrow : NullThrumAbilityPawnCorpse
     {
         public override string VerbName => "Harrow";
+        public override string VerbDescription => "and harvest their genetic material.";
         public override Texture2D Icon => BaseContent.BadTex;
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
@@ -152,46 +154,5 @@ namespace OMW_Samhaphage
 
             return true;
         }
-
-        public override FloatMenuOption NewFloatMenuOptionPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
-        {
-            string reason;
-
-            if (CanApplyOnPawn(pawn, caster, out reason))
-            {
-                return new FloatMenuOption($"{this.VerbName} {pawn.LabelShort}", () => Job(targetInfo, caster));
-            }
-            else
-            {
-                return new FloatMenuOption($"Can't {this.VerbName} {pawn.LabelShort} because {reason}", null) { Disabled = true };
-            }
-        }
-
-        public override FloatMenuOption NewFloatMenuOptionCorpse(LocalTargetInfo targetInfo, Corpse corpse, Pawn caster = null)
-        {
-            string reason;
-
-            if (CanApplyOnCorpse(corpse, caster, out reason))
-            {
-                return new FloatMenuOption($"{this.VerbName} {corpse.InnerPawn.LabelShort}", () => Job(targetInfo, caster));
-            }
-            else
-            {
-                return new FloatMenuOption($"Can't {this.VerbName} {corpse.InnerPawn.LabelShort} because {reason}", null) { Disabled = true };
-            }
-        }
-
-        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
-        {
-            return NewMenuItemIconDisabled(targetInfo);
-        }
-
-
-        public override MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse,
-            Pawn caster = null)
-        {
-            return NewMenuItemIconDisabled(targetInfo);            
-        }
-
     }
 }

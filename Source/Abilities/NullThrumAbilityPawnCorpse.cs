@@ -2,19 +2,8 @@ using Verse;
 
 namespace OMW_Samhaphage
 {
-    public abstract class NullThrumAbilityPawnOnly: NullThrumAbilityBase
+    public abstract class NullThrumAbilityPawnCorpse: NullThrumAbilityBase
     {
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster = null)
-        {
-            return false;
-        }
-
-        public override bool CanApplyOnCorpse(Corpse corpse, Pawn caster, out string reason)
-        {
-            reason = "No corpses.";
-            return false;
-        }
-
        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
         {
             string reason;
@@ -31,7 +20,16 @@ namespace OMW_Samhaphage
 
         public override MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse, Pawn caster = null)
         {
-            return NewMenuItemIconDisabled(targetInfo);
-        }        
+            string reason;
+
+            if (CanApplyOnCorpse(corpse, caster, out reason))
+            {
+                return new MenuItemIcon(() => Job(targetInfo, caster), $"{this.VerbName} {corpse.InnerPawn.LabelShort} {this.VerbDescription}", this.Icon);
+            }
+            else
+            {
+                return NewMenuItemIconDisabled(targetInfo, $"Can't {this.VerbName} {corpse.InnerPawn.LabelShort} because {reason}");
+            }
+        }  
     }
 }

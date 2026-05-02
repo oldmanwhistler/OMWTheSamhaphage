@@ -12,6 +12,7 @@ namespace OMW_Samhaphage
     public class PawnTeratogenicHealing : NullThrumAbilityPawnOnly
     {
         public override string VerbName => "Teratogenic Healing";
+        public override string VerbDescription => "and heal them with their carcinomas.";   
         public override Texture2D Icon => BaseContent.BadTex;
         public override bool ApplyPawn(Pawn pawn, Pawn caster)
         {
@@ -130,35 +131,6 @@ namespace OMW_Samhaphage
             }
 
             return true;
-        }
-
-        public override FloatMenuOption NewFloatMenuOptionPawn(LocalTargetInfo targetInfo, Pawn pawn,
-            Pawn caster = null)
-        {
-            string reason;
-
-            if (CanApplyOnPawn(pawn, caster, out reason))
-            {
-                return new FloatMenuOption($"Heal {pawn.LabelShort} with their carcinomas",
-                    () => Job(targetInfo, caster));
-            }
-            else
-            {
-                return new FloatMenuOption($"Can't heal {pawn.LabelShort}. {reason}", null)
-                { Disabled = true };
-            }
-        }
-        
-        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
-        {
-            return NewMenuItemIconDisabled(targetInfo);
-        }
-
-
-        public override MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse,
-            Pawn caster = null)
-        {
-            return NewMenuItemIconDisabled(targetInfo);            
-        }        
+        }      
     }
 }

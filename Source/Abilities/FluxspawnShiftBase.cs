@@ -65,21 +65,6 @@ namespace OMW_Samhaphage
             return true;
         }
 
-        public override FloatMenuOption NewFloatMenuOptionPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
-        {
-            XenotypeDef xeno = TargetXenotype();
-            string reason;
-
-            if (CanApplyOnPawn(pawn, caster, out reason))
-            {
-                return new FloatMenuOption($"Shift {pawn.LabelShort} to {xeno.descriptionShort}", () => Job(targetInfo, caster));
-            }
-            else
-            {
-                return new FloatMenuOption($"Can't shift because {reason}", null) { Disabled = true };
-            }
-        }
-
         public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
         {
             XenotypeDef xeno = TargetXenotype();

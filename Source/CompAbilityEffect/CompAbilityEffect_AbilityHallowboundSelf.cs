@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -18,74 +19,73 @@ namespace OMW_Samhaphage
     {
         public override void OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
-
-            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            List<MenuItemBase> items = new List<MenuItemBase>();
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
             string reason;
-            NullThrumAbilityBase ability;
 
-            options.Add(new FloatMenuOption(GetGeneStateDesc(parent.pawn), null) { Disabled = true });
+            // Header with current gene state
+            items.Add(new MenuItemText(null, GetGeneStateDesc(parent.pawn)));
 
             if (xeno != OMW_XenotypeDefOf.omw_hallowbound)
             {
                 // hybrids lose the ability
-                reason = $"Xenotype {xeno} can't use this ability.";
-                options.Add(new FloatMenuOption(reason, null)
-                    { Disabled = true });
-                OpenWindow(options);
-                return;
-            }
-            
-            if (PawnApplyRetune.CanApplyOn(parent.pawn, out reason))
-            {
-                options.Add(new FloatMenuOption($"Retune self",
-                    () => PawnApplyRetune.Apply(parent.pawn, parent.pawn)));
+                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Hallowbound abilities.", MessageTypeDefOf.NegativeEvent);                
             }
             else
             {
-                options.Add(new FloatMenuOption($"Can't Retune self. {reason}.", null)
-                    { Disabled = true });
-            }
-            
-            if (PawnClearXenogenes.CanApplyOn(parent.pawn, out reason))
-            {
-                options.Add(new FloatMenuOption($"Reject xenogenes",
-                    () => PawnClearXenogenes.Apply(parent.pawn, parent.pawn)));
-            }
-            else
-            {
-                options.Add(new FloatMenuOption($"Can't reject xenogenes. {reason}.", null)
-                    { Disabled = true });
+                if (PawnApplyRetune.CanApplyOn(parent.pawn, out reason))
+                {
+                    items.Add(new MenuItemText((Action)(() => PawnApplyRetune.Apply(parent.pawn, parent.pawn)), "Retune self"));
+                }
+                else
+                {
+                    items.Add(new MenuItemText(null, $"Can't Retune self. {reason}."));
+                }
+
+                if (PawnClearXenogenes.CanApplyOn(parent.pawn, out reason))
+                {
+                    items.Add(new MenuItemText((Action)(() => PawnClearXenogenes.Apply(parent.pawn, parent.pawn)), "Reject xenogenes"));
+                }
+                else
+                {
+                    items.Add(new MenuItemText(null, $"Can't reject xenogenes. {reason}."));
+                }
+
+                int xenogenes = OMWGenes.CountXenogenes(parent.pawn);
+                if (xenogenes > 0)
+                {
+                    items.Add(new MenuItemText((Action)(() => OMWGenes.XenogenesToEndogenes(parent.pawn)), "Integrate xenogenes"));
+                }
+                else
+                {
+                    items.Add(new MenuItemText(null, "No xenogenes available to integrate"));
+                }
+
+                int reqComplexity = 0;
+                int currComplexity = OMWGenes.CalculateComplexity(parent.pawn);
+                if (currComplexity >= reqComplexity)
+                {
+                    items.Add(new MenuItemText((Action)(() => OMWGenes.ChangeEndotype(parent.pawn, OMW_XenotypeDefOf.omw_hallowbound, OMW_XenotypeDefOf.omw_samhaphage)), "Arise to Samhaphage"));
+                }
+                else
+                {
+                    items.Add(new MenuItemText(null, $"At {currComplexity}/{reqComplexity} for becoming Samhaphage"));
+                }
             }
 
-            int xenogenes = OMWGenes.CountXenogenes(parent.pawn);
-            if (xenogenes > 0)
+            if (items.Count > 0)
             {
-                options.Add(new FloatMenuOption("Integrate xenogenes",
-                    () => OMWGenes.XenogenesToEndogenes(parent.pawn)));
+                BetterFloatMenu.Open(items, (item) =>
+                {
+                    if (item.Payload is Action action)
+                    {
+                        Log.Message($"BetterFloatMenu is invoking {action.Method.Name}");
+                        action.Invoke();
+                    }
+                });
             }
-            else
-            {
-                options.Add(
-                    new FloatMenuOption("No xenogenes available to integrate", null)
-                        { Disabled = true });
-            }
-
-            int reqComplexity = 0;
-            int currComplexity = OMWGenes.CalculateComplexity(parent.pawn);
-            if (currComplexity >= reqComplexity)
-            {
-                options.Add(new FloatMenuOption("Arise to Samhaphage",
-                () => OMWGenes.ChangeEndotype(parent.pawn, OMW_XenotypeDefOf.omw_hallowbound, OMW_XenotypeDefOf.omw_samhaphage)));
-            }
-            else
-            {
-                options.Add(new FloatMenuOption($"At {currComplexity}/{reqComplexity} for becoming Samhaphage", null) { Disabled = true });                            
-            }
-
-            OpenWindow(options);
         }
-   }                
+    }
 
 }

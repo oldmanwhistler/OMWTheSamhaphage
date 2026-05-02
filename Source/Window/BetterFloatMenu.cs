@@ -5,6 +5,17 @@ using Verse;
 
 namespace OMW_Samhaphage
 {
+
+    // The MIT License (MIT)
+
+    // Copyright (c) 2022 James
+
+    // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+    // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+    // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
     // From: https://github.com/Epicguru/BetterFloatMenu/tree/master/BetterFloatMenu
 
     /// <summary>
@@ -130,9 +141,16 @@ namespace OMW_Samhaphage
             // Draw search bar if allowed.
             if (CanSearch)
             {
-                var searchBar = inRect;
-                searchBar.height = 28;
-                SearchString = Widgets.TextField(searchBar, SearchString);
+                float cancelWidth = 70f;
+                float spacing = 6f;
+                Rect searchRect = new Rect(inRect.x, inRect.y, inRect.width - cancelWidth - spacing, 28f);
+                Rect cancelRect = new Rect(searchRect.xMax + spacing, inRect.y, cancelWidth, 28f);
+
+                SearchString = Widgets.TextField(searchRect, SearchString);
+                if (Widgets.ButtonText(cancelRect, "Cancel"))
+                {
+                    Close();
+                }
                 inRect.yMin += 36;
             }
 

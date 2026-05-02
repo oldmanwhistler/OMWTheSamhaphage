@@ -29,6 +29,7 @@ namespace OMW_Samhaphage
             if ((xeno != OMW_XenotypeDefOf.omw_fluxspawn_hiveling) && (xeno != OMW_XenotypeDefOf.omw_fluxspawn_brute) &&
                 (xeno != OMW_XenotypeDefOf.omw_fluxspawn_flicker))
             {
+                // hybrids lose the ability
                 Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Fluxspawn abilities.", MessageTypeDefOf.NegativeEvent);
                }
             else if (xeno == OMW_XenotypeDefOf.omw_fluxspawn_brute)

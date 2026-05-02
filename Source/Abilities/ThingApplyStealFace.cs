@@ -35,9 +35,11 @@ namespace OMW_Samhaphage
         }
     }
 
-    public class ThingApplyStealFace : NullThrumAbilityBase
+    public class ThingApplyStealFace : NullThrumAbilityPawnCorpse
     {
         public override string VerbName => "Steal Face";
+
+        public override string VerbDescription => "and disguise yourself as one of their kind.";        
         public override Texture2D Icon => BaseContent.BadTex;
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
@@ -128,46 +130,6 @@ namespace OMW_Samhaphage
             }
 
             return true;
-        }
-
-        public override FloatMenuOption NewFloatMenuOptionPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
-        {
-            string reason;
-
-            if (CanApplyOnPawn(pawn, caster, out reason))
-            {
-                return new FloatMenuOption($"Steal Face {pawn.LabelShort}", () => Job(targetInfo, caster));
-            }
-            else
-            {
-                return new FloatMenuOption($"Can't Steal Face {pawn.LabelShort} because {reason}", null) { Disabled = true };
-            }
-        }
-
-        public override FloatMenuOption NewFloatMenuOptionCorpse(LocalTargetInfo targetInfo, Corpse corpse, Pawn caster = null)
-        {
-            string reason;
-
-            if (CanApplyOnCorpse(corpse, caster, out reason))
-            {
-                return new FloatMenuOption($"Steal Face {corpse.InnerPawn.LabelShort}", () => Job(targetInfo, caster));
-            }
-            else
-            {
-                return new FloatMenuOption($"Can't Steal Face {corpse.InnerPawn.LabelShort} because {reason}", null) { Disabled = true };
-            }
-        }
-
-        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
-        {
-            return NewMenuItemIconDisabled(targetInfo);
-        }
-
-
-        public override MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse,
-            Pawn caster = null)
-        {
-            return NewMenuItemIconDisabled(targetInfo);            
         }
     }
 }

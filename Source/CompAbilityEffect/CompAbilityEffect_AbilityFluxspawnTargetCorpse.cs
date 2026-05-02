@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -18,7 +19,7 @@ namespace OMW_Samhaphage
     {
         public override void OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            List<MenuItemBase> items = new List<MenuItemBase>();
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;            
             string reason = "Unknown reason";
@@ -26,29 +27,35 @@ namespace OMW_Samhaphage
             if ((xeno != OMW_XenotypeDefOf.omw_fluxspawn_hiveling) && (xeno != OMW_XenotypeDefOf.omw_fluxspawn_brute) && (xeno != OMW_XenotypeDefOf.omw_fluxspawn_flicker))
             {
                 // hybrids lose the ability
-                reason = $"Xenotype {xeno} can't use this ability.";
-                options.Add(new FloatMenuOption(reason, null)
-                    { Disabled = true });
-                OpenWindow(options);
-                return;                
+                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Fluxspawn abilities.", MessageTypeDefOf.NegativeEvent);
             }
-            if (target.Thing is Corpse corpse)
+            else if (target.Thing is Corpse corpse)
             {
                 if (CorpseApplyResurrect.CanApplyOn(corpse, out reason))
                 {
-                    options.Add(new FloatMenuOption($"Sacrifice self to transform {target.Label} to Hallowbound xenotype.",
-                        () => JobResurrectHallowbound(target)));
+                    items.Add(new MenuItemText((Action)(() => JobResurrectHallowbound(target)), $"Sacrifice self to transform {target.Label} to Hallowbound xenotype."));
                 }        
                 else
                 {
-                    options.Add(new FloatMenuOption($"Can't implant Hallowbound. {reason}.", null)
-                    { Disabled = true });
+                    items.Add(new MenuItemText(null, $"Can't implant Hallowbound. {reason}."));
                 }
             }
-            // Pop the menu at the mouse location
-            if (options.Count > 0)
+
+            if (items.Count > 0)
             {
-                Find.WindowStack.Add(new Dialog_Options(options));
+                BetterFloatMenu.Open(items, (item) =>
+                {
+                    if (item.Payload is Action action)
+                    {
+                        Log.Message($"BetterFloatMenu is invoking {item.Payload.ToString()}");
+                        action.Invoke();
+                        Log.Message($"BetterFloatMenu is done invoking {item.Payload.ToString()}");
+                    }
+                    else
+                    {
+                        Log.Error($"[OMW] Samhaphage AbilityFluxSpawnTargetCorpse does not know how to handle item.Payload={item.Payload?.ToString() ?? "null"}");
+                    }
+                });
             }
         }
         private void JobResurrectHallowbound(LocalTargetInfo target)

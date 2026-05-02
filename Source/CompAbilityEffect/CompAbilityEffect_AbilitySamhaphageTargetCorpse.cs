@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -18,7 +19,7 @@ namespace OMW_Samhaphage
     {
         public override void OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            List<MenuItemBase> items = new List<MenuItemBase>();
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
             string reason;
@@ -34,34 +35,36 @@ namespace OMW_Samhaphage
             if ((xeno != OMW_XenotypeDefOf.omw_samhaphage) && (xeno != OMW_XenotypeDefOf.omw_sovereign_stillness))
             {
                 // hybrids lose the ability
-                reason = $"Xenotype {xeno} can't use this ability.";
-                options.Add(new FloatMenuOption(reason, null)
-                    { Disabled = true });
+                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Samhaphage abilities.", MessageTypeDefOf.NegativeEvent); 
             }
             else if (target.Thing is Corpse corpse)
             {
                 ability = new ThingApplyScrub();
-                options.Add(ability.NewFloatMenuOptionCorpse(target, corpse, parent.pawn));
+                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
                 ability = new ThingApplyHarrow();
-                options.Add(ability.NewFloatMenuOptionCorpse(target, corpse, parent.pawn));
+                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
                 if (CorpseTakeXenogenes.CanApplyOn(corpse, out reason))
                 {
-                    options.Add(new FloatMenuOption($"Take xenogenes from corpse {corpse.LabelShort}",
-                        () => JobCorpseTakeXenogenes(target, parent.pawn)));
+                    items.Add(new MenuItemText((Action)(() => JobCorpseTakeXenogenes(target, parent.pawn)), $"Take xenogenes from corpse {corpse.LabelShort}"));
                 }        
                 else
                 {
-                    options.Add(new FloatMenuOption($"Can't take xenogenes. {reason}.", null)
-                    { Disabled = true });
+                    items.Add(new MenuItemText(null, $"Can't take xenogenes. {reason}."));
                 }
             }
 
-            // Pop the menu at the mouse location
-            if (options.Count > 0)
+            if (items.Count > 0)
             {
-                Find.WindowStack.Add(new Dialog_Options(options));
+                BetterFloatMenu.Open(items, (item) =>
+                {
+                    if (item.Payload is Action action)
+                    {
+                        Log.Message($"BetterFloatMenu is invoking {item.Payload.ToString()}");
+                        action.Invoke();
+                    }
+                });
             }
         }
 

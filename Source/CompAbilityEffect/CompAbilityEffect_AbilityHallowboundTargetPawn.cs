@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -18,7 +19,7 @@ namespace OMW_Samhaphage
     {
         public override void OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            List<MenuItemBase> items = new List<MenuItemBase>();
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
             string reason;
@@ -28,33 +29,35 @@ namespace OMW_Samhaphage
             if (xeno != OMW_XenotypeDefOf.omw_hallowbound)
             {
                 // hybrids lose the ability
-                reason = $"Xenotype {xeno} can't use this ability.";
-                options.Add(new FloatMenuOption(reason, null)
-                    { Disabled = true });
+                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Hallowbound abilities.", MessageTypeDefOf.NegativeEvent); 
             }
             else if (target.Thing is Pawn otherPawn)
             {
                 ability = new ThingApplyStealFace();
-                options.Add(ability.NewFloatMenuOptionPawn(target, otherPawn, parent.pawn));
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
                 ability = new ThingApplyScrub();
-                options.Add(ability.NewFloatMenuOptionPawn(target, otherPawn, parent.pawn));
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
                 
                 if (PawnApplyParasiticStinger.CanApplyOn(otherPawn, parent.pawn, out reason))
                 {
-                    options.Add(new FloatMenuOption($"Implant {otherPawn.Name} with Fluxspawn egg",
-                        () => JobPawnApplyParasiticStinger(target, parent.pawn)));
+                    items.Add(new MenuItemText((Action)(() => JobPawnApplyParasiticStinger(target, parent.pawn)), $"Implant {otherPawn.Name} with Fluxspawn egg"));
                 }
                 else
                 {
-                    options.Add(new FloatMenuOption($"Can't implant Fluxspawn egg. {reason}", null) { Disabled = true });
+                    items.Add(new MenuItemText(null, $"Can't implant Fluxspawn egg. {reason}"));
                 }
             }
 
-            // Pop the menu at the mouse location
-            if (options.Count > 0)
+            if (items.Count > 0)
             {
-                Find.WindowStack.Add(new Dialog_Options(options));
+                BetterFloatMenu.Open(items, (item) =>
+                {
+                    if (item.Payload is Action action)
+                    {
+                        action.Invoke();
+                    }
+                });
             }
         }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -18,7 +19,7 @@ namespace OMW_Samhaphage
     {
         public override void OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            List<MenuItemBase> items = new List<MenuItemBase>();
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
             string reason;
@@ -34,65 +35,63 @@ namespace OMW_Samhaphage
             if ((xeno != OMW_XenotypeDefOf.omw_samhaphage) && (xeno != OMW_XenotypeDefOf.omw_sovereign_stillness))
             {
                 // hybrids lose the ability
-                reason = $"Xenotype {xeno} can't use this ability.";
-                options.Add(new FloatMenuOption(reason, null)
-                    { Disabled = true });
+                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Samhaphage abilities.", MessageTypeDefOf.NegativeEvent); 
             }
             else if (target.Thing is Pawn otherPawn)
             {
                 if (PawnApplyFlatten.CanApplyOn(otherPawn, out reason))
                 {
-                    options.Add(new FloatMenuOption($"Flatten {otherPawn.LabelShort}",
-                        () => JobPawnFlatten(target, parent.pawn)));
+                    items.Add(new MenuItemText((Action)(() => JobPawnFlatten(target, parent.pawn)), $"Flatten {otherPawn.LabelShort}"));
                 }
                 else
                 {
-                    options.Add(new FloatMenuOption($"Can't flatten {otherPawn.LabelShort}. {reason}.", null)
-                        { Disabled = true });
+                    items.Add(new MenuItemText(null, $"Can't flatten {otherPawn.LabelShort}. {reason}."));
                 }
 
                 ability = new ThingApplyScrub();
-                options.Add(ability.NewFloatMenuOptionPawn(target, otherPawn, parent.pawn));
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
                 if (PawnApplyRetune.CanApplyOn(otherPawn, out reason))
                 {
-                    options.Add(new FloatMenuOption($"Retune {otherPawn.LabelShort}",
-                        () => JobPawnRetune(target, parent.pawn)));
+                    items.Add(new MenuItemText((Action)(() => JobPawnRetune(target, parent.pawn)), $"Retune {otherPawn.LabelShort}"));
                 }
                 else
                 {
-                    options.Add(new FloatMenuOption($"Can't Retune {otherPawn.LabelShort}. {reason}.", null)
-                        { Disabled = true });
+                    items.Add(new MenuItemText(null, $"Can't Retune {otherPawn.LabelShort}. {reason}."));
                 }
 
                 ability = new ThingApplyHarrow();
-                options.Add(ability.NewFloatMenuOptionPawn(target, otherPawn, parent.pawn));
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
                 if (PawnApplyHallowbound.CanApplyOn(otherPawn, out reason))
                 {
-                    options.Add(new FloatMenuOption($"Transform {otherPawn.LabelShort} to Hallowbound.",
-                        () => JobPawnApplyHallowbound(target, parent.pawn)));
+                    items.Add(new MenuItemText((Action)(() => JobPawnApplyHallowbound(target, parent.pawn)), $"Transform {otherPawn.LabelShort} to Hallowbound."));
                 }
                 else
                 {
-                    options.Add(new FloatMenuOption($"Can't transform {otherPawn.LabelShort} to Hallowbound. {reason}", null) { Disabled = true });
+                    items.Add(new MenuItemText(null, $"Can't transform {otherPawn.LabelShort} to Hallowbound. {reason}"));
                 }                
 
                 if (PawnApplyParasiticStinger.CanApplyOn(otherPawn, parent.pawn, out reason))
                 {
-                    options.Add(new FloatMenuOption($"Implant {otherPawn.LabelShort} with Fluxspawn egg",
-                        () => JobPawnApplyParasiticStinger(target, parent.pawn)));
+                    items.Add(new MenuItemText((Action)(() => JobPawnApplyParasiticStinger(target, parent.pawn)), $"Implant {otherPawn.LabelShort} with Fluxspawn egg"));
                 }
                 else
                 {
-                    options.Add(new FloatMenuOption($"Can't implant Fluxspawn egg. {reason}", null) { Disabled = true });
+                    items.Add(new MenuItemText(null, $"Can't implant Fluxspawn egg. {reason}"));
                 }
             }
 
-            // Pop the menu at the mouse location
-            if (options.Count > 0)
+            if (items.Count > 0)
             {
-                Find.WindowStack.Add(new Dialog_Options(options));
+                BetterFloatMenu.Open(items, (item) =>
+                {
+                    if (item.Payload is Action action)
+                    {
+                        Log.Message($"BetterFloatMenu is invoking {action.Method.Name}");
+                        action.Invoke();
+                    }
+                });
             }
         }
 

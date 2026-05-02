@@ -19,6 +19,7 @@ namespace OMW_Samhaphage
 
         // Abstract methods
 
+
         public abstract string Name { get; }
 
         protected abstract float ResonanceTotalMultiplier { get; }

@@ -32,9 +32,10 @@ namespace OMW_Samhaphage
         }        
     }
 
-    public class ThingApplyScrub : NullThrumAbilityBase
+    public class ThingApplyScrub : NullThrumAbilityPawnCorpse
     {
         public override string VerbName => "Scrub";
+        public override string VerbDescription => "and convert their genetic material to resonance.";   
         public override Texture2D Icon => BaseContent.BadTex;
 
         public static bool RemoveCarcinomas(Pawn victim, Pawn caster)
@@ -161,47 +162,5 @@ namespace OMW_Samhaphage
 
             return true;
         }
-
-        public override FloatMenuOption NewFloatMenuOptionPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
-        {
-            string reason;
-
-            if (CanApplyOnPawn(pawn, caster, out reason))
-            {
-                return new FloatMenuOption($"Filter {pawn.LabelShort}", () => Job(targetInfo, caster));
-            }
-            else
-            {
-                return new FloatMenuOption($"Can't Filter {pawn.LabelShort} because {reason}", null) { Disabled = true };
-            }
-        }
-
-        public override FloatMenuOption NewFloatMenuOptionCorpse(LocalTargetInfo targetInfo, Corpse corpse, Pawn caster = null)
-        {
-            string reason;
-
-            if (CanApplyOnCorpse(corpse, caster, out reason))
-            {
-                return new FloatMenuOption($"Scrub {corpse.InnerPawn.LabelShort}", () => Job(targetInfo, caster));
-            }
-            else
-            {
-                return new FloatMenuOption($"Can't Scrub {corpse.InnerPawn.LabelShort} because {reason}", null) { Disabled = true };
-            }
-        }
-
-        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
-        {
-            return NewMenuItemIconDisabled(targetInfo);
-        }
-
-
-        public override MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse,
-            Pawn caster = null)
-        {
-            return NewMenuItemIconDisabled(targetInfo);
-        }
-
-
     }
 }

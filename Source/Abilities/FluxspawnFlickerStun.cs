@@ -7,6 +7,7 @@ namespace OMW_Samhaphage
     public class FluxspawnFlickerStun: NullThrumAbilityPawnOnly
     {
         public override string VerbName => "Stun";
+        public override string VerbDescription => "and prepare them for parasitization.";           
         public override Texture2D Icon => BaseContent.BadTex;
         public override bool ApplyPawn(Pawn pawn, Pawn caster = null)
         {            
@@ -41,30 +42,5 @@ namespace OMW_Samhaphage
             return true;
         }
 
-        public override FloatMenuOption NewFloatMenuOptionPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
-        {
-            string reason;
-
-            if (CanApplyOnPawn(pawn, caster, out reason))
-            {
-                return new FloatMenuOption($"Stun {pawn.LabelShort}", () => Job(targetInfo, caster));
-            }
-            else
-            {
-                return new FloatMenuOption($"Can't stun {pawn.LabelShort} because {reason}", null) { Disabled = true };
-            }
-        }
-
-        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
-        {
-            return NewMenuItemIconDisabled(targetInfo);
-        }
-
-
-        public override MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse,
-            Pawn caster = null)
-        {
-            return NewMenuItemIconDisabled(targetInfo);            
-        }        
     }
 }

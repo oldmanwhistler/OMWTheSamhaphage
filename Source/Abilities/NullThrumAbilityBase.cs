@@ -10,6 +10,7 @@ namespace OMW_Samhaphage
 
         public abstract Texture2D Icon { get; }
         public abstract string VerbName { get; }
+        public abstract string VerbDescription { get; }        
 
         public bool ApplyThing(Thing thing, Pawn caster = null)
         {
@@ -51,31 +52,6 @@ namespace OMW_Samhaphage
         public abstract bool CanApplyOnCorpse(Corpse corpse, Pawn caster, out string reason);
 
         public abstract bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason);
-
-        public FloatMenuOption NewFloatMenuOptionDisabled(LocalTargetInfo targetInfo)
-        {
-            return new FloatMenuOption($"Can't apply {this.ToString()} on {targetInfo.Label}", null) { Disabled = true };
-        }
-        public FloatMenuOption NewFloatMenuOption(LocalTargetInfo targetInfo, Pawn caster = null)
-        {
-            if (targetInfo.Thing is Pawn pawn)
-            {
-                return NewFloatMenuOptionPawn(targetInfo, pawn, caster);
-            }
-            else if (targetInfo.Thing is Corpse corpse)
-            {
-                return NewFloatMenuOptionCorpse(targetInfo, corpse, caster);
-            }
-            else
-            {
-                return NewFloatMenuOptionDisabled(targetInfo);
-            }
-        }
-
-        public abstract FloatMenuOption NewFloatMenuOptionPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null);
-
-        public abstract FloatMenuOption NewFloatMenuOptionCorpse(LocalTargetInfo targetInfo, Corpse corpse,
-            Pawn caster = null);
 
         public void Job(LocalTargetInfo targetInfo, Pawn caster)
         {
