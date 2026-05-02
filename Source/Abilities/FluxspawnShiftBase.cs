@@ -11,6 +11,7 @@ namespace OMW_Samhaphage
         {
             if (PawnTeratogenics.CarcinomaCount(pawn) == 0)
             {
+                Messages.Message($"{pawn.LabelShort} doesn't have any carcinomas.", MessageTypeDefOf.RejectInput);
                 return false;
             }
 
@@ -78,5 +79,20 @@ namespace OMW_Samhaphage
                 return new FloatMenuOption($"Can't shift because {reason}", null) { Disabled = true };
             }
         }
+
+        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
+        {
+            XenotypeDef xeno = TargetXenotype();
+            string reason;
+
+            if (CanApplyOnPawn(pawn, caster, out reason))
+            {
+                return new MenuItemIcon(() => Job(targetInfo, caster), $"Shift {pawn.LabelShort} to {xeno.descriptionShort}", this.Icon);
+            }
+            else
+            {
+                return NewMenuItemIconDisabled(pawn, $"Can't shift because {reason}");
+            }
+        }        
     }
 }

@@ -1,12 +1,13 @@
 using RimWorld;
 using Verse;
+using UnityEngine;
 
 namespace OMW_Samhaphage
 {    
-    public class FluxspawnFickerStun: NullThrumAbilityPawnOnly
+    public class FluxspawnFlickerStun: NullThrumAbilityPawnOnly
     {
         public override string VerbName => "Stun";
-
+        public override Texture2D Icon => BaseContent.BadTex;
         public override bool ApplyPawn(Pawn pawn, Pawn caster = null)
         {            
             pawn.stances.stunner.StunFor(5000, caster);
@@ -53,5 +54,17 @@ namespace OMW_Samhaphage
                 return new FloatMenuOption($"Can't stun {pawn.LabelShort} because {reason}", null) { Disabled = true };
             }
         }
+
+        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
+        {
+            return NewMenuItemIconDisabled(targetInfo);
+        }
+
+
+        public override MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse,
+            Pawn caster = null)
+        {
+            return NewMenuItemIconDisabled(targetInfo);            
+        }        
     }
 }

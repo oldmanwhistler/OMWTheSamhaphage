@@ -19,5 +19,10 @@ namespace OMW_Samhaphage
         {
             return NewFloatMenuOptionDisabled(targetInfo);
         }
+
+        public override MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse, Pawn caster = null)
+        {
+            return NewMenuItemIconDisabled(targetInfo);
+        }        
     }
 }

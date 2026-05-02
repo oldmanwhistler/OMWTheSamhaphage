@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RimWorld;
 using Verse;
@@ -18,51 +19,55 @@ namespace OMW_Samhaphage
     {
         public override void OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            List<FloatMenuOption> options = new List<FloatMenuOption>();
+            List<MenuItemBase> items = new List<MenuItemBase>();
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
-            string reason;
             NullThrumAbilityBase ability;
 
-            options.Add(new FloatMenuOption(GetGeneStateDesc(parent.pawn), null) { Disabled = true });
+            // Add the gene state as a non-interactive header
+  
             if ((xeno != OMW_XenotypeDefOf.omw_fluxspawn_hiveling) && (xeno != OMW_XenotypeDefOf.omw_fluxspawn_brute) &&
                 (xeno != OMW_XenotypeDefOf.omw_fluxspawn_flicker))
             {
-                // hybrids lose the ability
-                reason = $"Xenotype {xeno} can't use this ability.";
-                options.Add(new FloatMenuOption(reason, null)
-                    { Disabled = true });
-                OpenWindow(options);
-                return;
-            }
+                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Fluxspawn abilities.", MessageTypeDefOf.NegativeEvent);
+               }
             else if (xeno == OMW_XenotypeDefOf.omw_fluxspawn_brute)
             {
                 ability = new FluxspawnShiftHiveling();
-                options.Add(ability.NewFloatMenuOption(target, parent.pawn));
+                items.Add(ability.NewMenuItemIcon(target, parent.pawn));
                 ability = new FluxspawnShiftFlicker();
-                options.Add(ability.NewFloatMenuOption(target, parent.pawn));
+                items.Add(ability.NewMenuItemIcon(target, parent.pawn));
             }
             else if (xeno == OMW_XenotypeDefOf.omw_fluxspawn_flicker)
             {
                 ability = new FluxspawnShiftHiveling();
-                options.Add(ability.NewFloatMenuOption(target, parent.pawn));
+                items.Add(ability.NewMenuItemIcon(target, parent.pawn));
                 ability = new FluxspawnShiftBrute();
-                options.Add(ability.NewFloatMenuOption(target, parent.pawn));
+                items.Add(ability.NewMenuItemIcon(target, parent.pawn));
             }
             else if (xeno == OMW_XenotypeDefOf.omw_fluxspawn_hiveling)
             {
                 ability = new FluxspawnShiftBrute();
-                options.Add(ability.NewFloatMenuOption(target, parent.pawn));
+                items.Add(ability.NewMenuItemIcon(target, parent.pawn));
                 ability = new FluxspawnShiftFlicker();
-                options.Add(ability.NewFloatMenuOption(target, parent.pawn));
+                items.Add(ability.NewMenuItemIcon(target, parent.pawn));
             }
 
-            // Pop the menu at the mouse location
-            if (options.Count > 0)
+            if (items.Count > 0)
             {
-                Find.WindowStack.Add(new Dialog_Options(options));
+                BetterFloatMenu.Open(items, (item) =>
+                {
+                    if (item.Payload is Action action)
+                    {
+                        Log.Message($"BetterFloatMenu is invoking {item.Payload.ToString()}");
+                        action.Invoke();
+                        Log.Message($"BetterFloatMenu is done invoking {item.Payload.ToString()}");
+                    } else
+                    {
+                        Log.Error($"[OMW] Samhaphage AbilityFluxSpawn does not know how to handle item.Payload={item.Payload.ToString()}");
+                    }
+                });
             }
         }
-
     }
 }

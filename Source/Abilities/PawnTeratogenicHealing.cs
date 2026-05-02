@@ -1,6 +1,7 @@
 using RimWorld;
 using System.Collections.Generic;
 using Verse;
+using UnityEngine;
 
 namespace OMW_Samhaphage
 {
@@ -11,7 +12,7 @@ namespace OMW_Samhaphage
     public class PawnTeratogenicHealing : NullThrumAbilityPawnOnly
     {
         public override string VerbName => "Teratogenic Healing";
-
+        public override Texture2D Icon => BaseContent.BadTex;
         public override bool ApplyPawn(Pawn pawn, Pawn caster)
         {
             int healedCount = 0;
@@ -144,8 +145,20 @@ namespace OMW_Samhaphage
             else
             {
                 return new FloatMenuOption($"Can't heal {pawn.LabelShort}. {reason}", null)
-                    { Disabled = true };
+                { Disabled = true };
             }
         }
+        
+        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
+        {
+            return NewMenuItemIconDisabled(targetInfo);
+        }
+
+
+        public override MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse,
+            Pawn caster = null)
+        {
+            return NewMenuItemIconDisabled(targetInfo);            
+        }        
     }
 }

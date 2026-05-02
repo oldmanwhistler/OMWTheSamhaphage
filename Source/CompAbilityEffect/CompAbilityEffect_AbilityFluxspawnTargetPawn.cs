@@ -38,7 +38,7 @@ namespace OMW_Samhaphage
             {
                 if (xeno == OMW_XenotypeDefOf.omw_fluxspawn_flicker)
                 {
-                    ability = new FluxspawnFickerStun();
+                    ability = new FluxspawnFlickerStun();
                     options.Add(ability.NewFloatMenuOptionPawn(target, otherPawn, parent.pawn));
                 }
                 if (PawnApplyPregnant.CanApplyOn(otherPawn, out reason))

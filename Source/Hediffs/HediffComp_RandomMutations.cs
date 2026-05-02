@@ -28,10 +28,28 @@ namespace OMW_Samhaphage
 
         public List<GeneDef> geneDefs = new List<GeneDef>();
 
-        // TODO: this should be static? It doesn't need to be stored on each individual hediff instance, and it would be more efficient to cache it instead of looking it up every time a new hediff is created.
-        public List<GeneDef> blacklist = new List<GeneDef>();
+        // Caching these globally to prevent redundant iterations across multiple pawns
+        private static List<GeneDef> cachedBlacklist;
+        private static List<string> cachedDefnameStrings;
+        private static List<GeneDef> cachedValidGenes;
 
-        public List<string> defnameStrings = new List<string>();
+        private static void EnsureCacheLoaded()
+        {
+            if (cachedBlacklist != null) return;
+
+            cachedBlacklist = new List<GeneDef>();
+            cachedDefnameStrings = new List<string>();
+
+            List<AlphaGenes.WretchBlacklistDef> allWretchBlacklistedGenes = DefDatabase<AlphaGenes.WretchBlacklistDef>.AllDefsListForReading;
+            foreach (AlphaGenes.WretchBlacklistDef individualList in allWretchBlacklistedGenes)
+            {
+                if (!individualList.blackListedGenes.NullOrEmpty())
+                    cachedBlacklist.AddRange(individualList.blackListedGenes);
+                
+                if (!individualList.blackListedDefNameStrings.NullOrEmpty())
+                    cachedDefnameStrings.AddRange(individualList.blackListedDefNameStrings);
+            }
+        }
 
         public bool Active = false;
 
@@ -39,35 +57,13 @@ namespace OMW_Samhaphage
         {
             base.CompExposeData();
             Scribe_Collections.Look(ref this.geneDefs, nameof(this.geneDefs));
-            Scribe_Collections.Look(ref this.blacklist, nameof(this.blacklist));
-            Scribe_Collections.Look(ref this.defnameStrings, nameof(this.defnameStrings));
             Scribe_Values.Look(ref this.Active, nameof(this.Active));
-            CompPostMake();
-
         }
 
         public override void CompPostMake()
         {
             base.CompPostMake();
-
-            blacklist?.Clear();
-            defnameStrings?.Clear();
-
-            // TODO: make this more efficient by caching the blacklist and defnameStrings instead of looking them up every time a new hediff is created. This is especially important if there are a lot of wretchblacklistdefs, but even with just a few it would be better to cache it.
-            List<AlphaGenes.WretchBlacklistDef> allWretchBlacklistedGenes = DefDatabase<AlphaGenes.WretchBlacklistDef>.AllDefsListForReading;
-            foreach (AlphaGenes.WretchBlacklistDef individualList in allWretchBlacklistedGenes)
-            {
-                if (!individualList.blackListedGenes.NullOrEmpty())
-                {
-                    blacklist.AddRange(individualList.blackListedGenes);
-                }
-                if (!individualList.blackListedDefNameStrings.NullOrEmpty())
-                {
-                    defnameStrings.AddRange(individualList.blackListedDefNameStrings);
-                }
-
-
-            }
+            EnsureCacheLoaded();
         }
 
         public override void CompPostTick(ref float severityAdjustment)
@@ -77,13 +73,17 @@ namespace OMW_Samhaphage
             if (!Active && this.parent.pawn.Map != null)
             {
                 Active = true;
+                EnsureCacheLoaded();
                 this.geneDefs?.Clear();
                 for (int i = 0; i < Props.numberOfGenes; i++)
                 {
-                    // TODO: make this more efficient by caching the list of valid genes instead of looking it up every time a mutation is applied. This is especially important if there are a lot of genes, but even with just a few it would be better to cache it.
-                    GeneDef gene = DefDatabase<GeneDef>.AllDefs.Where((GeneDef x) => x.exclusionTags?.Contains("AG_OnlyOnCharacterCreation") == false &&
-                    x.prerequisite == null && x.biostatArc == 0 && x.biostatMet > Props.minMetabolism && x.biostatMet < Props.maxMetabolism && x.modContentPack?.PackageId != "vanillaracesexpanded.insector" && !defnameStrings.Any(s => x.defName.Contains(s))
-                    && !blacklist.Contains(x)).RandomElement();
+                    GeneDef gene = DefDatabase<GeneDef>.AllDefs.Where((GeneDef x) => 
+                        x.exclusionTags?.Contains("AG_OnlyOnCharacterCreation") == false &&
+                        x.prerequisite == null && x.biostatArc == 0 && x.biostatMet > Props.minMetabolism && x.biostatMet < Props.maxMetabolism && 
+                        x.modContentPack?.PackageId != "vanillaracesexpanded.insector" && 
+                        !cachedDefnameStrings.Any(s => x.defName.Contains(s)) && 
+                        !cachedBlacklist.Contains(x)).RandomElement();
+                    
                     if (gene != null)
                     {
                         this.geneDefs.Add(gene);

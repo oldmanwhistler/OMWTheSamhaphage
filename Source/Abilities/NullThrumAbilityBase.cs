@@ -1,3 +1,5 @@
+using System;
+using UnityEngine;
 using Verse;
 
 namespace OMW_Samhaphage
@@ -6,6 +8,7 @@ namespace OMW_Samhaphage
     {
         public NullThrumVerbBase verb;
 
+        public abstract Texture2D Icon { get; }
         public abstract string VerbName { get; }
 
         public bool ApplyThing(Thing thing, Pawn caster = null)
@@ -66,7 +69,7 @@ namespace OMW_Samhaphage
             else
             {
                 return NewFloatMenuOptionDisabled(targetInfo);
-            }            
+            }
         }
 
         public abstract FloatMenuOption NewFloatMenuOptionPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null);
@@ -84,5 +87,35 @@ namespace OMW_Samhaphage
             job.onInteract = (actor, t) => ApplyThing(t, actor);
             caster.jobs.TryTakeOrderedJob(job);
         }
+
+        public MenuItemIcon NewMenuItemIconDisabled(LocalTargetInfo targetInfo, string reason = null)
+        {
+            string msg = $"Can't apply {this.ToString()} on {targetInfo.Label}";
+            if (reason != null)
+            {
+                msg += "\n" + reason;
+            }
+            return new MenuItemIcon(null, msg, this.Icon, Color.gray);
+        }        
+        public MenuItemIcon NewMenuItemIcon(LocalTargetInfo targetInfo, Pawn caster = null)
+        {
+            if (targetInfo.Thing is Pawn pawn)
+            {
+                return NewMenuItemIconPawn(targetInfo, pawn, caster);
+            }
+            else if (targetInfo.Thing is Corpse corpse)
+            {
+                return NewMenuItemIconCorpse(targetInfo, corpse, caster);
+            }
+            else
+            {
+                return NewMenuItemIconDisabled(targetInfo);
+            }
+        }
+
+        public abstract MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null);
+
+        public abstract MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse,
+            Pawn caster = null);
     }
 }

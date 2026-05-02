@@ -2,7 +2,7 @@ using RimWorld;
 using Verse;
 using System.Linq;
 using System.Collections.Generic;
-using UnityEngine.Rendering;
+using UnityEngine;
 
 namespace OMW_Samhaphage
 {
@@ -39,7 +39,7 @@ namespace OMW_Samhaphage
     public class ThingApplyHarrow : NullThrumAbilityBase
     {
         public override string VerbName => "Harrow";
-
+        public override Texture2D Icon => BaseContent.BadTex;
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
             if (victim == null || caster == null) return false;
@@ -180,5 +180,18 @@ namespace OMW_Samhaphage
                 return new FloatMenuOption($"Can't {this.VerbName} {corpse.InnerPawn.LabelShort} because {reason}", null) { Disabled = true };
             }
         }
+
+        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
+        {
+            return NewMenuItemIconDisabled(targetInfo);
+        }
+
+
+        public override MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse,
+            Pawn caster = null)
+        {
+            return NewMenuItemIconDisabled(targetInfo);            
+        }
+
     }
 }

@@ -83,10 +83,10 @@ Here is the full collection of everything that adds more features to this mod:
 
 ## AI Notice
 
-  This project was to learn how to mod RimWorld and to gain experience using different gen AI tools. If you are boycotting anything that uses AI then feel free to not leave a comment and skip to the next mod. I can appreciate and agree with the environmental/social/evil-billionaire reasons to boycott AI. I also think that in 2026 -- the genie is out of the bottle. The outcome of enthusiastically boycotting any project that discloses AI usage upfront is you discourage AI transparency. Any device with software or firmware developed after 2025 likely used some form of AI-assistance. I think the best outcome in 2026 is AI token usage gets priced what it actually costs vs companies giving it away for free because their valuations are so high.
+  This project was to learn how to mod RimWorld and to gain experience using different gen AI tools. Some of us single parents don't have the freedom to switch careers out of tech to "avoid AI".
 
-1. There was very little vibe coding because of the "Gell-Man Amnesia" effect. It generates code I am not happy with because I understand what it did wrong.
-2. Gen AI was used for icon assets. But before you go "Pitty about the AI" in the comments, these are just the placeholders I am using while I wait for you to draw me some vanilla aesthetic icons. Thanks in advance.
+1. There was very little vibe coding because I see the mistakes. Intellisense and AI suggestions/review.
+2. Gen AI was used for icon assets. But before you get pissed off, these are just the placeholders I am using while I wait for you to draw me some vanilla aesthetic icons. Thanks in advance.
 3. AI was used for nomenclature suggestions and for writing XML descriptions.
 
 ## License

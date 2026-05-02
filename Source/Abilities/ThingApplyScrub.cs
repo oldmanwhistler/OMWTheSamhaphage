@@ -2,6 +2,7 @@ using RimWorld;
 using Verse;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace OMW_Samhaphage
 {
@@ -34,6 +35,7 @@ namespace OMW_Samhaphage
     public class ThingApplyScrub : NullThrumAbilityBase
     {
         public override string VerbName => "Scrub";
+        public override Texture2D Icon => BaseContent.BadTex;
 
         public static bool RemoveCarcinomas(Pawn victim, Pawn caster)
         {
@@ -64,7 +66,7 @@ namespace OMW_Samhaphage
 
             return true;
         }
-        
+
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
             if (victim == null || caster == null) return false;
@@ -88,7 +90,7 @@ namespace OMW_Samhaphage
                     if (verb.PayResonance(plus))
                     {
                         victim.genes.RemoveGene(plus.gene);
-                        Log.Message($"Destroyed {plus.gene.LabelCap} from {victim.LabelShort}");                        
+                        Log.Message($"Destroyed {plus.gene.LabelCap} from {victim.LabelShort}");
                         activated = true;
                     }
                 }
@@ -97,7 +99,7 @@ namespace OMW_Samhaphage
             if (activated)
             {
                 verb.ApplyDissonance(victim, caster);
-            }            
+            }
             return activated;
         }
 
@@ -187,5 +189,19 @@ namespace OMW_Samhaphage
                 return new FloatMenuOption($"Can't Scrub {corpse.InnerPawn.LabelShort} because {reason}", null) { Disabled = true };
             }
         }
+
+        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
+        {
+            return NewMenuItemIconDisabled(targetInfo);
+        }
+
+
+        public override MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse,
+            Pawn caster = null)
+        {
+            return NewMenuItemIconDisabled(targetInfo);
+        }
+
+
     }
 }

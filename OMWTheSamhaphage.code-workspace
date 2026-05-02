@@ -35,7 +35,7 @@
 			"Xenotype",
 			"xenotypes"
 		],
-		"markdown.extension.completion.enabled": true,
-		"markdown.extension.tableFormatter.enabled": true
+		"markdown.extension.completion.enabled": false,
+		"markdown.extension.tableFormatter.enabled": false
 	}
 }

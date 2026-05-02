@@ -2,6 +2,7 @@ using RimWorld;
 using Verse;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace OMW_Samhaphage
 {
@@ -37,10 +38,10 @@ namespace OMW_Samhaphage
     public class ThingApplyStealFace : NullThrumAbilityBase
     {
         public override string VerbName => "Steal Face";
-        
+        public override Texture2D Icon => BaseContent.BadTex;
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
-            if (victim == null || caster == null) return false;     
+            if (victim == null || caster == null) return false;
 
             verb = new VerbStealFace(caster, victim, caster);
 
@@ -66,7 +67,7 @@ namespace OMW_Samhaphage
                     }
                 }
             }));
-            
+
             return activated;
         }
 
@@ -155,6 +156,18 @@ namespace OMW_Samhaphage
             {
                 return new FloatMenuOption($"Can't Steal Face {corpse.InnerPawn.LabelShort} because {reason}", null) { Disabled = true };
             }
+        }
+
+        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
+        {
+            return NewMenuItemIconDisabled(targetInfo);
+        }
+
+
+        public override MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse,
+            Pawn caster = null)
+        {
+            return NewMenuItemIconDisabled(targetInfo);            
         }
     }
 }
