@@ -102,10 +102,11 @@ Here is the full collection of everything that adds more features to this mod:
 
   This project was to learn how to mod RimWorld and to gain experience using different gen AI tools. Some of us single parents don't have the freedom to switch careers out of tech because "AI bad".
 
-1. Coding used Intellisense and AI suggestions/review. Only thing approaching vibe coding was from refactoring.
-2. Gen AI is used a for icon assets. If this bugs you then I'll happily accept your hand-drawn vanilla aesthetic icons. Thanks in advance!
-   * There are no in-game graphic assets other than gene icons and ability icons.
-3. AI was to brainstorm nomenclature and to brainstorm descriptions.
+1. AI was used for brainstorming nomenclature and descriptions.
+2. Coded using VS Code with Intellisense and AI suggestions/review.
+   * "Vibe coding" used for batch refactoring and for working with the RimWorld "Window" UI classes.
+3. Gen AI used for icon assets. If this bugs you then I'll happily accept your hand-drawn vanilla aesthetic icons. Thanks in advance!
+   * This mod has no graphical assets other than gene icons and ability icons.
 
 ## License
 
@@ -113,7 +114,7 @@ This project and the work it was derived is free software. You can redistribute 
 
 Includes modified code from the following mods:
 
-* UI is based on [BetterFloatMenus by EpicGuru. MIT License.](https://github.com/Epicguru/BetterFloatMenu/tree/master/BetterFloatMenu)
+* UI is based on [BetterFloatMenus by EpicGuru. MIT License.](https://github.com/Epicguru/BetterFloatMenu/tree/master)
 * abilityblah based on WVC_RacesBiotech (c)2023 WVCSergkart
 * Teratogenesis based on [AlphaGenes (c)2021 juanosarg. License unknown.](https://github.com/juanosarg/AlphaGenes)
 * Unstable Mutations based on [AlphaGenes (c)2021 juanosarg. License unknown.](https://github.com/juanosarg/AlphaGenes)

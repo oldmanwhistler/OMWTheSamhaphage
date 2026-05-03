@@ -65,7 +65,7 @@ I ended up doing a big refactor for the menu system for the abilities.
 
 ## Week #7 - March 30th, 2026
 
-I'm getting burned out on this project and I haven't played RimWorld in almost two months. My attempts at generating in-game graphics for the abilities is not going well. I try a bunch of pixel art AI generators and they all kind of such or have shady monetization practices. I find a prompt that works ok with gemini and then just use Paint/Copilot to remove backgrounds and paint.net to resize it. I'm feeling better at having some assets now. I start added carcinomas as resources based on Taukai race concepts; once I know more about how to properly use resources I should add this back to AlphaGenes. The existing code in AlphaGenes wipes out all carcinomas instead of treating it like a resource.
+I'm getting burned out on this project and I haven't played RimWorld in almost two months. My attempts at generating in-game graphics for the abilities is not going well. I try a bunch of pixel art AI generators and they all kind of such or have shady monetization practices. I find a prompt that works ok with gemini and then just use Paint/Copilot to remove backgrounds and paint.net to resize it. I'm feeling better at having some assets now. I start added carcinomas as resources based on Taukai race concepts; once I know more about how to properly use resources I should add this back to AlphaGenes. The existing code in AlphaGenes wipes out all carcinomas when the ability is used instead of treating it like a resource.
 
 ## Week #8 - April 6th, 2026
 
@@ -81,4 +81,4 @@ Overtime at work; no RimWorld.
 
 ## Week #11 - April 27th, 2026
 
-I want to get this project done "enough" that I can start playing again.
+I want to get this project done "enough" that I can start playing again. It's been three months of no RimWorld. I have a big refactor ahead of me. I've already set up some classes around abilities to reduce all of the boilerplate code every ability had. I also want to try out BetterFloatMenu to use icons for abilities rather than a boring FloatMenu. I end up tweaking it, yay MIT license.

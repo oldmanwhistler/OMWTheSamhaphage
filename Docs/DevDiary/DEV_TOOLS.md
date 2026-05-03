@@ -35,9 +35,11 @@
 ## Week #11
 
 * I've been using Gemini and NotebookLM for D&D Campaigns, I'm going to try it out building a RimWorld Notebook for querying things with specific GitHub repos. I've ended up loading them as different projects in VSCode to search but it'll be interesting if using them as NotebookLM can give be better sources.
-* [RimWorld Auto Documentation](https://github.com/Epicguru/Rimworld-Auto-Documentation) seems to be what was used to generate the rimworld.lattemacchiato.dev website.
-  * Getting an idea of taking that and having it spit out Markdown instead to teach LLMs the RimWorld APIs. While it's doing it's think have it also run [DocFx](https://dotnet.github.io/docfx/docs/basic-concepts.html) to create Markdown.
+* Using the free Gemini Coding Assistant. Damn, should have done this from the start because it is generating code that at least compiles.
+* [RimWorld Auto Documentation](https://github.com/Epicguru/Rimworld-Auto-Documentation) seems to be what was used to generate the RimWorld.lattemacchiato.dev website.
+  * Getting an idea of taking that and having it spit out Markdown of the RimWorld APIs. Could set it up to run [DocFx](https://dotnet.github.io/docfx/docs/basic-concepts.html) to create Markdown while it's is creating HTML.
 * The same author [EpicGuru](https://github.com/Epicguru) has a bunch of modder tools that I should investigate
-  * [BetterFloatMenu](https://github.com/Epicguru/BetterFloatMenu/tree/master) - once you select an ability I should use this for the ability icons
   * [InGameWiki](https://github.com/Epicguru/InGameWiki/tree/master)
+  * [BetterFloatMenu](https://github.com/Epicguru/BetterFloatMenu/tree/master)
+    * I ended up incorporating this.
 * Also came across [EditCompileReload](https://github.com/Zetrith/EditCompileReload) - which loads like a way to hotload DDLs under development which would be **great** for speeding up testing.
