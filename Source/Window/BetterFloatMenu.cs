@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using RimWorld.QuestGen;
 using UnityEngine;
 using Verse;
 
@@ -39,7 +40,7 @@ namespace OMW_Samhaphage
             created.OnSelected = onSelected;
             created.closeOnAccept = false;
             created.closeOnCancel = true;
-            created.closeOnClickedOutside = true;
+            created.closeOnClickedOutside = false;
             created.layer = WindowLayer.SubSuper;
             Find.WindowStack.Add(created);
             return created;
@@ -190,7 +191,7 @@ namespace OMW_Samhaphage
                         GUI.color = Color.white;
                     }
 
-                    if (Widgets.ButtonInvisible(area))
+                if (!item.Disabled && Widgets.ButtonInvisible(area))
                     {
                         OnSelected?.Invoke(item);
                         if (CloseOnSelected)
@@ -252,6 +253,8 @@ namespace OMW_Samhaphage
         /// The width, in pixels, of the containing box.
         /// </summary>
         public int BoxThickness = 1;
+        // Is the button disabled and can't be pressed
+        public bool Disabled = false;
 
         /// <summary>
         /// Returns the <see cref="Payload"/>, cast to a specified type. May throw an invalid cast or null exception.
@@ -355,7 +358,7 @@ namespace OMW_Samhaphage
             {
                 Rect iconArea = area;
                 iconArea.width = iconArea.height;
-                GUI.color = IconColor;
+                GUI.color = Disabled ? Color.gray : IconColor;
                 Widgets.DrawTextureFitted(iconArea, Icon, 1f);
                 GUI.color = Color.white;
             }
@@ -367,7 +370,9 @@ namespace OMW_Samhaphage
             else
                 labelArea.xMin += 4;
             
+            if (Disabled) GUI.color = Color.gray;
             Widgets.LabelFit(labelArea, label);
+            GUI.color = Color.white;
 
             if (Tooltip != null)
                 TooltipHandler.TipRegion(area, Tooltip);
@@ -385,7 +390,7 @@ namespace OMW_Samhaphage
         /// <summary>
         /// The size of the item. Defaults to a square 64x64.
         /// </summary>
-        public Vector2 Size = new Vector2(64, 64);
+        public Vector2 Size = new Vector2(64, 84);
         /// <summary>
         /// The optional tooltip text. Used to filter searches if provided.
         /// </summary>
@@ -405,24 +410,38 @@ namespace OMW_Samhaphage
 
         protected string drawLabel;
         private bool consumedSearch;
+        public string Label;
 
         public MenuItemIcon() { }
 
-        public MenuItemIcon(object payload, string tooltip, Texture2D icon, Color iconColor = default)
+        public MenuItemIcon(string label, string tooltip, Texture2D icon, object payload)
         {
             this.Payload = payload;
             this.Tooltip = tooltip;
             this.Icon = icon;
-            this.Color = iconColor == default ? Color.white : iconColor;
+            this.Label = label;
+            this.Color = Color.white;
+            this.Disabled = false;
         }
+
+        public MenuItemIcon(string label, string tooltip, Texture2D icon)
+        {
+            this.Payload = null;
+            this.Tooltip = tooltip;
+            this.Icon = icon;
+            this.Label = label;
+            this.Color = Color.gray;
+            this.Disabled = true;
+        }        
 
         public override bool MatchesSearch(string search)
         {
-            if (Tooltip == null)
-                return true;
-
             consumedSearch = false;
-            drawLabel = BetterFloatMenu.SearchMatch(Tooltip, search, null);
+            drawLabel = BetterFloatMenu.SearchMatch(Label ?? "", search, null);
+            if (drawLabel == null && Tooltip != null)
+            {
+                drawLabel = BetterFloatMenu.SearchMatch(Tooltip, search, null);
+            }
             return drawLabel != null;
         }
 
@@ -433,32 +452,39 @@ namespace OMW_Samhaphage
 
         public override Vector2 Draw(Vector2 pos)
         {
-            if (Icon == null)
-                return Size;
-
             Rect area = new Rect(pos, Size);
+            Rect iconArea = new Rect(pos.x, pos.y, Size.x, Size.x);
+            Rect labelArea = new Rect(pos.x, pos.y + Size.x + 2f, Size.x, Size.y - Size.x - 2f);
 
-            if (BGColor != default)
+            if (Icon != null)
             {
-                Widgets.DrawBoxSolid(area, BGColor);
+                if (BGColor != default)
+                {
+                    Widgets.DrawBoxSolid(iconArea, BGColor);
+                }
+
+                var oldColor = GUI.color;
+                if (Color != Color.white)
+                    GUI.color = Color;
+                Widgets.DrawTextureFitted(iconArea, Icon, 1f);
+                GUI.color = oldColor;
             }
 
-            var old = GUI.color;
-            if(Color != Color.white)
-                GUI.color = Color;
-            Widgets.DrawTextureFitted(area, Icon, 1f);
-            GUI.color = old;
-
-            string label = Tooltip;
-            if (!consumedSearch)
+            if (!Label.NullOrEmpty())
             {
-                label = drawLabel;
-                consumedSearch = true;
+                var oldAnchor = Text.Anchor;
+                var oldFont = Text.Font;
+                Text.Anchor = TextAnchor.UpperCenter;
+                Text.Font = GameFont.Tiny;
+                if (Disabled) GUI.color = Color.gray;
+                Widgets.Label(labelArea, Label);
+                GUI.color = Color.white;
+                Text.Anchor = oldAnchor;
+                Text.Font = oldFont;
             }
 
-            GUI.color = Color.white;
-            TooltipHandler.TipRegion(area, label);
-            GUI.color = old;
+            if (Tooltip != null)
+                TooltipHandler.TipRegion(area, Tooltip);
 
             return Size;
         }

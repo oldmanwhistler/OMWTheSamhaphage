@@ -71,7 +71,7 @@ namespace OMW_Samhaphage
             {
                 msg += "\n" + reason;
             }
-            return new MenuItemIcon(null, msg, this.Icon, Color.gray);
+            return new MenuItemIcon(this.VerbName, msg, this.Icon);
         }        
         public MenuItemIcon NewMenuItemIcon(LocalTargetInfo targetInfo, Pawn caster = null)
         {

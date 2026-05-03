@@ -21,8 +21,8 @@ namespace OMW_Samhaphage
         {
             List<MenuItemBase> items = new List<MenuItemBase>();
 
+            NullThrumAbilityBase ability;
             XenotypeDef xeno = parent.pawn.genes.Xenotype;            
-            string reason = "Unknown reason";
 
             if ((xeno != OMW_XenotypeDefOf.omw_fluxspawn_hiveling) && (xeno != OMW_XenotypeDefOf.omw_fluxspawn_brute) && (xeno != OMW_XenotypeDefOf.omw_fluxspawn_flicker))
             {
@@ -31,14 +31,8 @@ namespace OMW_Samhaphage
             }
             else if (target.Thing is Corpse corpse)
             {
-                if (CorpseApplyResurrect.CanApplyOn(corpse, out reason))
-                {
-                    items.Add(new MenuItemText((Action)(() => JobResurrectHallowbound(target)), $"Sacrifice self to transform {target.Label} to Hallowbound xenotype."));
-                }        
-                else
-                {
-                    items.Add(new MenuItemText(null, $"Can't implant Hallowbound. {reason}."));
-                }
+                ability = new CorpseApplyResurrectHallowbound();
+                items.Add(ability.NewMenuItemIcon(target, parent.pawn));
             }
 
             if (items.Count > 0)
@@ -57,24 +51,6 @@ namespace OMW_Samhaphage
                     }
                 });
             }
-        }
-        private void JobResurrectHallowbound(LocalTargetInfo target)
-        {
-            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
-            job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
-            job.targetA = target;
-            // The delegate needs to match the signature: (Pawn actor, Thing t)
-            // We use the 't' passed from the JobDriver to ensure target validity
-            job.onInteract = (actor, t) => AbilityResurrectHallowbound(t, actor);
-            parent.pawn.jobs.TryTakeOrderedJob(job);
-        }
-
-        private void AbilityResurrectHallowbound(Thing thing, Pawn actor)
-        {
-            Corpse corpse = thing as Corpse;
-            CorpseApplyResurrect resurrect = new CorpseApplyResurrect();
-            resurrect.ApplySacrifice(corpse, actor, OMW_HediffDefOf.OMW_SilentServitude,
-                OMW_XenotypeDefOf.omw_hallowbound);
         }
     }
 }

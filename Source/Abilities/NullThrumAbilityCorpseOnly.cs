@@ -2,20 +2,22 @@ using Verse;
 
 namespace OMW_Samhaphage
 {
-    public abstract class NullThrumAbilityPawnCorpse: NullThrumAbilityBase
+    public abstract class NullThrumAbilityCorpseOnly: NullThrumAbilityBase
     {
+        public override bool ApplyPawn(Pawn pawn, Pawn caster = null)
+        {
+            return false;
+        }
+
+        public override bool CanApplyOnPawn(Pawn pawn, Pawn caster, out string reason)
+        {
+            reason = "No living pawns.";
+            return false;
+        }
+
        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
         {
-            string reason;
-
-            if (CanApplyOnPawn(pawn, caster, out reason))
-            {
-                return new MenuItemIcon(this.VerbName, $"{this.VerbName} {pawn.LabelShort} {this.VerbDescription}", this.Icon, () => Job(targetInfo, caster));
-            }
-            else
-            {
-                return NewMenuItemIconDisabled(targetInfo, $"Can't {this.VerbName} {pawn.LabelShort} because {reason}");
-            }
+            return NewMenuItemIconDisabled(targetInfo);
         }
 
         public override MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse, Pawn caster = null)
@@ -30,6 +32,6 @@ namespace OMW_Samhaphage
             {
                 return NewMenuItemIconDisabled(targetInfo, $"Can't {this.VerbName} {corpse.InnerPawn.LabelShort} because {reason}");
             }
-        }  
+        }                  
     }
 }

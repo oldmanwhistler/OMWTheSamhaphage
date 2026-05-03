@@ -22,7 +22,6 @@ namespace OMW_Samhaphage
             List<MenuItemBase> items = new List<MenuItemBase>();
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
-            string reason;
 
             NullThrumAbilityBase ability;
 
@@ -34,7 +33,7 @@ namespace OMW_Samhaphage
             else if (target.Thing is Corpse corpse)
             {
                 ability = new ThingApplyStealFace();
-                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
+                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));                
                 
                 ability = new ThingApplyScrub();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
@@ -42,14 +41,8 @@ namespace OMW_Samhaphage
                 ability = new ThingApplyHarrow();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
-                if (CorpseApplyResurrect.CanApplyOn(corpse, out reason))
-                {
-                    items.Add(new MenuItemText((Action)(() => JobEchovessel(target)), "Raise corpse as an Echovessel"));
-                }
-                else
-                {
-                    items.Add(new MenuItemText(null, $"Can't raise corpse as an Echovessel. {reason}."));
-                }
+                ability = new CorpseApplyResurrectEchovessel();
+                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
             }
 
             if (items.Count > 0)
@@ -83,25 +76,6 @@ namespace OMW_Samhaphage
                 PawnTakeXenogenes take = new PawnTakeXenogenes();
                 take.ApplySacrifice(target, actor);
             }
-        }
-
-        private void JobEchovessel(LocalTargetInfo target)
-        {
-            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
-            job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
-            job.targetA = target;
-            // The delegate needs to match the signature: (Pawn actor, Thing t)
-            // We use the 't' passed from the JobDriver to ensure target validity
-            job.onInteract = (actor, t) => AbilityEchovessel(t, actor);
-            parent.pawn.jobs.TryTakeOrderedJob(job);
-        }
-
-        private void AbilityEchovessel(Thing thing, Pawn actor)
-        {
-            Corpse corpse = thing as Corpse;
-            CorpseApplyResurrect resurrect = new CorpseApplyResurrect();
-            resurrect.Apply(corpse, OMW_HediffDefOf.OMW_SilentServitude,
-                OMW_XenotypeDefOf.omw_echovessel);
         }
       
         private void JobCorpseTakeXenogenes(LocalTargetInfo target, Pawn actor)
