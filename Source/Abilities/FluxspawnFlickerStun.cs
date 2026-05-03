@@ -7,8 +7,8 @@ namespace OMW_Samhaphage
     public class FluxspawnFlickerStun: NullThrumAbilityPawnOnly
     {
         public override string VerbName => "Stun";
-        public override string VerbDescription => "and prepare them for parasitization.";           
-        public override Texture2D Icon => BaseContent.BadTex;
+        public override string VerbDescription => "and prepare them for parasitization.";
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/Stun");
         public override bool ApplyPawn(Pawn pawn, Pawn caster = null)
         {            
             pawn.stances.stunner.StunFor(5000, caster);

@@ -41,7 +41,7 @@ namespace OMW_Samhaphage
     {
         public override string VerbName => "Harrow";
         public override string VerbDescription => "and harvest their genetic material.";
-        public override Texture2D Icon => BaseContent.BadTex;
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/Harrow");
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
             if (victim == null || caster == null) return false;

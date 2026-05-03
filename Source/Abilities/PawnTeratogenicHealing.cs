@@ -13,7 +13,7 @@ namespace OMW_Samhaphage
     {
         public override string VerbName => "Teratogenic Healing";
         public override string VerbDescription => "and heal them with their carcinomas.";   
-        public override Texture2D Icon => BaseContent.BadTex;
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/TeratogenicHealing");
         public override bool ApplyPawn(Pawn pawn, Pawn caster)
         {
             int healedCount = 0;

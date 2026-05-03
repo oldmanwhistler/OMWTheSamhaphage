@@ -35,8 +35,8 @@ namespace OMW_Samhaphage
     public class ThingApplyScrub : NullThrumAbilityPawnCorpse
     {
         public override string VerbName => "Scrub";
-        public override string VerbDescription => "and convert their genetic material to resonance.";   
-        public override Texture2D Icon => BaseContent.BadTex;
+        public override string VerbDescription => "and convert their genetic material to resonance.";
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/Scrub");
 
         public static bool RemoveCarcinomas(Pawn victim, Pawn caster)
         {
