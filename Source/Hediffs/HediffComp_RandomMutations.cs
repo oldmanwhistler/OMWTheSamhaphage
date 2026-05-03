@@ -6,7 +6,13 @@ using Verse;
 // TODO: is this needed? using static HarmonyLib.Code;
 using AlphaGenes;
 
-// Based on AlphaGenes' RandomMutation hediff comp, but changed to match the headcanon for my xenotypes. Credit to Sarg for the original code and idea.
+// Based on AlphaGenes' RandomMutation hediff comp (c) juanosarg. 
+// See original at: https://github.com/juanosarg/AlphaGenes/blob/d6f14ee6106ce01351c86eb369703edde65bce66/1.6/Source/AlphaGenes/AlphaGenes/HediffComps/HediffComp_RandomMutation.cs
+
+// The difference from Alpha Genes:
+// - the genes are only removed if they remained xenogenes.
+// - it can filter out genes not within the min/max metabolism range.
+// - TODO: switch to my own "random gene blacklist control"
 
 namespace OMW_Samhaphage
 {
@@ -45,7 +51,7 @@ namespace OMW_Samhaphage
             {
                 if (!individualList.blackListedGenes.NullOrEmpty())
                     cachedBlacklist.AddRange(individualList.blackListedGenes);
-                
+
                 if (!individualList.blackListedDefNameStrings.NullOrEmpty())
                     cachedDefnameStrings.AddRange(individualList.blackListedDefNameStrings);
             }
@@ -77,13 +83,13 @@ namespace OMW_Samhaphage
                 this.geneDefs?.Clear();
                 for (int i = 0; i < Props.numberOfGenes; i++)
                 {
-                    GeneDef gene = DefDatabase<GeneDef>.AllDefs.Where((GeneDef x) => 
+                    GeneDef gene = DefDatabase<GeneDef>.AllDefs.Where((GeneDef x) =>
                         x.exclusionTags?.Contains("AG_OnlyOnCharacterCreation") == false &&
-                        x.prerequisite == null && x.biostatArc == 0 && x.biostatMet > Props.minMetabolism && x.biostatMet < Props.maxMetabolism && 
-                        x.modContentPack?.PackageId != "vanillaracesexpanded.insector" && 
-                        !cachedDefnameStrings.Any(s => x.defName.Contains(s)) && 
+                        x.prerequisite == null && x.biostatArc == 0 && x.biostatMet > Props.minMetabolism && x.biostatMet < Props.maxMetabolism &&
+                        x.modContentPack?.PackageId != "vanillaracesexpanded.insector" &&
+                        !cachedDefnameStrings.Any(s => x.defName.Contains(s)) &&
                         !cachedBlacklist.Contains(x)).RandomElement();
-                    
+
                     if (gene != null)
                     {
                         this.geneDefs.Add(gene);
@@ -131,7 +137,7 @@ namespace OMW_Samhaphage
                     {
                         this.parent.pawn.genes?.RemoveGene(gene);
                     }
-                }                
+                }
             }
             Active = false;
             this.geneDefs?.Clear();

@@ -14,6 +14,10 @@ namespace OMW_Samhaphage
         // Taken from AlphaGenes parasiticStinger
         public void Apply(Pawn pawn, Pawn implanter, HediffDef targetHediffDef, XenotypeDef targetXenotypeDef, int numBabies = 1)
         {
+
+            // Based on https://github.com/juanosarg/AlphaGenes/blob/d6f14ee6106ce01351c86eb369703edde65bce66/1.6/Source/AlphaGenes/AlphaGenes/Ability%20Comps/CompAbilityEffect_ParasiticStinger.cs
+            // (c) juanosarg.
+
             if (pawn == null) return;
             HealthUtility.DamageUntilDowned(pawn);
 
