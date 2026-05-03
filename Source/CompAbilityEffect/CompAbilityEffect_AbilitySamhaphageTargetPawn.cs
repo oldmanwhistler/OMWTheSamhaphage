@@ -95,27 +95,6 @@ namespace OMW_Samhaphage
             }
         }
 
-        private void JobPawnTakeXenogenes(LocalTargetInfo target, Pawn actor)
-        {
-            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
-            job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
-            job.targetA = target;
-            // The delegate needs to match the signature: (Pawn actor, Thing t)
-            // We use the 't' passed from the JobDriver to ensure target validity
-            job.onInteract = (actor, t) => AbilityPawnTakeXenogenes(t, actor);                        
-            parent.pawn.jobs.TryTakeOrderedJob(job);
-        }
-        
-        private void AbilityPawnTakeXenogenes(Thing thing, Pawn actor)
-        {
-            if (thing is Pawn target)
-            {
-                PawnTakeXenogenes take = new PawnTakeXenogenes();
-                take.ApplySacrifice(target, actor);
-            }
-        }
-
-
         private void JobPawnApplyHallowbound(LocalTargetInfo target, Pawn actor)
         {
             Job_ApproachAndInteract job = new Job_ApproachAndInteract();
@@ -136,30 +115,7 @@ namespace OMW_Samhaphage
             }
         }        
       
-        private void JobCorpseTakeXenogenes(LocalTargetInfo target, Pawn actor)
-        {
-            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
-            job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
-            job.targetA = target;
-            // The delegate needs to match the signature: (Pawn actor, Thing t)
-            // We use the 't' passed from the JobDriver to ensure target validity
-            job.onInteract = (actor, t) => AbilityCorpseTakeXenogenes(t, actor);
-            parent.pawn.jobs.TryTakeOrderedJob(job);
-        }
-
-        private void AbilityCorpseTakeXenogenes(Thing thing, Pawn actor)
-        {
-            if (thing is Corpse corpse)
-            {
-                CorpseTakeXenogenes take = new CorpseTakeXenogenes();
-                if (take.Apply(corpse, actor))
-                {
-                    corpse.Destroy(DestroyMode.Vanish);
-                }
-            }
-        }
-
-        private void JobPawnApplyParasiticStinger(LocalTargetInfo target, Pawn actor)
+         private void JobPawnApplyParasiticStinger(LocalTargetInfo target, Pawn actor)
         {
             Job_ApproachAndInteract job = new Job_ApproachAndInteract();
             job.def = OMW_JobDefOf.OMW_ApproachAndInteract;

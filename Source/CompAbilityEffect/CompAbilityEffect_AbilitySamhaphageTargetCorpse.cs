@@ -44,15 +44,6 @@ namespace OMW_Samhaphage
 
                 ability = new ThingApplyHarrow();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
-
-                if (CorpseTakeXenogenes.CanApplyOn(corpse, out reason))
-                {
-                    items.Add(new MenuItemText((Action)(() => JobCorpseTakeXenogenes(target, parent.pawn)), $"Take xenogenes from corpse {corpse.LabelShort}"));
-                }        
-                else
-                {
-                    items.Add(new MenuItemText(null, $"Can't take xenogenes. {reason}."));
-                }
             }
 
             if (items.Count > 0)
@@ -65,26 +56,6 @@ namespace OMW_Samhaphage
                         action.Invoke();
                     }
                 });
-            }
-        }
-
-        private void JobPawnTakeXenogenes(LocalTargetInfo target, Pawn actor)
-        {
-            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
-            job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
-            job.targetA = target;
-            // The delegate needs to match the signature: (Pawn actor, Thing t)
-            // We use the 't' passed from the JobDriver to ensure target validity
-            job.onInteract = (actor, t) => AbilityPawnTakeXenogenes(t, actor);                        
-            parent.pawn.jobs.TryTakeOrderedJob(job);
-        }
-        
-        private void AbilityPawnTakeXenogenes(Thing thing, Pawn actor)
-        {
-            if (thing is Pawn target)
-            {
-                PawnTakeXenogenes take = new PawnTakeXenogenes();
-                take.ApplySacrifice(target, actor);
             }
         }
 
@@ -108,29 +79,6 @@ namespace OMW_Samhaphage
             }
         }        
       
-        private void JobCorpseTakeXenogenes(LocalTargetInfo target, Pawn actor)
-        {
-            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
-            job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
-            job.targetA = target;
-            // The delegate needs to match the signature: (Pawn actor, Thing t)
-            // We use the 't' passed from the JobDriver to ensure target validity
-            job.onInteract = (actor, t) => AbilityCorpseTakeXenogenes(t, actor);
-            parent.pawn.jobs.TryTakeOrderedJob(job);
-        }
-
-        private void AbilityCorpseTakeXenogenes(Thing thing, Pawn actor)
-        {
-            if (thing is Corpse corpse)
-            {
-                CorpseTakeXenogenes take = new CorpseTakeXenogenes();
-                if (take.Apply(corpse, actor))
-                {
-                    corpse.Destroy(DestroyMode.Vanish);
-                }
-            }
-        }
-
         private void JobPawnApplyParasiticStinger(LocalTargetInfo target, Pawn actor)
         {
             Job_ApproachAndInteract job = new Job_ApproachAndInteract();
