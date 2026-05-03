@@ -22,7 +22,7 @@ I had gemini write out some mod rules based on my human-readable lore document s
 
 ## Week #2 - Feb 23rd 2026
 
-The next exploration was moving from Notepad++ to using VSCode with Claude Haiku 4.5. I set up a proper workspace with the game definitions and *only* 1.6 definitions for the parent genetic mods. Dang, always start with using a proper IDE. Proper indentation and all kinds of extensions like spellcheck. I really like using AI to search for XML definitions amongst the mods I have installed as it also EXPLAINS the definitions for me. Not having used the stuff before I blow through my GitHub Copilot requests in an hour but in that time I got it to build some C# that "actually compiles" without looking at the source code. Vibe coding achieved but it took 6-10 iterations to compile and it doesn't work. Looking up more about how requests and tokens work is pretty confusing. 
+The next exploration was moving from Notepad++ to using VSCode with Claude Haiku 4.5. I set up a proper workspace with the game definitions and *only* 1.6 definitions for the parent genetic mods. Dang, always start with using a proper IDE. Proper indentation and all kinds of extensions like spellcheck. I really like using AI to search for XML definitions amongst the mods I have installed as it also EXPLAINS the definitions for me. Not having used the stuff before I blow through my GitHub Copilot requests in an hour but in that time I got it to build some C# that "actually compiles" without looking at the source code. Vibe coding achieved but it took 6-10 iterations to compile and it doesn't work. Looking up more about how requests and tokens work is pretty confusing.
 
 When I start looking at "vibe coded" output I think this is the wrong approach. I'm better off with modifying functionality from existing mods since this isn't a "green field" project. There are good examples of things I'm trying to do. I want to modify existing mod functionality to match the lore in my head.
 
@@ -30,7 +30,7 @@ I set up a scenario that starts with all the modded races so I can quickly creat
 
 ## Week #3 - March 2nd, 2026
 
-I switch my documentation from text files to markdown files to more fit in with the VS Code / AI / GitHub conventions. I grab the GitHub source code for AlphaGenes, Big and Small, and Outland Genetics since the mods don't include the C#. I Started working on converting the parasitic implanter from AG so that it takes a xenotype string from the AbilityDef. The parasitic implanter code doesn't quite fix my headcanon because the fluxspawn should birth litters which leads me down a path of them having a combination of xenogenetic implanter that also causes pregnancy. 
+I switch my documentation from text files to markdown files to more fit in with the VS Code / AI / GitHub conventions. I grab the GitHub source code for AlphaGenes, Big and Small, and Outland Genetics since the mods don't include the C#. I Started working on converting the parasitic implanter from AG so that it takes a xenotype string from the AbilityDef. The parasitic implanter code doesn't quite fix my headcanon because the fluxspawn should birth litters which leads me down a path of them having a combination of xenogenetic implanter that also causes pregnancy.
 
 I spend more time messing around with my testing scenario to get more ideas for features I want. I do a couple of two hour runs to get a feel for how the existing genes work, etc.
 
@@ -40,10 +40,10 @@ I get frustrated with the debug loop of having to load RimWorld to find out I fo
 
 I've given up on vibe coding, and I'm basing C# code off of other mods like AlphaGenes and WVC. I still use gemini for asking C# questions but anyone who thinks that is vibe coding can eat a bag of dicks. I fix up the PregnancyAbility more and create a new xenotype called Cradlemold to fit into the reproductive cycle and so it seems more like an alien/inject parasite movie and less like #JustRimWorldThings.
 
-I notice that AG Random Mutations are always removed when there is a new batch which doesn't match what I'm trying to accomplish with fluxspawn being genetic mutation engines. What I want for the game loop is the samhaphages can "retune" someone's xenogenes to endogenes so they are kept, or the hallowborn can kill a fluxspawn and use the BS Mimic
+I notice that AG Random Mutations are always removed when there is a new batch which doesn't match what I'm trying to accomplish with fluxspawn being genetic mutation engines. What I want for the game loop is the samhaphages can "retune" someone's xenogenes to endogenes so they are kept, or the Hallowbound can kill a fluxspawn and use the BS Mimic
 ability to acquire the xenogenes. To reinforce the idea that fluxspawn are fast breeding sources of genes/traits for the other xenotypes to evolve.
 
-I try out the BS Parasite genes again and it seems like a pretty valid mechanism for keeping your fluxspawn alive for the early game. Just stash them in another pawn when it gets chilly. This is changing my original idea of the brute/spitters being minor variations of the fluxspawn. Maybe they are an intermediary stage between the fluxspawn and the hallowborn? I want it to be possible to do a full run from fluxspawn to hallowborn to samhaphage to sovereign stillness cuz that sounds neat.
+I try out the BS Parasite genes again and it seems like a pretty valid mechanism for keeping your fluxspawn alive for the early game. Just stash them in another pawn when it gets chilly. This is changing my original idea of the brute/spitters being minor variations of the fluxspawn. Maybe they are an intermediary stage between the fluxspawn and the Hallowbound? I want it to be possible to do a full run from fluxspawn to Hallowbound to samhaphage to sovereign stillness cuz that sounds neat.
 
 Gemini is the friggin GOAT for sitting down and iterating over the nomenclature. A fucking idiot for generating XML and C#, but brainstorming is fun. Yeah I'm talking about you, gemini. It's <biostatMet> not <biostats><metabolism>. TryResurrecting not Resurrect.
 
@@ -53,7 +53,7 @@ I have come to the same conclusion that probably happened for WVC: trying to set
 
 ## Week #5 - March 16th, 2026
 
-I'm feeling burned out from working overtime at work. This mod development is taking so long and I want to just play. I get more motivated after doing a 3 hour play test. Because I'm using this menu system for abilities there is no cooldown mechanics on abilities so it's too OP. I'm trying to balance it out by having suicidal abilities and destroying corpses so they can't be used multiple times. I might go back to AbilityDefs once I have everything coded up and working. Just stick the abilities on the main gene for each xenotype so I don't have to mess around with a gene per ability and so I don't have to deal with testing combinations.
+I'm feeling burned out from working overtime at work. This mod development is taking so long and I want to just play. I get more motivated after doing a 3 hour play test. Because I'm using this menu system for abilities there is no cool-down mechanics on abilities so it's too OP. I'm trying to balance it out by having suicidal abilities and destroying corpses so they can't be used multiple times. I might go back to AbilityDefs once I have everything coded up and working. Just stick the abilities on the main gene for each xenotype so I don't have to mess around with a gene per ability and so I don't have to deal with testing combinations.
 
 This approach of having one gene with all the abilities has a big pay-off: I can test the changes using the same save file which shortens the efforts to recreate scenarios.
 

@@ -43,7 +43,7 @@
   - Salvage integration (Echovessel organ grafting)
   - Gene siphoning (Harrowing absorption)
   - Parasitic implantation (Fluxspawn/Samhaphage reproduction)
-  - Evolution (Fluxspawn Hiveling to Fluxspawn Brute or Spitter, Fluxspawn to Hallowborn, Hallowborn to Samhaphage, Samhaphage to Sovereign Stillness)
+  - Evolution (Fluxspawn Hiveling to Fluxspawn Brute or Spitter, Fluxspawn to Hallowbound, Hallowbound to Samhaphage, Samhaphage to Sovereign Stillness)
 - **Balance Note**: This is intentionally overpowered. The fun IS in the power fantasy.
 - **Raid Scaling**: Weak hivemind = few raids. Powerful hivemind = raid after raid as colonies try to wipe you out for their own survival.
 
