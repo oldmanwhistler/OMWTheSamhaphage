@@ -51,7 +51,7 @@ namespace OMW_Samhaphage
         {
             return $"Harrow {victim.LabelShort} and harvest their genes using resonance.";
         }
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/Harrow");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Harrow");
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
             if (victim == null || caster == null) return false;

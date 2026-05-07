@@ -16,7 +16,7 @@ namespace OMW_Samhaphage
         {
             return $"{caster.LabelShort} will use their carcinomas to heal {victim.LabelShort}.";
         }
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/TeratogenicHealing");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/TeratogenicHealing");
         public override bool ApplyPawn(Pawn pawn, Pawn caster)
         {
             HediffDef hediffDef = HediffDefOf.Carcinoma;

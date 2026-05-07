@@ -13,7 +13,7 @@ namespace OMW_Samhaphage
         }
 
 
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/ShiftFluxspawnHiveling");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/ShiftFluxspawnHiveling");
         public override XenotypeDef TargetXenotype()
         {
             return OMW_XenotypeDefOf.omw_fluxspawn_hiveling;

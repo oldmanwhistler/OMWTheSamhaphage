@@ -38,7 +38,7 @@ namespace OMW_Samhaphage
             return $"Attenuate {victim.LabelShort} of their genes.\nConverts victim's genes to resonance.";
         }
         
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/Attenuate");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Attenuate");
 
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {

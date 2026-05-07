@@ -8,7 +8,7 @@ namespace OMW_Samhaphage
         public override Verse.HediffDef TargetHediff => OMW_HediffDefOf.OMW_SilentServitude;
         public override RimWorld.XenotypeDef TargetXenotype => OMW_XenotypeDefOf.omw_echovessel;
         public override bool SacrificeCaster => false;
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/ResurrectEchovessel");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/ResurrectEchovessel");
 
         public override string VerbName => "Resurrect";
         public override string VerbDescription(Pawn victim, Pawn caster)
