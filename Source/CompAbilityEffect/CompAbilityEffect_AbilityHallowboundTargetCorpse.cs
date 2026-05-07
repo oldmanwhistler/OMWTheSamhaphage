@@ -32,7 +32,7 @@ namespace OMW_Samhaphage
             }
             else if (target.Thing is Corpse corpse)
             {
-                ability = new ThingApplyStealFace();
+                ability = new ThingApplySample();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));                
                 
                 ability = new ThingApplyScrub();

@@ -8,9 +8,7 @@ namespace OMW_Samhaphage
 {
     public class VerbHarrow : NullThrumVerbBase
     {
-        public VerbHarrow(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest)
-        {
-        }
+        public VerbHarrow(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) { }
 
         public override string Name => "Harrow";
 
@@ -37,15 +35,27 @@ namespace OMW_Samhaphage
         }        
     }
 
+// ### Harrow (Theft)
+
+// Reclaims and archives specific genes from the host.
+
+// - Requires a scoured mind / blocked by dissonance.
+// - Caster can pay resonance to take genes from Victim.
+// - Applies dissonance to Victim.
+
     public class ThingApplyHarrow : NullThrumAbilityPawnCorpse
     {
         public override string VerbName => "Harrow";
-        public override string VerbDescription => "and harvest their genetic material.";
+
+        public override string VerbDescription(Pawn victim, Pawn caster)
+        {
+            return $"Harrow {victim.LabelShort} and harvest their genes using resonance.";
+        }
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/Harrow");
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
             if (victim == null || caster == null) return false;
-            verb = new VerbHarrow(caster,victim, caster);
+            verb = new VerbHarrow(caster, victim, caster);
 
             if (verb.genes.Count == 0)
             {
@@ -105,7 +115,7 @@ namespace OMW_Samhaphage
 
             if (!ResonanceUtility.HasGene(caster))
             {
-                reason = $"{caster.LabelShort} does not have available resonance to {this.verb.Name}.";
+                reason = $"{caster.LabelShort} does not have a supply of resonance.";
                 return false;
             }
 
@@ -117,7 +127,7 @@ namespace OMW_Samhaphage
 
             if (!OMWGenes.HasScouredMind(p))
             {
-                reason = $"{p.LabelShort} does not have a scoured mind.";
+                reason = $"{p.LabelShort} does not have a Scoured Mind. Must be Flattened.";
                 return false;
             }
 
@@ -148,7 +158,7 @@ namespace OMW_Samhaphage
 
             if (!ResonanceUtility.HasGene(caster))
             {
-                reason = $"{caster.LabelShort} does not have available resonance.";
+                reason = $"{caster.LabelShort} does not have a supply of resonance.";
                 return false;
             }
 

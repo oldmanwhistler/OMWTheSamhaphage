@@ -25,14 +25,19 @@ namespace OMW_Samhaphage
             NullThrumAbilityBase ability;
 
             // Add the gene state as a non-interactive header
-  
+
             if ((xeno != OMW_XenotypeDefOf.omw_fluxspawn_hiveling) && (xeno != OMW_XenotypeDefOf.omw_fluxspawn_brute) &&
                 (xeno != OMW_XenotypeDefOf.omw_fluxspawn_flicker))
             {
                 // hybrids lose the ability
                 Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Fluxspawn abilities.", MessageTypeDefOf.NegativeEvent);
-               }
-            else if (xeno == OMW_XenotypeDefOf.omw_fluxspawn_brute)
+                return;
+            }
+
+            ability = new PawnTeratogenicHealing();
+            items.Add(ability.NewMenuItemIcon(target, parent.pawn));
+
+            if (xeno == OMW_XenotypeDefOf.omw_fluxspawn_brute)
             {
                 ability = new FluxspawnShiftHiveling();
                 items.Add(ability.NewMenuItemIcon(target, parent.pawn));

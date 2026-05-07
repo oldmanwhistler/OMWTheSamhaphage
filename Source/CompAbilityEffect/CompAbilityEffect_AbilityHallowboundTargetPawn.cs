@@ -33,7 +33,7 @@ namespace OMW_Samhaphage
             }
             else if (target.Thing is Pawn otherPawn)
             {
-                ability = new ThingApplyStealFace();
+                ability = new ThingApplySample();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
                 ability = new ThingApplyScrub();

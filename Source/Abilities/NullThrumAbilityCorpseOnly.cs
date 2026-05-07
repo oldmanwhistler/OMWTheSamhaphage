@@ -26,7 +26,7 @@ namespace OMW_Samhaphage
 
             if (CanApplyOnCorpse(corpse, caster, out reason))
             {
-                return new MenuItemIcon(this.VerbName, $"{this.VerbName} {corpse.InnerPawn.LabelShort} {this.VerbDescription}", this.Icon, () => Job(targetInfo, caster));
+                return new MenuItemIcon(this.VerbName, this.VerbDescription(corpse.InnerPawn, caster), this.Icon, () => Job(targetInfo, caster));
             }
             else
             {

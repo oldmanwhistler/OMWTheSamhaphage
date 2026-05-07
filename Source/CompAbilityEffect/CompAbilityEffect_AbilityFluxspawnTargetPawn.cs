@@ -32,6 +32,9 @@ namespace OMW_Samhaphage
             }
             else if (target.Thing is Pawn otherPawn)
             {
+                ability = new PawnTeratogenicHealing();
+                items.Add(ability.NewMenuItemIcon(target, parent.pawn));
+
                 if (xeno == OMW_XenotypeDefOf.omw_fluxspawn_flicker)
                 {
                     ability = new FluxspawnFlickerStun();

@@ -8,19 +8,21 @@ namespace OMW_Samhaphage
     // And it’s teratogenic healing, baby
     // It’s teratogenic healing, it’s good for me
     // Teratogenic healing, baby
-    // Makes me feel so... carcinogenic - ally free
+    // Makes me feel so... carcinogenicly free
     public class PawnTeratogenicHealing : NullThrumAbilityPawnOnly
     {
         public override string VerbName => "Teratogenic Healing";
-        public override string VerbDescription => "and heal them with their carcinomas.";   
+        public override string VerbDescription(Pawn victim, Pawn caster)
+        {
+            return $"{caster.LabelShort} will use their carcinomas to heal {victim.LabelShort}.";
+        }
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/TeratogenicHealing");
         public override bool ApplyPawn(Pawn pawn, Pawn caster)
         {
-            int healedCount = 0;
             HediffDef hediffDef = HediffDefOf.Carcinoma;
 
             List<Hediff> carcinomas = new List<Hediff>();
-            foreach (Hediff hediffToCheck in pawn.health.hediffSet.hediffs)
+            foreach (Hediff hediffToCheck in caster.health.hediffSet.hediffs)
             {
                 if (hediffToCheck.def == hediffDef)
                 {
@@ -30,7 +32,7 @@ namespace OMW_Samhaphage
 
             if (carcinomas.Count == 0)
             {
-                Log.Message($"{pawn.LabelShort} doesn't have any carcinomas to heal with.");
+                Log.Message($"{caster.LabelShort} doesn't have any carcinomas to heal with.");
                 return false;
             }
 
@@ -43,34 +45,11 @@ namespace OMW_Samhaphage
                 }
             }
 
-            if (injuries.Count == 0)
-            {
-                foreach (Hediff possibleInjuryHediff in caster.health.hediffSet.hediffs)
-                {
-                    if (possibleInjuryHediff as Hediff_Injury != null)
-                    {
-                        injuries.Add((Hediff_Injury)possibleInjuryHediff);
-                    }
-                }
-            }
-
-            if (injuries.Count == 0)
-            {
-                Log.Message($"{pawn.LabelShort} and ${caster.LabelShort} both don't have any carcinomas to heal with.");
-                return false;
-            }
-
-            if (injuries.Count > 0)
-            {
-                healedCount++;
-                injuries.RandomElement().Severity -= 20f;
-            }
-
             int removedCarcinomasCount = 0;
             int max = carcinomas.Count;
             for (int ii = 0; ii < max; ii++)
             {
-                if (injuries.Count == 0) break;
+                if (injuries.Count == 0) break;                
 
                 Hediff_Injury injury = injuries.RandomElement();
                 injury.Severity -= 20f;
@@ -80,55 +59,69 @@ namespace OMW_Samhaphage
                 }
 
                 Hediff carcinoma = carcinomas.RandomElement();
-                pawn.health.RemoveHediff(carcinoma);
+                caster.health.RemoveHediff(carcinoma);
                 carcinomas.Remove(carcinoma);
                 removedCarcinomasCount++;
             }
 
-            Log.Message($"{pawn.LabelShort} removed ${removedCarcinomasCount} carcinomas.");
+            Log.Message($"{caster.LabelShort} removed ${removedCarcinomasCount} carcinomas.");
             return (bool)(removedCarcinomasCount > 0);
         }
 
-        public override bool CanApplyOnPawn(Pawn p, Pawn caster, out string reason)
+        public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
         {
             reason = "unknown reason";
 
-            if (p == null)
+            if (victim == null)
             {
                 reason = "Target is null.";
                 return false;
             }
 
             // Check if target is a not already Retune
-            if (!p.RaceProps.Humanlike)
+            if (!victim.RaceProps.Humanlike)
             {
-                reason = $"{p.LabelShort} is not humanlike.";
+                reason = $"{victim.LabelShort} is not humanlike.";
                 return false;
             }
 
-            if (!OMWGenes.HasNullThrum(p))
+            if (!OMWGenes.HasNullThrum(caster))
             {
-                reason = $"{p.LabelShort} is not part of the harmony of the Null-Thrum.";
+                reason = $"{caster.LabelShort} is not part of the harmony of the Null-Thrum.";
                 return false;
             }
 
-            if (!p.genes.HasActiveGene(OMW_GeneDefOf.AG_Teratogenesis))
+            if (!caster.genes.HasActiveGene(OMW_GeneDefOf.AG_Teratogenesis))
             {
-                reason = $"{p.LabelShort} is does not possess Teratogenesis.";
+                reason = $"{caster.LabelShort} is does not possess Teratogenesis.";
                 return false;
             }
 
-            if (p.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
+            if (caster.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
             {
-                reason = $"{p.LabelShort} is affected by Genetic Dissonance.";
+                reason = $"{caster.LabelShort} is affected by Genetic Dissonance.";
                 return false;
             }
 
-            if (PawnTeratogenics.CarcinomaCount(p) == 0)
+            if (PawnTeratogenics.CarcinomaCount(caster) == 0)
             {
-                reason = $"{p.LabelShort} doesn't have any carcinomas.";
+                reason = $"{caster.LabelShort} doesn't have any carcinomas.";
                 return false;
             }
+
+            List<Hediff_Injury> injuries = new List<Hediff_Injury>();
+            foreach (Hediff possibleInjuryHediff in victim.health.hediffSet.hediffs)
+            {
+                if (possibleInjuryHediff as Hediff_Injury != null)
+                {
+                    injuries.Add((Hediff_Injury)possibleInjuryHediff);
+                }
+            }  
+            if (injuries.Count == 0)
+            {
+                reason = $"{victim.LabelShort} does not have any injuries.";
+                return false;
+            }            
 
             return true;
         }      

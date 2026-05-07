@@ -7,7 +7,10 @@ namespace OMW_Samhaphage
     public class FluxspawnShiftBrute: FluxspawnShiftBase
     {
         public override string VerbName => "Transpose ";
-        public override string VerbDescription => "to a Fluxspawn Brute.";         
+        public override string VerbDescription(Pawn victim, Pawn caster)
+        {
+            return $"Transpose {caster.LabelShort} to a Fluxspawn Brute.";
+        }
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/ShiftFluxspawnBrute");
 
         public override XenotypeDef TargetXenotype()

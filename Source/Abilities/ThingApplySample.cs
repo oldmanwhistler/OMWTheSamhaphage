@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class VerbStealFace : NullThrumVerbBase
+    public class VerbSample : NullThrumVerbBase
     {
-        public VerbStealFace(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest)
+        public VerbSample(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest)
         {
             
         }
@@ -35,17 +35,20 @@ namespace OMW_Samhaphage
         }
     }
 
-    public class ThingApplyStealFace : NullThrumAbilityPawnCorpse
+    public class ThingApplySample : NullThrumAbilityPawnCorpse
     {
-        public override string VerbName => "Steal Face";
+        public override string VerbName => "Sample";
 
-        public override string VerbDescription => "and disguise yourself as one of their kind.";        
+        public override string VerbDescription(Pawn victim, Pawn caster)
+        {
+            return $"Sample {victim.LabelShort} and steal their appearance to disguise yourself as one of their kind.";
+        }
         public override Texture2D Icon => BaseContent.BadTex;
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
             if (victim == null || caster == null) return false;
 
-            verb = new VerbStealFace(caster, victim, caster);
+            verb = new VerbSample(caster, victim, caster);
 
             if (verb.genes.Count == 0)
             {

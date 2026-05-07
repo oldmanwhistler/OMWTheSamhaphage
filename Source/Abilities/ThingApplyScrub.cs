@@ -8,10 +8,7 @@ namespace OMW_Samhaphage
 {
     public class VerbScrub : NullThrumVerbBase
     {
-        public VerbScrub(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest)
-        {
-        }
-
+        public VerbScrub(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
         
         public override string Name => "Scrub";
         // Cheap because it is destroying genes
@@ -32,10 +29,24 @@ namespace OMW_Samhaphage
         }        
     }
 
+// ### Scrub (Harvest)
+
+// Collect carcinomas and disabled genes as resonance.
+
+// - Requires a scoured mind / blocked by dissonance.
+// - Victim loses carcinomas and Caster gains resonance.
+// - Caster can pay resonance to destroy disabled genes on Victim.
+// - Applies dissonance to Victim.
+
     public class ThingApplyScrub : NullThrumAbilityPawnCorpse
     {
         public override string VerbName => "Scrub";
-        public override string VerbDescription => "and convert their genetic material to resonance.";
+
+        public override string VerbDescription(Pawn victim, Pawn caster)
+        {
+            return $"Scrub {victim.LabelShort} of their carcinomas and useless genes.\nConverts carcinomas to resonance and opens a menu to destroy deactivated genes.";
+        }
+        
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/Scrub");
 
         public static bool RemoveCarcinomas(Pawn victim, Pawn caster)

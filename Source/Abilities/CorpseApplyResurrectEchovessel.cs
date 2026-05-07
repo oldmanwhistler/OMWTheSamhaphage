@@ -11,7 +11,14 @@ namespace OMW_Samhaphage
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/ResurrectEchovessel");
 
         public override string VerbName => "Resurrect";
-        public override string VerbDescription => "as an Echovessel.";
+        public override string VerbDescription(Pawn victim, Pawn caster)
+        {
+            if (this.SacrificeCaster)
+                return $"Resurrect {victim.LabelShort} as an Echovessel by sacrificing yourself.";
+            else
+                return $"Resurrect {victim.LabelShort} as an Echovessel.";
+        }
+
 
         public override bool CanApplyOnCorpse(Corpse corpse, Pawn caster, out string reason)
         {

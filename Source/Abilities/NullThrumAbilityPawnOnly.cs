@@ -21,7 +21,7 @@ namespace OMW_Samhaphage
 
             if (CanApplyOnPawn(pawn, caster, out reason))
             {
-                return new MenuItemIcon(this.VerbName, $"{this.VerbName} {pawn.LabelShort} {this.VerbDescription}", this.Icon, () => Job(targetInfo, caster));
+                return new MenuItemIcon(this.VerbName, this.VerbDescription(pawn, caster), this.Icon, () => Job(targetInfo, caster));
             }
             else
             {

@@ -10,7 +10,7 @@ namespace OMW_Samhaphage
 
         public abstract Texture2D Icon { get; }
         public abstract string VerbName { get; }
-        public abstract string VerbDescription { get; }        
+        public abstract string VerbDescription(Pawn victim, Pawn caster);
 
         public bool ApplyThing(Thing thing, Pawn caster = null)
         {
