@@ -121,7 +121,7 @@ namespace OMW_Samhaphage
 
             if (ResonanceUtility.Total(caster) <= 2)
             {
-                reason = $"{caster.LabelShort} does not have enough resonance to {this.verb.Name}.";
+                reason = $"{caster.LabelShort} does not have enough resonance to {this.VerbName}.";
                 return false;
             }
 
