@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using RimWorld.QuestGen;
+using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace OMW_Samhaphage
 {
@@ -65,7 +67,7 @@ namespace OMW_Samhaphage
             if (highlightColor == null)
                 return label;
 
-            return label.Insert(index+search.Length, "</color>").Insert(index, $"<color={highlightColor}>");
+            return label.Insert(index + search.Length, "</color>").Insert(index, $"<color={highlightColor}>");
         }
 
         /// <summary>
@@ -135,7 +137,7 @@ namespace OMW_Samhaphage
             if (Items == null || Items.Count == 0)
             {
                 Log.Message($"Opened a {nameof(BetterFloatMenu)} with no items! Closing...");
-                Close(); 
+                Close();
                 return;
             }
 
@@ -191,13 +193,18 @@ namespace OMW_Samhaphage
                         GUI.color = Color.white;
                     }
 
-                if (!item.Disabled && Widgets.ButtonInvisible(area))
+                    if (!item.Disabled)
                     {
-                        OnSelected?.Invoke(item);
-                        if (CloseOnSelected)
+                        Widgets.DrawHighlightIfMouseover(area);
+                        if (Widgets.ButtonInvisible(area))
                         {
-                            Close();
-                            break;
+                            SoundDefOf.Click.PlayOneShotOnCamera();
+                            OnSelected?.Invoke(item);
+                            if (CloseOnSelected)
+                            {
+                                Close();
+                                break;
+                            }
                         }
                     }
                     y += size.y + Padding;
@@ -369,7 +376,7 @@ namespace OMW_Samhaphage
                 labelArea.xMin += area.height + 2;
             else
                 labelArea.xMin += 4;
-            
+
             if (Disabled) GUI.color = Color.gray;
             Widgets.LabelFit(labelArea, label);
             GUI.color = Color.white;
@@ -432,7 +439,7 @@ namespace OMW_Samhaphage
             this.Label = label;
             this.Color = Color.gray;
             this.Disabled = true;
-        }        
+        }
 
         public override bool MatchesSearch(string search)
         {
