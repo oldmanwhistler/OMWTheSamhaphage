@@ -43,10 +43,6 @@ namespace OMW_Samhaphage
                 Log.Message($"Job created successfully for {caster} to approach and interact with {target}. Job: {job}");
             }
         }        
-        public string GetGeneStateDesc(Pawn pawn)
-        {
-            return $"Endo: {OMWGenes.CountEndogenes(pawn).ToString()}, Xeno: {OMWGenes.CountXenogenes(pawn).ToString()}, Complex: {OMWGenes.CalculateComplexity(pawn).ToString()}, Metab: {OMWGenes.CalculateMetabolism(pawn).ToString()}";
-        }
 
         public void OpenWindow(List<FloatMenuOption> options)
         {

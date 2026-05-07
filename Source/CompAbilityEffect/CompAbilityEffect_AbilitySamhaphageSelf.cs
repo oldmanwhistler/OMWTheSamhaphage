@@ -21,9 +21,6 @@ namespace OMW_Samhaphage
         {
             List<MenuItemBase> items = new List<MenuItemBase>();
 
-            // Header
-            items.Add(new MenuItemText(null, GetGeneStateDesc(parent.pawn)));
-
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
             string reason;
             NullThrumAbilityBase ability;

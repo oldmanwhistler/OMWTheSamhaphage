@@ -24,9 +24,6 @@ namespace OMW_Samhaphage
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
             string reason;
 
-            // Header with current gene state
-            items.Add(new MenuItemText(null, GetGeneStateDesc(parent.pawn)));
-
             if (xeno != OMW_XenotypeDefOf.omw_hallowbound)
             {
                 // hybrids lose the ability
