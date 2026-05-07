@@ -35,7 +35,8 @@ namespace OMW_Samhaphage
             if ((xeno != OMW_XenotypeDefOf.omw_samhaphage) && (xeno != OMW_XenotypeDefOf.omw_sovereign_stillness))
             {
                 // hybrids lose the ability
-                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Samhaphage abilities.", MessageTypeDefOf.NegativeEvent); 
+                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Samhaphage abilities.", MessageTypeDefOf.NegativeEvent);
+                return;
             }
             else if (target.Thing is Pawn otherPawn)
             {
@@ -51,16 +52,13 @@ namespace OMW_Samhaphage
                 ability = new ThingApplyScrub();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
-                if (PawnApplyRetune.CanApplyOn(otherPawn, out reason))
-                {
-                    items.Add(new MenuItemText((Action)(() => JobPawnRetune(target, parent.pawn)), $"Retune {otherPawn.LabelShort}"));
-                }
-                else
-                {
-                    items.Add(new MenuItemText(null, $"Can't Retune {otherPawn.LabelShort}. {reason}."));
-                }
+                ability = new PawnApplyRetune();
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
                 ability = new ThingApplyHarrow();
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+
+                ability = new ThingApplyAttenuate();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
                 if (PawnApplyHallowbound.CanApplyOn(otherPawn, out reason))
@@ -155,18 +153,6 @@ namespace OMW_Samhaphage
             }
         }
 
-        private void JobPawnRetune(LocalTargetInfo target, Pawn actor)
-        {
-            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
-            job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
-            job.targetA = target;
-            // The delegate needs to match the signature: (Pawn actor, Thing t)
-            // We use the 't' passed from the JobDriver to ensure target validity
-            job.onInteract = (actor, t) =>
-            {
-                if (t is Pawn victim) PawnApplyRetune.Apply(victim, actor);
-            };
-            parent.pawn.jobs.TryTakeOrderedJob(job);
-        }
+
     }
 }

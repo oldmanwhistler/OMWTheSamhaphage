@@ -33,7 +33,7 @@ namespace OMW_Samhaphage
             float tmp = 0f;
             foreach (GenePlus plus in selectedGenes)
             {
-                tmp += plus.cost;    
+                tmp += plus.value;    
             }
             return tmp;
         }

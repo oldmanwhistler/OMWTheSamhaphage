@@ -22,7 +22,6 @@ namespace OMW_Samhaphage
             List<MenuItemBase> items = new List<MenuItemBase>();
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
-            string reason;
             NullThrumAbilityBase ability;
 
             if (xeno == OMW_XenotypeDefOf.omw_sovereign_stillness)
@@ -35,21 +34,16 @@ namespace OMW_Samhaphage
             if ((xeno != OMW_XenotypeDefOf.omw_samhaphage) && (xeno != OMW_XenotypeDefOf.omw_sovereign_stillness))
             {
                 // hybrids lose the ability
-                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Samhaphage abilities.", MessageTypeDefOf.NegativeEvent); 
+                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Samhaphage abilities.", MessageTypeDefOf.NegativeEvent);
+                return;
             }
             else
             {
                 ability = new ThingApplyScrub();
                 items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
 
-                if (PawnApplyRetune.CanApplyOn(parent.pawn, out reason))
-                {
-                    items.Add(new MenuItemText((Action)(() => PawnApplyRetune.Apply(parent.pawn, parent.pawn)), "Retune self"));
-                }
-                else
-                {
-                    items.Add(new MenuItemText(null, $"Can't Retune self. {reason}."));
-                }
+                ability = new PawnApplyRetune();
+                items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
             }
 
             if (xeno == OMW_XenotypeDefOf.omw_samhaphage)

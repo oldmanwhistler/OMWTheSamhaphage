@@ -6,19 +6,18 @@ using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class VerbScrub : NullThrumVerbBase
+    public class VerbAttenuate : NullThrumVerbBase
     {
-        public VerbScrub(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
+        public VerbAttenuate(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
         
-        public override string Name => "Scrub";
+        public override string Name => "Attenuate";
         // Cheap because it is destroying genes
-        protected override float ResonanceTotalMultiplier => 0.5f;
+        protected override float ResonanceTotalMultiplier => 0.25f;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
             return source.genes.GenesListForReading
                 .Where(g => !OMW_BlacklistGenes.BlacklistedGenes.Contains(g.def) && // ignore blacklisted
-                        g.Overridden && // must be overridden to be scrubbed
                         !this.GeneIsWorthless(g)) // ignore cosmetic genes
                 .ToList();            
         }
@@ -29,89 +28,50 @@ namespace OMW_Samhaphage
         }        
     }
 
-// ### Scrub (Harvest)
 
-// Collect carcinomas and disabled genes as resonance.
-
-// - Requires a scoured mind / blocked by dissonance.
-// - Victim loses carcinomas and Caster gains resonance.
-// - Caster can pay resonance to destroy disabled genes on Victim.
-// - Applies dissonance to Victim.
-
-    public class ThingApplyScrub : NullThrumAbilityPawnCorpse
+    public class ThingApplyAttenuate : NullThrumAbilityPawnOnly
     {
-        public override string VerbName => "Scrub";
+        public override string VerbName => "Attenuate";
 
         public override string VerbDescription(Pawn victim, Pawn caster)
         {
-            return $"Scrub {victim.LabelShort} of their carcinomas and useless genes.\nConverts carcinomas to resonance and opens a menu to destroy deactivated genes.";
+            return $"Attenuate {victim.LabelShort} of their genes.\nConverts victim's genes to resonance.";
         }
-
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/Scrub");
-
-        public static bool RemoveCarcinomas(Pawn victim, Pawn caster)
-        {
-            HediffDef hediffDef = HediffDefOf.Carcinoma;
-
-            List<Hediff> carcinomas = new List<Hediff>();
-            foreach (Hediff hediffToCheck in victim.health.hediffSet.hediffs)
-            {
-                if (hediffToCheck.def == hediffDef)
-                {
-                    carcinomas.Add(hediffToCheck);
-                }
-            }
-
-            if (carcinomas.Count == 0)
-            {
-                Log.Message($"{victim.LabelShort} doesn't have any carcinomas to remove.");
-                return false;
-            }
-
-            float amount = carcinomas.Count * 1.5f;
-            ResonanceUtility.Incr("from removing carcinomas", caster, amount);
-
-            foreach (Hediff carcinoma in carcinomas)
-            {
-                victim.health.RemoveHediff(carcinoma);
-            }
-
-            return true;
-        }
+        
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/Attenuate");
 
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
             if (victim == null || caster == null) return false;
 
-            verb = new VerbScrub(caster, victim, null);
-
-            RemoveCarcinomas(victim, caster);
+            verb = new VerbAttenuate(caster, victim, null);
 
             if (verb.genes.Count == 0)
             {
-                Messages.Message($"{victim.LabelShort} has no genes that can be scrubbed.", MessageTypeDefOf.RejectInput);
+                Messages.Message($"{victim.LabelShort} has no genes that can be Attenuated.", MessageTypeDefOf.RejectInput);
                 return false;
             }
 
             bool activated = false;
-
-            Find.WindowStack.Add(new WindowSelectGenesForVerb(verb, (selectedList) =>
+            string msg = $"{victim.LabelShort} has died being attenuated for their resonance.";
+            // We define the lethal logic as an Action
+            System.Action sacrificeAction = () =>
             {
-                foreach (GenePlus plus in selectedList)
+                foreach (GenePlus plus in verb.genes)
                 {
-                    if (verb.ResonanceDebit(plus))
-                    {
-                        victim.genes.RemoveGene(plus.gene);
-                        Log.Message($"Destroyed {plus.gene.LabelCap} from {victim.LabelShort}");
-                        activated = true;
-                    }
+                    verb.ResonanceCredit(plus);
+                    victim.genes.RemoveGene(plus.gene);
+                    activated = true;
                 }
-            }));
+                if (activated) {
+                    OMWAnomaly.PawnToShamblerOrKillDestroy(caster, caster);
+                    Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
+                }
+            };
 
-            if (activated)
-            {
-                verb.ApplyDissonance(victim, caster);
-            }
+            // Open the confirmation dialog
+            OMW_UIHelpers.ShowLethalConfirmation(victim, sacrificeAction);
+
             return activated;
         }
 

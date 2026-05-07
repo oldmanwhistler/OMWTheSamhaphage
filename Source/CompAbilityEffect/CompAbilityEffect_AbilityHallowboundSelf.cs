@@ -21,24 +21,20 @@ namespace OMW_Samhaphage
         {
             List<MenuItemBase> items = new List<MenuItemBase>();
 
+            NullThrumAbilityBase ability;
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
             string reason;
 
             if (xeno != OMW_XenotypeDefOf.omw_hallowbound)
             {
                 // hybrids lose the ability
-                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Hallowbound abilities.", MessageTypeDefOf.NegativeEvent);                
+                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Hallowbound abilities.", MessageTypeDefOf.NegativeEvent);
+                return;                
             }
             else
             {
-                if (PawnApplyRetune.CanApplyOn(parent.pawn, out reason))
-                {
-                    items.Add(new MenuItemText((Action)(() => PawnApplyRetune.Apply(parent.pawn, parent.pawn)), "Retune self"));
-                }
-                else
-                {
-                    items.Add(new MenuItemText(null, $"Can't Retune self. {reason}."));
-                }
+                ability = new PawnApplyRetune();
+                items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
 
                 if (PawnClearXenogenes.CanApplyOn(parent.pawn, out reason))
                 {

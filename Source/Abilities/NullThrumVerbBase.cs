@@ -10,7 +10,7 @@ namespace OMW_Samhaphage
 
         protected NullThrumVerbBase(Pawn caster, Pawn source, Pawn dest)
         {
-            // Need to store this for calculating resonance cost and max selection
+            // Need to store this for calculating resonance value and max selection
             this.caster = caster;
             this.SetGenesToSelectFromPlus(source, dest);
         }
@@ -48,7 +48,7 @@ namespace OMW_Samhaphage
             return (gene.def.biostatCpx == 0) && (gene.def.biostatArc == 0) && (gene.def.biostatMet == 0);
         }
 
-        // GenesPlus is a wrapper class that has useful info for the UI, such as resonance cost and conflict info
+        // GenesPlus is a wrapper class that has useful info for the UI, such as resonance value and conflict info
         private void SetGenesToSelectFromPlus(Pawn source, Pawn dest)
         {
             List<Gene> genesToSelectFrom = this.GenesToSelectFrom(source, dest);
@@ -56,16 +56,16 @@ namespace OMW_Samhaphage
             this.genes = GenePlusUtility.ConvertToGenePlus(source, genesToSelectFrom, conflictDefs);
             foreach (GenePlus gene in this.genes)
             {
-                gene.cost = this.GeneValue(gene.gene);
+                gene.value = this.GeneValue(gene.gene);
             }
         }
 
-        public bool PayResonance(GenePlus plus)
+        public bool ResonanceDebit(GenePlus plus)
         {
-            float cost = this.GeneValue(plus.gene);
-            if (ResonanceUtility.HasAvailable(caster, cost))
+            float value = this.GeneValue(plus.gene);
+            if (ResonanceUtility.HasAvailable(caster, value))
             {
-                ResonanceUtility.Decr(caster, cost);
+                ResonanceUtility.Decr(caster, value);
                 return true;
             }
             else
@@ -73,6 +73,12 @@ namespace OMW_Samhaphage
                 Messages.Message($"Not enough Resonance to {Name} {plus.gene.LabelCap}.", MessageTypeDefOf.RejectInput);
                 return false;
             }
+        }
+
+        public void ResonanceCredit(GenePlus plus)
+        {
+            float value = this.GeneValue(plus.gene);
+            ResonanceUtility.Incr($"Apply credit", caster, value);
         }
 
         // GeneticDissonance prevents repeatedly using the same abilities on the same pawn

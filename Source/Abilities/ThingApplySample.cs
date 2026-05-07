@@ -13,7 +13,7 @@ namespace OMW_Samhaphage
             
         }
 
-        public override string Name => "Steal Face";
+        public override string Name => "Sample";
         // Stealing trash genes
         protected override float ResonanceTotalMultiplier => 0.75f;
 
@@ -63,7 +63,7 @@ namespace OMW_Samhaphage
             {
                 foreach (GenePlus plus in selectedList)
                 {
-                    if (verb.PayResonance(plus))
+                    if (verb.ResonanceDebit(plus))
                     {
                         victim.genes.RemoveGene(plus.gene);
                         caster.genes.AddGene(plus.gene.def, true);

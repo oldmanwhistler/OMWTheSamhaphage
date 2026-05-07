@@ -6,7 +6,7 @@ namespace OMW_Samhaphage
     public class GenePlus
     {
         public Gene gene;
-        public float cost = 0f;
+        public float value = 0f;
         public string destinationConflictStr = "";
         public bool isXenogene;
         
@@ -34,7 +34,7 @@ namespace OMW_Samhaphage
             {
                 stats += $"\nArchite: {this.gene.def.biostatArc}";
             }
-            stats += $"\nResonance Cost: {this.cost}";            
+            stats += $"\nResonance Value: {this.value}";            
             var tip = $"{this.gene.LabelCap}\n\n{this.gene.def.DescriptionFull}{stats}";
             if (this.gene.overriddenByGene != null)
             {
