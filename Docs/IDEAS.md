@@ -1,29 +1,16 @@
-# Reproduction
+# IDEAS
 
-Fluxspawn -> Fluxspawn (natural birth)
-Fluxspawn Hiveling -> Brute via Teratogenic shift
-Fluxspawn Hiveling -> Flicker via Teratogenic shift
-Fluxspawn Hiveling -> Prisoner -> Cradlemold (fluxspawn dies, another pawn become Cradlemold)
-Fluxspawn Hiveling -> Prisoner -> Hallowbound (fluxspawn dies, corpse becomes Hallowbound)
-Hallowbound -> Hallowbound (natural birth)
-Hallowbound -> Corpse -> Echovessel (resurrect corpse)
-Hallowbound -> Prisoner -> Fluxspawn (parasitic egg)
-Hallowbound -> Samhaphage (genetic metamorphosis)
-Samhaphage -> Corpse -> Hallowbound (resurrect corpse)
-Samhaphage -> Prisoner -> Fluxspawn (parasitic egg)
-Samhaphage -> Sovereign Stillness (genetic metamorphosis)
+What's the difference between this and TODO? TODO is stuff I'm going to do and this is just ideas.
 
-# Concepts
+## Concepts
 
 Concept: parasitic implantation of xenotype
-
-If there are more than one Sovereign Stillness they go berserk and fight?
 
 prevent specific traits on xenotypes?
 
 must allow violence?
 
-# Lore
+## Lore
 
 set up specific backgrounds on xenotypes?
 
@@ -32,9 +19,27 @@ need name files for the non corpse names
 can we add psylink as part of the xenotype but without the gene?
 samhaphage need to be able to space walk?
 
-# Scenarios
+## Scenarios
 
-scenario where you start with a functional gravship?
-Hallowbounds three crashland only rebuilding the hive
-2 hallowbound and 3 fluxspawn tribal only rebuilding the hive
-lone naked SovereignStillness on ice sheet (The Thing?)
+- Oops all Fluxpsawn
+- scenario where you start with a functional gravship?
+- Hallowbound three crashland only rebuilding the hive
+- 2 hallowbound and 3 fluxspawn tribal only rebuilding the hive
+- lone naked SovereignStillness on ice sheet (The Thing?)
+
+## Propaganda
+
+- Hear me out cake of fluxspawn or cradlemold or a brute
+- baseliners children sitting around campfire with a word balloon showing a fluxspawn
+- Solo-leveling arise meme but with a sovereign stillness
+- life finds a way poster
+- The Thing poster 
+- easter egg pawns?
+- They Live - echovessel and hallowbound
+- Slither
+- "Just a little guy" fluxspawn
+- Legally Blonde by a Cradlemold with a Fluxspawn in a purse
+  
+## NO AI GRAPHICS
+
+- Potato graphics replacer for the icons that doesn't use ai
