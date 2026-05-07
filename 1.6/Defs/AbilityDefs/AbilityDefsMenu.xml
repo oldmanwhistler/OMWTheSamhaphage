@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs>
+    <AbilityDef ParentName="AG_NoTargetAbilities" Name="OMW_AbilityXenotypeSelfBase" Abstract="True">
+        <hostile>false</hostile>    
+        <canUseAoeToGetTargets>false</canUseAoeToGetTargets>        
+        <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+        <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>            
+        <category>OMW_SamhaphageAbility</category>
+        <uiOrder>1</uiOrder>
+    </AbilityDef>    
+
+
     <AbilityDef Name="OMW_AbilityXenotypeTargetPawnBase" Abstract="True">
         <verbProperties >
             <verbClass>Verb_CastAbility</verbClass>
@@ -17,6 +27,8 @@
         <canUseAoeToGetTargets>false</canUseAoeToGetTargets>        
         <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
         <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>            
+        <category>OMW_SamhaphageAbility</category>
+        <uiOrder>2</uiOrder>        
     </AbilityDef>
 
     <AbilityDef Name="OMW_AbilityXenotypeTargetCorpseBase" Abstract="True">
@@ -36,18 +48,13 @@
         <canUseAoeToGetTargets>false</canUseAoeToGetTargets>        
         <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
         <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>            
-    </AbilityDef>    
-
-    <AbilityDef ParentName="AG_NoTargetAbilities" Name="OMW_AbilityXenotypeSelfBase" Abstract="True">
-        <hostile>false</hostile>    
-        <canUseAoeToGetTargets>false</canUseAoeToGetTargets>        
-        <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
-        <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>            
+        <category>OMW_SamhaphageAbility</category>
+        <uiOrder>3</uiOrder>
     </AbilityDef>    
 
     <AbilityDef ParentName="OMW_AbilityXenotypeTargetPawnBase" >
         <defName>OMW_AbilityFluxspawnTargetPawn</defName>
-        <label>Abilities</label>
+        <label>Pawn</label>
         <description>Manipulate the essence of fluxspawn to produce various effects. The available actions depend on the target.</description>
         <iconPath>UI/Abilities/FluxspawnPawn</iconPath>
         <comps>
@@ -58,7 +65,7 @@
 
     <AbilityDef ParentName="OMW_AbilityXenotypeTargetCorpseBase" >
         <defName>OMW_AbilityFluxspawnTargetCorpse</defName>
-        <label>Abilities</label>
+        <label>CompProperties_AbilityFluxspawnTargetPawn</label>
         <description>Manipulate the essence of fluxspawn to produce various effects. The available actions depend on the target.</description>
         <iconPath>UI/Abilities/FluxspawnCorpse</iconPath>
         <comps>
@@ -70,7 +77,7 @@
 
     <AbilityDef ParentName="OMW_AbilityXenotypeSelfBase" >
         <defName>OMW_AbilityFluxspawnSelf</defName>
-        <label>Abilities</label>
+        <label>Self</label>
         <description>Manipulate the essence of fluxspawn to produce various effects.</description>
         <iconPath>UI/Abilities/FluxspawnSelf</iconPath>
         <comps>
@@ -81,7 +88,7 @@
 
     <AbilityDef ParentName="OMW_AbilityXenotypeTargetPawnBase" >
         <defName>OMW_AbilityHallowboundTargetPawn</defName>
-        <label>Abilities</label>
+        <label>Pawn</label>
         <description>Manipulate the essence of Hallowbound to produce various effects. The available actions depend on the target.</description>
         <iconPath>UI/Abilities/HallowboundPawn</iconPath>
         <comps>
@@ -92,7 +99,7 @@
 
     <AbilityDef ParentName="OMW_AbilityXenotypeTargetCorpseBase" >
         <defName>OMW_AbilityHallowboundTargetCorpse</defName>
-        <label>Abilities</label>
+        <label>Corpse</label>
         <description>Manipulate the essence of Hallowbound to produce various effects. The available actions depend on the target.</description>
         <iconPath>UI/Abilities/HallowboundCorpse</iconPath>
         <comps>
@@ -104,7 +111,7 @@
 
     <AbilityDef ParentName="OMW_AbilityXenotypeSelfBase" >
         <defName>OMW_AbilityHallowboundSelf</defName>
-        <label>Abilities</label>
+        <label>Self</label>
         <description>Manipulate the essence of Hallowbound to produce various effects.</description>
         <iconPath>UI/Abilities/HallowboundSelf</iconPath>
         <comps>
@@ -115,7 +122,7 @@
 
     <AbilityDef ParentName="OMW_AbilityXenotypeTargetPawnBase" >
         <defName>OMW_AbilitySamhaphageTargetPawn</defName>
-        <label>Abilities</label>
+        <label>Pawn</label>
         <iconPath>UI/Abilities/SamhaphagePawn</iconPath>        
         <description>Manipulate the essence of Samhaphage to produce various effects. The available actions depend on the target.</description>
         <comps>
@@ -126,7 +133,7 @@
 
     <AbilityDef ParentName="OMW_AbilityXenotypeTargetCorpseBase" >
         <defName>OMW_AbilitySamhaphageTargetCorpse</defName>
-        <label>Abilities</label>
+        <label>Corpse</label>
         <iconPath>UI/Abilities/SamhaphageCorpse</iconPath>        
         <description>Manipulate the essence of Samhaphage to produce various effects. The available actions depend on the target.</description>
         <comps>
@@ -137,7 +144,7 @@
 
     <AbilityDef ParentName="OMW_AbilityXenotypeSelfBase" >
         <defName>OMW_AbilitySamhaphageSelf</defName>
-        <label>Abilities</label>
+        <label>Self</label>
         <description>Manipulate the essence of Samhaphage to produce various effects.</description>
         <iconPath>UI/Abilities/SamhaphageSelf</iconPath>
         <comps>
