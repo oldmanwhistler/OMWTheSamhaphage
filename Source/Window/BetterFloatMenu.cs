@@ -423,6 +423,7 @@ namespace OMW_Samhaphage
 
         public MenuItemIcon(string label, string tooltip, Texture2D icon, object payload)
         {
+            Log.Message($"MenuItemIcon, enabled, {label}, {tooltip}");
             this.Payload = payload;
             this.Tooltip = tooltip;
             this.Icon = icon;
@@ -433,6 +434,7 @@ namespace OMW_Samhaphage
 
         public MenuItemIcon(string label, string tooltip, Texture2D icon)
         {
+            Log.Message($"MenuItemIcon, disabled, {label}, {tooltip}");
             this.Payload = null;
             this.Tooltip = tooltip;
             this.Icon = icon;
