@@ -97,19 +97,10 @@ namespace OMW_Samhaphage
             // pawns to 'abort' jobs on sleeping allies/colonists.
             interactToil.initAction = delegate
             {
-                Pawn targetPawn = TargetA.Thing as Pawn;
-                if (targetPawn != null)
+                if (TargetA.Thing is Pawn targetPawn && targetPawn != pawn && targetPawn.Spawned && !targetPawn.Dead)
                 {
-                    if (pawn == targetPawn)
-                    {
-                        // Targeting self, don't interrupt
-                    }
-                    else if (!targetPawn.HostileTo(pawn))
-                    {
-                        Log.Message(
-                            $"[OMW_Samhaphage] Target {targetPawn} is friendly to {pawn}. Ending job.");
-                        targetPawn.jobs.EndCurrentJob(JobCondition.Incompletable);
-                    }
+                    Log.Message($"[OMW_Samhaphage] Target {targetPawn.LabelShort} interrupted to allow interaction.");
+                    targetPawn.jobs?.StopAll();
                 }
             };
 
