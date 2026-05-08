@@ -40,6 +40,7 @@ namespace OMW_Samhaphage
 
     public class ThingApplyScrub : NullThrumAbilityPawnCorpse
     {
+        PawnApplyFlatten Flatten = new PawnApplyFlatten();
         public override string AbilityName => "Scrub";
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
@@ -87,6 +88,11 @@ namespace OMW_Samhaphage
 
             RemoveCarcinomas(victim, caster);
 
+            if (!OMWGenes.HasScouredMind(victim))
+            {
+                Flatten.ApplyPawn(victim, caster);
+            } 
+            
             if (selector.genes.Count == 0)
             {
                 Messages.Message($"{victim.LabelShort} has no genes that can be scrubbed.", MessageTypeDefOf.RejectInput);
@@ -124,31 +130,12 @@ namespace OMW_Samhaphage
         }
 
 
-        public override bool CanApplyOnPawn(Pawn p, Pawn caster, out string reason)
+        public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
         {
             reason = "unknown reason";
 
-            if (p == null)
+            if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason))
             {
-                reason = "Target is null.";
-                return false;
-            }
-
-            if (!p.RaceProps.Humanlike)
-            {
-                reason = $"{p.LabelShort} is not humanlike.";
-                return false;
-            }
-
-            if (!OMWGenes.HasScouredMind(p))
-            {
-                reason = $"{p.LabelShort} does not have a scoured mind.";
-                return false;
-            }
-
-            if (p.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
-            {
-                reason = $"{p.LabelShort} is affected by Genetic Dissonance";
                 return false;
             }
 

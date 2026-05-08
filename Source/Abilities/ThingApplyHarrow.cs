@@ -45,6 +45,7 @@ namespace OMW_Samhaphage
 
     public class ThingApplyHarrow : NullThrumAbilityPawnCorpse
     {
+        PawnApplyFlatten Flatten = new PawnApplyFlatten();        
         public override string AbilityName => "Harrow";
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
@@ -55,6 +56,11 @@ namespace OMW_Samhaphage
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
             if (victim == null || caster == null) return false;
+
+            if (!OMWGenes.HasScouredMind(victim))
+            {
+                Flatten.ApplyPawn(victim, caster);
+            }            
             SelectionHarrow selector = new SelectionHarrow(caster, victim, caster);
 
             if (selector.genes.Count == 0)
@@ -97,19 +103,12 @@ namespace OMW_Samhaphage
         }
 
 
-        public override bool CanApplyOnPawn(Pawn p, Pawn caster, out string reason)
+        public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
         {
             reason = "unknown reason";
 
-            if (p == null)
+            if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason))
             {
-                reason = "Target is null.";
-                return false;
-            }
-
-            if (!p.RaceProps.Humanlike)
-            {
-                reason = $"{p.LabelShort} is not humanlike.";
                 return false;
             }
 
@@ -122,18 +121,6 @@ namespace OMW_Samhaphage
             if (ResonanceUtility.Total(caster) <= 2)
             {
                 reason = $"{caster.LabelShort} does not have enough resonance to {this.AbilityName}.";
-                return false;
-            }
-
-            if (!OMWGenes.HasScouredMind(p))
-            {
-                reason = $"{p.LabelShort} does not have a Scoured Mind. Must be Flattened.";
-                return false;
-            }
-
-            if (p.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
-            {
-                reason = $"{p.LabelShort} is affected by Genetic Dissonance";
                 return false;
             }
 

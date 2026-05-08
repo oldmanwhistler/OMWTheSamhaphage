@@ -63,6 +63,25 @@ namespace OMW_Samhaphage
         {
             reason = "unknown reason";
 
+            if (!HasOrCanApplyOnPawn(victim, caster, out reason))
+            {
+                return false;
+            }
+
+            if (OMWGenes.HasScouredMind(victim))
+            {
+                reason = $"{victim.LabelShort} already has a scoured mind.";
+                return false;
+            }
+
+            return true;
+        }
+        
+        // Like CanApplyOnPawn except it will return true if the pawn already has a scoured mind
+        public bool HasOrCanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
+        {
+            reason = "unknown reason";
+
             if (victim == null)
             {
                 reason = "Target is null.";
@@ -75,16 +94,15 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            if (OMWGenes.HasScouredMind(victim))
+            // Only care about SilentServitude if they don't have flatten
+            // This might not matter and just be a left-over when I was first coding it.
+            if (!OMWGenes.HasScouredMind(victim))
             {
-                reason = $"{victim.LabelShort} already has a scoured mind.";
-                return false;
-            }
-
-            if (victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_SilentServitude))
-            {
-                reason = $"{victim.LabelShort} is affected by Silent Servitude.";
-                return false;
+                if (victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_SilentServitude))
+                {
+                    reason = $"{victim.LabelShort} is affected by Silent Servitude.";
+                    return false;
+                }
             }
 
             if (victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
@@ -92,20 +110,7 @@ namespace OMW_Samhaphage
                 reason = $"{victim.LabelShort} is affected by Genetic Dissonance.";
                 return false;
             }
-
-            return true;
-        }
-        
-        // Like CanApplyOnPawn except it will return true if the pawn already has a scoured mind
-        public bool HasOrCanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
-        {
-            reason = "unknown reason";
-            if (OMWGenes.HasScouredMind(victim))
-            {
-                reason = $"{victim.LabelShort} already has a scoured mind.";
-                return true;
-            }
-            return CanApplyOnPawn(victim, caster, out reason);
+            return true; 
         }
     }
 }

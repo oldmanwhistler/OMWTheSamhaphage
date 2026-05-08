@@ -6,6 +6,7 @@ namespace OMW_Samhaphage
 {
     public class PawnApplyHallowbound : NullThrumAbilityPawnOnly
     {
+        PawnApplyFlatten Flatten = new PawnApplyFlatten();
         public override string AbilityName => "Hallowbound";
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Hallowbound");
         public virtual bool SacrificeCaster => false;
@@ -20,6 +21,11 @@ namespace OMW_Samhaphage
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
             if (victim == null || caster == null) return false;
+
+            if (!OMWGenes.HasScouredMind(victim))
+            {
+                Flatten.ApplyPawn(victim, caster);
+            }
 
             if (!SacrificeCaster)
             {
@@ -39,39 +45,15 @@ namespace OMW_Samhaphage
             return true;
         }
 
-        public override bool CanApplyOnPawn(Pawn p, Pawn caster, out string reason)
+        public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
         {
             reason = "unknown reason";
 
-            if (p == null) 
+            if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason))
             {
-                reason = "Target is null.";
                 return false;
-            }            
-
-            if (!p.RaceProps.Humanlike)
-            {
-                reason = $"{p.LabelShort} is not humanlike.";
-                return false;
-            }
-
-            if (OMWGenes.HasNullThrum(p))
-            {
-                return true;
             }
             
-            if (!OMWGenes.HasScouredMind(p))
-            {
-                reason = $"{p.LabelShort} has not had their mind scoured.";
-                return false;
-            }
-
-            if (!p.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_SilentServitude))
-            {
-                reason = $"{p.LabelShort} is not affected by Silent Servitude.";
-                return false;
-            }
-
             return true;
         }
     }
