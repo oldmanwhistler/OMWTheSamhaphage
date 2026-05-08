@@ -100,13 +100,14 @@ Here is the full collection of everything that adds more features to this mod:
 
 ## AI Notice
 
-  This project was to learn how to mod RimWorld and to gain experience using different gen AI tools. Some of us single parents don't have the freedom to switch careers out of tech because "AI bad".
-
+  This project was to learn how to mod RimWorld and to gain experience using different gen AI tools I don't use at work.
+  
 1. AI was used for brainstorming nomenclature and descriptions.
 2. Coded using VS Code with Intellisense and AI suggestions/review.
    * "Vibe coding" used for batch refactoring and for working with the RimWorld "Window" UI classes.
 3. Gen AI used for icon assets. If this bugs you then I'll happily accept your hand-drawn vanilla aesthetic icons. Thanks in advance!
    * This mod has no graphical assets other than gene icons and ability icons.
+   * TODO: create an AI-free potato-pack of icons that don't use AI.
 
 ## License
 
@@ -114,8 +115,8 @@ This project and the work it was derived is free software. You can redistribute 
 
 Includes modified code from the following mods:
 
-* UI is based on [BetterFloatMenus by EpicGuru. MIT License.](https://github.com/Epicguru/BetterFloatMenu/tree/master)
+* UI is based on [BetterFloatMenus by EpicGuru](https://github.com/Epicguru/BetterFloatMenu/tree/master). MIT License.
 * abilityblah based on WVC_RacesBiotech (c)2023 WVCSergkart
-* Teratogenesis based on [AlphaGenes (c)2021 juanosarg. License unknown.](https://github.com/juanosarg/AlphaGenes)
-* Unstable Mutations based on [AlphaGenes (c)2021 juanosarg. License unknown.](https://github.com/juanosarg/AlphaGenes)
-* Parasitic Implantation based on [AlphaGenes (c)2021 juanosarg. License unknown.](https://github.com/juanosarg/AlphaGenes)
+* Teratogenesis based on [AlphaGenes (c)2021 juanosarg](https://github.com/juanosarg/AlphaGenes) [License CC-BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+* Unstable Mutations based on [AlphaGenes (c)2021 juanosarg](https://github.com/juanosarg/AlphaGenes) [License CC-BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+* Parasitic Implantation based on [AlphaGenes (c)2021 juanosarg](https://github.com/juanosarg/AlphaGenes) [License CC-BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)
