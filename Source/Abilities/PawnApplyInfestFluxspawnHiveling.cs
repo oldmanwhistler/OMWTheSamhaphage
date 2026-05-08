@@ -9,11 +9,11 @@ using AlphaGenes;
 
 namespace OMW_Samhaphage
 {
-    public class PawnApplyParasiticStinger : NullThrumAbilityPawnOnly
+    public class PawnApplyInfestFluxspawnHiveling : NullThrumAbilityPawnOnly
     {
-        public override string VerbName => "Parasitize";
-        public override string VerbDescription(Pawn victim, Pawn caster) => $"Implant a parasitic egg into {victim.LabelShort}. The process is lethal and will birth a litter of Fluxspawn.";
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Parasite");
+        public override string VerbName => "Infest";
+        public override string VerbDescription(Pawn victim, Pawn caster) => $"Infest {victim.LabelShort} with Fluxspawn embryos.\nThe process is lethal and will birth a litter of Fluxspawn.";
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Infest");
 
         public virtual HediffDef TargetHediffDef => OMW_HediffDefOf.OMW_ParasiticImplantation;
         public virtual XenotypeDef TargetXenotypeDef => OMW_XenotypeDefOf.omw_fluxspawn_hiveling;
