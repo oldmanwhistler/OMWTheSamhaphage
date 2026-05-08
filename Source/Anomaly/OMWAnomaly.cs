@@ -32,8 +32,8 @@ namespace OMW_Samhaphage
 
             victim.TakeDamage(dinfo);
 
-            if (brain) return true;
-            else return false;
+
+            return true;
         }
 
         // safe shamblerization of corpses only if AnomalyDLC is present.
