@@ -57,7 +57,7 @@ namespace OMW_Samhaphage
                 ability = new PawnApplyHallowbound();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
-                ability = new PawnApplyParasiticStinger();
+                ability = new PawnApplyInfestFluxspawnHiveling();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
             }
 

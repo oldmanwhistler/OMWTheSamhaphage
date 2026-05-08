@@ -22,7 +22,6 @@ namespace OMW_Samhaphage
             List<MenuItemBase> items = new List<MenuItemBase>();
 
             XenotypeDef xeno = parent.pawn.genes.Xenotype;            
-            string reason = "Unknown reason";
             NullThrumAbilityBase ability;
 
             if ((xeno != OMW_XenotypeDefOf.omw_fluxspawn_hiveling) && (xeno != OMW_XenotypeDefOf.omw_fluxspawn_brute) && (xeno != OMW_XenotypeDefOf.omw_fluxspawn_flicker))
@@ -41,14 +40,8 @@ namespace OMW_Samhaphage
                     ability = new FluxspawnFlickerStun();
                     items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
                 }
-                if (PawnApplyPregnant.CanApplyOn(otherPawn, out reason))
-                {
-                    items.Add(new MenuItemText((Action)(() => JobEnwomb(target)), $"Sacrifice self to transform {otherPawn.LabelShort} to Cradlemold xenotype."));
-                }
-                else
-                {
-                    items.Add(new MenuItemText(null, $"Can't transform {otherPawn.LabelShort} to Cradlemold. {reason}"));
-                }
+                ability = new PawnApplyEnwombSacrifice();
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
                 ability = new PawnApplyHallowboundSacrifice();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
@@ -69,27 +62,6 @@ namespace OMW_Samhaphage
                         Log.Error($"[OMW] Samhaphage AbilityFluxSpawnTargetPawn does not know how to handle item.Payload={item.Payload?.ToString() ?? "null"}");
                     }
                 });
-            }
-        }
-
-        private void JobEnwomb(LocalTargetInfo target)
-        {
-            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
-            job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
-            job.targetA = target;
-            // The delegate needs to match the signature: (Pawn actor, Thing t)
-            // We use the 't' passed from the JobDriver to ensure target validity
-            job.onInteract = (actor, t) => AbilityEnwomb(t, actor);            
-            parent.pawn.jobs.TryTakeOrderedJob(job);
-        }
-        
-        private void AbilityEnwomb(Thing thing, Pawn father)
-        {
-            if (thing is Pawn mother)
-            {
-                PawnApplyPregnant prego = new PawnApplyPregnant();
-                prego.ApplySacrifice(mother, father, OMW_HediffDefOf.OMW_SilentServitude,
-                    OMW_XenotypeDefOf.omw_cradlemold);
             }
         }
 

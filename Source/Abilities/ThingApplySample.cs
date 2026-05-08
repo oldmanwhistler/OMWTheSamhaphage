@@ -103,7 +103,7 @@ namespace OMW_Samhaphage
 
             if (ResonanceUtility.Total(caster) < 1)
             {
-                reason = "Not enough Resonance to steal a face.";
+                reason = $"Not enough Resonance to sample {p.LabelShort} and copy their appearance.";
                 return false;
             }
 

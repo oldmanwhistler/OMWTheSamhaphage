@@ -23,7 +23,6 @@ namespace OMW_Samhaphage
 
             NullThrumAbilityBase ability;
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
-            string reason;
 
             if (xeno != OMW_XenotypeDefOf.omw_hallowbound)
             {
@@ -35,26 +34,7 @@ namespace OMW_Samhaphage
             {
                 ability = new PawnApplyRetune();
                 items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
-
-                if (PawnClearXenogenes.CanApplyOn(parent.pawn, out reason))
-                {
-                    items.Add(new MenuItemText((Action)(() => PawnClearXenogenes.Apply(parent.pawn, parent.pawn)), "Reject xenogenes"));
-                }
-                else
-                {
-                    items.Add(new MenuItemText(null, $"Can't reject xenogenes. {reason}."));
-                }
-
-                int xenogenes = OMWGenes.CountXenogenes(parent.pawn);
-                if (xenogenes > 0)
-                {
-                    items.Add(new MenuItemText((Action)(() => OMWGenes.XenogenesToEndogenes(parent.pawn)), "Integrate xenogenes"));
-                }
-                else
-                {
-                    items.Add(new MenuItemText(null, "No xenogenes available to integrate"));
-                }
-
+            
                 int reqComplexity = 0;
                 int currComplexity = OMWGenes.CalculateComplexity(parent.pawn);
                 if (currComplexity >= reqComplexity)

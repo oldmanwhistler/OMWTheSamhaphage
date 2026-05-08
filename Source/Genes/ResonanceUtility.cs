@@ -35,7 +35,6 @@ namespace OMW_Samhaphage
                 resonance.Value += amount;
                 Log.Message(
                     $"[Resonance] {pawn.LabelShort} now has {resonance.Value} available resonance.");                
-                Messages.Message($"Gained {amount} resonance {reason}.", pawn, MessageTypeDefOf.PositiveEvent);
                 return true;
             }
             return false;
