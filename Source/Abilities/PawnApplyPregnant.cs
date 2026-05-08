@@ -1,47 +1,45 @@
 using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.AccessControl;
 using Verse;
+using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class PawnApplyPregnant
+    public class PawnApplyEnwomb : NullThrumAbilityPawnOnly
     {
-        private List<GeneDef> preggoGenes;
+        public override string VerbName => "Enwomb";
+        public override string VerbDescription(Pawn victim, Pawn caster) => $"Implant {victim.LabelShort} with a new life.";
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Enwomb");
 
-        private void pregnancyGenesTransfer(Pawn mother, Pawn father)
+        public virtual HediffDef TargetHediff => null;
+        public virtual XenotypeDef TargetXenotype => null;
+        public virtual bool SacrificeCaster => false;
+
+        private static List<GeneDef> cachedPreggoGenes;
+
+        private void PregnancyGenesTransfer(Pawn mother, Pawn father)
         {
             // Get all active genes from the father
             List<Gene> daddyGenes = father.genes.GenesListForReading
                 .Where(g => !g.Overridden)
                 .ToList();
 
-            // will only execute once
-            if (preggoGenes == null)
+            if (cachedPreggoGenes == null)
             {
-                // Names of all the pregnancy genes in common mods I support
-                // Order implies prioritization
-                List<string> preggoGeneNames = new List<string>();            
-                preggoGeneNames.AddRange(new string[]
+                List<string> preggoGeneNames = new List<string>
                 {
-                    // eggs
                     "AG_EggLaying",
-                    // weird
                     "BS_AutoPregnancy",
                     "WVC_IncestLover",
-                    // maturity
                     "BS_VeryEarlyMaturity",
                     "BS_EarlyMaturity",
-                    // amount
                     "BS_BirthLitter",
                     "BS_BirthTwins",
-                    // gestation
                     "BS_MinimalPregnancy",
                     "BS_ShortPregnancy",
                     "AG_FastGestation",
                     "AG_SlowGestation",
-                    // fertility
                     "Sterile",
                     "VU_NearSterile",
                     "WVC_AgeDebuff_Sterile",
@@ -51,34 +49,50 @@ namespace OMW_Samhaphage
                     "WVC_BaselinerFertility",
                     "Fertile",
                     "AG_ReducedFertile"
-                });
+                };
 
                 // Get a list of the actual GeneDefs for those names, filtering out any that don't exist in the current mod setup
-                preggoGenes = preggoGeneNames.Select(name => DefDatabase<GeneDef>.GetNamed(name)).ToList();
+                cachedPreggoGenes = preggoGeneNames.Select(name => DefDatabase<GeneDef>.GetNamed(name)).ToList();
             }
 
-
-            // Find which of the father's active genes match our "preggo" list
             List<Gene> genesToTransfer = daddyGenes
-                .Where(g => preggoGenes.Contains(g.def))
+                .Where(g => cachedPreggoGenes.Contains(g.def))
                 .ToList();
 
-            // Add those genes to the mother
             foreach (Gene gene in genesToTransfer)
             {
-                // Check if mother already has it to avoid duplicates/errors
                 if (!mother.genes.HasActiveGene(gene.def))
                 {
-                    // Second parameter 'true' usually adds it as a Xenogene
                     mother.genes.AddGene(gene.def, xenogene: true);
                 }
             }
         }
 
-        public bool Apply(Pawn mother, Pawn father, HediffDef targetHeDiff = null, XenotypeDef targetXenotype = null)
+        public override bool ApplyPawn(Pawn mother, Pawn father = null)
         {
             if (mother == null || father == null) return false;
 
+            if (!SacrificeCaster)
+            {
+                return ExecutePregnancy(mother, father);
+            }
+
+            string msg = $"{father.LabelShort} has died making {mother.LabelShort} pregnant.";
+            System.Action sacrificeAction = () =>
+            {
+                if (ExecutePregnancy(mother, father))
+                {
+                    OMWAnomaly.PawnToShamblerOrKillDestroy(father, father);
+                    Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
+                }
+            };
+
+            OMW_UIHelpers.ShowLethalConfirmation(father, sacrificeAction);
+            return true;
+        }
+
+        private bool ExecutePregnancy(Pawn mother, Pawn father)
+        {
             // Life finds a way.
             if (mother.gender != Gender.Female)
             {
@@ -86,53 +100,31 @@ namespace OMW_Samhaphage
             }
             OMWHediffs.RemoveHediff(mother, HediffDefOf.Sterilized);
 
-            if (targetXenotype != null)
+            if (TargetXenotype != null)
             {
-                OMWGenes.ChangeXenotype(mother, null, targetXenotype);
+                OMWGenes.ChangeXenotype(mother, null, TargetXenotype);
             }
 
             OMWGenes.Refresh(mother);
 
-            this.pregnancyGenesTransfer(mother, father);            
+            this.PregnancyGenesTransfer(mother, father);            
 
-            // Tried to vibe code this; failed. I ended up copying it from MiscUtility.cs in WVC_RacesBiotech
             Hediff_Pregnant hediff_Pregnant =
                 (Hediff_Pregnant)HediffMaker.MakeHediff(HediffDefOf.PregnantHuman, mother);
             hediff_Pregnant.Severity = PregnancyUtility.GeneratedPawnPregnancyProgressRange.TrueMin;
             hediff_Pregnant.SetParents(mother, father, null);
             mother.health.AddHediff(hediff_Pregnant);
 
-            if (targetHeDiff != null)
+            if (TargetHediff != null)
             {
-                mother.health.AddHediff(targetHeDiff);
+                mother.health.AddHediff(TargetHediff);
             }
             
-            // Optional: Visual mote to show it worked
             MoteMaker.MakeStaticMote(mother.TrueCenter(), mother.Map, ThingDefOf.Mote_ThoughtBad);
             return true;
         }
 
-        public void ApplySacrifice(Pawn mother, Pawn father, HediffDef targetHeDiff = null, XenotypeDef
-            targetXenotype = null)
-        {
-            string msg = $"{father.LabelShort} has died making {mother.LabelShort} pregnant.";
-            // We define the lethal logic as an Action
-            System.Action sacrificeAction = () =>
-            {
-                if (Apply(mother, father, targetHeDiff, targetXenotype))
-                {
-
-                    OMWAnomaly.PawnToShamblerOrKillDestroy(father, father);                    
-                    Messages.Message(msg,
-                        MessageTypeDefOf.NegativeEvent);
-                }
-            };
-
-            // Open the confirmation dialog
-            OMW_UIHelpers.ShowLethalConfirmation(father, sacrificeAction);
-        }
-
-        public static bool CanApplyOn(Pawn p, out string reason)
+        public override bool CanApplyOnPawn(Pawn p, Pawn caster, out string reason)
         {
             reason = "unknown reason";
             if (p == null) 
@@ -147,7 +139,6 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            // Check if target is a not already pregnant
             if (!p.RaceProps.Humanlike)
             {
                 reason = "Target is not humanlike.";
@@ -161,5 +152,13 @@ namespace OMW_Samhaphage
 
             return true;
         }
+    }
+
+    public class PawnApplyEnwombSacrifice : PawnApplyEnwomb
+    {
+        public override HediffDef TargetHediff => OMW_HediffDefOf.OMW_SilentServitude;
+        public override XenotypeDef TargetXenotype => OMW_XenotypeDefOf.omw_cradlemold;
+        public override bool SacrificeCaster => true;
+        public override string VerbDescription(Pawn victim, Pawn caster) => $"Sacrifice yourself to transform {victim.LabelShort} into a Cradlemold factory.";
     }
 }
