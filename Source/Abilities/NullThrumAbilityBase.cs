@@ -6,8 +6,6 @@ namespace OMW_Samhaphage
 {
     public abstract class NullThrumAbilityBase
     {
-        public NullThrumSelectionGene verb;
-
         public abstract Texture2D Icon { get; }
         public abstract string AbilityName { get; }
         public abstract string AbilityDescription(Pawn victim, Pawn caster);

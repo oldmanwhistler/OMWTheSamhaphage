@@ -44,9 +44,9 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return false;
 
-            verb = new SelectionAttenuate(caster, victim, null);
+            SelectionAttenuate selector = new SelectionAttenuate(caster, victim, null);
 
-            if (verb.genes.Count == 0)
+            if (selector.genes.Count == 0)
             {
                 Messages.Message($"{victim.LabelShort} has no genes that can be Attenuated.", MessageTypeDefOf.RejectInput);
                 return false;
@@ -57,9 +57,9 @@ namespace OMW_Samhaphage
             // We define the lethal logic as an Action
             System.Action sacrificeAction = () =>
             {
-                foreach (GenePlus plus in verb.genes)
+                foreach (GenePlus plus in selector.genes)
                 {
-                    verb.ResonanceCredit(plus);
+                    selector.ResonanceCredit(plus);
                     victim.genes.RemoveGene(plus.gene);
                     activated = true;
                 }

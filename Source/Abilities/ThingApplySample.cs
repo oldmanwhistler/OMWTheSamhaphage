@@ -48,9 +48,9 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return false;
 
-            verb = new SelectionSample(caster, victim, caster);
+            SelectionSample selector = new SelectionSample(caster, victim, caster);
 
-            if (verb.genes.Count == 0)
+            if (selector.genes.Count == 0)
             {
                 Messages.Message($"{victim.LabelShort} has no genes that can be stolen.",
                     MessageTypeDefOf.RejectInput);
@@ -59,11 +59,11 @@ namespace OMW_Samhaphage
 
             bool activated = false;
 
-            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(verb, (selectedList) =>
+            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
             {
                 foreach (GenePlus plus in selectedList)
                 {
-                    if (verb.ResonanceDebit(plus))
+                    if (selector.ResonanceDebit(plus))
                     {
                         victim.genes.RemoveGene(plus.gene);
                         caster.genes.AddGene(plus.gene.def, true);

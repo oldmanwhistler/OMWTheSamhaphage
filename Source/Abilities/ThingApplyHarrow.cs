@@ -55,9 +55,9 @@ namespace OMW_Samhaphage
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
             if (victim == null || caster == null) return false;
-            verb = new SelectionHarrow(caster, victim, caster);
+            SelectionHarrow selector = new SelectionHarrow(caster, victim, caster);
 
-            if (verb.genes.Count == 0)
+            if (selector.genes.Count == 0)
             {
                 Messages.Message($"{victim.LabelShort} has no genes that can be harrowed.",
                     MessageTypeDefOf.RejectInput);
@@ -66,11 +66,11 @@ namespace OMW_Samhaphage
 
             bool activated = false;
 
-            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(verb, (selectedList) =>
+            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
             {
                 foreach (GenePlus plus in selectedList)
                 {
-                    if (verb.ResonanceDebit(plus))
+                    if (selector.ResonanceDebit(plus))
                     {
                         victim.genes.RemoveGene(plus.gene);
                         caster.genes.AddGene(plus.gene.def, true);
@@ -82,7 +82,7 @@ namespace OMW_Samhaphage
 
             if (activated)
             {
-                verb.ApplyDissonance(victim, caster);
+                selector.ApplyDissonance(victim, caster);
             }
 
             return activated;

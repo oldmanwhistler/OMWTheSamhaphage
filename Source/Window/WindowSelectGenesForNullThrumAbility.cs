@@ -9,7 +9,7 @@ namespace OMW_Samhaphage
 {
     public class WindowSelectGenesForNullThrumAbility : Window
     {
-        private NullThrumSelectionGene verb;
+        private NullThrumSelectionGene selector;
         private WindowState windowState;
         private HashSet<GenePlus> selectedGenes = new HashSet<GenePlus>();
         private System.Action<List<GenePlus>> onConfirm;
@@ -17,9 +17,9 @@ namespace OMW_Samhaphage
 
         public override Vector2 InitialSize => new Vector2(450f, 700f);
 
-        public WindowSelectGenesForNullThrumAbility(NullThrumSelectionGene verb, System.Action<List<GenePlus>> callback)
+        public WindowSelectGenesForNullThrumAbility(NullThrumSelectionGene selector, System.Action<List<GenePlus>> callback)
         {
-            this.verb = verb;
+            this.selector = selector;
             this.onConfirm = callback;
 
             this.forcePause = true;
@@ -40,7 +40,7 @@ namespace OMW_Samhaphage
 
         public float SelectionMaxCost()
         {
-            return this.verb.SelectionMaxCost;
+            return this.selector.SelectionMaxCost;
         }
         
         public override void DoWindowContents(Rect inRect)
@@ -49,7 +49,7 @@ namespace OMW_Samhaphage
             // --- Header ---
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 40f);
             Text.Font = GameFont.Medium;
-            Widgets.Label(headerRect, $"Select Genes to {this.verb.Name} ({100f*this.SelectionCurCost()/this.SelectionMaxCost()}%)");
+            Widgets.Label(headerRect, $"Select Genes to {this.selector.Name} ({100f*this.SelectionCurCost()/this.SelectionMaxCost()}%)");
 
             // Clear All Button
             Rect clearBtnRect = new Rect(inRect.width - 100f, inRect.y + 5f, 100f, 25f);
@@ -67,7 +67,7 @@ namespace OMW_Samhaphage
             float footerHeight = 50f;
             Rect scrollRect = new Rect(0f, listStartY + 5f, inRect.width,
                 inRect.height - listStartY - footerHeight - 10f);
-            float viewHeight = (this.verb.genes.Count * 40f) + 60f;
+            float viewHeight = (this.selector.genes.Count * 40f) + 60f;
             Rect viewRect = new Rect(0f, 0f, scrollRect.width - 26f, viewHeight);
 
             Widgets.BeginScrollView(scrollRect, ref scrollPosition, viewRect);
@@ -76,7 +76,7 @@ namespace OMW_Samhaphage
             bool drawnEndoHeader = false;
             bool drawnXenoHeader = false;
 
-            foreach (GenePlus plus in this.verb.genes)
+            foreach (GenePlus plus in this.selector.genes)
             {
                 if (plus.isXenogene && !drawnXenoHeader)
                 {

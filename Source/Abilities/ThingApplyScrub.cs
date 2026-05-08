@@ -83,11 +83,11 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return false;
 
-            verb = new SelectionScrub(caster, victim, null);
+            SelectionScrub selector = new SelectionScrub(caster, victim, null);
 
             RemoveCarcinomas(victim, caster);
 
-            if (verb.genes.Count == 0)
+            if (selector.genes.Count == 0)
             {
                 Messages.Message($"{victim.LabelShort} has no genes that can be scrubbed.", MessageTypeDefOf.RejectInput);
                 return false;
@@ -95,11 +95,11 @@ namespace OMW_Samhaphage
 
             bool activated = false;
 
-            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(verb, (selectedList) =>
+            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
             {
                 foreach (GenePlus plus in selectedList)
                 {
-                    if (verb.ResonanceDebit(plus))
+                    if (selector.ResonanceDebit(plus))
                     {
                         victim.genes.RemoveGene(plus.gene);
                         Log.Message($"Destroyed {plus.gene.LabelCap} from {victim.LabelShort}");
@@ -110,7 +110,7 @@ namespace OMW_Samhaphage
 
             if (activated)
             {
-                verb.ApplyDissonance(victim, caster);
+                selector.ApplyDissonance(victim, caster);
             }
             return activated;
         }

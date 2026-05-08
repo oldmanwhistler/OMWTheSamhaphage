@@ -56,9 +56,9 @@ namespace OMW_Samhaphage
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogermLossShock);
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogerminationComa);
 
-            verb = new SelectionRetune(caster, victim, caster);
+            SelectionRetune selector = new SelectionRetune(caster, victim, caster);
 
-            if (verb.genes.Count == 0)
+            if (selector.genes.Count == 0)
             {
                 Messages.Message($"{victim.LabelShort} has no genes that can be retuned.",
                     MessageTypeDefOf.RejectInput);
@@ -67,11 +67,11 @@ namespace OMW_Samhaphage
 
             bool activated = false;
 
-            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(verb, (selectedList) =>
+            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
             {
                 foreach (GenePlus plus in selectedList)
                 {
-                    if (verb.ResonanceDebit(plus))
+                    if (selector.ResonanceDebit(plus))
                     {
                         victim.genes.RemoveGene(plus.gene);
                         victim.genes.AddGene(plus.gene.def, false);
@@ -83,7 +83,7 @@ namespace OMW_Samhaphage
 
             if (activated)
             {
-                verb.ApplyDissonance(victim, caster);
+                selector.ApplyDissonance(victim, caster);
             }
 
             return activated;
