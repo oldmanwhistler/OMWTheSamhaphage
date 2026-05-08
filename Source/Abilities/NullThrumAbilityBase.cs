@@ -6,7 +6,7 @@ namespace OMW_Samhaphage
 {
     public abstract class NullThrumAbilityBase
     {
-        public NullThrumVerbBase verb;
+        public NullThrumSelectionGene verb;
 
         public abstract Texture2D Icon { get; }
         public abstract string VerbName { get; }

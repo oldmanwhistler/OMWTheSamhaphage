@@ -7,9 +7,9 @@ using Verse;
 
 namespace OMW_Samhaphage
 {
-    public class WindowSelectGenesForVerb : Window
+    public class WindowSelectGenesForNullThrumAbility : Window
     {
-        private NullThrumVerbBase verb;
+        private NullThrumSelectionGene verb;
         private WindowState windowState;
         private HashSet<GenePlus> selectedGenes = new HashSet<GenePlus>();
         private System.Action<List<GenePlus>> onConfirm;
@@ -17,7 +17,7 @@ namespace OMW_Samhaphage
 
         public override Vector2 InitialSize => new Vector2(450f, 700f);
 
-        public WindowSelectGenesForVerb(NullThrumVerbBase verb, System.Action<List<GenePlus>> callback)
+        public WindowSelectGenesForNullThrumAbility(NullThrumSelectionGene verb, System.Action<List<GenePlus>> callback)
         {
             this.verb = verb;
             this.onConfirm = callback;

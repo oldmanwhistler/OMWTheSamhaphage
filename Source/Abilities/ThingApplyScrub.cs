@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class VerbScrub : NullThrumVerbBase
+    public class VerbScrub : NullThrumSelectionGene
     {
         public VerbScrub(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
         
@@ -95,7 +95,7 @@ namespace OMW_Samhaphage
 
             bool activated = false;
 
-            Find.WindowStack.Add(new WindowSelectGenesForVerb(verb, (selectedList) =>
+            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(verb, (selectedList) =>
             {
                 foreach (GenePlus plus in selectedList)
                 {

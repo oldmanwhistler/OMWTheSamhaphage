@@ -4,27 +4,20 @@ using System.Collections.Generic;
 
 namespace OMW_Samhaphage
 {
-    public abstract class NullThrumVerbBase
+    public abstract class NullThrumSelectionGene : NullThrumSelectionBase
     {
-        protected Pawn caster;
-
-        protected NullThrumVerbBase(Pawn caster, Pawn source, Pawn dest)
+        protected NullThrumSelectionGene(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest)
         {
-            // Need to store this for calculating resonance value and max selection
-            this.caster = caster;
             this.SetGenesToSelectFromPlus(source, dest);
         }
 
         public List<GenePlus> genes;
 
-        // Abstract methods
-
-
-        public abstract string Name { get; }
-
         protected abstract float ResonanceTotalMultiplier { get; }
 
         public int SelectionMaxCost => ResonanceUtility.Total(this.caster, this.ResonanceTotalMultiplier);
+
+        // Abstract methods
 
         protected abstract List<Gene> GenesToSelectFrom(Pawn source, Pawn dest);
         protected abstract List<GeneDef> ConflictGeneDefs(Pawn source, Pawn dest);
@@ -80,13 +73,5 @@ namespace OMW_Samhaphage
             float value = this.GeneValue(plus.gene);
             ResonanceUtility.Incr($"Apply credit", caster, value);
         }
-
-        // GeneticDissonance prevents repeatedly using the same abilities on the same pawn
-        public void ApplyDissonance(Pawn victim, Pawn caster)
-        {
-            Hediff hediffDissonance = HediffMaker.MakeHediff(OMW_HediffDefOf.OMW_GeneticDissonance, caster);
-            victim.health.AddHediff(hediffDissonance);
-        }
-
     }
 }

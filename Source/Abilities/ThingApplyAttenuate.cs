@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class VerbAttenuate : NullThrumVerbBase
+    public class VerbAttenuate : NullThrumSelectionGene
     {
         public VerbAttenuate(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
         
