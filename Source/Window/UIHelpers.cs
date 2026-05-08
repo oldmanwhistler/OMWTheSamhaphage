@@ -31,6 +31,27 @@ namespace OMW_Samhaphage
             Find.WindowStack.Add(window);
         }
 
+        public static void ShowCorpseConfirmation(Pawn pawn, System.Action sacrificeAction)
+        {
+            string msg = $"Warning: Activating this ability will destroy {pawn.LabelShort}. Are you sure?";
+            if (ModsConfig.AnomalyActive)
+            {
+                msg = $"Warning: Activating this ability could raise {pawn.LabelShort} as a shambler. Are you sure?";
+            }
+            Dialog_MessageBox window = new Dialog_MessageBox(
+                text: msg,
+                buttonAText: "Confirm".Translate(),
+                buttonAAction: sacrificeAction,
+                buttonBText: "Cancel".Translate(),
+                buttonBAction: null,
+                buttonADestructive: true,
+                title: "Lethal Ability".Translate()
+            );
+
+            Find.WindowStack.Add(window);
+        }
+
+
         public static void ShowXenogeneLossConfirmation(Pawn target, Pawn caster, System.Action sacrificeAction)
         {
             int xenoCountCaster = OMWGenes.CountXenogenes(caster);

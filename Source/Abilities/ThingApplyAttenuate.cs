@@ -29,8 +29,9 @@ namespace OMW_Samhaphage
     }
 
 
-    public class ThingApplyAttenuate : NullThrumAbilityPawnOnly
+    public class ThingApplyAttenuate : NullThrumAbilityPawnCorpse
     {
+        PawnApplyFlatten Flatten = new PawnApplyFlatten();
         public override string AbilityName => "Attenuate";
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
@@ -43,6 +44,11 @@ namespace OMW_Samhaphage
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
             if (victim == null || caster == null) return false;
+
+            if (!OMWGenes.HasScouredMind(victim))
+            {
+                Flatten.ApplyPawn(victim, caster);
+            }
 
             SelectionAttenuate selector = new SelectionAttenuate(caster, victim, null);
 
@@ -80,35 +86,52 @@ namespace OMW_Samhaphage
             if (corpse == null || caster == null) return false;
             if (corpse.InnerPawn == null) return false;
 
-            return ApplyPawn(corpse.InnerPawn, caster);
+            Pawn victim = corpse.InnerPawn;
+
+            SelectionAttenuate selector = new SelectionAttenuate(caster, victim, null);
+
+            if (selector.genes.Count == 0)
+            {
+                Messages.Message($"{victim.LabelShort} has no genes that can be Attenuated.", MessageTypeDefOf.RejectInput);
+                return false;
+            }
+
+            bool activated = false;
+            string msg = $"{victim.LabelShort} corpse was destroyed after being attenuated for their resonance.";
+            // We define the lethal logic as an Action
+            System.Action sacrificeAction = () =>
+            {
+                foreach (GenePlus plus in selector.genes)
+                {
+                    selector.ResonanceCredit(plus);
+                    victim.genes.RemoveGene(plus.gene);
+                    activated = true;
+                }
+                if (activated) {
+                    OMWAnomaly.PawnToShamblerOrKillDestroy(victim, caster);
+                    Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
+                }
+            };
+
+            // Open the confirmation dialog
+            OMW_UIHelpers.ShowCorpseConfirmation(victim, sacrificeAction);
+
+            return activated;
         }
 
 
-        public override bool CanApplyOnPawn(Pawn p, Pawn caster, out string reason)
+        public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
         {
             reason = "unknown reason";
 
-            if (p == null)
+            if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason))
             {
-                reason = "Target is null.";
                 return false;
             }
 
-            if (!p.RaceProps.Humanlike)
+            if (victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
             {
-                reason = $"{p.LabelShort} is not humanlike.";
-                return false;
-            }
-
-            if (!OMWGenes.HasScouredMind(p))
-            {
-                reason = $"{p.LabelShort} does not have a scoured mind.";
-                return false;
-            }
-
-            if (p.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
-            {
-                reason = $"{p.LabelShort} is affected by Genetic Dissonance";
+                reason = $"{victim.LabelShort} is affected by Genetic Dissonance";
                 return false;
             }
 

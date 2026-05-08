@@ -44,6 +44,9 @@ namespace OMW_Samhaphage
 
                 ability = new ThingApplyHarrow();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
+
+                ability = new ThingApplyAttenuate();
+                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
             }
 
             if (items.Count > 0)

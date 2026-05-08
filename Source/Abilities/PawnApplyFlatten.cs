@@ -63,11 +63,11 @@ namespace OMW_Samhaphage
         {
             reason = "unknown reason";
 
-            if (victim == null) 
+            if (victim == null)
             {
                 reason = "Target is null.";
                 return false;
-            }            
+            }
 
             if (!victim.RaceProps.Humanlike)
             {
@@ -94,6 +94,18 @@ namespace OMW_Samhaphage
             }
 
             return true;
+        }
+        
+        // Like CanApplyOnPawn except it will return true if the pawn already has a scoured mind
+        public bool HasOrCanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
+        {
+            reason = "unknown reason";
+            if (OMWGenes.HasScouredMind(victim))
+            {
+                reason = $"{victim.LabelShort} already has a scoured mind.";
+                return true;
+            }
+            return CanApplyOnPawn(victim, caster, out reason);
         }
     }
 }

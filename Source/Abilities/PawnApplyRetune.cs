@@ -39,6 +39,8 @@ namespace OMW_Samhaphage
 
     public class PawnApplyRetune : NullThrumAbilityPawnOnly
     {
+        PawnApplyFlatten Flatten = new PawnApplyFlatten();
+
         public override string AbilityName => "Retune";
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
@@ -51,6 +53,11 @@ namespace OMW_Samhaphage
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
             if (victim == null || caster == null) return false;
+
+            if (!OMWGenes.HasScouredMind(victim))
+            {
+                Flatten.ApplyPawn(victim, caster);
+            }
 
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogermReplicating);
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogermLossShock);
@@ -93,15 +100,8 @@ namespace OMW_Samhaphage
         {
             reason = "unknown reason";
 
-            if (victim == null) 
+            if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason))
             {
-                reason = "Target is null.";
-                return false;
-            }            
-            // Check if target is a not already Retune
-            if (!victim.RaceProps.Humanlike)
-            {
-                reason = $"{victim.LabelShort} is not humanlike.";
                 return false;
             }
 
@@ -111,27 +111,9 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            if (!OMWGenes.HasScouredMind(victim))
-            {
-                reason = $"{victim.LabelShort} has not had their mind scoured to prepare them for genetic manipulation.";
-                return false;
-            }
-
             if (!OMWGenes.HasNullThrum(victim))
             {            
                 reason = $"{victim.LabelShort} is not part of the harmony of the Null-Thrum.";
-                return false;
-            }
-
-            if (victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_SilentServitude))
-            {
-                reason = $"{victim.LabelShort} is affected by Silent Servitude.";
-                return false;
-            }
-
-            if (victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
-            {
-                reason = $"{victim.LabelShort} is affected by Genetic Dissonance";
                 return false;
             }
 
