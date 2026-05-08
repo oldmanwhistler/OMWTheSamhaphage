@@ -8,7 +8,7 @@ namespace OMW_Samhaphage
     {
         private static bool debug = true;
 
-        public static bool ApplyBrainDamage(Pawn caster, Pawn victim)
+        public static bool ApplyBrainDamage(Pawn victim, Pawn caster)
         {
             if (victim == null) return false;
 
@@ -31,7 +31,9 @@ namespace OMW_Samhaphage
             );
 
             victim.TakeDamage(dinfo);
-            return true;
+
+            if (brain) return true;
+            else return false;
         }
 
         // safe shamblerization of corpses only if AnomalyDLC is present.
@@ -55,7 +57,7 @@ namespace OMW_Samhaphage
             {
                 int lifespanTicks = 60000 * 3; // 3 Days
                 MutantUtility.ResurrectAsShambler(corpse.InnerPawn, lifespanTicks, corpse.Faction);
-                if (debug) Log.Message($"CorpseToShamblerOrDestroy make a shambler from {corpse.LabelShort}");
+                if (debug) Log.Message($"CorpseToShamblerOrDestroy made a shambler from {corpse.LabelShort}");
                 return true;
             }
             else
@@ -67,7 +69,7 @@ namespace OMW_Samhaphage
         }
 
 
-        public static bool PawnToShamblerOrKillDestroy(Pawn caster, Pawn victim)
+        public static bool PawnToShamblerOrKillDestroy(Pawn victim, Pawn caster)
         {
             if (victim == null)
             {
@@ -83,7 +85,7 @@ namespace OMW_Samhaphage
                 MutantUtility.SetPawnAsMutantInstantly(victim, MutantDefOf.Shambler);
                 return true;
             }
-            else if (ApplyBrainDamage(caster, victim))
+            else if (ApplyBrainDamage(victim, caster))
             {
                 if (debug)
                     Log.Message($"PawnToShamblerOrKillDestroy is killing {victim.LabelShort} brain damage");

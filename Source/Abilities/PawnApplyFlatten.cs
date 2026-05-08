@@ -2,11 +2,16 @@ using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class PawnApplyFlatten
+    public class PawnApplyFlatten : NullThrumAbilityPawnOnly
     {
+        public override string VerbName => "Flatten";
+        public override string VerbDescription(Pawn victim, Pawn caster) => $"Scour {victim.LabelShort}'s mind, removing negative memories and preparing them for genetic manipulation.";
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Flatten");
+
         private static void PurgeNegativeMemories(Pawn pawn)
         {
             var memoryHandler = pawn?.needs?.mood?.thoughts?.memories;
@@ -24,18 +29,18 @@ namespace OMW_Samhaphage
             }
         }
 
-        public bool Apply(Pawn victim, Pawn caster)
+        public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
             if (victim == null || caster == null) return false;
 
             if (!victim.genes.HasActiveGene(OMW_GeneDefOf.OMW_ScouredMind))
             {
-                victim.genes.AddGene(OMW_GeneDefOf.OMW_ScouredMind, false);
+                victim.genes.AddGene(OMW_GeneDefOf.OMW_ScouredMind, xenogene: false);
             }
 
             if (victim.InMentalState)
             {
-                victim.mindState.mentalStateHandler.Reset();
+                victim.mindState.mentalStateHandler.CurState.RecoverFromState();
             }
 
             // OMW_SilentServitude prevents repeated calls to flatten
@@ -44,47 +49,47 @@ namespace OMW_Samhaphage
 
             PurgeNegativeMemories(victim);
 
-            victim.genes.AddGene(OMW_GeneDefOf.OMW_UnstableMutationMinor, true);
+            victim.genes.AddGene(OMW_GeneDefOf.OMW_UnstableMutationMinor, xenogene: true);
 
             OMWGenes.RemoveDisabledGenes(victim);
             OMWGenes.Refresh(victim);
 
-            ResonanceUtility.Incr($"from flatting {victim.LabelShort}",  caster, 3);
+            ResonanceUtility.Incr($"from flattening {victim.LabelShort}",  caster, 3f);
 
             return true;
         }
 
-        public static bool CanApplyOn(Pawn p, out string reason)
+        public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
         {
             reason = "unknown reason";
 
-            if (p == null) 
+            if (victim == null) 
             {
                 reason = "Target is null.";
                 return false;
             }            
 
-            if (!p.RaceProps.Humanlike)
+            if (!victim.RaceProps.Humanlike)
             {
-                reason = $"{p.LabelShort} is not humanlike.";
+                reason = $"{victim.LabelShort} is not humanlike.";
                 return false;
             }
 
-            if (OMWGenes.HasScouredMind(p))
+            if (OMWGenes.HasScouredMind(victim))
             {
-                reason = $"{p.LabelShort} has a scoured mind.";
+                reason = $"{victim.LabelShort} already has a scoured mind.";
                 return false;
             }
 
-            if (p.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_SilentServitude))
+            if (victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_SilentServitude))
             {
-                reason = $"{p.LabelShort} is affected by Silent Servitude.";
+                reason = $"{victim.LabelShort} is affected by Silent Servitude.";
                 return false;
             }
 
-            if (p.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
+            if (victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
             {
-                reason = $"{p.LabelShort} is affected by Genetic Dissonance";
+                reason = $"{victim.LabelShort} is affected by Genetic Dissonance.";
                 return false;
             }
 

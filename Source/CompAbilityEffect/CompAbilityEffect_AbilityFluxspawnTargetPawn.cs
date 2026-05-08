@@ -29,6 +29,7 @@ namespace OMW_Samhaphage
             {
                 // hybrids lose the ability
                 Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Fluxspawn abilities.", MessageTypeDefOf.NegativeEvent);
+                return;
             }
             else if (target.Thing is Pawn otherPawn)
             {
@@ -49,14 +50,8 @@ namespace OMW_Samhaphage
                     items.Add(new MenuItemText(null, $"Can't transform {otherPawn.LabelShort} to Cradlemold. {reason}"));
                 }
 
-                if (PawnApplyHallowbound.CanApplyOn(otherPawn, out reason))
-                {
-                    items.Add(new MenuItemText((Action)(() => JobPawnApplyHallowbound(target, parent.pawn)), $"Sacrifice self to transform {otherPawn.LabelShort} to Hallowbound xenotype."));
-                }
-                else
-                {
-                    items.Add(new MenuItemText(null, $"Can't transform {otherPawn.LabelShort} to Hallowbound. {reason}"));
-                }
+                ability = new PawnApplyHallowboundSacrifice();
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
             }
 
             if (items.Count > 0)
@@ -98,24 +93,5 @@ namespace OMW_Samhaphage
             }
         }
 
-        private void JobPawnApplyHallowbound(LocalTargetInfo target, Pawn actor)
-        {
-            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
-            job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
-            job.targetA = target;
-            // The delegate needs to match the signature: (Pawn actor, Thing t)
-            // We use the 't' passed from the JobDriver to ensure target validity
-            job.onInteract = (actor, t) => AbilityPawnApplyHallowbound(t, actor);
-            parent.pawn.jobs.TryTakeOrderedJob(job);
-        }
-
-        private void AbilityPawnApplyHallowbound(Thing thing, Pawn actor)
-        {
-            if (thing is Pawn target)
-            {
-                PawnApplyHallowbound apply = new PawnApplyHallowbound();
-                apply.ApplySacrifice(target, actor);
-            }
-        }
     }
 }

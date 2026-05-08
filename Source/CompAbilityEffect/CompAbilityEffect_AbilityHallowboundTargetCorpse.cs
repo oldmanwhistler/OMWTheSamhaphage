@@ -28,7 +28,8 @@ namespace OMW_Samhaphage
             if (xeno != OMW_XenotypeDefOf.omw_hallowbound)
             {
                 // hybrids lose the ability
-                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Hallowbound abilities.", MessageTypeDefOf.NegativeEvent); 
+                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Hallowbound abilities.", MessageTypeDefOf.NegativeEvent);
+                return;
             }
             else if (target.Thing is Corpse corpse)
             {
@@ -58,24 +59,5 @@ namespace OMW_Samhaphage
             }
         }
 
-        private void JobPawnApplyParasiticStinger(LocalTargetInfo target, Pawn actor)
-        {
-            Job_ApproachAndInteract job = new Job_ApproachAndInteract();
-            job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
-            job.targetA = target;
-            // The delegate needs to match the signature: (Pawn actor, Thing t)
-            // We use the 't' passed from the JobDriver to ensure target validity
-            job.onInteract = (actor, t) => AbilityPawnApplyParasiticStinger(t, actor);
-            parent.pawn.jobs.TryTakeOrderedJob(job);
-        }
-
-        private void AbilityPawnApplyParasiticStinger(Thing thing, Pawn actor)
-        {
-            if (thing is Pawn target)
-            {
-                PawnApplyParasiticStinger sting = new PawnApplyParasiticStinger();
-                sting.ApplySacrifice(target, actor, OMW_HediffDefOf.OMW_ParasiticImplantation, OMW_XenotypeDefOf.omw_fluxspawn_hiveling, 5);
-            }
-        }        
     }
 }

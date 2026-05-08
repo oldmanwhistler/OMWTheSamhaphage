@@ -12,7 +12,7 @@ namespace OMW_Samhaphage
         
         public override string Name => "Attenuate";
         // Cheap because it is destroying genes
-        protected override float ResonanceTotalMultiplier => 0.25f;
+        protected override float ResonanceTotalMultiplier => 1f;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
@@ -64,7 +64,7 @@ namespace OMW_Samhaphage
                     activated = true;
                 }
                 if (activated) {
-                    OMWAnomaly.PawnToShamblerOrKillDestroy(caster, caster);
+                    OMWAnomaly.PawnToShamblerOrKillDestroy(victim, caster);
                     Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
                 }
             };

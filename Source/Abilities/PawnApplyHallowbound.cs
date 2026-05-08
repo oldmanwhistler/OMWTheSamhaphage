@@ -1,38 +1,45 @@
 using RimWorld;
 using Verse;
+using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class PawnApplyHallowbound
+    public class PawnApplyHallowbound : NullThrumAbilityPawnOnly
     {
-        public bool Apply(Pawn victim, Pawn caster)
+        public override string VerbName => "Hallowbound";
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Hallowbound");
+        public virtual bool SacrificeCaster => false;
+
+        public override string VerbDescription(Pawn victim, Pawn caster)
+        {
+            return SacrificeCaster 
+                ? $"Sacrifice yourself to transpose {victim.LabelShort} into a Hallowbound."
+                : $"Transpose {victim.LabelShort} into a Hallowbound.";
+        }
+
+        public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
             if (victim == null || caster == null) return false;
-            
-            OMWGenes.ChangeXenotype(victim, victim.genes?.Xenotype, OMW_XenotypeDefOf.omw_hallowbound);
 
+            if (!SacrificeCaster)
+            {
+                OMWGenes.ChangeXenotype(victim, victim.genes?.Xenotype, OMW_XenotypeDefOf.omw_hallowbound);
+                return true;
+            }
+
+            string msg = $"{caster.LabelShort} has died making {victim.LabelShort} a Hallowbound.";
+            System.Action sacrificeAction = () =>
+            {
+                OMWGenes.ChangeXenotype(victim, victim.genes?.Xenotype, OMW_XenotypeDefOf.omw_hallowbound);
+                OMWAnomaly.PawnToShamblerOrKillDestroy(caster, caster);
+                Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
+            };
+
+            OMW_UIHelpers.ShowLethalConfirmation(caster, sacrificeAction);
             return true;
         }
 
-        public void ApplySacrifice(Pawn victim, Pawn caster)
-        {
-            string msg = $"{caster.LabelShort} has died making {victim.LabelShort} a Hallowbound.";
-            // We define the lethal logic as an Action
-            System.Action sacrificeAction = () =>
-            {
-                if (Apply(victim, caster))
-                {
-                    OMWAnomaly.PawnToShamblerOrKillDestroy(caster, caster);
-                    Messages.Message(msg,
-                        MessageTypeDefOf.NegativeEvent);
-                }
-            };
-
-            // Open the confirmation dialog
-            OMW_UIHelpers.ShowLethalConfirmation(caster, sacrificeAction);
-        }        
-
-        public static bool CanApplyOn(Pawn p, out string reason)
+        public override bool CanApplyOnPawn(Pawn p, Pawn caster, out string reason)
         {
             reason = "unknown reason";
 
@@ -41,7 +48,7 @@ namespace OMW_Samhaphage
                 reason = "Target is null.";
                 return false;
             }            
-            // Check if target is a not already Hallowbound
+
             if (!p.RaceProps.Humanlike)
             {
                 reason = $"{p.LabelShort} is not humanlike.";
@@ -55,7 +62,7 @@ namespace OMW_Samhaphage
             
             if (!OMWGenes.HasScouredMind(p))
             {
-                reason = $"{p.LabelShort} has not had their mind scoured to prepare them for genetic manipulation.";
+                reason = $"{p.LabelShort} has not had their mind scoured.";
                 return false;
             }
 
@@ -67,5 +74,10 @@ namespace OMW_Samhaphage
 
             return true;
         }
+    }
+
+    public class PawnApplyHallowboundSacrifice : PawnApplyHallowbound
+    {
+        public override bool SacrificeCaster => true;
     }
 }
