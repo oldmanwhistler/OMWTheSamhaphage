@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class VerbHarrow : NullThrumSelectionGene
+    public class SelectionHarrow : NullThrumSelectionGene
     {
-        public VerbHarrow(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) { }
+        public SelectionHarrow(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) { }
 
         public override string Name => "Harrow";
 
@@ -55,7 +55,7 @@ namespace OMW_Samhaphage
         public override bool ApplyPawn(Pawn victim, Pawn caster = null)
         {
             if (victim == null || caster == null) return false;
-            verb = new VerbHarrow(caster, victim, caster);
+            verb = new SelectionHarrow(caster, victim, caster);
 
             if (verb.genes.Count == 0)
             {

@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class VerbScrub : NullThrumSelectionGene
+    public class SelectionScrub : NullThrumSelectionGene
     {
-        public VerbScrub(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
+        public SelectionScrub(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
         
         public override string Name => "Scrub";
         // Cheap because it is destroying genes
@@ -83,7 +83,7 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return false;
 
-            verb = new VerbScrub(caster, victim, null);
+            verb = new SelectionScrub(caster, victim, null);
 
             RemoveCarcinomas(victim, caster);
 

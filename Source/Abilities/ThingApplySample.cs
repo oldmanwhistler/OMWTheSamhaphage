@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class VerbSample : NullThrumSelectionGene
+    public class SelectionSample : NullThrumSelectionGene
     {
-        public VerbSample(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest)
+        public SelectionSample(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest)
         {
             
         }
@@ -48,7 +48,7 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return false;
 
-            verb = new VerbSample(caster, victim, caster);
+            verb = new SelectionSample(caster, victim, caster);
 
             if (verb.genes.Count == 0)
             {

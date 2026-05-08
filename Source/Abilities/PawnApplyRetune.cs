@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class VerbRetune : NullThrumSelectionGene
-    {
-        public VerbRetune(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) { }
+    public class SelectionRetune : NullThrumSelectionGene
+    {        
+        public SelectionRetune(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) { }
 
         public override string Name => "Retune";
 
@@ -32,7 +32,7 @@ namespace OMW_Samhaphage
         {
             if (dest == null || dest.genes == null || dest.genes.GenesListForReading == null)
                 return new List<GeneDef>();
-            return dest.genes.GenesListForReading.Select(g => g.def).ToList();
+            return dest.genes.Endogenes.Select(g => g.def).ToList();
         }        
     }
 
@@ -56,7 +56,7 @@ namespace OMW_Samhaphage
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogermLossShock);
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogerminationComa);
 
-            verb = new VerbRetune(caster, victim, caster);
+            verb = new SelectionRetune(caster, victim, caster);
 
             if (verb.genes.Count == 0)
             {
@@ -74,7 +74,7 @@ namespace OMW_Samhaphage
                     if (verb.ResonanceDebit(plus))
                     {
                         victim.genes.RemoveGene(plus.gene);
-                        victim.genes.AddGene(plus.gene.def, true);
+                        victim.genes.AddGene(plus.gene.def, false);
                         Log.Message($"Retuned {plus.gene.LabelCap} on {victim.LabelShort}");
                         activated = true;
                     }

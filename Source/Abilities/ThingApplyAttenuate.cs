@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class VerbAttenuate : NullThrumSelectionGene
+    public class SelectionAttenuate : NullThrumSelectionGene
     {
-        public VerbAttenuate(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
+        public SelectionAttenuate(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
         
         public override string Name => "Attenuate";
         // Cheap because it is destroying genes
@@ -44,7 +44,7 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return false;
 
-            verb = new VerbAttenuate(caster, victim, null);
+            verb = new SelectionAttenuate(caster, victim, null);
 
             if (verb.genes.Count == 0)
             {
