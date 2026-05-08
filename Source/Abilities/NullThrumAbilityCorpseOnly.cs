@@ -26,11 +26,11 @@ namespace OMW_Samhaphage
 
             if (CanApplyOnCorpse(corpse, caster, out reason))
             {
-                return new MenuItemIcon(this.VerbName, this.VerbDescription(corpse.InnerPawn, caster), this.Icon, () => Job(targetInfo, caster));
+                return new MenuItemIcon(this.AbilityName, this.AbilityDescription(corpse.InnerPawn, caster), this.Icon, () => Job(targetInfo, caster));
             }
             else
             {
-                return NewMenuItemIconDisabled(targetInfo, $"Can't {this.VerbName} {corpse.InnerPawn.LabelShort} because {reason}");
+                return NewMenuItemIconDisabled(targetInfo, $"Can't {this.AbilityName} {corpse.InnerPawn.LabelShort} because {reason}");
             }
         }                  
     }

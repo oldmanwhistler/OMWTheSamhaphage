@@ -6,11 +6,11 @@ namespace OMW_Samhaphage
 {
     public class PawnApplyHallowbound : NullThrumAbilityPawnOnly
     {
-        public override string VerbName => "Hallowbound";
+        public override string AbilityName => "Hallowbound";
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Hallowbound");
         public virtual bool SacrificeCaster => false;
 
-        public override string VerbDescription(Pawn victim, Pawn caster)
+        public override string AbilityDescription(Pawn victim, Pawn caster)
         {
             return SacrificeCaster 
                 ? $"Sacrifice yourself to transpose {victim.LabelShort} into a Hallowbound."

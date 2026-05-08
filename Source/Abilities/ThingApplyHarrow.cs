@@ -45,9 +45,9 @@ namespace OMW_Samhaphage
 
     public class ThingApplyHarrow : NullThrumAbilityPawnCorpse
     {
-        public override string VerbName => "Harrow";
+        public override string AbilityName => "Harrow";
 
-        public override string VerbDescription(Pawn victim, Pawn caster)
+        public override string AbilityDescription(Pawn victim, Pawn caster)
         {
             return $"Harrow {victim.LabelShort} and harvest their genes using resonance.";
         }
@@ -121,7 +121,7 @@ namespace OMW_Samhaphage
 
             if (ResonanceUtility.Total(caster) <= 2)
             {
-                reason = $"{caster.LabelShort} does not have enough resonance to {this.VerbName}.";
+                reason = $"{caster.LabelShort} does not have enough resonance to {this.AbilityName}.";
                 return false;
             }
 

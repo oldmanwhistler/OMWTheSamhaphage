@@ -10,9 +10,9 @@ namespace OMW_Samhaphage
         public override bool SacrificeCaster => true;
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/ResurrectHallowbound");
 
-        public override string VerbName => "Resurrect";
+        public override string AbilityName => "Resurrect";
 
-        public override string VerbDescription(Pawn victim, Pawn caster)
+        public override string AbilityDescription(Pawn victim, Pawn caster)
         {
             if (this.SacrificeCaster)
                 return $"Resurrect {victim.LabelShort} as Hallowbound by sacrificing yourself.";

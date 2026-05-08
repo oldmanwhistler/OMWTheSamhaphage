@@ -72,7 +72,7 @@ namespace OMW_Samhaphage
 
             if (CanApplyOnPawn(pawn, caster, out reason))
             {
-                return new MenuItemIcon(this.VerbName, $"Shift {pawn.LabelShort} to {xeno.descriptionShort}", this.Icon, () => Job(targetInfo, caster));
+                return new MenuItemIcon(this.AbilityName, $"Shift {pawn.LabelShort} to {xeno.descriptionShort}", this.Icon, () => Job(targetInfo, caster));
             }
             else
             {

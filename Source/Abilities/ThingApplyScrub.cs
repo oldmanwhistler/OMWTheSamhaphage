@@ -40,9 +40,9 @@ namespace OMW_Samhaphage
 
     public class ThingApplyScrub : NullThrumAbilityPawnCorpse
     {
-        public override string VerbName => "Scrub";
+        public override string AbilityName => "Scrub";
 
-        public override string VerbDescription(Pawn victim, Pawn caster)
+        public override string AbilityDescription(Pawn victim, Pawn caster)
         {
             return $"Scrub {victim.LabelShort} of their carcinomas and useless genes.\nConverts carcinomas to resonance and opens a menu to destroy deactivated genes.";
         }

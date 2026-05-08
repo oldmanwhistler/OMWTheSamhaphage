@@ -37,9 +37,9 @@ namespace OMW_Samhaphage
 
     public class ThingApplySample : NullThrumAbilityPawnCorpse
     {
-        public override string VerbName => "Sample";
+        public override string AbilityName => "Sample";
 
-        public override string VerbDescription(Pawn victim, Pawn caster)
+        public override string AbilityDescription(Pawn victim, Pawn caster)
         {
             return $"Sample {victim.LabelShort} and steal their appearance to disguise yourself as one of their kind.";
         }

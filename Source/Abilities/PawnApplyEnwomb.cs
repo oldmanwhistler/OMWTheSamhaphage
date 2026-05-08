@@ -8,8 +8,8 @@ namespace OMW_Samhaphage
 {
     public class PawnApplyEnwomb : NullThrumAbilityPawnOnly
     {
-        public override string VerbName => "Enwomb";
-        public override string VerbDescription(Pawn victim, Pawn caster) => $"Implant {victim.LabelShort} with a new life.";
+        public override string AbilityName => "Enwomb";
+        public override string AbilityDescription(Pawn victim, Pawn caster) => $"Implant {victim.LabelShort} with a new life.";
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Enwomb");
 
         public virtual HediffDef TargetHediff => null;
@@ -159,6 +159,6 @@ namespace OMW_Samhaphage
         public override HediffDef TargetHediff => OMW_HediffDefOf.OMW_SilentServitude;
         public override XenotypeDef TargetXenotype => OMW_XenotypeDefOf.omw_cradlemold;
         public override bool SacrificeCaster => true;
-        public override string VerbDescription(Pawn victim, Pawn caster) => $"Sacrifice yourself to transform {victim.LabelShort} into a Cradlemold factory.";
+        public override string AbilityDescription(Pawn victim, Pawn caster) => $"Sacrifice yourself to transform {victim.LabelShort} into a Cradlemold factory.";
     }
 }

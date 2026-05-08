@@ -21,11 +21,11 @@ namespace OMW_Samhaphage
 
             if (CanApplyOnPawn(pawn, caster, out reason))
             {
-                return new MenuItemIcon(this.VerbName, this.VerbDescription(pawn, caster), this.Icon, () => Job(targetInfo, caster));
+                return new MenuItemIcon(this.AbilityName, this.AbilityDescription(pawn, caster), this.Icon, () => Job(targetInfo, caster));
             }
             else
             {
-                return NewMenuItemIconDisabled(targetInfo, $"Can't {this.VerbName} {pawn.LabelShort} because {reason}");
+                return NewMenuItemIconDisabled(targetInfo, $"Can't {this.AbilityName} {pawn.LabelShort} because {reason}");
             }
         }
 

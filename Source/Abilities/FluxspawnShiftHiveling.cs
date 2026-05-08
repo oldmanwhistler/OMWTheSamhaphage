@@ -6,8 +6,8 @@ namespace OMW_Samhaphage
 {    
     public class FluxspawnShiftHiveling: FluxspawnShiftBase
     {
-        public override string VerbName => "Transpose";
-        public override string VerbDescription(Pawn victim, Pawn caster)
+        public override string AbilityName => "Transpose";
+        public override string AbilityDescription(Pawn victim, Pawn caster)
         {
             return $"Transpose {caster.LabelShort} to a Fluxspawn Hiveling.";
         }

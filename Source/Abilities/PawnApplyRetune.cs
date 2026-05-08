@@ -39,9 +39,9 @@ namespace OMW_Samhaphage
 
     public class PawnApplyRetune : NullThrumAbilityPawnOnly
     {
-        public override string VerbName => "Retune";
+        public override string AbilityName => "Retune";
 
-        public override string VerbDescription(Pawn victim, Pawn caster)
+        public override string AbilityDescription(Pawn victim, Pawn caster)
         {
             return $"Harmonize {victim.LabelShort}'s genetic frequency, integrating their xenogenes into their endogenic sequence.";
         }

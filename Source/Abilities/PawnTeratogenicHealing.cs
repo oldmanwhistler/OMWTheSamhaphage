@@ -11,8 +11,8 @@ namespace OMW_Samhaphage
     // Makes me feel so... carcinogenicly free
     public class PawnTeratogenicHealing : NullThrumAbilityPawnOnly
     {
-        public override string VerbName => "Teratogenic Healing";
-        public override string VerbDescription(Pawn victim, Pawn caster)
+        public override string AbilityName => "Teratogenic Healing";
+        public override string AbilityDescription(Pawn victim, Pawn caster)
         {
             return $"{caster.LabelShort} will use their carcinomas to heal {victim.LabelShort}.";
         }

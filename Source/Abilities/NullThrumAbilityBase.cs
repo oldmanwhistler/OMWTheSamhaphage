@@ -9,8 +9,8 @@ namespace OMW_Samhaphage
         public NullThrumSelectionGene verb;
 
         public abstract Texture2D Icon { get; }
-        public abstract string VerbName { get; }
-        public abstract string VerbDescription(Pawn victim, Pawn caster);
+        public abstract string AbilityName { get; }
+        public abstract string AbilityDescription(Pawn victim, Pawn caster);
 
         public bool ApplyThing(Thing thing, Pawn caster = null)
         {
@@ -71,7 +71,7 @@ namespace OMW_Samhaphage
             {
                 msg += "\n" + reason;
             }
-            return new MenuItemIcon(this.VerbName, msg, this.Icon);
+            return new MenuItemIcon(this.AbilityName, msg, this.Icon);
         }        
         public MenuItemIcon NewMenuItemIcon(LocalTargetInfo targetInfo, Pawn caster = null)
         {
