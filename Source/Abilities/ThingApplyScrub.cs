@@ -18,8 +18,7 @@ namespace OMW_Samhaphage
         {
             return source.genes.GenesListForReading
                 .Where(g => !OMW_BlacklistGenes.BlacklistedGenes.Contains(g.def) && // ignore blacklisted
-                        g.Overridden && // must be overridden to be scrubbed
-                        !this.GeneIsWorthless(g)) // ignore cosmetic genes
+                        g.Overridden) // must be overridden to be scrubbed
                 .ToList();            
         }
     
