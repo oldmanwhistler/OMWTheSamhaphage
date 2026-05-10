@@ -24,7 +24,6 @@ namespace OMW_Samhaphage
             return source.genes.Xenogenes
                 .Where(g => !OMW_BlacklistGenes.BlacklistedGenes.Contains(g.def) && // ignore blacklisted
                             !alreadyHas.Contains(g.def)) // ignore genes the caster already has
-                            //!this.GeneIsWorthless(g)) // ignore cosmetic genes
                 .ToList();
         }
 
