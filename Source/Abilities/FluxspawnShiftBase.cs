@@ -19,46 +19,46 @@ namespace OMW_Samhaphage
             return PawnTeratogenics.RemoveRandomCarcinoma(pawn);
         }
 
-        public override bool CanApplyOnPawn(Pawn p, Pawn caster, out string reason)
+        public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
         {
             reason = "unknown reason";
 
-            if (p == null)
+            if (victim == null)
             {
                 reason = "Target is null.";
                 return false;
             }
 
             // Check if target is a not already Retune
-            if (!p.RaceProps.Humanlike)
+            if (!victim.RaceProps.Humanlike)
             {
-                reason = $"{p.LabelShort} is not humanlike.";
+                reason = $"{victim.LabelShort} is not humanlike.";
                 return false;
             }
 
-            if (!OMWGenes.HasNullThrum(p))
+            if (!OMWGenes.HasNullThrum(victim))
             {
-                reason = $"{p.LabelShort} is not part of the harmony of the Null-Thrum.";
+                reason = $"{caster.LabelShort} is not part of the harmony of the Null-Thrum.";
                 return false;
             }
 
-            if ((p.genes.Xenotype != OMW_XenotypeDefOf.omw_fluxspawn_brute) && 
-                (p.genes.Xenotype != OMW_XenotypeDefOf.omw_fluxspawn_hiveling) &&
-                (p.genes.Xenotype != OMW_XenotypeDefOf.omw_fluxspawn_flicker))
+            if ((victim.genes.Xenotype != OMW_XenotypeDefOf.omw_fluxspawn_brute) && 
+                (victim.genes.Xenotype != OMW_XenotypeDefOf.omw_fluxspawn_hiveling) &&
+                (victim.genes.Xenotype != OMW_XenotypeDefOf.omw_fluxspawn_flicker))
             {
-                reason = $"{p.LabelShort} is not a Fluxspawn.";
+                reason = $"{victim.LabelShort} is not a Fluxspawn.";
                 return false;
             }
 
-            if (p.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
+            if (victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
             {
-                reason = $"{p.LabelShort} is affected by Genetic Dissonance.";
+                reason = $"{victim.LabelShort} is affected by Genetic Dissonance.";
                 return false;
             }
 
-            if (PawnTeratogenics.CarcinomaCount(p) == 0)
+            if (PawnTeratogenics.CarcinomaCount(caster) == 0)
             {
-                reason = $"{p.LabelShort} doesn't have any carcinomas.";
+                reason = $"{caster.LabelShort} doesn't have any carcinomas.";
                 return false;
             }
 
