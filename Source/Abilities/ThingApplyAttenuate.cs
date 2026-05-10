@@ -41,7 +41,7 @@ namespace OMW_Samhaphage
         
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Attenuate");
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster = null)
+        public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
             if (victim == null || caster == null) return false;
 
@@ -81,7 +81,7 @@ namespace OMW_Samhaphage
             return activated;
         }
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster = null)
+        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
         {
             if (corpse == null || caster == null) return false;
             if (corpse.InnerPawn == null) return false;

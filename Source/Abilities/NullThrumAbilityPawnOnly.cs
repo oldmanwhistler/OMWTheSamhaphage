@@ -4,7 +4,7 @@ namespace OMW_Samhaphage
 {
     public abstract class NullThrumAbilityPawnOnly: NullThrumAbilityBase
     {
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster = null)
+        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
         {
             return false;
         }
@@ -15,7 +15,7 @@ namespace OMW_Samhaphage
             return false;
         }
 
-       public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
+       public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster)
         {
             string reason;
 
@@ -29,7 +29,7 @@ namespace OMW_Samhaphage
             }
         }
 
-        public override MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse, Pawn caster = null)
+        public override MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse, Pawn caster)
         {
             return NewMenuItemIconDisabled(targetInfo);
         }        

@@ -19,7 +19,7 @@ namespace OMW_Samhaphage
         public virtual XenotypeDef TargetXenotypeDef => OMW_XenotypeDefOf.omw_fluxspawn_hiveling;
         public virtual int NumBabies => 5;
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster = null)
+        public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
             if (victim == null || caster == null) return false;
 

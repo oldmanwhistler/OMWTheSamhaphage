@@ -7,7 +7,7 @@ namespace OMW_Samhaphage
     {
         public abstract XenotypeDef TargetXenotype();
 
-        public override bool ApplyPawn(Pawn pawn, Pawn caster = null)
+        public override bool ApplyPawn(Pawn pawn, Pawn caster)
         {
             if (PawnTeratogenics.CarcinomaCount(pawn) == 0)
             {
@@ -65,7 +65,7 @@ namespace OMW_Samhaphage
             return true;
         }
 
-        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null)
+        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster)
         {
             XenotypeDef xeno = TargetXenotype();
             string reason;

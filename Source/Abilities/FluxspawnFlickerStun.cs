@@ -13,7 +13,7 @@ namespace OMW_Samhaphage
             return $"Stun {victim.LabelShort} and prepare them for parasitization.";
         }
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Stun");
-        public override bool ApplyPawn(Pawn pawn, Pawn caster = null)
+        public override bool ApplyPawn(Pawn pawn, Pawn caster)
         {            
             pawn.stances.stunner.StunFor(1000, caster);
 

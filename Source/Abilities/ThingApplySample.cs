@@ -15,7 +15,7 @@ namespace OMW_Samhaphage
 
         public override string Name => "Sample";
         // Stealing trash genes
-        protected override float ResonanceTotalMultiplier => 0.75f;
+        protected override float ResonanceTotalMultiplier => 0.5f;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
@@ -44,7 +44,7 @@ namespace OMW_Samhaphage
             return $"Sample {victim.LabelShort} and steal their appearance to disguise yourself as one of their kind.";
         }
         public override Texture2D Icon => BaseContent.BadTex;
-        public override bool ApplyPawn(Pawn victim, Pawn caster = null)
+        public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
             if (victim == null || caster == null) return false;
 
@@ -73,10 +73,16 @@ namespace OMW_Samhaphage
                 }
             }));
 
+            if (activated)
+            {
+                PawnApplyRetune retune = new PawnApplyRetune();
+                retune.ApplyPawn(caster, caster);
+            }
+
             return activated;
         }
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster = null)
+        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
         {
             if (corpse == null || caster == null) return false;
             if (corpse.InnerPawn == null) return false;

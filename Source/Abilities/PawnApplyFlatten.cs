@@ -29,7 +29,7 @@ namespace OMW_Samhaphage
             }
         }
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster = null)
+        public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
             if (victim == null || caster == null) return false;
 

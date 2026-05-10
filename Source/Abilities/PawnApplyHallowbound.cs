@@ -18,7 +18,7 @@ namespace OMW_Samhaphage
                 : $"Transpose {victim.LabelShort} into a Hallowbound.";
         }
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster = null)
+        public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
             if (victim == null || caster == null) return false;
 

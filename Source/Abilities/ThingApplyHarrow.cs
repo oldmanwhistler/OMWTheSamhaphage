@@ -53,14 +53,18 @@ namespace OMW_Samhaphage
             return $"Harrow {victim.LabelShort} and harvest their genes using resonance.";
         }
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Harrow");
-        public override bool ApplyPawn(Pawn victim, Pawn caster = null)
+        public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
             if (victim == null || caster == null) return false;
 
             if (!OMWGenes.HasScouredMind(victim))
             {
                 Flatten.ApplyPawn(victim, caster);
-            }            
+            }
+
+            ThingApplyScrub scrub = new ThingApplyScrub();
+            scrub.ApplyPawn(victim, caster);
+
             SelectionHarrow selector = new SelectionHarrow(caster, victim, caster);
 
             if (selector.genes.Count == 0)
@@ -88,13 +92,15 @@ namespace OMW_Samhaphage
 
             if (activated)
             {
+                PawnApplyRetune retune = new PawnApplyRetune();
+                retune.ApplyPawn(caster, caster);
                 selector.ApplyDissonance(victim, caster);
             }
 
             return activated;
         }
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster = null)
+        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
         {
             if (corpse == null || caster == null) return false;
             if (corpse.InnerPawn == null) return false;

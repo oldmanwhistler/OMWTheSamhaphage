@@ -49,7 +49,7 @@ namespace OMW_Samhaphage
             return true;
         }
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster = null)
+        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
         {
             if (corpse == null || caster == null) return false;
             if (! this.SacrificeCaster)

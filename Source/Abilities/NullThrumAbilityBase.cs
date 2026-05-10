@@ -10,7 +10,7 @@ namespace OMW_Samhaphage
         public abstract string AbilityName { get; }
         public abstract string AbilityDescription(Pawn victim, Pawn caster);
 
-        public bool ApplyThing(Thing thing, Pawn caster = null)
+        public bool ApplyThing(Thing thing, Pawn caster)
         {
             if (thing is Pawn pawn)
             {
@@ -26,9 +26,9 @@ namespace OMW_Samhaphage
             }
         }
 
-        public abstract bool ApplyPawn(Pawn pawn, Pawn caster = null);
+        public abstract bool ApplyPawn(Pawn pawn, Pawn caster);
 
-        public abstract bool ApplyCorpse(Corpse corpse, Pawn caster = null);
+        public abstract bool ApplyCorpse(Corpse corpse, Pawn caster);
 
         public bool CanApplyOnThing(Thing thing, Pawn caster, out string reason)
         {
@@ -71,7 +71,7 @@ namespace OMW_Samhaphage
             }
             return new MenuItemIcon(this.AbilityName, msg, this.Icon);
         }        
-        public MenuItemIcon NewMenuItemIcon(LocalTargetInfo targetInfo, Pawn caster = null)
+        public MenuItemIcon NewMenuItemIcon(LocalTargetInfo targetInfo, Pawn caster)
         {
             if (targetInfo.Thing is Pawn pawn)
             {
@@ -87,9 +87,9 @@ namespace OMW_Samhaphage
             }
         }
 
-        public abstract MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster = null);
+        public abstract MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster);
 
         public abstract MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse,
-            Pawn caster = null);
+            Pawn caster);
     }
 }

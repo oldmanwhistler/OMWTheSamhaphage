@@ -50,7 +50,7 @@ namespace OMW_Samhaphage
 
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Retune");
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster = null)
+        public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
             if (victim == null || caster == null) return false;
 
@@ -62,6 +62,9 @@ namespace OMW_Samhaphage
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogermReplicating);
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogermLossShock);
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogerminationComa);
+
+            ThingApplyScrub scrub = new ThingApplyScrub();
+            scrub.ApplyPawn(victim, caster);
 
             SelectionRetune selector = new SelectionRetune(caster, victim, caster);
 
@@ -92,6 +95,7 @@ namespace OMW_Samhaphage
             {
                 selector.ApplyDissonance(victim, caster);
             }
+
 
             return activated;
         }

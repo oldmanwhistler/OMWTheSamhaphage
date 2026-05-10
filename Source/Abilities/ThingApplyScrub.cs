@@ -80,7 +80,7 @@ namespace OMW_Samhaphage
             return true;
         }
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster = null)
+        public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
             if (victim == null || caster == null) return false;
 
@@ -92,7 +92,7 @@ namespace OMW_Samhaphage
             {
                 Flatten.ApplyPawn(victim, caster);
             } 
-            
+
             if (selector.genes.Count == 0)
             {
                 Messages.Message($"{victim.LabelShort} has no genes that can be scrubbed.", MessageTypeDefOf.RejectInput);
@@ -121,7 +121,7 @@ namespace OMW_Samhaphage
             return activated;
         }
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster = null)
+        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
         {
             if (corpse == null || caster == null) return false;
             if (corpse.InnerPawn == null) return false;
