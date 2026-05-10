@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net.Sockets;
 using RimWorld;
 using Verse;
 
@@ -237,13 +238,29 @@ namespace OMW_Samhaphage
         }
 
 
-        public static void ChangeXenotype(Pawn pawn, XenotypeDef sourceXenotype, XenotypeDef targetXenotype)
+        public static bool CanChangeXenotype(Pawn pawn, XenotypeDef sourceXenotype, XenotypeDef targetXenotype, bool sendMsg=false)
         {
-            if (pawn == null) return;
+            if (pawn == null) return false;
 
             // Guess the xenotype
             if (sourceXenotype == null) sourceXenotype = pawn.genes?.Xenotype;
 
+            if (sourceXenotype == targetXenotype)
+            {
+                if (sendMsg)
+                {
+                    Messages.Message($"{pawn.LabelShort} is already targetXenotype", MessageTypeDefOf.RejectInput);
+                }
+                return false;
+            }
+            return true;
+        }
+
+        public static bool ChangeXenotype(Pawn pawn, XenotypeDef sourceXenotype, XenotypeDef targetXenotype)
+        {
+            if (!CanChangeXenotype(pawn, sourceXenotype, targetXenotype, true)) return false;
+            // Guess the xenotype
+            if (sourceXenotype == null) sourceXenotype = pawn.genes?.Xenotype;
             if (debug) Log.Message($"{pawn.LabelShort}.ChangeXenotype: Start changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
             if (sourceXenotype != null) RemoveXenotype(pawn, sourceXenotype);
             RemoveDisabledGenes(pawn);
@@ -253,24 +270,22 @@ namespace OMW_Samhaphage
             if (debug)
                 Log.Message(
                     $"{pawn.LabelShort}.ChangeXenotype: Done changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
+            return true;
         }
 
-        public static void ChangeEndotype(Pawn pawn, XenotypeDef sourceXenotype, XenotypeDef targetXenotype)
+        public static bool ChangeEndotype(Pawn pawn, XenotypeDef sourceXenotype, XenotypeDef targetXenotype)
         {
-            if (pawn == null) return;
-
+            if (!CanChangeXenotype(pawn, sourceXenotype, targetXenotype, true)) return false;
             // Guess the xenotype
-            if (sourceXenotype == null) sourceXenotype = pawn.genes?.Xenotype;
-            
-            if (debug)
-                Log.Message(
-                    $"{pawn.LabelShort}.ChangeEndotype: Start changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
+            if (sourceXenotype == null) sourceXenotype = pawn.genes?.Xenotype;           
+            if (debug) Log.Message($"{pawn.LabelShort}.ChangeEndotype: Start changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
             ChangeXenotype(pawn, sourceXenotype, targetXenotype);
             XenogenesToEndogenes(pawn);
             RemoveDisabledGenes(pawn);
             if (debug)
                 Log.Message(
                     $"{pawn.LabelShort}.ChangeEndotype: Done changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
+            return true;
         }        
 
         public static bool HasNullThrum(Pawn pawn)
