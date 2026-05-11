@@ -12,6 +12,13 @@ namespace OMW_Samhaphage
             base.Apply(target, dest);
             if (target.Thing is Pawn targetPawn)
             {
+                // Prevent targeting hostiles if the ability is meant for the hive/allies
+                if (targetPawn.HostileTo(parent.pawn))
+                {
+                    Messages.Message("Cannot target hostile creatures with this ability.", targetPawn, MessageTypeDefOf.RejectInput, false);
+                    return;
+                }
+
                 if (targetPawn == parent.pawn)
                 {
                     OpenMenu(target, dest);
