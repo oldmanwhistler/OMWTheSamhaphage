@@ -16,10 +16,8 @@
       <li MayRequire="wvc.sergkart.races.biotech">WVC_MechaPowerSource_Vanometric</li>
       <li MayRequire="redmattis.bigsmall.core">BS_AnomalousPsychicPower</li>
       <li MayRequire="redmattis.bigsmall.core">BS_FeedingFrenzy</li>
-      <li MayRequire="sarg.alphagenes">AG_Female</li>
-      <li MayRequire="redmattis.betterprerequisites">Body_FemaleOnly</li>
       <li MayRequire="redmattis.bigsmall.core">BS_GeneEater</li>
-         <li MayRequire="redmattis.bigsmall.core">BS_ConsumeSoul</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_ConsumeSoul</li>
       <li MayRequire="redmattis.bigsmall.core">BS_SoulPowerGreat</li>
       <li MayRequire="redmattis.bigsmall.core">BS_Deathlike</li>
       <li MayRequire="redmattis.bigsmall.core,Ludeon.RimWorld.Anomaly">BS_GreaterDeathless</li>
@@ -47,15 +45,13 @@
       <li MayRequire="sarg.alphagenes">AG_TarBlood</li>
       <li MayRequire="sarg.alphagenes">AG_PukeBile</li>
       <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_TwistedFlesh</li>
-      <li MayRequire="sarg.alphagenes">AG_BlackChitinLeather</li>
-      <li MayRequire="sarg.alphagenes">AG_FissionMouseAffinity</li>
+      <li MayRequire="sarg.alphagenes,sarg.alphaskills">AG_BlackChitinLeather</li>
       <li MayRequire="sarg.alphagenes">AG_EfficientMandibles</li>
       <li MayRequire="sarg.alphagenes">AG_TableResistance</li>
       <li MayRequire="sarg.alphagenes">AG_Rowdy</li>
       <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Royalty">AG_PsychicSight</li>
       <li MayRequire="sarg.alphagenes">AG_Skin_TrueBlack</li>
       <li MayRequire="sarg.alphagenes">AG_VFEI_PheromoneSecretor</li>
-      <li MayRequire="sarg.alphagenes">AlphaGenes_ExoticOrganism</li>
       <li>DarkVision</li>
       <li>Deathless</li>
       <li>ArchiteMetabolism</li>
@@ -65,7 +61,6 @@
       <li>RobustDigestion</li>
       <li>PsychicBonding</li>
       <li>KillThirst</li>
-      <li>Libido_High</li>
       <li>Sterile</li>
       <li>Hair_BaldOnly</li>
       <li>Beard_NoBeardOnly</li>
@@ -108,7 +103,6 @@
       <li MayRequire="wvc.sergkart.races.biotech">WVC_LongTentacleTail</li>
       <li MayRequire="wvc.sergkart.races.biotech">WVC_TentacleHands</li>
       <li MayRequire="wvc.sergkart.races.biotech">WVC_PredatorPrey_NotTasty</li>
-      <li MayRequire="wvc.sergkart.races.biotech,Ludeon.RimWorld.Anomaly">WVC_ResurgentCells_AnomalyStability</li>
       <li MayRequire="neronix17.outland.genetics">Outland_Pos7Metabolism</li>
       <li MayRequire="danzen.vpe.biotechintegration">IncreasedMetabolism</li>
       <li MayRequire="danzen.vpe.biotechintegration">Gene_Hemosage</li>
@@ -124,7 +118,6 @@
       <li MayRequire="wvc.sergkart.races.biotech">WVC_Hivemind_Regeneration</li>
       <li MayRequire="wvc.sergkart.races.biotech">WVC_Chimera_Corpseharvest</li>
       <li MayRequire="wvc.sergkart.races.biotech">WVC_Chimera_Xenoharvest</li>
-      <li MayRequire="frimmerdah.hemocapgenefork">Sarius_MajorArchiteHemogenCap</li>
       <li MayRequire="wvc.sergkart.races.biotech">WVC_EternalHunger</li>
       <li MayRequire="wvc.sergkart.races.biotech">WVC_Bloodeater</li>
       <li MayRequire="wvc.sergkart.races.biotech">WVC_MechaAI_SoftwareManipulation</li>

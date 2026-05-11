@@ -47,7 +47,7 @@
       <li MayRequire="sarg.alphagenes">AG_DangerousRaidPresence</li>
       <li MayRequire="sarg.alphagenes">AG_PukeBile</li>
       <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_TwistedFlesh</li>
-      <li MayRequire="sarg.alphagenes">AG_BlackChitinLeather</li>
+      <li MayRequire="sarg.alphagenes,sarg.alphaskills">AG_BlackChitinLeather</li>
       <li MayRequire="sarg.alphagenes">AG_EfficientMandibles</li>
       <li MayRequire="sarg.alphagenes">AG_SurvivalInstinct_Low</li>
       <li MayRequire="sarg.alphagenes">AG_TableResistance</li>
@@ -68,8 +68,7 @@
       <li>Hair_BaldOnly</li>
       <li>Beard_NoBeardOnly</li>
       <li>FacialRidges</li>
-      <li>Body_Standard</li>
-      <li>Body_Thin</li>
+      <li>Body_Hulk</li>
       <li>AptitudePoor_Shooting</li>
       <li>AptitudePoor_Melee</li>
       <li>AptitudePoor_Construction</li>
