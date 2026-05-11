@@ -43,3 +43,26 @@
   * [BetterFloatMenu](https://github.com/Epicguru/BetterFloatMenu/tree/master)
     * I ended up incorporating this.
 * Also came across [EditCompileReload](https://github.com/Zetrith/EditCompileReload) - which loads like a way to hotload DDLs under development which would be **great** for speeding up testing.
+
+## Week #12
+
+* Markdown to steam BB code .NET tool
+```bash
+# also needed to download .NET 7.0
+dotnet tool install -g Converter.MarkdownToBBCodeSteam.Tool
+```
+```json
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Convert to Steam bbcode",
+            "type": "shell",
+            "command": "markdown_to_bbcodesteam -i ${file} -o ${file}.bbcode",
+            "group": "build"
+        }
+    ]
+}
+```

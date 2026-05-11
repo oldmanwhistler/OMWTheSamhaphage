@@ -13,7 +13,7 @@
 | **Cradlemold** | Foundries | Living nurseries of the waxy, screaming void | Brood mothers, gene-bankers, population engines |
 | **Sovereign Stillness** | Avatar | Incarnate Silence itself | Endgame, psychic anchor, doomsday |
 
-### QUICK REFERENCE - ABILITY VERBS
+### QUICK REFERENCE - ABILITIES
 
 * Flatten	(Clearing):	The psychological peaks are ironed out. They no longer resist the biological overhaul.
 * Scrub (Harvest): Collect carcinomas and disabled genes as resonance.
@@ -336,18 +336,17 @@
 - Consciousness anchor (presence flattens minds of nearby)
 - Can destroy corpses in melee (means less biomass to harvest!)
 - Psychic anchor
-- Does not hunt - simply occupies space
+- More bestial than the other xenotypes
 - Manifestation of the Absolute Frequency
 
 **Descriptive Language**:
 
 - "Rent flesh of reality"
 - "Silhouette of absolute quiet in world of screaming noise"
-- "Source of Perfect Silence"
 - "Psychic anchor that flattens the minds of all nearby"
 - "Your heartbeat synchronizes with Null-Thrum until your identity feels like distracting unnecessary noise"
-- "Architect of soul-void found on dead worlds"
 - "The Absolute Frequency incarnate"
+- "The End"
 
 **Mechanical Role**:
 
@@ -358,7 +357,7 @@
 
 ---
 
-## ABILITY VERBS
+## ABILITIES
 
 ### FLATTEN (Thematic Concept)
 
@@ -436,7 +435,57 @@ Action: The Samhaphage manually disables neural inhibitors through deep internal
 
 Narrative: The subject is told that their life has been lived in a deafening, meaningless roar; they are finally being allowed to hear the single, perfect note of the Thrum.
 
-Sensory: A heavy pressure on the mind then a sudden, jarring pop followed by the disappearance of all ambient noise, replaced by a weightless sensation and stillness. 
+Sensory: A heavy pressure on the mind then a sudden, jarring pop followed by the disappearance of all ambient noise, replaced by a weightless  sensation and stillness.
+
+### COMPRESS (Thematic Concept)
+
+Thematic: The finality of the archive. Temporary genetic "noise" is squeezed into permanent biological data. To Compress is to take the volatile, shifting xenogenes and crush them into the host's endogenic foundation, making the alien transition irreversible.
+
+Action: A crushing, gravitational harmonic pulse that collapses the space between the host’s original DNA and the introduced Samhaphage markers, fusing them into a single, high-density sequence.
+
+Narrative: Why settle for a temporary performance when you can become the record? We remove the "gaps" in your evolution, packing the Sovereign's design so tightly into your marrow that no natural process could ever unravel it. You are no longer a host carrying a gift; you are the gift.
+
+Sensory: A terrifying, inward-pulling sensation—as if the marrow is becoming lead and the cells are folding in on themselves—followed by a sudden, metallic "click" that resonates through every bone in the body.
+
+### ATTENUATE (Thematic Concept)
+
+Thematic: The total conversion of matter into signal. To Attenuate is to fade the physical form entirely, turning the host’s biological "volume" down to zero so that their genetic information can be broadcast back into the hive’s collective resonance.
+
+Action: A lethal, high-frequency phase-shift that vibrates the subject’s cellular structure until the physical bonds fail, dissolving the body into a cloud of pure, data-rich harmonic energy.
+
+Narrative: The vessel has served its purpose and is now invited to join the silence. We do not let your genes rot in the earth; we strip away the weight of your flesh, leaving only the pure frequency of your existence to be absorbed by the Sovereign.
+
+Sensory: The victim’s silhouette begins to blur and lose opacity as they emit a fading, mournful hum, eventually vanishing into a soft shimmer of static that leaves the air tasting like ozone.
+
+### SAMPLE (Thematic Concept)
+
+Thematic: The theft of a visual frequency. The Hallowbound recognizes that "identity" is merely a surface-level vibration that can be captured, stored, and replayed. To Sample a pawn is to rip the aesthetic data from their silhouette and wrap it around oneself like a digital shroud.
+
+Action: The Hallowbound emits a high-speed, invisible "ping" that maps the target’s physical geometry and light-reflective properties, instantly overwriting the Hallowbound's own visual output with the stolen data.
+
+Narrative: Your face is a beautiful melody, but you are a poor performer. We will take the arrangement for ourselves and play it with the perfection it deserves, while you fade into a nameless hum.
+
+Sensory: A rapid, camera-shutter click followed by a brief "smearing" of the air, as if the Hallowbound is a screen glitching before it snaps into a perfect, high-definition replica of the victim.
+
+### CROSSFADE (Thematic Concept)
+
+A seamless transition of identity. Crossfade is the art of simultaneous biological displacement: as one frequency is lowered in the host, another is raised to take its place, resulting in a perfect swap of genetic traits between two living vessels.
+
+Action: Two subjects are locked in a sympathetic vibration loop; the Samhaphage modulates their internal "mix," causing a specific trait from the target to slide into the user while the user's corresponding genetic "track" slides into the target.
+
+Narrative: Symmetry is the soul of the Absolute Frequency. Why merely take when you can rebalance? We slide the faders of your existence, ensuring that no data is lost—only relocated to a more appropriate instrument.
+
+Sensory: An overlapping, rhythmic pulsing that feels like two heartbeats trying to sync up, accompanied by a dizzying "panning" sensation where the subjects feel their very essence sliding sideways into one another.
+
+### BOOTLEG (Thematic Concept)
+
+Thematic: The capturing of a dying echo. To Bootleg is to intercept the jagged, distorted frequencies still vibrating within a cooling vessel before they bleed into the background hiss of entropy. It is a raw, high-gain recording of a biological "performance" that has already ended, salvaging the most potent genetic riffs from the silence of the grave.
+
+Action: The Samhaphage drops a wide-aperture "needle" into the host's marrow, using a resonant surge to amplify a single genetic track until it screams over the noise of cellular decay, allowing it to be captured and stored.
+
+Narrative: When the singer dies, the song lingers for a heartbeat in the air. We do not let the silence swallow it; we catch the vibration, no matter how distorted or stained by the static of death, and fold it back into the Sovereign’s playlist.
+
+Sensory: A harsh, overdriven crackle followed by a hollow, cavernous reverb that pulls a shimmering "ribbon" of sound out of the corpse’s throat.
 
 ## HEDIFFS
 

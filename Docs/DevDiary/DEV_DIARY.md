@@ -82,3 +82,21 @@ Overtime at work; no RimWorld.
 ## Week #11 - April 27th, 2026
 
 I want to get this project done "enough" that I can start playing again. It's been three months of no RimWorld. I have a big refactor ahead of me. I've already set up some classes around abilities to reduce all of the boilerplate code every ability had. I also want to try out BetterFloatMenu to use icons for abilities rather than a boring FloatMenu. I end up tweaking it, yay MIT license.
+
+## Week #12 - May 4th, 2026
+
+I finished the refactoring that was causing me not to work on this.
+
+- Everything is using the same NullThrumAbility classes
+- Changed "Verb" to selector since Verb is already a nomenclature in base RimWorld
+- Menu system is almost all icons now
+- Doing more playtests... it's definitely too fiddly where you need to apply the same commands all the time.
+- Acquiring resonance to power the abilities without fluxspawn is very challenging, but when you have fluxspawn it's almost too easy.
+
+I had my first experience of hallucination in `Gemini Code Assist` where it suggested a non-existent `<AbilityDef><targetParams><NeverTargetHostile>` but then when I followed up with a question if that exists, it manages to look at my `TODO.md` tracker to figure out what I was working on, know the bug I was trying to solve and then give me up a bunch of good suggestions for how to fix it. Oh wait, it hallucinates `canTargetMutants`.
+
+In my playtesting I am getting a Crash-To-Desktop with no logging. I need to get smarter about using RimSort's save/open modlists to go back and forth between debugging and trying out bigger modlists. I end up spending a few hours getting back to a stable base of performance mods.
+
+See [OMW Performance Collection on Steam](https://github.com/oldmanwhistler/omw-modlists/blob/main/optimization.md)
+
+## Week #13 - May 11th, 2026

@@ -79,6 +79,12 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 * Genetic Drift 1.6: adds random genes to non-colonists and makes the gene collecting gameplay have a bigger dopamine hit
 * [Gene Ledger](https://steamcommunity.com/sharedfiles/filedetails/?id=3673202834)
 
+## Recommended
+
+* [Tweaks Galore](https://steamcommunity.com/sharedfiles/filedetails/?id=2695164414) can add a Gene menu when viewing pawns/corpses that makes it much faster to browse genes for genes to steal.
+  * It also has a "Gene Pack Tweaks" section where you can con control whether or not every gene can spawn in a genepack.
+  * This mod will respect the gene pack setting as to whether or not a gene can spawn via random mutation or be biologically extracted.
+
 ## Save Files
 
 * Safe to add to save.
@@ -87,7 +93,7 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 * Safe to upgrade during save.
   * If new genes were added to the xenotype XMLs your existing pawns wouldn't have them, like any other biotech mod.
 
-## Mod Conflicts
+## Potential Mod Conflicts
 
 * Self-contained and doesn't patch anything, and doesn't have any global processing other than hediffs.
 * All mod code is user-initiated, even stuff like checking if an ability can apply.

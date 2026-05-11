@@ -2,8 +2,15 @@
 
 ## Next
 
-* Spend resonance to integrate xenogenes
+* I really need to create a logger class with a settings menu
+* adding scrub/harrow to existing stuff isn't executing
+* "arise" needs to become an ability
+* need a ELI5 description of what stuff does on the selector menu
+* anomaly pawns like shamblers can be targeted, also hostiles can be targeted
+* ghoulification of the Sovereign breaks it
 * Retune retriggers Resonance.PostAdd
+* gene categories contain "cosmetic"?
+* respect the gene pack setting in Tweaks Galore for random spawning.
 
 ## BALANCE
 
@@ -12,24 +19,29 @@
 ## BUGS
 
 * flicker stun ability isn't working properly
-* parasitic implantation victims are dying first
+* crashing when working with a bigger modlist
 
 ## Genes
 
 * gene or ritual that bestows a psylink
 * add meditation focus types
-* Re-skin the gene extractor genes to be cohesive.
 * need short descriptions for the Hediffs
 
 ## Xenotypes
 
 * transform commands should check if they are already target xenotype
 
+## Resonance
+
+* automatically convert cancer to resonance
+* Consume carcinomas of others for resonance
+* resonance level should reduce the time of genetic dissonance
+* give resonance on kill? need more ways to acquire resonance
+
 ## Cradlemold
 
 ## Hallowbound
 
-* better name for Steal Face
 * Void Fascination trait
 
 ## Fluxspawn
@@ -42,10 +54,6 @@
 * Hallowbound need to be able to force Fluxspawn to self-heal with their carcinomas
 
 ## Samhaphage
-
-* automatically convert cancer to resonance
-* Consume carcinomas of others for resonance
-* resonance level should reduce the time of genetic disonnance
 
 ## Sovereign Stillness
 
