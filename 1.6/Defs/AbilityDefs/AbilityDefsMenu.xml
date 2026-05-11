@@ -11,6 +11,7 @@
 
 
     <AbilityDef Name="OMW_AbilityXenotypeTargetPawnBase" Abstract="True">
+        <hostile>false</hostile>
         <verbProperties >
             <verbClass>Verb_CastAbility</verbClass>
             <range>100</range >
@@ -21,9 +22,9 @@
                 <canTargetPawns>true</canTargetPawns>
                 <canTargetBuildings>false</canTargetBuildings>
                 <canTargetCorpses>false</canTargetCorpses>
+                <canTargetMechs>false</canTargetMechs>
             </targetParams>
         </verbProperties>
-        <hostile>false</hostile>    
         <canUseAoeToGetTargets>false</canUseAoeToGetTargets>        
         <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
         <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>            
@@ -32,6 +33,7 @@
     </AbilityDef>
 
     <AbilityDef Name="OMW_AbilityXenotypeTargetCorpseBase" Abstract="True">
+        <hostile>false</hostile>   
         <verbProperties >
             <verbClass>Verb_CastAbility</verbClass>
             <range>100</range >
@@ -42,9 +44,9 @@
                 <canTargetPawns>false</canTargetPawns>
                 <canTargetBuildings>false</canTargetBuildings>
                 <canTargetCorpses>true</canTargetCorpses>
+                <canTargetMechs>false</canTargetMechs>
             </targetParams>
-        </verbProperties>    
-        <hostile>false</hostile>    
+        </verbProperties>     
         <canUseAoeToGetTargets>false</canUseAoeToGetTargets>        
         <displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
         <disableGizmoWhileUndrafted>false</disableGizmoWhileUndrafted>            
