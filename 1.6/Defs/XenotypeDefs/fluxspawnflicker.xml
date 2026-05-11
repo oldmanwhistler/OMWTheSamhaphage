@@ -93,6 +93,7 @@
       <li MayRequire="wvc.sergkart.races.biotech">WVC_PredatorPrey_Tasty</li>
       <li MayRequire="neronix17.outland.genetics">Outland_EyeVisual_Recessed</li>
       <li MayRequire="neronix17.outland.genetics">Outland_Headbone_Bulb</li>
+          <li MayRequire="wvc.sergkart.races.biotech">WVC_Invisibility</li>
     </genes>
   </XenotypeDef>
 </Defs>
