@@ -16,7 +16,6 @@ namespace OMW_Samhaphage
             job.count = 1;
             job.targetA = target;
             job.onInteract = onInteract;
-            caster.jobs.EndCurrentJob(JobCondition.InterruptForced);
             caster.jobs.TryTakeOrderedJob(job);            
             return job;
         }
@@ -64,6 +63,16 @@ namespace OMW_Samhaphage
                     if (job == null)
                     {
                         pawn.jobs.EndCurrentJob(JobCondition.Errored);
+                        return;
+                    }
+
+                    // Give the target a job to stand still so we don't have to chase them.
+                    // We use JobDefOf.Wait with a generous duration (1000 ticks is ~16 seconds).
+                    if (TargetA.Thing is Pawn targetPawn && targetPawn != pawn && targetPawn.Spawned && !targetPawn.Dead)
+                    {
+                        Job waitJob = JobMaker.MakeJob(JobDefOf.Wait, 1000);
+                        targetPawn.jobs.TryTakeOrderedJob(waitJob, JobTag.Misc);
+                        Log.Message($"[OMW_Samhaphage] {targetPawn.LabelShort} assigned Wait job to facilitate approach by {pawn.LabelShort}.");
                     }
                 },
                 defaultCompleteMode = ToilCompleteMode.Instant
@@ -100,7 +109,10 @@ namespace OMW_Samhaphage
                 if (TargetA.Thing is Pawn targetPawn && targetPawn != pawn && targetPawn.Spawned && !targetPawn.Dead)
                 {
                     Log.Message($"[OMW_Samhaphage] Target {targetPawn.LabelShort} interrupted to allow interaction.");
-                    targetPawn.jobs?.StopAll();
+                    // Now that we've arrived, give them a fresh wait job to ensure they stay still 
+                    // during the actual interaction progress bar.
+                    Job waitJob = JobMaker.MakeJob(JobDefOf.Wait, 500);
+                    targetPawn.jobs.TryTakeOrderedJob(waitJob, JobTag.Misc);
                 }
             };
 
