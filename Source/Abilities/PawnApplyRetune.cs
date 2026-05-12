@@ -32,9 +32,7 @@ namespace OMW_Samhaphage
 
         protected override List<GeneDef> ConflictGeneDefs(Pawn source, Pawn dest)
         {
-            if (dest == null || dest.genes == null || dest.genes.GenesListForReading == null)
-                return new List<GeneDef>();
-            return dest.genes.Endogenes.Select(g => g.def).ToList();
+            return new List<GeneDef>();
         }        
     }
 
