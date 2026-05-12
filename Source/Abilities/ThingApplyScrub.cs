@@ -14,6 +14,8 @@ namespace OMW_Samhaphage
         // Cheap because it is destroying genes
         protected override float ResonanceTotalMultiplier => 0.5f;
 
+        protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeCredit;
+
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
             return source.genes.GenesListForReading
@@ -104,12 +106,10 @@ namespace OMW_Samhaphage
             {
                 foreach (GenePlus plus in selectedList)
                 {
-                    if (selector.ResonanceDebit(plus))
-                    {
-                        victim.genes.RemoveGene(plus.gene);
-                        Log.Message($"Destroyed {plus.gene.LabelCap} from {victim.LabelShort}");
-                        activated = true;
-                    }
+                    selector.ResonanceCredit(plus);
+                    victim.genes.RemoveGene(plus.gene);
+                    Log.Message($"Destroyed {plus.gene.LabelCap} from {victim.LabelShort}");
+                    activated = true;
                 }
             }));
 

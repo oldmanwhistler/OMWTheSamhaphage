@@ -16,6 +16,7 @@ namespace OMW_Samhaphage
         public override string Name => "Sample";
         // Stealing trash genes
         protected override float ResonanceTotalMultiplier => 0.5f;
+        protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeCredit;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
@@ -43,7 +44,7 @@ namespace OMW_Samhaphage
         {
             return $"Sample {victim.LabelShort} and steal their appearance to disguise yourself as one of their kind.";
         }
-        public override Texture2D Icon => BaseContent.BadTex;
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Sample");
         public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
             if (victim == null || caster == null) return false;
@@ -63,13 +64,11 @@ namespace OMW_Samhaphage
             {
                 foreach (GenePlus plus in selectedList)
                 {
-                    if (selector.ResonanceDebit(plus))
-                    {
-                        victim.genes.RemoveGene(plus.gene);
-                        caster.genes.AddGene(plus.gene.def, true);
-                        Log.Message($"Stole gene {plus.gene.LabelCap} from {victim.LabelShort}");
-                        activated = true;
-                    }
+                    selector.ResonanceCredit(plus);
+                    victim.genes.RemoveGene(plus.gene);
+                    caster.genes.AddGene(plus.gene.def, true);
+                    Log.Message($"Stole gene {plus.gene.LabelCap} from {victim.LabelShort}");
+                    activated = true;
                 }
             }));
 

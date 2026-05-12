@@ -14,12 +14,11 @@ namespace OMW_Samhaphage
         // Cheap because it is destroying genes
         protected override float ResonanceTotalMultiplier => 1f;
 
+        protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeCredit;
+
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
-            return source.genes.GenesListForReading
-                .Where(g => !OMW_BlacklistGenes.BlacklistedGenes.Contains(g.def) && // ignore blacklisted
-                        !this.GeneIsWorthless(g)) // ignore cosmetic genes
-                .ToList();            
+            return source.genes.GenesListForReading.ToList();            
         }
     
         protected override List<GeneDef> ConflictGeneDefs(Pawn source, Pawn dest)

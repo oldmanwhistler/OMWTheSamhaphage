@@ -14,6 +14,7 @@ namespace OMW_Samhaphage
 
         // More expensive because it is stealing genes
         protected override float ResonanceTotalMultiplier => 0.1f;
+        protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeDebit;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {

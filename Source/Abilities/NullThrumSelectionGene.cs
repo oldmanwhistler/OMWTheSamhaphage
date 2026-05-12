@@ -4,6 +4,13 @@ using System.Collections.Generic;
 
 namespace OMW_Samhaphage
 {
+
+    public enum NullThrumResonanceType
+    {
+        ResonanceTypeCredit,
+        ResonanceTypeDebit
+    }
+
     public abstract class NullThrumSelectionGene : NullThrumSelectionBase
     {
         protected NullThrumSelectionGene(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest)
@@ -15,7 +22,7 @@ namespace OMW_Samhaphage
 
         protected abstract float ResonanceTotalMultiplier { get; }
 
-        public int SelectionMaxCost => ResonanceUtility.Total(this.caster, this.ResonanceTotalMultiplier);
+        protected abstract NullThrumResonanceType ResonanceType { get; }
 
         // Abstract methods
 
@@ -24,6 +31,20 @@ namespace OMW_Samhaphage
 
 
         // Concrete methods
+
+        public float SelectionMaxCost()
+        {
+            if (this.ResonanceType == NullThrumResonanceType.ResonanceTypeDebit)
+            {
+                return ResonanceUtility.Total(this.caster, this.ResonanceTotalMultiplier);
+            }
+            else
+            {
+                // disable the MaxCost when it's a credit.
+                return 1000;
+            }
+        }
+
 
         protected float GeneValue(Gene gene)
         {
@@ -38,7 +59,12 @@ namespace OMW_Samhaphage
 
         protected bool GeneIsWorthless(Gene gene)
         {
-            return (gene.def.biostatCpx == 0) && (gene.def.biostatArc == 0) && (gene.def.biostatMet == 0);
+
+            if (gene.def.displayCategory.defName.Contains("Cosmetic"))
+            {
+                return true;
+            }
+            return false;
         }
 
         // GenesPlus is a wrapper class that has useful info for the UI, such as resonance value and conflict info
@@ -55,6 +81,9 @@ namespace OMW_Samhaphage
 
         public bool ResonanceDebit(GenePlus plus)
         {
+            if (this.ResonanceType == NullThrumResonanceType.ResonanceTypeCredit)
+                Log.Error($"NullThrumSelectionGene:{this.Name} is configured to be a Credit but it is calling ResonanceDebit()");
+
             float value = this.GeneValue(plus.gene);
             if (ResonanceUtility.HasAvailable(caster, value))
             {
@@ -70,6 +99,9 @@ namespace OMW_Samhaphage
 
         public void ResonanceCredit(GenePlus plus)
         {
+            if (this.ResonanceType == NullThrumResonanceType.ResonanceTypeDebit)
+                Log.Error($"NullThrumSelectionGene:{this.Name} is configured to be a Debit but it is calling ResonanceCredit()");
+
             float value = this.GeneValue(plus.gene);
             ResonanceUtility.Incr($"Apply credit", caster, value);
         }

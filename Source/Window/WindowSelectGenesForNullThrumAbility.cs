@@ -40,7 +40,7 @@ namespace OMW_Samhaphage
 
         public float SelectionMaxCost()
         {
-            return this.selector.SelectionMaxCost;
+            return this.selector.SelectionMaxCost();
         }
         
         public override void DoWindowContents(Rect inRect)

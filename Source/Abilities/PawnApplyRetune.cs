@@ -15,6 +15,8 @@ namespace OMW_Samhaphage
         // More expensive because it is stealing genes
         protected override float ResonanceTotalMultiplier => 0.5f;
 
+        protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeDebit;
+
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
             // Retune is moving Xenogenes to Endogenes on source
@@ -23,7 +25,8 @@ namespace OMW_Samhaphage
                 .ToHashSet();
             return source.genes.Xenogenes
                 .Where(g => !OMW_BlacklistGenes.BlacklistedGenes.Contains(g.def) && // ignore blacklisted
-                            !alreadyHas.Contains(g.def)) // ignore genes the caster already has
+                            !alreadyHas.Contains(g.def) &&
+                            !this.GeneIsWorthless(g)) // ignore cosmetic genes
                 .ToList();
         }
 

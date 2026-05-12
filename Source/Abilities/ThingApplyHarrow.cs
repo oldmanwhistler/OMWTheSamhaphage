@@ -14,6 +14,7 @@ namespace OMW_Samhaphage
 
         // More expensive because it is stealing genes
         protected override float ResonanceTotalMultiplier => 1.5f;
+        protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeDebit;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
@@ -22,7 +23,9 @@ namespace OMW_Samhaphage
                 .ToHashSet();
             return source.genes.GenesListForReading
                 .Where(g => !OMW_BlacklistGenes.BlacklistedGenes.Contains(g.def) && // ignore blacklisted
-                            !alreadyHas.Contains(g.def)) // ignore genes the caster already has                            
+                            !alreadyHas.Contains(g.def) && // ignore genes the caster already has                            
+                            !this.GeneIsWorthless(g)) // ignore cosmetic genes
+ 
                 .ToList();
         }
 
