@@ -43,6 +43,9 @@ namespace OMW_Samhaphage
             created.closeOnAccept = false;
             created.closeOnCancel = true;
             created.closeOnClickedOutside = false;
+            created.absorbInputAroundWindow = true;
+            created.doCloseX = true;
+            created.forcePause = true;
             created.layer = WindowLayer.SubSuper;
             Find.WindowStack.Add(created);
             return created;

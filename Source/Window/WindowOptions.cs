@@ -17,7 +17,7 @@ namespace OMW_Samhaphage
             this.options = options;
             this.forcePause = true; // This pauses the game
             this.doCloseButton = true; // Adds an "X" or "Close" button
-            this.closeOnClickedOutside = true;
+            this.closeOnClickedOutside = false;
             this.absorbInputAroundWindow = true; // Prevents clicking things behind the window
         }
 

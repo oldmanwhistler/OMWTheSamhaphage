@@ -24,7 +24,7 @@ namespace OMW_Samhaphage
 
             this.forcePause = true;
             this.doCloseX = true;
-            this.closeOnClickedOutside = true;
+            this.closeOnClickedOutside = false;
             this.absorbInputAroundWindow = true;
         }
 
