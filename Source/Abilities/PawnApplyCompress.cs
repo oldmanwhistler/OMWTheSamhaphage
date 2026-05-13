@@ -61,19 +61,22 @@ namespace OMW_Samhaphage
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogerminationComa);
 
             ThingApplyScrub scrub = new ThingApplyScrub();
-            scrub.ApplyPawn(victim, caster);
+            // Chain the compression logic to run only after the scrub window is closed
+            scrub.ApplyPawn(victim, caster, () => ExecuteCompress(victim, caster));
 
-            SelectionCompress selector = new SelectionCompress(caster, victim, caster);
+            return true;
+        }
 
+        private void ExecuteCompress(Pawn victim, Pawn caster)
+        {
+            SelectionCompress selector = new SelectionCompress(caster, victim, victim);
             if (selector.genes.Count == 0)
             {
-                Messages.Message($"{victim.LabelShort} has no genes that can be Compressed.",
-                    MessageTypeDefOf.RejectInput);
-                return false;
+                Messages.Message($"{victim.LabelShort} has no genes that can be Compressed.", MessageTypeDefOf.RejectInput);
+                return;
             }
 
             bool activated = false;
-
             foreach (GenePlus plus in selector.genes)
             {
                 if (selector.ResonanceDebit(plus))
@@ -89,9 +92,6 @@ namespace OMW_Samhaphage
             {
                 selector.ApplyDissonance(victim, caster);
             }
-
-
-            return activated;
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

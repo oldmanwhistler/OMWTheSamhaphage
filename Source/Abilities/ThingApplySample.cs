@@ -58,10 +58,9 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            bool activated = false;
-
             Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
             {
+                bool activated = false;
                 foreach (GenePlus plus in selectedList)
                 {
                     selector.ResonanceCredit(plus);
@@ -70,15 +69,13 @@ namespace OMW_Samhaphage
                     Log.Message($"Stole gene {plus.gene.LabelCap} from {victim.LabelShort}");
                     activated = true;
                 }
+                if (activated)
+                {
+                    PawnApplyRetune retune = new PawnApplyRetune();
+                    retune.ApplyPawn(caster, caster);
+                }
             }));
-
-            if (activated)
-            {
-                PawnApplyRetune retune = new PawnApplyRetune();
-                retune.ApplyPawn(caster, caster);
-            }
-
-            return activated;
+            return true;
         }
 
         public override bool ApplyCorpse(Corpse corpse, Pawn caster)

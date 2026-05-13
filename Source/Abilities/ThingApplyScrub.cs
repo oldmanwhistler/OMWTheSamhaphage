@@ -81,11 +81,16 @@ namespace OMW_Samhaphage
             return true;
         }
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster)
+        public override bool ApplyPawn(Pawn victim, Pawn caster) => ApplyPawn(victim, caster, null);
+
+        /// <summary>
+        /// Specialized ApplyPawn that allows a callback for chaining abilities.
+        /// </summary>
+        public bool ApplyPawn(Pawn victim, Pawn caster, System.Action onComplete)
         {
             if (victim == null || caster == null) return false;
 
-            SelectionScrub selector = new SelectionScrub(caster, victim, null);
+            SelectionScrub selector = new SelectionScrub(caster, victim, victim);
 
             RemoveCarcinomas(victim, caster);
 
@@ -96,11 +101,12 @@ namespace OMW_Samhaphage
 
             if (selector.genes.Count == 0)
             {
-                Messages.Message($"{victim.LabelShort} has no genes that can be scrubbed.", MessageTypeDefOf.RejectInput);
+                // If no genes to scrub, just gain the carcinoma resonance and finish.
+                onComplete?.Invoke();
                 return false;
             }
 
-            bool activated = false;
+            Log.Message($"Going to open scrub for {victim.LabelShort}");
 
             Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
             {
@@ -109,15 +115,14 @@ namespace OMW_Samhaphage
                     selector.ResonanceCredit(plus);
                     victim.genes.RemoveGene(plus.gene);
                     Log.Message($"Destroyed {plus.gene.LabelCap} from {victim.LabelShort}");
-                    activated = true;
                 }
-            }));
-
-            if (activated)
-            {
+                
+                // Side effects must happen INSIDE the callback
                 selector.ApplyDissonance(victim, caster);
-            }
-            return activated;
+                onComplete?.Invoke();
+            }));
+            
+            return true;
         }
 
         public override bool ApplyCorpse(Corpse corpse, Pawn caster)

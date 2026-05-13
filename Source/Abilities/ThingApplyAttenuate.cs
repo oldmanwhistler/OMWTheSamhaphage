@@ -49,7 +49,7 @@ namespace OMW_Samhaphage
                 Flatten.ApplyPawn(victim, caster);
             }
 
-            SelectionAttenuate selector = new SelectionAttenuate(caster, victim, null);
+            SelectionAttenuate selector = new SelectionAttenuate(caster, victim, caster);
 
             if (selector.genes.Count == 0)
             {
@@ -87,7 +87,7 @@ namespace OMW_Samhaphage
 
             Pawn victim = corpse.InnerPawn;
 
-            SelectionAttenuate selector = new SelectionAttenuate(caster, victim, null);
+            SelectionAttenuate selector = new SelectionAttenuate(caster, victim, caster);
 
             if (selector.genes.Count == 0)
             {

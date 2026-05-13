@@ -65,21 +65,24 @@ namespace OMW_Samhaphage
             }
 
             ThingApplyScrub scrub = new ThingApplyScrub();
-            scrub.ApplyPawn(victim, caster);
+            // Chain Harrow window to open after Scrub is done
+            scrub.ApplyPawn(victim, caster, () => OpenHarrowWindow(victim, caster));
 
+            return true;
+        }
+
+        private void OpenHarrowWindow(Pawn victim, Pawn caster)
+        {
             SelectionHarrow selector = new SelectionHarrow(caster, victim, caster);
-
             if (selector.genes.Count == 0)
             {
-                Messages.Message($"{victim.LabelShort} has no genes that can be harrowed.",
-                    MessageTypeDefOf.RejectInput);
-                return false;
+                Messages.Message($"{victim.LabelShort} has no genes that can be harrowed.", MessageTypeDefOf.RejectInput);
+                return;
             }
-
-            bool activated = false;
 
             Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
             {
+                bool activated = false;
                 foreach (GenePlus plus in selectedList)
                 {
                     if (selector.ResonanceDebit(plus))
@@ -90,16 +93,15 @@ namespace OMW_Samhaphage
                         activated = true;
                     }
                 }
+
+                if (activated)
+                {
+                    // Retune the caster after harvesting to integrate new genes
+                    PawnApplyRetune retune = new PawnApplyRetune();
+                    retune.ApplyPawn(caster, caster);
+                    selector.ApplyDissonance(victim, caster);
+                }
             }));
-
-            if (activated)
-            {
-                PawnApplyRetune retune = new PawnApplyRetune();
-                retune.ApplyPawn(caster, caster);
-                selector.ApplyDissonance(victim, caster);
-            }
-
-            return activated;
         }
 
         public override bool ApplyCorpse(Corpse corpse, Pawn caster)

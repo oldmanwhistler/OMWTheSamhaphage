@@ -64,21 +64,26 @@ namespace OMW_Samhaphage
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogerminationComa);
 
             ThingApplyScrub scrub = new ThingApplyScrub();
-            scrub.ApplyPawn(victim, caster);
+            
+            // Use the callback to ensure Retune window only opens AFTER Scrub window is closed.
+            scrub.ApplyPawn(victim, caster, () => OpenRetuneWindow(victim, caster));
 
-            SelectionRetune selector = new SelectionRetune(caster, victim, caster);
+            return true;
+        }
+
+        private void OpenRetuneWindow(Pawn victim, Pawn caster)
+        {
+            SelectionRetune selector = new SelectionRetune(caster, victim, victim);
 
             if (selector.genes.Count == 0)
             {
-                Messages.Message($"{victim.LabelShort} has no genes that can be retuned.",
-                    MessageTypeDefOf.RejectInput);
-                return false;
+                Messages.Message($"{victim.LabelShort} has no genes that can be retuned.", MessageTypeDefOf.RejectInput);
+                return;
             }
-
-            bool activated = false;
 
             Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
             {
+                bool activated = false;
                 foreach (GenePlus plus in selectedList)
                 {
                     if (selector.ResonanceDebit(plus))
@@ -89,15 +94,12 @@ namespace OMW_Samhaphage
                         activated = true;
                     }
                 }
+
+                if (activated)
+                {
+                    selector.ApplyDissonance(victim, caster);
+                }
             }));
-
-            if (activated)
-            {
-                selector.ApplyDissonance(victim, caster);
-            }
-
-
-            return activated;
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
