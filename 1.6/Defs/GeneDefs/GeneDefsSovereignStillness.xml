@@ -108,7 +108,7 @@
 	</customEffectDescriptions>
 	<modExtensions>
 		<li Class="WVC_XenotypesAndGenes.GeneExtension_Giver">
-			<intervalRange>-100~100</intervalRange>
+			<intervalRange>-1000~1000</intervalRange>
 		</li>
 	</modExtensions>
   </GeneDef>
