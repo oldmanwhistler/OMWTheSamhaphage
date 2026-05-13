@@ -83,6 +83,9 @@ namespace OMW_Samhaphage
                 if (debug)
                     Log.Message($"PawnToShamblerOrKillDestroy make {victim.LabelShort} into a shambler");
                 MutantUtility.SetPawnAsMutantInstantly(victim, MutantDefOf.Shambler);
+                // Fix for "Node is null": Force graphics initialization 
+                // after the pawn state changes to Shambler.
+                victim.Drawer.renderer.EnsureGraphicsInitialized();
                 return true;
             }
             else if (ApplyBrainDamage(victim, caster))
