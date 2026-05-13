@@ -13,7 +13,6 @@
       <li MayRequire="omw.samhaphage">OMW_NullThrum</li>
       <li MayRequire="omw.samhaphage">OMW_UnstableMutation</li>
       <li MayRequire="omw.samhaphage">OMW_Resonance</li>
-      <li MayRequire="redmattis.bigsmall.core">BS_GeneEater</li>
       <li MayRequire="redmattis.bigsmall.core">BS_ConsumeSoul</li>
       <li MayRequire="redmattis.bigsmall.core">BS_SoulPowerGreat</li>
       <li MayRequire="redmattis.bigsmall.core">BS_Deathlike</li>
