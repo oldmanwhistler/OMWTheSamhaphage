@@ -8,8 +8,9 @@ namespace OMW_Samhaphage
 {
     public class Gene_ResourceResonance : Gene_Resource
     {
-        // 1. Mandatory overrides from the base class you provided:
-        public override float InitialResourceMax => 100f;
+        private const int PassiveGainIntervalTicks = 1000; // Avoids CS0108 name conflict
+
+        public override float InitialResourceMax => 200f;
         protected override Color BarColor => new Color(0.36f, 0.22f, 0.42f); // Bruise-Purple
         protected override Color BarHighlightColor => new Color(0.54f, 0.17f, 0.89f); // Neon-Violet
         public override float MinLevelForAlert => 1f;
@@ -30,9 +31,46 @@ namespace OMW_Samhaphage
         {
             base.PostAdd();
             // initialize with a random amount
-            this.Value = Rand.Range(3, 20);
-        }        
+            if (Value <= 0)
+            {
+                Value = Rand.Range(3, 20);
+            }
+        }
+
+        public override void Tick()
+        {
+            base.Tick();
+
+            // Use the hash interval to prevent performance hits every frame
+            if (pawn.IsHashIntervalTick(PassiveGainIntervalTicks))
+            {
+                ApplyPassiveGain();
+            }
+        }
+
+        private void ApplyPassiveGain()
+        {
+            if (pawn.genes == null) return;
+
+            // Dynamically fetch the gain from the Pawn's stats
+            // This looks for OMW_StatResonance defined in your StatDefs.xml
+            float dailyGain = pawn.GetStatValue(StatDef.Named("OMW_StatResonance"));
+
+            if (dailyGain != 0)
+            {
+                // Calculate gain: (Daily Amount / 60000 ticks in a day) * Ticks Passed
+                float gainPerInterval = (dailyGain / 60000f) * (float)PassiveGainIntervalTicks;
+                OffsetResonance(gainPerInterval);
+            }
+        }
+
+        public void OffsetResonance(float offset)
+        {
+            // Value and MaxForDisplay are built-in fields from Gene_Resource
+            Value = Mathf.Clamp(Value + offset, 0f, MaxForDisplay);
+        }
     }
+
     public class GeneGizmo_ResourceResonance : GeneGizmo_Resource
     {
         Gene_ResourceResonance ResourceGene => gene as Gene_ResourceResonance;

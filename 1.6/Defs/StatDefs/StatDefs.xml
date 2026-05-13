@@ -4,7 +4,7 @@
   <StatDef>
     <defName>OMW_StatResonance</defName>
     <label>Resonance Capacity</label>
-    <description>A measure of this creature's ability to harness and stabilize the Null-Thrum. Resonance allows for manipulation of the Null-Thrum and enables the retuning abilities.</description>
+    <description>A measure of this creature's ability to harness and stabilize the Null-Thrum. Resonance allows for manipulation of the Null-Thrum and enables the xenotype abilities.</description>
     <category>Genetics</category>
     <defaultBaseValue>0</defaultBaseValue>
     <hideAtValue>0</hideAtValue>
