@@ -57,11 +57,12 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            bool activated = false;
+            bool value = false;
             string msg = $"{victim.LabelShort} has died being attenuated for their resonance.";
             // We define the lethal logic as an Action
             System.Action sacrificeAction = () =>
             {
+                bool activated = false;
                 foreach (GenePlus plus in selector.genes)
                 {
                     selector.ResonanceCredit(plus);
@@ -71,13 +72,13 @@ namespace OMW_Samhaphage
                 if (activated) {
                     OMWAnomaly.PawnToShamblerOrKillDestroy(victim, caster);
                     Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
+                    value = true;
                 }
             };
 
             // Open the confirmation dialog
             OMW_UIHelpers.ShowLethalConfirmation(victim, sacrificeAction);
-
-            return activated;
+            return value;
         }
 
         public override bool ApplyCorpse(Corpse corpse, Pawn caster)
@@ -95,11 +96,11 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            bool activated = false;
             string msg = $"{victim.LabelShort} corpse was destroyed after being attenuated for their resonance.";
             // We define the lethal logic as an Action
             System.Action sacrificeAction = () =>
             {
+                bool activated = false;
                 foreach (GenePlus plus in selector.genes)
                 {
                     selector.ResonanceCredit(plus);
@@ -108,14 +109,17 @@ namespace OMW_Samhaphage
                 }
                 if (activated) {
                     OMWAnomaly.PawnToShamblerOrKillDestroy(victim, caster);
+                    // Corpes don't usually need graphic initialization, but if 
+                    // the pawn is resurrected/spawned as a shambler here, call it:
+                    victim.Drawer.renderer.EnsureGraphicsInitialized();
+
                     Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
                 }
             };
 
             // Open the confirmation dialog
             OMW_UIHelpers.ShowCorpseConfirmation(victim, sacrificeAction);
-
-            return activated;
+            return false;
         }
 
 

@@ -66,9 +66,7 @@ namespace OMW_Samhaphage
             ThingApplyScrub scrub = new ThingApplyScrub();
             
             // Use the callback to ensure Retune window only opens AFTER Scrub window is closed.
-            scrub.ApplyPawn(victim, caster, () => OpenRetuneWindow(victim, caster));
-
-            return true;
+            return scrub.ApplyPawn(victim, caster, () => OpenRetuneWindow(victim, caster));
         }
 
         private void OpenRetuneWindow(Pawn victim, Pawn caster)

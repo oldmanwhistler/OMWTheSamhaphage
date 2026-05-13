@@ -108,21 +108,28 @@ namespace OMW_Samhaphage
 
             Log.Message($"Going to open scrub for {victim.LabelShort}");
 
+            bool value = false;
             Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
             {
+                bool activated = false;
                 foreach (GenePlus plus in selectedList)
                 {
                     selector.ResonanceCredit(plus);
                     victim.genes.RemoveGene(plus.gene);
                     Log.Message($"Destroyed {plus.gene.LabelCap} from {victim.LabelShort}");
+                    activated = true;
                 }
-                
-                // Side effects must happen INSIDE the callback
-                selector.ApplyDissonance(victim, caster);
-                onComplete?.Invoke();
+
+                if (activated)
+                {
+                    // Side effects must happen INSIDE the callback
+                    selector.ApplyDissonance(victim, caster);
+                    onComplete?.Invoke();
+                    value = true;
+                }
             }));
             
-            return true;
+            return value;
         }
 
         public override bool ApplyCorpse(Corpse corpse, Pawn caster)

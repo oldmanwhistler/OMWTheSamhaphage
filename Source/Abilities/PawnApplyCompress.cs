@@ -62,9 +62,7 @@ namespace OMW_Samhaphage
 
             ThingApplyScrub scrub = new ThingApplyScrub();
             // Chain the compression logic to run only after the scrub window is closed
-            scrub.ApplyPawn(victim, caster, () => ExecuteCompress(victim, caster));
-
-            return true;
+            return scrub.ApplyPawn(victim, caster, () => ExecuteCompress(victim, caster));
         }
 
         private void ExecuteCompress(Pawn victim, Pawn caster)

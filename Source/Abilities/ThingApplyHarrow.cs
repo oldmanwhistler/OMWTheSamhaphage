@@ -66,9 +66,7 @@ namespace OMW_Samhaphage
 
             ThingApplyScrub scrub = new ThingApplyScrub();
             // Chain Harrow window to open after Scrub is done
-            scrub.ApplyPawn(victim, caster, () => OpenHarrowWindow(victim, caster));
-
-            return true;
+            return scrub.ApplyPawn(victim, caster, () => OpenHarrowWindow(victim, caster));
         }
 
         private void OpenHarrowWindow(Pawn victim, Pawn caster)

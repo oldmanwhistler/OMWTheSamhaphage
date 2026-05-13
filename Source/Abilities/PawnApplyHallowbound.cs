@@ -33,16 +33,18 @@ namespace OMW_Samhaphage
                 return true;
             }
 
+            bool value = false;
             string msg = $"{caster.LabelShort} has died making {victim.LabelShort} a Hallowbound.";
             System.Action sacrificeAction = () =>
             {
                 OMWGenes.ChangeXenotype(victim, victim.genes?.Xenotype, OMW_XenotypeDefOf.omw_hallowbound);
                 OMWAnomaly.PawnToShamblerOrKillDestroy(caster, caster);
                 Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
+                value = true;
             };
 
             OMW_UIHelpers.ShowLethalConfirmation(caster, sacrificeAction);
-            return true;
+            return value;
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

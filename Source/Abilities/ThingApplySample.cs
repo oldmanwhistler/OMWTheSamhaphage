@@ -58,6 +58,7 @@ namespace OMW_Samhaphage
                 return false;
             }
 
+            bool value = false;
             Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
             {
                 bool activated = false;
@@ -73,9 +74,10 @@ namespace OMW_Samhaphage
                 {
                     PawnApplyRetune retune = new PawnApplyRetune();
                     retune.ApplyPawn(caster, caster);
+                    value = true;
                 }
             }));
-            return true;
+            return value;
         }
 
         public override bool ApplyCorpse(Corpse corpse, Pawn caster)

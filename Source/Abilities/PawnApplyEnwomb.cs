@@ -77,6 +77,7 @@ namespace OMW_Samhaphage
                 return ExecutePregnancy(mother, father);
             }
 
+            bool value = false;
             string msg = $"{father.LabelShort} has died making {mother.LabelShort} pregnant.";
             System.Action sacrificeAction = () =>
             {
@@ -84,11 +85,12 @@ namespace OMW_Samhaphage
                 {
                     OMWAnomaly.PawnToShamblerOrKillDestroy(father, father);
                     Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
+                    value = true;
                 }
             };
 
             OMW_UIHelpers.ShowLethalConfirmation(father, sacrificeAction);
-            return true;
+            return value;
         }
 
         private bool ExecutePregnancy(Pawn mother, Pawn father)
