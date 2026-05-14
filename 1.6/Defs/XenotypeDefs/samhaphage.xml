@@ -50,7 +50,6 @@
       <li MayRequire="sarg.alphagenes">AG_EfficientMandibles</li>
       <li MayRequire="sarg.alphagenes">AG_SurvivalInstinct_Low</li>
       <li MayRequire="sarg.alphagenes">AG_TableResistance</li>
-      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Royalty">AG_InnatePsylink</li>
       <li MayRequire="sarg.alphagenes">AG_NightStriding</li>
       <li MayRequire="sarg.alphagenes">AG_Rowdy</li>
       <li MayRequire="sarg.alphagenes">AG_CancerousBody</li>
