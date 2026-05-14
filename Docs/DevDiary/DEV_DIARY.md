@@ -100,3 +100,5 @@ In my playtesting I am getting a Crash-To-Desktop with no logging. I need to get
 See [OMW Performance Collection on Steam](https://github.com/oldmanwhistler/omw-modlists/blob/main/optimization.md)
 
 ## Week #13 - May 11th, 2026
+
+I'm not happy with how using the ability "feels". It's better after changing the job so it makes the target pawn wait, and then fixing a problem where one of the menus doesn't pause.

@@ -43,9 +43,7 @@
 - **Smell**: Ozone mixed with rot, fermented/electric scents, sharp/acid notes
 - **Texture**: Slick, chitinous, waxy, smooth, translucent, pulsating
 
-### 11. AI NOTE
-
-When brainstorming or writing descriptions
+### When brainstorming or writing descriptions
 
 1. Remember this is **RimWorld** - validate all fields against vanilla
 2. This is a **horror mod with joy** - grotesque but awesome, not grimdark
@@ -55,3 +53,7 @@ When brainstorming or writing descriptions
 6. The **hierarchy is unambiguous**: Samhaphage > Hallowbound > Echovessel > Fluxspawn (in sophistication, not capability)
 7. **Every description should echo the Null-Thrum** - resonance, harmony, silence, frequency
 8. The **player is the villain** - but a righteous, inevitable villain
+
+## FURTHER DESIGN RULES
+
+See [DESIGN_RULES.md](./DESIGN_RULES.md)

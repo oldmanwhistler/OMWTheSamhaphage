@@ -3,27 +3,22 @@
 ## Next
 
 * I really need to create a logger class with a settings menu
-* adding scrub/harrow to existing stuff isn't executing
 * "arise" needs to become an ability
 * need a ELI5 description of what stuff does on the selector menu
-* anomaly pawns like shamblers can be targeted, also hostiles can be targeted
-* ghoulification of the Sovereign breaks it
-* Retune retriggers Resonance.PostAdd
-* gene categories contain "cosmetic"?
-* respect the gene pack setting in Tweaks Galore for random spawning.
+
+* blacklist respect the gene pack setting in Tweaks Galore for random spawning.
 
 ## BALANCE
 
 * silent servitude is too strong at recruiting
+* I need to export all genes as a CSV with the cost of different abilities so I can come up with good defaults.
 
 ## BUGS
 
 * flicker stun ability isn't working properly
-* crashing when working with a bigger modlist
 
 ## Genes
 
-* gene or ritual that bestows a psylink
 * add meditation focus types
 * need short descriptions for the Hediffs
 
@@ -34,21 +29,28 @@
 ## Resonance
 
 * automatically convert cancer to resonance
-* Consume carcinomas of others for resonance
-* resonance level should reduce the time of genetic dissonance
 * give resonance on kill? need more ways to acquire resonance
+* daily resonance amount that varies per xenotype? Doesn't seem to be working.
+* resonance level should reduce the time of genetic dissonance
+* consume a psylink for resonance
+
+## UI
+
+* Need to correct the "resonance cost count" and make it more obvious
+* MaxSelection isn't an accurate total
+
 
 ## Cradlemold
 
 ## Hallowbound
 
 * Void Fascination trait
+* Resurrecting as Echovessel is free?
 
 ## Fluxspawn
 
 * Still working on flicker
 * Faster speed
-* Invisibility
 * Stun
 * Smoke Cloud
 * Hallowbound need to be able to force Fluxspawn to self-heal with their carcinomas

@@ -20,9 +20,9 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 
 ## Design Documents
 
-* [See LORE.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/LORE.md)
-* [See DESIGN_RULES.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DESIGN_RULES.md)
-* [See DEV_DIARY.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DevDiary/DEV_DIARY.md)
+* [See LORE.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/LORE.md) for the descriptions and ideas behind this.
+* [See DESIGN_RULES.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DESIGN_RULES.md) for information about the abilities / genes / xenotypes.
+* [See DEV_DIARY.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DevDiary/DEV_DIARY.md) for my thoughts and experiences while working on it.
 
 ## Game Balance
 
@@ -91,12 +91,17 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 * Safe to remove from save.
   * Could have some errors on first load after removing, like removing any mod.
 * Safe to upgrade during save.
-  * If new genes were added to the xenotype XMLs your existing pawns wouldn't have them, like any other biotech mod.
+  * If new genes were added to the xenotype XMLs then your existing pawns wouldn't have them, like any other biotech mod.
 
-## Potential Mod Conflicts
+## Interactions with Other Mods
 
-* Self-contained and doesn't patch anything, and doesn't have any global processing other than hediffs.
-* All mod code is user-initiated, even stuff like checking if an ability can apply.
+* Doesn't patch anything in the core game or other mods.
+* Mods that change the complexity / metabolism costs of a gene will change the resonance cost that fuels the abilities.
+
+### Performance
+
+* Resonance resource gene ticks every 2 hr
+* Hediffs doing hediff things
 
 ## Mod Collections
 
@@ -108,12 +113,14 @@ Here is the full collection of everything that adds more features to this mod:
 
   This project was to learn how to mod RimWorld and to gain experience using different gen AI tools I don't use at work.
   
-1. AI was used for brainstorming nomenclature and descriptions.
+1. Gen AI was used for brainstorming nomenclature and descriptions.
 2. Coded using VS Code with Intellisense and AI suggestions/review.
-   * "Vibe coding" used for batch refactoring and for working with the RimWorld "Window" UI classes.
+   * "Vibe coding" used for batch refactoring, and working with my Job class and Window UI classes.
 3. Gen AI used for icon assets. If this bugs you then I'll happily accept your hand-drawn vanilla aesthetic icons. Thanks in advance!
    * This mod has no graphical assets other than gene icons and ability icons.
    * TODO: create an AI-free potato-pack of icons that don't use AI.
+
+[My further thoughts on how AI affects video game modding are here](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/RIMWORLD_SLOP.md). Please read before leaving an AI related comment.
 
 ## License
 

@@ -15,8 +15,6 @@ must allow violence?
 set up specific backgrounds on xenotypes?
 
 need name files for the non corpse names
-
-can we add psylink as part of the xenotype but without the gene?
 samhaphage need to be able to space walk?
 
 ## Scenarios

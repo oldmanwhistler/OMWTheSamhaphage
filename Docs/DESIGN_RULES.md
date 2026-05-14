@@ -437,6 +437,16 @@ Narrative: The subject is told that their life has been lived in a deafening, me
 
 Sensory: A heavy pressure on the mind then a sudden, jarring pop followed by the disappearance of all ambient noise, replaced by a weightless  sensation and stillness.
 
+### MUTE (Thematic Concept)
+
+Thematic: The silencing of the internal psychic roar. A psylink is viewed by the Samhaphage as a chaotic, unrefined leak from the rift—a "hiss" of raw potential that creates unnecessary psychic noise. To Mute a victim is to clamp down on this signal, compressing the wild energy of their psylink into a stable, silent, and harvestable pool of Resonance.
+
+Action: The Samhaphage projects a "phase-inverted" psychic field that perfectly cancels out the victim’s neural oscillations, causing their connection to the rift to flatline and collapse into a dense, liquid harmonic frequency.
+
+Narrative: You are screaming into a void that does not care to listen. We will take that frantic, jagged energy and turn the dial to zero, refining your pointless noise into the pure, usable silence of the Sovereign. Your mind will finally be quiet, and the Hive will finally be fed.
+
+Sensory: A sudden, deafening "vacuum" effect where all sound—physical and psychic—is sucked out of the room, followed by the victim’s eyes turning a dull, matte violet as their mental "static" is drained away.
+
 ### COMPRESS (Thematic Concept)
 
 Thematic: The finality of the archive. Temporary genetic "noise" is squeezed into permanent biological data. To Compress is to take the volatile, shifting xenogenes and crush them into the host's endogenic foundation, making the alien transition irreversible.
@@ -467,16 +477,6 @@ Narrative: Your face is a beautiful melody, but you are a poor performer. We wil
 
 Sensory: A rapid, camera-shutter click followed by a brief "smearing" of the air, as if the Hallowbound is a screen glitching before it snaps into a perfect, high-definition replica of the victim.
 
-### CROSSFADE (Thematic Concept)
-
-A seamless transition of identity. Crossfade is the art of simultaneous biological displacement: as one frequency is lowered in the host, another is raised to take its place, resulting in a perfect swap of genetic traits between two living vessels.
-
-Action: Two subjects are locked in a sympathetic vibration loop; the Samhaphage modulates their internal "mix," causing a specific trait from the target to slide into the user while the user's corresponding genetic "track" slides into the target.
-
-Narrative: Symmetry is the soul of the Absolute Frequency. Why merely take when you can rebalance? We slide the faders of your existence, ensuring that no data is lost—only relocated to a more appropriate instrument.
-
-Sensory: An overlapping, rhythmic pulsing that feels like two heartbeats trying to sync up, accompanied by a dizzying "panning" sensation where the subjects feel their very essence sliding sideways into one another.
-
 ### BOOTLEG (Thematic Concept)
 
 Thematic: The capturing of a dying echo. To Bootleg is to intercept the jagged, distorted frequencies still vibrating within a cooling vessel before they bleed into the background hiss of entropy. It is a raw, high-gain recording of a biological "performance" that has already ended, salvaging the most potent genetic riffs from the silence of the grave.
@@ -498,3 +498,15 @@ The Mechanism: The Null-Thrum erases the neural "friction" required for dissent,
 The Result: The pawn becomes a silent mirror that can only reflect the hivemind’s will.
 
 The Philosophy: To the Samhaphage, this is not a lobotomy; it is the gift of absolute peace, achieved by removing the chaotic burden of identity.
+
+TODO
+
+### CROSSFADE (Thematic Concept)
+
+A seamless transition of identity. Crossfade is the art of simultaneous biological displacement: as one frequency is lowered in the host, another is raised to take its place, resulting in a perfect swap of genetic traits between two living vessels.
+
+Action: Two subjects are locked in a sympathetic vibration loop; the Samhaphage modulates their internal "mix," causing a specific trait from the target to slide into the user while the user's corresponding genetic "track" slides into the target.
+
+Narrative: Symmetry is the soul of the Absolute Frequency. Why merely take when you can rebalance? We slide the faders of your existence, ensuring that no data is lost—only relocated to a more appropriate instrument.
+
+Sensory: An overlapping, rhythmic pulsing that feels like two heartbeats trying to sync up, accompanied by a dizzying "panning" sensation where the subjects feel their very essence sliding sideways into one another.

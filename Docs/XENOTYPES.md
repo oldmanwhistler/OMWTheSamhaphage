@@ -88,20 +88,25 @@ TODO: Desc
 
 - Caster can steal the appearance from a Victim or Corpse.
 
-## NOT IMPLEMENTED
+### Compress (Compacting)
+
+Compress crushes volatile xenogenes into the subject's permanent endogenic sequence. It is the final archival act, removing biological "redundancy" to lock the alien frequency into the marrow with irreversible density.
 
 ### Unmute (Awakening)
 
 Strips biological filters to awaken psychic potential. They stop generating "noise" and start receiving the frequency.
 
-### Compress (Compacting)
+### Mute (Awakening)
 
-Compress crushes volatile xenogenes into the subject's permanent endogenic sequence. It is the final archival act, removing biological "redundancy" to lock the alien frequency into the marrow with irreversible density.
+Mute applies a total dampening field to a victim’s psychic core, neutralizing their psylink and distilling the resulting energy into pure Resonance. It effectively silences the subject's higher mind, converting their chaotic rift-connection into a stabilized biological battery for the hive.
+
+### Bootleg (Copy)
+
+Bootleg captures the raw, jagged frequency of a trait from a corpse before the vibration of life completely dissipates. It is an aggressive, high-gain sampling process that salvages potent biological melodies from the encroaching static of death.
+
+## NOT IMPLEMENTED
 
 ### Crossfade (Exchange)
 
 Crossfade executes a dual-signal swap, seamlessly sliding a trait from one living pawn to another while simultaneously replacing it with a trait from the caster. It is a precise harmonic realignment that maintains the hive's total data volume while optimizing individual vessels.
 
-### Bootleg (Copy)
-
-Bootleg captures the raw, jagged frequency of a trait from a corpse before the vibration of life completely dissipates. It is an aggressive, high-gain sampling process that salvages potent biological melodies from the encroaching static of death.
