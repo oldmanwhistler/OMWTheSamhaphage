@@ -40,6 +40,29 @@ namespace OMW_Samhaphage
         
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Attenuate");
 
+        public SelectionAttenuate CanApplyAttenuate(Pawn victim, Pawn caster)
+        {
+            SelectionAttenuate selector = new SelectionAttenuate(caster, victim, caster);
+            if (selector.genes.Count == 0)
+            {
+                Messages.Message($"{victim.LabelShort} has no genes that can be Attenuated.", MessageTypeDefOf.RejectInput);
+                return null;
+            }
+            return selector;
+        }
+
+        public bool ApplyAttenuate(Pawn victim, Pawn caster, SelectionAttenuate selector)
+        {
+            bool activated = false;
+            foreach (GenePlus plus in selector.genes)
+            {
+                selector.ResonanceCredit(plus);
+                victim.genes.RemoveGene(plus.gene);
+                activated = true;
+            }
+            return activated;
+        }
+
         public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
             if (victim == null || caster == null) return false;
@@ -49,27 +72,16 @@ namespace OMW_Samhaphage
                 Flatten.ApplyPawn(victim, caster);
             }
 
-            SelectionAttenuate selector = new SelectionAttenuate(caster, victim, caster);
-
-            if (selector.genes.Count == 0)
-            {
-                Messages.Message($"{victim.LabelShort} has no genes that can be Attenuated.", MessageTypeDefOf.RejectInput);
-                return false;
-            }
+            SelectionAttenuate selector = CanApplyAttenuate(victim, caster);
+            if (selector == null) return false;
 
             bool value = false;
             string msg = $"{victim.LabelShort} has died being attenuated for their resonance.";
             // We define the lethal logic as an Action
             System.Action sacrificeAction = () =>
             {
-                bool activated = false;
-                foreach (GenePlus plus in selector.genes)
+                if (ApplyAttenuate(victim, caster, selector))
                 {
-                    selector.ResonanceCredit(plus);
-                    victim.genes.RemoveGene(plus.gene);
-                    activated = true;
-                }
-                if (activated) {
                     OMWAnomaly.PawnToShamblerOrKillDestroy(victim, caster);
                     Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
                     value = true;
@@ -88,26 +100,15 @@ namespace OMW_Samhaphage
 
             Pawn victim = corpse.InnerPawn;
 
-            SelectionAttenuate selector = new SelectionAttenuate(caster, victim, caster);
-
-            if (selector.genes.Count == 0)
-            {
-                Messages.Message($"{victim.LabelShort} has no genes that can be Attenuated.", MessageTypeDefOf.RejectInput);
-                return false;
-            }
+            SelectionAttenuate selector = CanApplyAttenuate(victim, caster);
+            if (selector == null) return false;
 
             string msg = $"{victim.LabelShort} corpse was destroyed after being attenuated for their resonance.";
             // We define the lethal logic as an Action
             System.Action sacrificeAction = () =>
             {
-                bool activated = false;
-                foreach (GenePlus plus in selector.genes)
+                if (ApplyAttenuate(victim, caster, selector))
                 {
-                    selector.ResonanceCredit(plus);
-                    victim.genes.RemoveGene(plus.gene);
-                    activated = true;
-                }
-                if (activated) {
                     OMWAnomaly.PawnToShamblerOrKillDestroy(victim, caster);
                     // Corpes don't usually need graphic initialization, but if 
                     // the pawn is resurrected/spawned as a shambler here, call it:

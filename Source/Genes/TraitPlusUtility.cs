@@ -7,16 +7,22 @@ namespace OMW_Samhaphage
     public class TraitPlus
     {
         public Trait trait;
+        public float value = 1f;
         public string destinationConflictStr = "";
 
         public TraitPlus(Trait trait)
         {
-            this.trait = trait;
+            this.trait = trait;            
         }
 
         public bool HasConflict()
         {
             return !this.destinationConflictStr.NullOrEmpty();
+        }
+
+        public Trait Copy()
+        {
+            return new Trait(this.trait.def, this.trait.Degree);
         }
 
         public override string ToString()
