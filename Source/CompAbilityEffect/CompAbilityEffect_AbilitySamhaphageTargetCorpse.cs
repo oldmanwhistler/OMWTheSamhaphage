@@ -45,11 +45,14 @@ namespace OMW_Samhaphage
                 ability = new ThingApplyHarrow();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
+                ability = new ThingApplyMute();
+                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
+
                 ability = new ThingApplyAttenuate();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
                 ability = new ThingApplyBootleg();
-                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
+                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));                
             }
 
             if (items.Count > 0)
