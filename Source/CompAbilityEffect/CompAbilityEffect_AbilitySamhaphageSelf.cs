@@ -29,7 +29,7 @@ namespace OMW_Samhaphage
                 // this only works because Sovereign and Samhaphage have the same menu
                 OMWXenotypes.ThereCanOnlyBeOne();
                 xeno = parent.pawn.genes.Xenotype;
-            }            
+            }
 
             if ((xeno != OMW_XenotypeDefOf.omw_samhaphage) && (xeno != OMW_XenotypeDefOf.omw_sovereign_stillness))
             {
@@ -43,6 +43,9 @@ namespace OMW_Samhaphage
                 items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
 
                 ability = new PawnApplyRetune();
+                items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
+
+                ability = new PawnApplyUnmute();
                 items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
             }
 
