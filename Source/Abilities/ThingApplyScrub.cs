@@ -109,7 +109,7 @@ namespace OMW_Samhaphage
             Log.Message($"Going to open scrub for {victim.LabelShort}");
 
             bool value = false;
-            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
+            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, selectedList =>
             {
                 bool activated = false;
                 foreach (GenePlus plus in selectedList)
@@ -124,10 +124,9 @@ namespace OMW_Samhaphage
                 {
                     // Side effects must happen INSIDE the callback
                     selector.ApplyDissonance(victim, caster);
-                    onComplete?.Invoke();
                     value = true;
                 }
-            }));
+            }, onComplete));
             
             return value;
         }

@@ -13,14 +13,16 @@ namespace OMW_Samhaphage
         private WindowState windowState;
         private HashSet<GenePlus> selectedGenes = new HashSet<GenePlus>();
         private System.Action<List<GenePlus>> onConfirm;
+        private System.Action onDismiss;
         private Vector2 scrollPosition;
 
         public override Vector2 InitialSize => new Vector2(450f, 700f);
 
-        public WindowSelectGenesForNullThrumAbility(NullThrumSelectionGene selector, System.Action<List<GenePlus>> callback)
+        public WindowSelectGenesForNullThrumAbility(NullThrumSelectionGene selector, System.Action<List<GenePlus>> callback, System.Action onDismiss = null)
         {
             this.selector = selector;
             this.onConfirm = callback;
+            this.onDismiss = onDismiss;
 
             this.forcePause = true;
             this.doCloseX = true;
@@ -171,6 +173,12 @@ namespace OMW_Samhaphage
             }
             GUI.color = Color.white;
             this.windowState.Restore();
+        }
+
+        public override void PostClose()
+        {
+            base.PostClose();
+            onDismiss?.Invoke();
         }
 
         private void DrawCategoryHeader(ref float curY, float width, string label)
