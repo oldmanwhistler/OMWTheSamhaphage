@@ -122,8 +122,6 @@ namespace OMW_Samhaphage
 
                 if (activated)
                 {
-                    // Side effects must happen INSIDE the callback
-                    selector.ApplyDissonance(victim, caster);
                     value = true;
                 }
             }, onComplete));
