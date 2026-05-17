@@ -14,7 +14,7 @@
         <hostile>false</hostile>
         <verbProperties >
             <verbClass>Verb_CastAbility</verbClass>
-            <range>100</range >
+            <range>200</range >
             <warmupTime>0</warmupTime>
 	        <requireLineOfSight>false</requireLineOfSight>            
             <targetParams>
@@ -36,7 +36,7 @@
         <hostile>false</hostile>   
         <verbProperties >
             <verbClass>Verb_CastAbility</verbClass>
-            <range>100</range >
+            <range>200</range >
             <warmupTime>0</warmupTime>
 	        <requireLineOfSight>false</requireLineOfSight>            
             <targetParams>
