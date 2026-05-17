@@ -221,51 +221,48 @@ namespace OMW_Samhaphage
         }
 
 
-        public static bool CanChangeXenotype(Pawn pawn, XenotypeDef sourceXenotype, XenotypeDef targetXenotype, bool sendMsg=false)
+        public static bool CanChangeXenotype(Pawn pawn, XenotypeDef targetXenotype)
         {
             if (pawn == null) return false;
+            if (targetXenotype == null) return false;
+            if (pawn.genes == null) return false;
 
-            // Guess the xenotype
-            if (sourceXenotype == null) sourceXenotype = pawn.genes?.Xenotype;
-
-            if (sourceXenotype == targetXenotype)
+            if (pawn.genes?.Xenotype == targetXenotype)
             {
-                if (sendMsg)
-                {
-                    Messages.Message($"{pawn.LabelShort} is already targetXenotype", MessageTypeDefOf.RejectInput);
-                }
+                Log.Debug($"{pawn.LabelShort} is already targetXenotype");
                 return false;
             }
             return true;
         }
-
-        public static bool ChangeXenotype(Pawn pawn, XenotypeDef sourceXenotype, XenotypeDef targetXenotype)
+        
+        public static bool ChangeXenotype(Pawn pawn, XenotypeDef targetXenotype)
         {
-            if (sourceXenotype == null) sourceXenotype = pawn.genes?.Xenotype;
-            if (!CanChangeXenotype(pawn, sourceXenotype, targetXenotype, true)) return false;
-            // Guess the xenotype
+            if (!CanChangeXenotype(pawn, targetXenotype)) return false;
+
+            // Correctly initialize the local variable
+            XenotypeDef sourceXenotype = pawn.genes?.Xenotype;
 
             Log.Debug($"{pawn.LabelShort}.ChangeXenotype: Start changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
             if (sourceXenotype != null) RemoveXenotype(pawn, sourceXenotype);
             XenogenesToEndogenes(pawn);
             if (targetXenotype != null) AddXenotype(pawn, targetXenotype);
-            
-                Log.Debug(
-                    $"{pawn.LabelShort}.ChangeXenotype: Done changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
+
+            Log.Debug(
+                $"{pawn.LabelShort}.ChangeXenotype: Done changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
             return true;
         }
 
-        public static bool ChangeEndotype(Pawn pawn, XenotypeDef sourceXenotype, XenotypeDef targetXenotype)
+        public static bool ChangeEndotype(Pawn pawn, XenotypeDef targetXenotype)
         {
-            if (!CanChangeXenotype(pawn, sourceXenotype, targetXenotype, true)) return false;
-            // Guess the xenotype
-            if (sourceXenotype == null) sourceXenotype = pawn.genes?.Xenotype;           
+            if (!CanChangeXenotype(pawn, targetXenotype)) return false;
+
+            XenotypeDef sourceXenotype = pawn.genes?.Xenotype;
+
             Log.Debug($"{pawn.LabelShort}.ChangeEndotype: Start changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
-            ChangeXenotype(pawn, sourceXenotype, targetXenotype);
+            ChangeXenotype(pawn, targetXenotype);
             XenogenesToEndogenes(pawn);
             
-                Log.Debug(
-                    $"{pawn.LabelShort}.ChangeEndotype: Done changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
+            Log.Debug($"{pawn.LabelShort}.ChangeEndotype: Done changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
             return true;
         }        
 

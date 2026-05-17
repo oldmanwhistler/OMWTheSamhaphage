@@ -15,7 +15,7 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            OMWGenes.ChangeEndotype(pawn, null, TargetXenotype());
+            OMWGenes.ChangeEndotype(pawn, TargetXenotype());
             return PawnTeratogenics.RemoveRandomCarcinoma(pawn);
         }
 

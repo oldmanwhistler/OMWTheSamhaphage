@@ -70,8 +70,8 @@ namespace OMW_Samhaphage
             {
                 if (pawn != choice)
                 {
-                    OMWGenes.ChangeEndotype(pawn, OMW_XenotypeDefOf.omw_sovereign_stillness, OMW_XenotypeDefOf.omw_samhaphage);
-                    Find.LetterStack.ReceiveLetter($"{pawn.LabelShort} xenotype changed.", $"{pawn.LabelShort} lost the role of Soverign Stillness and has returned to being a Samhaphage.", LetterDefOf.PositiveEvent,(TargetInfo)pawn);
+                    OMWGenes.ChangeEndotype(pawn, OMW_XenotypeDefOf.omw_samhaphage);
+                    Find.LetterStack.ReceiveLetter($"{pawn.LabelShort} xenotype changed.", $"{pawn.LabelShort} lost the role of Sovereign Stillness and has returned to being a Samhaphage.", LetterDefOf.PositiveEvent,(TargetInfo)pawn);
                 }
             }
         }

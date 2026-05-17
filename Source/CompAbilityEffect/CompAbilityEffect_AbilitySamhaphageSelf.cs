@@ -63,7 +63,7 @@ namespace OMW_Samhaphage
                 }
                 else
                 {
-                    items.Add(new MenuItemText((Action)(() => OMWGenes.ChangeEndotype(parent.pawn, OMW_XenotypeDefOf.omw_samhaphage, OMW_XenotypeDefOf.omw_sovereign_stillness)), "Arise to Sovereign Stillness"));
+                    items.Add(new MenuItemText((Action)(() => OMWGenes.ChangeEndotype(parent.pawn, OMW_XenotypeDefOf.omw_sovereign_stillness)), "Arise to Sovereign Stillness"));
                 }
             }
 

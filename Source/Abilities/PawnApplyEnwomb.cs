@@ -104,7 +104,7 @@ namespace OMW_Samhaphage
 
             if (TargetXenotype != null)
             {
-                OMWGenes.ChangeXenotype(mother, null, TargetXenotype);
+                OMWGenes.ChangeXenotype(mother, TargetXenotype);
             }
 
             OMWGenes.Refresh(mother);

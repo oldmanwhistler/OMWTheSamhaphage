@@ -10,10 +10,10 @@ namespace OMW_Samhaphage
         private readonly string prefix;
         private readonly string subPrefix;
 
-        public Logger(string subPrefix = null)
+        public Logger(string subPrefix)
         {
             this.subPrefix = subPrefix;
-            this.prefix = subPrefix.NullOrEmpty() ? "[OMW] " : $"[OMW] [{subPrefix}] ";
+            this.prefix = $"[SAMHAPHAGE-{subPrefix}] ";
         }
 
         public void Message(string text)

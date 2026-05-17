@@ -29,7 +29,7 @@ namespace OMW_Samhaphage
 
             if (!SacrificeCaster)
             {
-                OMWGenes.ChangeXenotype(victim, victim.genes?.Xenotype, OMW_XenotypeDefOf.omw_hallowbound);
+                OMWGenes.ChangeXenotype(victim, OMW_XenotypeDefOf.omw_hallowbound);
                 return true;
             }
 
@@ -37,7 +37,7 @@ namespace OMW_Samhaphage
             string msg = $"{caster.LabelShort} has died making {victim.LabelShort} a Hallowbound.";
             System.Action sacrificeAction = () =>
             {
-                OMWGenes.ChangeXenotype(victim, victim.genes?.Xenotype, OMW_XenotypeDefOf.omw_hallowbound);
+                OMWGenes.ChangeXenotype(victim, OMW_XenotypeDefOf.omw_hallowbound);
                 OMWAnomaly.PawnToShamblerOrKillDestroy(caster, caster);
                 Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
                 value = true;

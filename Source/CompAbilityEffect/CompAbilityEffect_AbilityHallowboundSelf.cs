@@ -39,7 +39,7 @@ namespace OMW_Samhaphage
                 int currComplexity = OMWGenes.CalculateComplexity(parent.pawn);
                 if (currComplexity >= reqComplexity)
                 {
-                    items.Add(new MenuItemText((Action)(() => OMWGenes.ChangeEndotype(parent.pawn, OMW_XenotypeDefOf.omw_hallowbound, OMW_XenotypeDefOf.omw_samhaphage)), "Arise to Samhaphage"));
+                    items.Add(new MenuItemText((Action)(() => OMWGenes.ChangeEndotype(parent.pawn, OMW_XenotypeDefOf.omw_samhaphage)), "Arise to Samhaphage"));
                 }
                 else
                 {
