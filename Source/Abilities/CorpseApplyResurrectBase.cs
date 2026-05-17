@@ -28,11 +28,6 @@ namespace OMW_Samhaphage
                 OMWGenes.ChangeXenotype(pawn, null, this.TargetXenotype);
             }
 
-            if (this.TargetHediff != null)
-            {
-                pawn.health.AddHediff(this.TargetHediff);
-            }
-
             try
             {
                 ResurrectionUtility.TryResurrect(pawn);
@@ -45,6 +40,16 @@ namespace OMW_Samhaphage
             if (!pawn.Spawned) return false;
 
             pawn.health.RestorePart(pawn.RaceProps.body.corePart);
+
+            if (this.TargetHediff != null)
+            {
+                pawn.health.AddHediff(this.TargetHediff);
+            }
+
+            if (!pawn.health.hediffSet.HasHediff(HediffDef.Named("OMW_Reassembled")))
+            {
+                pawn.health.AddHediff(HediffDef.Named("OMW_Reassembled"));
+            }
 
             return true;
         }

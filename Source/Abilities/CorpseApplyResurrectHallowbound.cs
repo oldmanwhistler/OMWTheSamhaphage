@@ -58,6 +58,12 @@ namespace OMW_Samhaphage
                 return false;
             }
 
+            if (pawn.health.hediffSet.HasHediff(HediffDef.Named("OMW_Reassembled")))
+            {
+                reason = "Vessel has already been reassembled; the frequency cannot be anchored.";
+                return false;
+            }
+
             return true;
         }
     }

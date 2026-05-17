@@ -161,4 +161,12 @@
         </stages>
     </HediffDef>
 
+    <HediffDef>
+        <defName>OMW_Reassembled</defName>
+        <label>reassembled</label>
+        <description>Bound permanently to the marrow of their vessel, this pawn can never again be reassembled from death.</description>
+        <isBad>false</isBad>
+        <initialSeverity>1.0</initialSeverity>
+    </HediffDef>
+
 </Defs>
