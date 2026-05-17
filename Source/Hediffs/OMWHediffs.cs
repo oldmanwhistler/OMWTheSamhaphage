@@ -6,8 +6,6 @@ namespace OMW_Samhaphage
 {
     public static class OMWHediffs
     {
-        private static bool debug = true;
-
         public static bool RemoveHediff(Pawn pawn, HediffDef hediffDef)
         {
             if (pawn == null) return false;
