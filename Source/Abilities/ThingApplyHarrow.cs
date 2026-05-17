@@ -22,7 +22,7 @@ namespace OMW_Samhaphage
                 .Select(g => g.def)
                 .ToHashSet();
             return source.genes.GenesListForReading
-                .Where(g => !OMW_BlacklistGenes.BlacklistedGenes.Contains(g.def) && // ignore blacklisted
+                .Where(g => !OMW_BlacklistGenes.BlacklistedGenesResonance.Contains(g.def) && // ignore blacklisted
                             !alreadyHas.Contains(g.def) && // ignore genes the caster already has                            
                             !this.GeneIsWorthless(g)) // ignore cosmetic genes
  

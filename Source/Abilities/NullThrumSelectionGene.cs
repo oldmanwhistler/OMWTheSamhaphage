@@ -45,16 +45,9 @@ namespace OMW_Samhaphage
             }
         }
 
-
         protected float GeneValue(Gene gene)
         {
-            float cpx = gene.def.biostatCpx;
-            float arc = 3 * gene.def.biostatArc;
-            float met = gene.def.biostatMet;
-            met = met / 4 * -1;
-            float tmp = cpx + met + arc;
-            if (tmp < 0f) tmp = 0f;
-            return tmp * this.ResonanceTotalMultiplier;
+            return ResonanceUtility.GeneResonanceValue(gene.def) * this.ResonanceTotalMultiplier;
         }
 
         protected bool GeneIsWorthless(Gene gene)

@@ -1,18 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using RimWorld;
 using Verse;
-// TODO: is this needed? using static HarmonyLib.Code;
-using AlphaGenes;
 
-// Based on AlphaGenes' RandomMutation hediff comp (c) juanosarg. 
+// Inspired by AlphaGenes' RandomMutation hediff comp (c) juanosarg. 
 // See original at: https://github.com/juanosarg/AlphaGenes/blob/d6f14ee6106ce01351c86eb369703edde65bce66/1.6/Source/AlphaGenes/AlphaGenes/HediffComps/HediffComp_RandomMutation.cs
 
 // The difference from Alpha Genes:
+// - uses my own "random gene blacklist control", although if you look at OMW_BlacklistGenes mine respects the WretchBlacklistDef.
 // - the genes are only removed if they remained xenogenes.
 // - it can filter out genes not within the min/max metabolism range.
-// - TODO: switch to my own "random gene blacklist control"
 
 namespace OMW_Samhaphage
 {
@@ -34,29 +30,6 @@ namespace OMW_Samhaphage
 
         public List<GeneDef> geneDefs = new List<GeneDef>();
 
-        // Caching these globally to prevent redundant iterations across multiple pawns
-        private static List<GeneDef> cachedBlacklist;
-        private static List<string> cachedDefnameStrings;
-        private static List<GeneDef> cachedValidGenes;
-
-        private static void EnsureCacheLoaded()
-        {
-            if (cachedBlacklist != null) return;
-
-            cachedBlacklist = new List<GeneDef>();
-            cachedDefnameStrings = new List<string>();
-
-            List<AlphaGenes.WretchBlacklistDef> allWretchBlacklistedGenes = DefDatabase<AlphaGenes.WretchBlacklistDef>.AllDefsListForReading;
-            foreach (AlphaGenes.WretchBlacklistDef individualList in allWretchBlacklistedGenes)
-            {
-                if (!individualList.blackListedGenes.NullOrEmpty())
-                    cachedBlacklist.AddRange(individualList.blackListedGenes);
-
-                if (!individualList.blackListedDefNameStrings.NullOrEmpty())
-                    cachedDefnameStrings.AddRange(individualList.blackListedDefNameStrings);
-            }
-        }
-
         public bool Active = false;
 
         public override void CompExposeData()
@@ -66,12 +39,6 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref this.Active, nameof(this.Active));
         }
 
-        public override void CompPostMake()
-        {
-            base.CompPostMake();
-            EnsureCacheLoaded();
-        }
-
         public override void CompPostTick(ref float severityAdjustment)
         {
             base.CompPostTick(ref severityAdjustment);
@@ -79,16 +46,18 @@ namespace OMW_Samhaphage
             if (!Active && this.parent.pawn.Map != null)
             {
                 Active = true;
-                EnsureCacheLoaded();
                 this.geneDefs?.Clear();
+
+                HashSet<GeneDef> alreadyHas = this.parent.pawn.genes.GenesListForReading
+                    .Select(g => g.def)
+                    .ToHashSet();
                 for (int i = 0; i < Props.numberOfGenes; i++)
                 {
                     GeneDef gene = DefDatabase<GeneDef>.AllDefs.Where((GeneDef x) =>
-                        x.exclusionTags?.Contains("AG_OnlyOnCharacterCreation") == false &&
-                        x.prerequisite == null && x.biostatArc == 0 && x.biostatMet > Props.minMetabolism && x.biostatMet < Props.maxMetabolism &&
-                        x.modContentPack?.PackageId != "vanillaracesexpanded.insector" &&
-                        !cachedDefnameStrings.Any(s => x.defName.Contains(s)) &&
-                        !cachedBlacklist.Contains(x)).RandomElement();
+                        !OMW_BlacklistGenes.BlacklistedGenesMutation.Contains(x) &&
+                        !alreadyHas.Contains(x) &&
+                        x.biostatMet >= Props.minMetabolism &&
+                        x.biostatMet <= Props.maxMetabolism).RandomElement();
 
                     if (gene != null)
                     {

@@ -19,8 +19,7 @@ namespace OMW_Samhaphage
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
             return source.genes.GenesListForReading
-                .Where(g => !OMW_BlacklistGenes.BlacklistedGenes.Contains(g.def) && // ignore blacklisted
-                        g.Overridden) // must be overridden to be scrubbed
+                .Where(g => g.Overridden) // must be overridden to be scrubbed
                 .ToList();            
         }
     

@@ -22,8 +22,7 @@ namespace OMW_Samhaphage
         {
             List<Gene> alreadyHas = dest.genes.GenesListForReading ?? new List<Gene>();
             return source.genes.GenesListForReading
-                .Where(g => !OMW_BlacklistGenes.BlacklistedGenes.Contains(g.def) && // ignore blacklisted
-                            !alreadyHas.Contains(g) && // ignore genes the caster already has
+                .Where(g => !alreadyHas.Contains(g) && // ignore genes the caster already has
                             !g.Overridden && // can't steal a face if it's already overridden
                             this.GeneIsWorthless(g)) // want cosmetic genes only
                 .ToList();

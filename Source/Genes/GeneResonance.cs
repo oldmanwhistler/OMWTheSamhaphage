@@ -8,6 +8,7 @@ namespace OMW_Samhaphage
 {
     public class Gene_ResourceResonance : Gene_Resource
     {
+        static Logger Log = new Logger("Resonance");
         private const int PassiveGainIntervalTicks = 1000; // Avoids CS0108 name conflict
 
         public override float InitialResourceMax => 200f;
@@ -58,6 +59,7 @@ namespace OMW_Samhaphage
             {
                 // Calculate gain: (Daily Amount / 60000 ticks in a day) * Ticks Passed
                 float gainPerInterval = (dailyGain / 60000f) * (float)PassiveGainIntervalTicks;
+                Log.Debug($"{pawn.LabelShort}.ApplyPassiveGain: {gainPerInterval}");
                 OffsetResonance(gainPerInterval);
             }
         }
@@ -79,13 +81,17 @@ namespace OMW_Samhaphage
         {
         }
 
-        protected override bool DraggingBar
+        protected override bool IsDraggable
         {
-            get { return false; }
-            set {  }
+            get
+            {
+                return false;
+            }
         }
 
-
+        // Prevents the player from clicking/dragging to set threshold targets.
+        protected override bool DraggingBar { get => false; set { } }
+        
         protected override string GetTooltip()
         {
             string text =

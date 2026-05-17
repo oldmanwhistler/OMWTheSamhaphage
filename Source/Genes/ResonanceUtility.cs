@@ -67,5 +67,34 @@ namespace OMW_Samhaphage
             }
             return 0;
         }
+
+        public static float GeneResonanceValueArchite(GeneDef geneDef)
+        {
+            return geneDef.biostatArc * 10f;
+        }
+
+        public static float GeneResonanceValueComplexity(GeneDef geneDef)
+        {
+            return geneDef.biostatCpx * 2f;
+        }
+
+        public static float GeneResonanceValueMetabolism(GeneDef geneDef)
+        {
+            return ((geneDef.biostatMet < 0) ? (geneDef.biostatMet * -1.5f) : (geneDef.biostatMet * -1f));
+        }
+
+        public static float GeneResonanceValue(GeneDef geneDef)
+        {
+            // Archite is the primary anchor (Max 30)
+            float arcWeight = GeneResonanceValueArchite(geneDef);
+            // Complexity is the signal density (Max 10)
+            float cpxWeight = GeneResonanceValueComplexity(geneDef);
+            // Metabolism is the entropic stability. Negative (high power) costs more to stabilize.
+            float metWeight = GeneResonanceValueMetabolism(geneDef);
+
+            // negative values become 1
+            return Mathf.Max(arcWeight + cpxWeight + metWeight, 1f);
+        }
+
     }
 }
