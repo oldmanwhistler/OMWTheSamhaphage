@@ -123,7 +123,48 @@ namespace OMW_Samhaphage
             if (debug) Log.Message($"{pawn.LabelShort}.XenogenesToEndogenes: Moved {genesToMove.Count} xenogenes to endogenes");
         }
 
+        public static void PrependXenogenes(Pawn pawn, List<GeneDef> genesToAdd)
+        {
+            if (pawn == null || genesToAdd.Count == 0) return;
 
+            if (debug) Log.Message($"{pawn.LabelShort}.PrependXenogenes: pawn has {pawn.genes.Xenogenes.Count}");
+
+            if (debug) Log.Message($"{pawn.LabelShort}.PrependXenogenes: step 1");
+
+            List<Gene> genesToRemove = new List<Gene>();
+            foreach (Gene xenoGene in pawn.genes.Xenogenes)
+            {
+                genesToRemove.Add(xenoGene);
+            }
+            if (debug) Log.Message($"{pawn.LabelShort}.PrependXenogenes: step 2");
+
+            foreach (Gene gene in genesToRemove)
+            {
+                pawn.genes.RemoveGene(gene);
+            }
+
+            if (debug) Log.Message($"{pawn.LabelShort}.PrependXenogenes: step 3");
+
+            int count = 0;
+            foreach (GeneDef geneDef in genesToAdd)
+            {
+                pawn.genes.AddGene(geneDef, xenogene: true);
+                count++;
+            }
+
+            if (debug) Log.Message($"{pawn.LabelShort}.PrependXenogenes: step 4");
+
+            foreach (Gene gene in genesToRemove)
+            {
+                pawn.genes.AddGene(gene.def, xenogene: true);
+            }
+
+            if (debug) Log.Message($"{pawn.LabelShort}.PrependXenogenes: step 5");
+
+            if (debug) Log.Message($"{pawn.LabelShort}.PrependXenogenes: Added {count} genes to the front of xenogenes");
+            Refresh(pawn);
+        }
+        
         public static void AddXenotype(Pawn pawn, XenotypeDef xenotype)
         {
             if (pawn == null || xenotype == null) return;
@@ -243,5 +284,6 @@ namespace OMW_Samhaphage
             if (pawn.genes.HasActiveGene(OMW_GeneDefOf.OMW_ScouredMind)) return true;
             return false;
         }
+
     }
 }

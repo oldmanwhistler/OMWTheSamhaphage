@@ -487,6 +487,16 @@ Narrative: When the singer dies, the song lingers for a heartbeat in the air. We
 
 Sensory: A harsh, overdriven crackle followed by a hollow, cavernous reverb that pulls a shimmering "ribbon" of sound out of the corpse’s throat.
 
+### CROSSTALK (Thematic Concept)
+
+Thematic: A chaotic, two-way rupture in biological insulation. The Hallowbound can deliberately drop their internal shielding to create a predatory signal loop with a target. Without the protection of these boundaries, the frequencies of both vessels violently bleed into one another, resulting in an unpredictable, scrambled exchange of genetic material as the two life-forms struggle for dominance over the shared signal.
+
+Action: The Hallowbound suppresses their psychic insulation, forcing their nervous system into a volatile feedback loop with a nearby pawn. This mutual interference causes random xenogenes to tear away from each host and jump the biological gap, leaving both sequences fractured and reassorted.
+
+Narrative: We drop our shields and let the chaos of our frequencies collide. In the static of our meeting, your melody bleeds into our silence, and our void collapses into your song. Neither of us chooses what pieces are left behind when the signal clears; we simply open the channel and let the mixing board tear us both apart.
+
+Sensory: A deafening, unpredictable screech of genetic feedback that vibrates the teeth and causes the eyes to twitch. The features of both pawns blur and shift erratically—glitching in and out of alignment—until a final, concussive "pop" fixes the new, scrambled traits into place.
+
 ## HEDIFFS
 
 ### Silent Servitude (Thematic Concept)

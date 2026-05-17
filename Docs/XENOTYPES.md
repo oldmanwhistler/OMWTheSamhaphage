@@ -104,9 +104,13 @@ Mute applies a total dampening field to a victim’s psychic core, neutralizing 
 
 Bootleg captures the raw, jagged frequency of a trait from a corpse before the vibration of life completely dissipates. It is an aggressive, high-gain sampling process that salvages potent biological melodies from the encroaching static of death.
 
+### Crosstalk (Absorb)
+
+Crosstalk occurs when a Hallowbound deliberately unshields their frequency to capture and replicate the xenogenic signals of a nearby pawn. By inviting this signal bleed, the Hallowbound allows the target's genetic data to bridge the biological gap and overwrite their own hollow sequence with a stolen resonance.
+
 ## NOT IMPLEMENTED
 
 ### Crossfade (Exchange)
 
-Crossfade executes a dual-signal swap, seamlessly sliding a trait from one living pawn to another while simultaneously replacing it with a trait from the caster. It is a precise harmonic realignment that maintains the hive's total data volume while optimizing individual vessels.
+Crosstalk forces a volatile, unshielded feedback loop between the Hallowbound and a target, causing a chaotic and random exchange of xenogenes between both entities. This predatory signal bleed strips away control, leaving both biological sequences permanently fractured and rearranged by the mutual interference.
 

@@ -39,6 +39,9 @@ namespace OMW_Samhaphage
                 ability = new ThingApplyScrub();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
+                ability = new ThingApplyCrosstalk();
+                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
+
                 ability = new ThingApplyHarrow();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
