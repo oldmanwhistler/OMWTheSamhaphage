@@ -105,10 +105,10 @@ namespace OMW_Samhaphage
             }
             if (activated)
             {
-                Log.Message($"Crosstalk attempting to switch {genesFromSource.Count} xenogenes from {victim.LabelShort} with {genesFromDest.Count} xenogenes from {caster.LabelShort}");
+                Log.Debug($"Crosstalk attempting to switch {genesFromSource.Count} xenogenes from {victim.LabelShort} with {genesFromDest.Count} xenogenes from {caster.LabelShort}");
                 OMWGenes.PrependXenogenes(caster, genesFromSource);
                 OMWGenes.PrependXenogenes(victim, genesFromDest);
-                Log.Message($"Crosstalk exchanged {genesFromSource.Count} xenogenes from {victim.LabelShort} with {genesFromDest.Count} xenogenes from {caster.LabelShort}");
+                Log.Debug($"Crosstalk exchanged {genesFromSource.Count} xenogenes from {victim.LabelShort} with {genesFromDest.Count} xenogenes from {caster.LabelShort}");
                 selector1.ApplyDissonance(victim, caster);
                 PawnApplyRetune retune = new PawnApplyRetune();
                 retune.ApplyPawn(caster, caster);            

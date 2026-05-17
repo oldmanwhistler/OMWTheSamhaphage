@@ -6,9 +6,10 @@ namespace OMW_Samhaphage
 {
     public abstract class CompAbilityEffect_AbilityBase : CompAbilityEffect
     {
+        protected static Logger Log = new Logger("CompAbilityEffect");
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            Log.Message($"{parent.pawn}.Apply called with target {target} and dest {dest}");
+            Log.Debug($"{parent.pawn}.Apply called with target {target} and dest {dest}");
             base.Apply(target, dest);
             if (target.Thing is Pawn targetPawn)
             {
@@ -26,7 +27,7 @@ namespace OMW_Samhaphage
                 }
             }
 
-            Log.Message($"{parent.pawn}.Apply is calling Job to move to target");
+            Log.Debug($"{parent.pawn}.Apply is calling Job to move to target");
             this.Job(target, dest, this.parent.pawn);
         }
         
@@ -36,7 +37,7 @@ namespace OMW_Samhaphage
         // Menu won't open if the caster isn't in range.
         public void Job(LocalTargetInfo target, LocalTargetInfo dest, Pawn caster)
         {
-            Log.Message($"{parent.pawn}.Job");
+            Log.Debug($"{parent.pawn}.Job");
             LocalTargetInfo targetClosure = target;
             LocalTargetInfo destClosure = dest;
             Job_ApproachAndInteract job = Job_ApproachAndInteract.CreateAndAssign(target, caster, 
@@ -47,7 +48,7 @@ namespace OMW_Samhaphage
             }
             else
             {
-                Log.Message($"Job created successfully for {caster} to approach and interact with {target}. Job: {job}");
+                Log.Debug($"Job created successfully for {caster} to approach and interact with {target}. Job: {job}");
             }
         }        
 

@@ -6,25 +6,25 @@ namespace OMW_Samhaphage
     public class OMW_Settings : ModSettings
     {
         public bool logAbilities = false;
+        public bool logAnomaly = false;
         public bool logCompAbilityEffect = false;
         public bool logGenes = false;
         public bool logResonance = false;
         public bool logHediffs = false;
         public bool logJobs = false;
-        public bool logThoughts = false;
-        public bool logWindow = false;
+        public bool logUI = false;
 
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Values.Look(ref logAbilities, "logAbilities", false);
+            Scribe_Values.Look(ref logAnomaly, "logAnomaly", false);
             Scribe_Values.Look(ref logCompAbilityEffect, "logCompAbilityEffect", false);
             Scribe_Values.Look(ref logGenes, "logGenes", false);
             Scribe_Values.Look(ref logResonance, "logResonance", false);
             Scribe_Values.Look(ref logHediffs, "logHediffs", false);
             Scribe_Values.Look(ref logJobs, "logJobs", false);
-            Scribe_Values.Look(ref logThoughts, "logThoughts", false);
-            Scribe_Values.Look(ref logWindow, "logWindow", false);
+            Scribe_Values.Look(ref logUI, "logUI", false);
         }
     }
 
@@ -47,13 +47,13 @@ namespace OMW_Samhaphage
             listing.Gap();
 
             listing.CheckboxLabeled("Log Abilities", ref settings.logAbilities, "Detailed traces for ability application and logic.");
+            listing.CheckboxLabeled("Log Anomaly", ref settings.logAnomaly, "Traces for the anomaly logic for creating shamblers.");
             listing.CheckboxLabeled("Log CompAbilityEffect", ref settings.logCompAbilityEffect, "Traces for menu generation and target selection.");
             listing.CheckboxLabeled("Log Genes", ref settings.logGenes, "Traces for gene addition, removal, and complexity calculation.");
             listing.CheckboxLabeled("Log Resonance", ref settings.logResonance, "Traces for resonance consumption and gains.");
             listing.CheckboxLabeled("Log Hediffs", ref settings.logHediffs, "Traces for technical Hediff components (e.g. ZeroWill).");
             listing.CheckboxLabeled("Log Jobs", ref settings.logJobs, "Traces for the custom 'Approach and Interact' jobs.");
-            listing.CheckboxLabeled("Log Thoughts", ref settings.logThoughts, "Traces for social opinion and situational thoughts.");
-            listing.CheckboxLabeled("Log Window UI", ref settings.logWindow, "Traces for the genetic selection UI window.");
+            listing.CheckboxLabeled("Log UI", ref settings.logUI, "Traces for the UIs added by the mod.");
 
             listing.End();
             base.DoSettingsWindowContents(inRect);

@@ -53,7 +53,7 @@ namespace OMW_Samhaphage
                 {
                     if (item.Payload is Action action)
                     {
-                        Log.Message($"BetterFloatMenu is invoking {action.Method.Name}");
+                        Log.Debug($"BetterFloatMenu is invoking {action.Method.Name}");
                         action.Invoke();
                     }
                 });

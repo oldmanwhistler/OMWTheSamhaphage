@@ -47,7 +47,7 @@ namespace OMW_Samhaphage
             if (levelsTaken > 0)
             {
                 MoteMaker.MakeAttachedOverlay(victim, ThingDefOf.Mote_ResurrectFlash, Vector3.zero);
-                Log.Message($"Muted {victim.LabelShort}: {levelsTaken} psylink levels harvested.");
+                Log.Debug($"Muted {victim.LabelShort}: {levelsTaken} psylink levels harvested.");
                 
                 // Apply Genetic Dissonance to prevent repeated harvesting from the same vessel in a short time.
                 Hediff hediffDissonance = HediffMaker.MakeHediff(OMW_HediffDefOf.OMW_GeneticDissonance, caster);

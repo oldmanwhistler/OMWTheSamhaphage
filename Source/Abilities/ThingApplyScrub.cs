@@ -66,7 +66,7 @@ namespace OMW_Samhaphage
 
             if (carcinomas.Count == 0)
             {
-                Log.Message($"{victim.LabelShort} doesn't have any carcinomas to remove.");
+                Log.Debug($"{victim.LabelShort} doesn't have any carcinomas to remove.");
                 return false;
             }
 
@@ -106,7 +106,7 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            Log.Message($"Going to open scrub for {victim.LabelShort}");
+            Log.Debug($"Going to open scrub for {victim.LabelShort}");
 
             bool value = false;
             Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, selectedList =>
@@ -116,7 +116,7 @@ namespace OMW_Samhaphage
                 {
                     selector.ResonanceCredit(plus);
                     victim.genes.RemoveGene(plus.gene);
-                    Log.Message($"Destroyed {plus.gene.LabelCap} from {victim.LabelShort}");
+                    Log.Debug($"Destroyed {plus.gene.LabelCap} from {victim.LabelShort}");
                     activated = true;
                 }
 

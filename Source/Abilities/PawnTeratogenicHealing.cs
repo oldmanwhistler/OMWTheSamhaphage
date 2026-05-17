@@ -32,7 +32,7 @@ namespace OMW_Samhaphage
 
             if (carcinomas.Count == 0)
             {
-                Log.Message($"{caster.LabelShort} doesn't have any carcinomas to heal with.");
+                Log.Debug($"{caster.LabelShort} doesn't have any carcinomas to heal with.");
                 return false;
             }
 
@@ -64,7 +64,7 @@ namespace OMW_Samhaphage
                 removedCarcinomasCount++;
             }
 
-            Log.Message($"{caster.LabelShort} removed ${removedCarcinomasCount} carcinomas.");
+            Log.Debug($"{caster.LabelShort} removed ${removedCarcinomasCount} carcinomas.");
             return (bool)(removedCarcinomasCount > 0);
         }
 

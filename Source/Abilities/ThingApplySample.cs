@@ -67,7 +67,7 @@ namespace OMW_Samhaphage
                     selector.ResonanceCredit(plus);
                     victim.genes.RemoveGene(plus.gene);
                     caster.genes.AddGene(plus.gene.def, true);
-                    Log.Message($"Stole gene {plus.gene.LabelCap} from {victim.LabelShort}");
+                    Log.Debug($"Stole gene {plus.gene.LabelCap} from {victim.LabelShort}");
                     activated = true;
                 }
                 if (activated)

@@ -6,7 +6,7 @@ namespace OMW_Samhaphage
 {
     public static class OMWAnomaly
     {
-        private static bool debug = true;
+        static Logger Log = new Logger("Anomaly");
 
         public static bool ApplyBrainDamage(Pawn victim, Pawn caster)
         {
@@ -41,29 +41,27 @@ namespace OMW_Samhaphage
         {
             if (corpse == null)
             {
-                if (debug)
-                    Log.Message($"CorpseToShamblerOrDestroy was called with a null corpse");
+                Log.Debug($"CorpseToShamblerOrDestroy was called with a null corpse");
                 return false;
             }
 
             if (!ModsConfig.AnomalyActive)
             {
                 corpse.Destroy();
-                if (debug)
-                    Log.Message($"CorpseToShamblerOrDestroy anomaly isn't active so destroyed {corpse.LabelShort}");
+                Log.Debug($"CorpseToShamblerOrDestroy anomaly isn't active so destroyed {corpse.LabelShort}");
                 return true;
             }
             if (MutantUtility.CanResurrectAsShambler(corpse, true))
             {
                 int lifespanTicks = 60000 * 3; // 3 Days
                 MutantUtility.ResurrectAsShambler(corpse.InnerPawn, lifespanTicks, corpse.Faction);
-                if (debug) Log.Message($"CorpseToShamblerOrDestroy made a shambler from {corpse.LabelShort}");
+                Log.Debug($"CorpseToShamblerOrDestroy made a shambler from {corpse.LabelShort}");
                 return true;
             }
             else
             {
                 corpse.Destroy();
-                if (debug) Log.Message($"CorpseToShamblerOrDestroy couldn't make a shambler so destroyed {corpse.LabelShort}");
+                Log.Debug($"CorpseToShamblerOrDestroy couldn't make a shambler so destroyed {corpse.LabelShort}");
                 return true;
             }
         }
@@ -73,15 +71,14 @@ namespace OMW_Samhaphage
         {
             if (victim == null)
             {
-                if (debug)
-                    Log.Message($"PawnToShamblerOrKillDestroy was called with a null pawn");
+                Log.Debug($"PawnToShamblerOrKillDestroy was called with a null pawn");
                 return false;
             }
 
             if (ModsConfig.AnomalyActive)
             {
-                if (debug)
-                    Log.Message($"PawnToShamblerOrKillDestroy make {victim.LabelShort} into a shambler");
+                
+                    Log.Debug($"PawnToShamblerOrKillDestroy make {victim.LabelShort} into a shambler");
                 MutantUtility.SetPawnAsMutantInstantly(victim, MutantDefOf.Shambler);
                 // Fix for "Node is null": Force graphics initialization 
                 // after the pawn state changes to Shambler.
@@ -90,14 +87,14 @@ namespace OMW_Samhaphage
             }
             else if (ApplyBrainDamage(victim, caster))
             {
-                if (debug)
-                    Log.Message($"PawnToShamblerOrKillDestroy is killing {victim.LabelShort} brain damage");
+                
+                    Log.Debug($"PawnToShamblerOrKillDestroy is killing {victim.LabelShort} brain damage");
                 return true;
             }
             else
             {
-                if (debug)
-                    Log.Message($"PawnToShamblerOrKillDestroy is killing {victim.LabelShort} with misc damage");
+                
+                    Log.Debug($"PawnToShamblerOrKillDestroy is killing {victim.LabelShort} with misc damage");
                 // we couldn't apply damage!?
                 DamageInfo dinfo = new DamageInfo(
                     DamageDefOf.ExecutionCut,

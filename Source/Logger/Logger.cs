@@ -35,7 +35,7 @@ namespace OMW_Samhaphage
         {
             if (IsDebugEnabled())
             {
-                Log.Message(prefix + "[Debug] " + text);
+                Log.Message(prefix + "[DEBUG] " + text);
             }
         }
 
@@ -45,13 +45,13 @@ namespace OMW_Samhaphage
             return subPrefix switch
             {
                 "Abilities" => OMW_Mod.settings.logAbilities,
+                "Anomaly" => OMW_Mod.settings.logAnomaly,
                 "CompAbilityEffect" => OMW_Mod.settings.logCompAbilityEffect,
                 "Genes" => OMW_Mod.settings.logGenes,
                 "Resonance" => OMW_Mod.settings.logResonance,
                 "Hediffs" => OMW_Mod.settings.logHediffs,
                 "Jobs" => OMW_Mod.settings.logJobs,
-                "Thoughts" => OMW_Mod.settings.logThoughts,
-                "Window" => OMW_Mod.settings.logWindow,
+                "UI" => OMW_Mod.settings.logUI,
                 _ => false,
             };
         }

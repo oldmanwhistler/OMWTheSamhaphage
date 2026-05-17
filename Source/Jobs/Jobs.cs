@@ -8,6 +8,7 @@ namespace OMW_Samhaphage
 {
     public class Job_ApproachAndInteract : Job
     {
+        static Logger Log = new Logger("Job");
         public static Job_ApproachAndInteract CreateAndAssign(LocalTargetInfo target, Pawn caster, Action<Pawn, Thing> onInteract)
         {
             Job_ApproachAndInteract job = new Job_ApproachAndInteract();
@@ -24,6 +25,7 @@ namespace OMW_Samhaphage
 
     public class JobDriver_ApproachAndInteract : JobDriver
     {
+        static Logger Log = new Logger("Job");
         // Use a property to avoid repeated casting
         private Job_ApproachAndInteract _specificJob;
         public override bool TryMakePreToilReservations(bool errorOnFailed)
@@ -72,7 +74,7 @@ namespace OMW_Samhaphage
                     {
                         Job waitJob = JobMaker.MakeJob(JobDefOf.Wait, 1000);
                         targetPawn.jobs.TryTakeOrderedJob(waitJob, JobTag.Misc);
-                        Log.Message($"[OMW_Samhaphage] {targetPawn.LabelShort} assigned Wait job to facilitate approach by {pawn.LabelShort}.");
+                        Log.Debug($"[OMW_Samhaphage] {targetPawn.LabelShort} assigned Wait job to facilitate approach by {pawn.LabelShort}.");
                     }
                 },
                 defaultCompleteMode = ToilCompleteMode.Instant
@@ -84,17 +86,17 @@ namespace OMW_Samhaphage
                 this._specificJob = omwJob;
             }
 
-            Log.Message($"[OMW_Samhaphage] Starting JobDriver_ApproachAndInteract for pawn {pawn} on target {TargetA.Thing}."); // Debug log
+            Log.Debug($"[OMW_Samhaphage] Starting JobDriver_ApproachAndInteract for pawn {pawn} on target {TargetA.Thing}."); // Debug log
 
             this.FailOn(() => this._specificJob?.onInteract == null);
             this.FailOnDespawnedOrNull(TargetIndex.A);
 
-            Log.Message(
+            Log.Debug(
                 $"[OMW_Samhaphage] {pawn} Toils_Goto.GotoThing {TargetA.Thing}."); // Debug log
 
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.InteractionCell);
 
-            Log.Message(
+            Log.Debug(
                 $"[OMW_Samhaphage] {pawn} killing current targets job {TargetA.Thing}."); // Debug log
 
 
@@ -108,7 +110,7 @@ namespace OMW_Samhaphage
             {
                 if (TargetA.Thing is Pawn targetPawn && targetPawn != pawn && targetPawn.Spawned && !targetPawn.Dead)
                 {
-                    Log.Message($"[OMW_Samhaphage] Target {targetPawn.LabelShort} interrupted to allow interaction.");
+                    Log.Debug($"[OMW_Samhaphage] Target {targetPawn.LabelShort} interrupted to allow interaction.");
                     // Now that we've arrived, give them a fresh wait job to ensure they stay still 
                     // during the actual interaction progress bar.
                     Job waitJob = JobMaker.MakeJob(JobDefOf.Wait, 500);
@@ -118,7 +120,7 @@ namespace OMW_Samhaphage
 
             interactToil.tickAction = delegate { pawn.rotationTracker.FaceTarget(TargetA); };
 
-            Log.Message(
+            Log.Debug(
                 $"[OMW_Samhaphage] interactToil WithProgressBar"); // Debug log
 
             // Ensure the progress bar shows up even if they are 'under' blankets
@@ -126,14 +128,14 @@ namespace OMW_Samhaphage
 
             yield return interactToil;
 
-            Log.Message(
+            Log.Debug(
                 $"[OMW_Samhaphage] {pawn} will do the interaction to {TargetA.Thing}"); // Debug log
 
 
             // 3. Final Execution
             yield return Toils_General.Do(() => { this._specificJob?.onInteract?.Invoke(pawn, TargetA.Thing); });
 
-            Log.Message(
+            Log.Debug(
                 $"[OMW_Samhaphage] Jobs done!"); // Debug log
         }
     }

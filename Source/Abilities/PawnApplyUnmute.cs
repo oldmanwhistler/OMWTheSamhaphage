@@ -28,7 +28,7 @@ namespace OMW_Samhaphage
                 ResonanceUtility.Decr(caster, ResonanceCost);
 
                 MoteMaker.MakeAttachedOverlay(victim, ThingDefOf.Mote_ResurrectFlash, Vector3.zero);
-                Log.Message($"Unmuted {victim.LabelShort}: Psylink granted.");
+                Log.Debug($"Unmuted {victim.LabelShort}: Psylink granted.");
                 return true;
             }
 

@@ -87,7 +87,7 @@ namespace OMW_Samhaphage
                     {
                         victim.genes.RemoveGene(plus.gene);
                         caster.genes.AddGene(plus.gene.def, true);
-                        Log.Message($"Harrowed {plus.gene.LabelCap} from {victim.LabelShort}");
+                        Log.Debug($"Harrowed {plus.gene.LabelCap} from {victim.LabelShort}");
                         activated = true;
                     }
                 }

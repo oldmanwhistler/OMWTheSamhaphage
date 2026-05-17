@@ -7,7 +7,7 @@ namespace OMW_Samhaphage
 {
     public static class OMWGenes
     {
-        private static bool debug = true;
+        static Logger Log = new Logger("Genes");
 
         public static void Refresh(Pawn pawn)
         {
@@ -21,7 +21,7 @@ namespace OMW_Samhaphage
             // This forces the game to re-evaluate the pawn's graphics and stats based on their current genes
             pawn.Drawer?.renderer?.SetAllGraphicsDirty();
 
-            if (debug) Log.Message($"{pawn.LabelShort}.Refresh: Graphics and stats should now reflect current genes");
+            Log.Debug($"{pawn.LabelShort}.Refresh: Graphics and stats should now reflect current genes");
         }
 
         public static int CountXenogenes(Pawn pawn)
@@ -75,7 +75,7 @@ namespace OMW_Samhaphage
                     pawn.genes.RemoveGene(currentGene);
                 }
             }
-            if (debug) Log.Message($"{pawn.LabelShort}.RemoveDisabledGenes: Removed {count} disabled genes");
+            Log.Debug($"{pawn.LabelShort}.RemoveDisabledGenes: Removed {count} disabled genes");
         }
 
         private static void PrependXenotypeGenesToEndogenes(Pawn pawn, XenotypeDef xenotype)
@@ -120,30 +120,30 @@ namespace OMW_Samhaphage
 
             PrependGenesToEndogenes(pawn, genesToMove);
 
-            if (debug) Log.Message($"{pawn.LabelShort}.XenogenesToEndogenes: Moved {genesToMove.Count} xenogenes to endogenes");
+            Log.Debug($"{pawn.LabelShort}.XenogenesToEndogenes: Moved {genesToMove.Count} xenogenes to endogenes");
         }
 
         public static void PrependXenogenes(Pawn pawn, List<GeneDef> genesToAdd)
         {
             if (pawn == null || genesToAdd.Count == 0) return;
 
-            if (debug) Log.Message($"{pawn.LabelShort}.PrependXenogenes: pawn has {pawn.genes.Xenogenes.Count}");
+            Log.Debug($"{pawn.LabelShort}.PrependXenogenes: pawn has {pawn.genes.Xenogenes.Count}");
 
-            if (debug) Log.Message($"{pawn.LabelShort}.PrependXenogenes: step 1");
+            Log.Debug($"{pawn.LabelShort}.PrependXenogenes: step 1");
 
             List<Gene> genesToRemove = new List<Gene>();
             foreach (Gene xenoGene in pawn.genes.Xenogenes)
             {
                 genesToRemove.Add(xenoGene);
             }
-            if (debug) Log.Message($"{pawn.LabelShort}.PrependXenogenes: step 2");
+            Log.Debug($"{pawn.LabelShort}.PrependXenogenes: step 2");
 
             foreach (Gene gene in genesToRemove)
             {
                 pawn.genes.RemoveGene(gene);
             }
 
-            if (debug) Log.Message($"{pawn.LabelShort}.PrependXenogenes: step 3");
+            Log.Debug($"{pawn.LabelShort}.PrependXenogenes: step 3");
 
             int count = 0;
             foreach (GeneDef geneDef in genesToAdd)
@@ -152,16 +152,16 @@ namespace OMW_Samhaphage
                 count++;
             }
 
-            if (debug) Log.Message($"{pawn.LabelShort}.PrependXenogenes: step 4");
+            Log.Debug($"{pawn.LabelShort}.PrependXenogenes: step 4");
 
             foreach (Gene gene in genesToRemove)
             {
                 pawn.genes.AddGene(gene.def, xenogene: true);
             }
 
-            if (debug) Log.Message($"{pawn.LabelShort}.PrependXenogenes: step 5");
+            Log.Debug($"{pawn.LabelShort}.PrependXenogenes: step 5");
 
-            if (debug) Log.Message($"{pawn.LabelShort}.PrependXenogenes: Added {count} genes to the front of xenogenes");
+            Log.Debug($"{pawn.LabelShort}.PrependXenogenes: Added {count} genes to the front of xenogenes");
             Refresh(pawn);
         }
         
@@ -196,7 +196,7 @@ namespace OMW_Samhaphage
             }     
 
             Refresh(pawn);
-            if (debug) Log.Message($"{pawn.LabelShort}.AddXenotype: Added {count} genes from xenotype {xenotype.LabelCap} to the front of xenogenes");
+            Log.Debug($"{pawn.LabelShort}.AddXenotype: Added {count} genes from xenotype {xenotype.LabelCap} to the front of xenogenes");
         }
 
         public static void RemoveXenotype(Pawn pawn, XenotypeDef xenotype)
@@ -217,7 +217,7 @@ namespace OMW_Samhaphage
             // this sets the xenotype name
             pawn.genes.SetXenotypeDirect(null);
             Refresh(pawn);
-            if (debug) Log.Message($"{pawn.LabelShort}.RemoveXenotype: Removed {count} genes and xenotype {xenotype.LabelCap}");
+            Log.Debug($"{pawn.LabelShort}.RemoveXenotype: Removed {count} genes and xenotype {xenotype.LabelCap}");
         }
 
 
@@ -245,12 +245,12 @@ namespace OMW_Samhaphage
             if (!CanChangeXenotype(pawn, sourceXenotype, targetXenotype, true)) return false;
             // Guess the xenotype
 
-            if (debug) Log.Message($"{pawn.LabelShort}.ChangeXenotype: Start changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
+            Log.Debug($"{pawn.LabelShort}.ChangeXenotype: Start changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
             if (sourceXenotype != null) RemoveXenotype(pawn, sourceXenotype);
             XenogenesToEndogenes(pawn);
             if (targetXenotype != null) AddXenotype(pawn, targetXenotype);
-            if (debug)
-                Log.Message(
+            
+                Log.Debug(
                     $"{pawn.LabelShort}.ChangeXenotype: Done changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
             return true;
         }
@@ -260,11 +260,11 @@ namespace OMW_Samhaphage
             if (!CanChangeXenotype(pawn, sourceXenotype, targetXenotype, true)) return false;
             // Guess the xenotype
             if (sourceXenotype == null) sourceXenotype = pawn.genes?.Xenotype;           
-            if (debug) Log.Message($"{pawn.LabelShort}.ChangeEndotype: Start changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
+            Log.Debug($"{pawn.LabelShort}.ChangeEndotype: Start changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
             ChangeXenotype(pawn, sourceXenotype, targetXenotype);
             XenogenesToEndogenes(pawn);
-            if (debug)
-                Log.Message(
+            
+                Log.Debug(
                     $"{pawn.LabelShort}.ChangeEndotype: Done changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
             return true;
         }        

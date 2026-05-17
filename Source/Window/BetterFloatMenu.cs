@@ -27,6 +27,7 @@ namespace OMW_Samhaphage
     /// </summary>
     public class BetterFloatMenu : Window
     {
+        static Logger Log = new Logger("UI");
         /// <summary>
         /// Opens a new float menu using the items provided.
         /// Note: by default, opening a new window will close existing windows.
@@ -139,7 +140,7 @@ namespace OMW_Samhaphage
 
             if (Items == null || Items.Count == 0)
             {
-                Log.Message($"Opened a {nameof(BetterFloatMenu)} with no items! Closing...");
+                Log.Debug($"Opened a {nameof(BetterFloatMenu)} with no items! Closing...");
                 Close();
                 return;
             }
@@ -397,8 +398,9 @@ namespace OMW_Samhaphage
     /// </summary>
     public class MenuItemIcon : MenuItemBase
     {
+        static Logger Log = new Logger("UI");
         /// <summary>
-        /// The size of the item. Defaults to a square 64x64.
+        /// The size of the item.
         /// </summary>
         public Vector2 Size = new Vector2(64, 84);
         /// <summary>
@@ -426,7 +428,7 @@ namespace OMW_Samhaphage
 
         public MenuItemIcon(string label, string tooltip, Texture2D icon, object payload)
         {
-            Log.Message($"MenuItemIcon, enabled, {label}, {tooltip}");
+            Log.Debug($"MenuItemIcon, enabled, {label}, {tooltip}");
             this.Payload = payload;
             this.Tooltip = tooltip;
             this.Icon = icon;
@@ -437,7 +439,7 @@ namespace OMW_Samhaphage
 
         public MenuItemIcon(string label, string tooltip, Texture2D icon)
         {
-            Log.Message($"MenuItemIcon, disabled, {label}, {tooltip}");
+            Log.Debug($"MenuItemIcon, disabled, {label}, {tooltip}");
             this.Payload = null;
             this.Tooltip = tooltip;
             this.Icon = icon;

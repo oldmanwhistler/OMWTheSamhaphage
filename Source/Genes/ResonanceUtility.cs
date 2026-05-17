@@ -6,6 +6,7 @@ namespace OMW_Samhaphage
 {
     public static class ResonanceUtility
     {
+        static Logger Log = new Logger("Resonance");
         public static bool HasGene(Pawn pawn)
         {
             if (pawn == null) return false;
@@ -19,7 +20,7 @@ namespace OMW_Samhaphage
             if (HasGene(pawn))
             {
                 Gene_Resource resonance = pawn.genes.GetGene(OMW_GeneDefOf.OMW_Resonance) as Gene_Resource;
-                Log.Message($"[Resonance] {pawn.LabelShort} has {resonance.Value} available resonance, checking if they have {requiredAmount}.");
+                Log.Debug($"[Resonance] {pawn.LabelShort} has {resonance.Value} available resonance, checking if they have {requiredAmount}.");
                 return resonance.Value >= requiredAmount;
             }
             return false;
@@ -30,10 +31,10 @@ namespace OMW_Samhaphage
             if (HasGene(pawn))
             {
                 Gene_Resource resonance = pawn.genes.GetGene(OMW_GeneDefOf.OMW_Resonance) as Gene_Resource;
-                Log.Message(
+                Log.Debug(
                     $"[Resonance] {pawn.LabelShort} has {resonance.Value} available resonance, incrementing by {amount}.");
                 resonance.Value += amount;
-                Log.Message(
+                Log.Debug(
                     $"[Resonance] {pawn.LabelShort} now has {resonance.Value} available resonance.");                
                 return true;
             }
@@ -45,10 +46,10 @@ namespace OMW_Samhaphage
             if (HasGene(pawn))
             {
                 Gene_Resource resonance = pawn.genes.GetGene(OMW_GeneDefOf.OMW_Resonance) as Gene_Resource;
-                Log.Message(
+                Log.Debug(
                     $"[Resonance] {pawn.LabelShort} has {resonance.Value} available resonance, decrementing by {amount}.");
                 resonance.Value -= amount;
-                Log.Message(
+                Log.Debug(
                     $"[Resonance] {pawn.LabelShort} now has {resonance.Value} available resonance.");
                 if (resonance.Value < 0f) resonance.Value = 0f;
                 return true;

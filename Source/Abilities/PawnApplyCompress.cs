@@ -81,7 +81,7 @@ namespace OMW_Samhaphage
                 {
                     victim.genes.RemoveGene(plus.gene);
                     victim.genes.AddGene(plus.gene.def, false);
-                    Log.Message($"Compressed {plus.gene.LabelCap} on {victim.LabelShort}");
+                    Log.Debug($"Compressed {plus.gene.LabelCap} on {victim.LabelShort}");
                     activated = true;
                 }
             }
