@@ -7,9 +7,11 @@ namespace OMW_Samhaphage
     public abstract class NullThrumAbilityBase
     {
         public abstract Texture2D Icon { get; }
+
         public abstract string AbilityName { get; }
         public abstract string AbilityDescription(Pawn victim, Pawn caster);
 
+        protected static Logger Log = new Logger("Abilities");
         public bool ApplyThing(Thing thing, Pawn caster)
         {
             if (thing is Pawn pawn)
