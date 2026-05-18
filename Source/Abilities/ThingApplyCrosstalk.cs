@@ -12,7 +12,7 @@ namespace OMW_Samhaphage
 
         public override string Name => "Crosstalk";
 
-        protected override float ResonanceTotalMultiplier => 0.5f;
+        protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multCrosstalk;
         protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeDebit;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
@@ -32,7 +32,7 @@ namespace OMW_Samhaphage
     public class ThingApplyCrosstalk : NullThrumAbilityPawnCorpse
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();       
-        public override string AbilityName => "Crosstalk";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Crosstalk;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {

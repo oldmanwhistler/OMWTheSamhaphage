@@ -8,7 +8,7 @@ namespace OMW_Samhaphage
     {
         private const float ResonanceCost = 30f;
 
-        public override string AbilityName => "Unmute";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Unmute;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {

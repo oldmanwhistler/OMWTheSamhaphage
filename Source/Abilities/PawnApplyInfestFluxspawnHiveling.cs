@@ -11,7 +11,7 @@ namespace OMW_Samhaphage
 {
     public class PawnApplyInfestFluxspawnHiveling : NullThrumAbilityPawnOnly
     {
-        public override string AbilityName => "Infest";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Infest;
         public override string AbilityDescription(Pawn victim, Pawn caster) => $"Infest {victim.LabelShort} with Fluxspawn embryos.\nThe process is lethal and will birth a litter of Fluxspawn.";
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Infest");
 

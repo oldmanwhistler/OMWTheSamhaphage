@@ -6,7 +6,7 @@ namespace OMW_Samhaphage
 {    
     public class FluxspawnFlickerStun: NullThrumAbilityPawnOnly
     {
-        public override string AbilityName => "Stun";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Stun;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {

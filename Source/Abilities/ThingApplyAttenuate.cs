@@ -12,8 +12,7 @@ namespace OMW_Samhaphage
         
         public override string Name => "Attenuate";
         // Cheap because it is destroying genes
-        protected override float ResonanceTotalMultiplier => 1f;
-
+        protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multAttenuate;
         protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeCredit;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
@@ -31,7 +30,7 @@ namespace OMW_Samhaphage
     public class ThingApplyAttenuate : NullThrumAbilityPawnCorpse
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
-        public override string AbilityName => "Attenuate";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Attenuate;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {

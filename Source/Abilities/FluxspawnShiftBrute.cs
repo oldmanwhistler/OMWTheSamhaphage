@@ -6,7 +6,6 @@ namespace OMW_Samhaphage
 {    
     public class FluxspawnShiftBrute: FluxspawnShiftBase
     {
-        public override string AbilityName => "Transpose ";
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {
             return $"Transpose {caster.LabelShort} to a Fluxspawn Brute.";

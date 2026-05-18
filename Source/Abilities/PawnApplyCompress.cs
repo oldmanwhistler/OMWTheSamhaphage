@@ -13,7 +13,7 @@ namespace OMW_Samhaphage
         public override string Name => "Compress";
 
         // More expensive because it is stealing genes
-        protected override float ResonanceTotalMultiplier => 0.1f;
+        protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multCompress;
         protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeDebit;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
@@ -37,8 +37,7 @@ namespace OMW_Samhaphage
     public class PawnApplyCompress : NullThrumAbilityPawnOnly
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
-
-        public override string AbilityName => "Compress";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Compress;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {

@@ -7,6 +7,8 @@ namespace OMW_Samhaphage
     {
         public abstract XenotypeDef TargetXenotype();
 
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Transpose;
+
         public override bool ApplyPawn(Pawn pawn, Pawn caster)
         {
             if (PawnTeratogenics.CarcinomaCount(pawn) == 0)

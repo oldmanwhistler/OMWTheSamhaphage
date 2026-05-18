@@ -13,7 +13,7 @@ namespace OMW_Samhaphage
         public override string Name => "Retune";
 
         // More expensive because it is stealing genes
-        protected override float ResonanceTotalMultiplier => 0.5f;
+        protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multRetune;
 
         protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeDebit;
 
@@ -40,8 +40,7 @@ namespace OMW_Samhaphage
     public class PawnApplyRetune : NullThrumAbilityPawnOnly
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
-
-        public override string AbilityName => "Retune";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Retune;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {

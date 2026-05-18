@@ -8,7 +8,7 @@ namespace OMW_Samhaphage
 {
     public class PawnApplyFlatten : NullThrumAbilityPawnOnly
     {
-        public override string AbilityName => "Flatten";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Flatten;
         public override string AbilityDescription(Pawn victim, Pawn caster) => $"Scour {victim.LabelShort}'s mind, removing negative memories and preparing them for genetic manipulation.";
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Flatten");
 

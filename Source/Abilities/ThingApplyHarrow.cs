@@ -13,7 +13,7 @@ namespace OMW_Samhaphage
         public override string Name => "Harrow";
 
         // More expensive because it is stealing genes
-        protected override float ResonanceTotalMultiplier => 1.5f;
+        protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multHarrow;
         protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeDebit;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
@@ -48,7 +48,7 @@ namespace OMW_Samhaphage
     public class ThingApplyHarrow : NullThrumAbilityPawnCorpse
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();        
-        public override string AbilityName => "Harrow";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Harrow;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {

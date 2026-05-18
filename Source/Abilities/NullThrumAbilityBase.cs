@@ -8,7 +8,9 @@ namespace OMW_Samhaphage
     {
         public abstract Texture2D Icon { get; }
 
-        public abstract string AbilityName { get; }
+        public abstract NullThrumAbilityType AbilityType { get; }
+
+        public string AbilityName => NullThrumUtility.ToString(this.AbilityType);
         public abstract string AbilityDescription(Pawn victim, Pawn caster);
 
         protected static Logger Log = new Logger("Abilities");

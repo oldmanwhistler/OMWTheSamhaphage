@@ -7,7 +7,7 @@ namespace OMW_Samhaphage
     public class PawnApplyHallowbound : NullThrumAbilityPawnOnly
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
-        public override string AbilityName => "Hallowbound";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Hallowbound;
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Hallowbound");
         public virtual bool SacrificeCaster => false;
 

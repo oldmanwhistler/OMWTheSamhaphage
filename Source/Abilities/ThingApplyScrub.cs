@@ -12,7 +12,7 @@ namespace OMW_Samhaphage
         
         public override string Name => "Scrub";
         // Cheap because it is destroying genes
-        protected override float ResonanceTotalMultiplier => 0.5f;
+        protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multScrub;
 
         protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeCredit;
 
@@ -41,7 +41,7 @@ namespace OMW_Samhaphage
     public class ThingApplyScrub : NullThrumAbilityPawnCorpse
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
-        public override string AbilityName => "Scrub";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Scrub;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {

@@ -8,7 +8,7 @@ namespace OMW_Samhaphage
 {
     public class PawnApplyEnwomb : NullThrumAbilityPawnOnly
     {
-        public override string AbilityName => "Enwomb";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Enwomb;
         public override string AbilityDescription(Pawn victim, Pawn caster) => $"Implant {victim.LabelShort} with a new life.";
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Enwomb");
 

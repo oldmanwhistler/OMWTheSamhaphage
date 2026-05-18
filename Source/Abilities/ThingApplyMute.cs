@@ -9,8 +9,7 @@ namespace OMW_Samhaphage
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
         private const float ResonanceGainPerLevel = 20f;
         private const float MaxResonanceThreshold = 100f;
-
-        public override string AbilityName => "Mute";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Mute;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {

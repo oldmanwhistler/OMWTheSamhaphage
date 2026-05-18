@@ -10,7 +10,6 @@ namespace OMW_Samhaphage
         public override bool SacrificeCaster => false;
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/ResurrectEchovessel");
 
-        public override string AbilityName => "Resurrect";
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {
             if (this.SacrificeCaster)

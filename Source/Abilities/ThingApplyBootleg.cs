@@ -42,7 +42,7 @@ namespace OMW_Samhaphage
     public class ThingApplyBootleg : NullThrumAbilityPawnCorpse
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
-        public override string AbilityName => "Bootleg";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Bootleg;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {
