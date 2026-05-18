@@ -34,9 +34,6 @@ namespace OMW_Samhaphage
                 return;
             }
 
-            ability = new PawnTeratogenicHealing();
-            items.Add(ability.NewMenuItemIcon(target, parent.pawn));
-
             if (xeno == OMW_XenotypeDefOf.omw_fluxspawn_brute)
             {
                 ability = new FluxspawnShiftHiveling();
