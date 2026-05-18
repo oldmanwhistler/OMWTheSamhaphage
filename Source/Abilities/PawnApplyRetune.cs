@@ -10,7 +10,7 @@ namespace OMW_Samhaphage
     {        
         public SelectionRetune(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) { }
 
-        public override string Name => "Retune";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Retune;
 
         // More expensive because it is stealing genes
         protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multRetune;

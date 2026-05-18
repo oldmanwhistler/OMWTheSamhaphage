@@ -10,7 +10,7 @@ namespace OMW_Samhaphage
     {
         public SelectionCrosstalk(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) { }
 
-        public override string Name => "Crosstalk";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Crosstalk;
 
         protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multCrosstalk;
         protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeDebit;

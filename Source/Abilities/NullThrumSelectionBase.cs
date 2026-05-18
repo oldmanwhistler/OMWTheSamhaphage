@@ -7,7 +7,7 @@ namespace OMW_Samhaphage
     public abstract class NullThrumSelectionBase
     {
         protected Pawn caster;
-
+       
         protected NullThrumSelectionBase(Pawn caster, Pawn source, Pawn dest)
         {
             // Need to store this for calculating resonance value and max selection
@@ -15,7 +15,9 @@ namespace OMW_Samhaphage
         }
 
         // Abstract methods
-        public abstract string Name { get; }
+        public abstract NullThrumAbilityType AbilityType { get; }
+
+        public string Name => NullThrumUtility.ToString(this.AbilityType);
 
         // Concrete methods
 

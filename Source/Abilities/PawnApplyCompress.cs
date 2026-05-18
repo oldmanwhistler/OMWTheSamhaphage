@@ -10,7 +10,7 @@ namespace OMW_Samhaphage
     {        
         public SelectionCompress(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) { }
 
-        public override string Name => "Compress";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Compress;
 
         // More expensive because it is stealing genes
         protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multCompress;

@@ -10,7 +10,7 @@ namespace OMW_Samhaphage
     {
         public SelectionAttenuate(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
         
-        public override string Name => "Attenuate";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Attenuate;
         // Cheap because it is destroying genes
         protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multAttenuate;
         protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeCredit;

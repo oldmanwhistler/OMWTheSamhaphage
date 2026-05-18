@@ -10,8 +10,7 @@ namespace OMW_Samhaphage
     {
         public SelectionBootleg(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) { }
 
-        public override string Name => "Bootleg";
-
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Bootleg;
         // Traits are spiritually heavy; stealing them requires significant resonance.
         protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multBootleg;
         protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeDebit;

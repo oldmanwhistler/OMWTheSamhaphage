@@ -10,7 +10,7 @@ namespace OMW_Samhaphage
     {
         public SelectionScrub(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
         
-        public override string Name => "Scrub";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Scrub;
         // Cheap because it is destroying genes
         protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multScrub;
 

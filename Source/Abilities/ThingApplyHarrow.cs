@@ -10,7 +10,7 @@ namespace OMW_Samhaphage
     {
         public SelectionHarrow(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) { }
 
-        public override string Name => "Harrow";
+        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Harrow;
 
         // More expensive because it is stealing genes
         protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multHarrow;
