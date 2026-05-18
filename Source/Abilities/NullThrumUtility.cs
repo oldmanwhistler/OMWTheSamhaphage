@@ -53,7 +53,14 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Hallowbound: return "Hallowbound";
                 default: return "Unknown";
             }
-        }         
+        }
+
+        public static string Description(NullThrumAbilityType ability, string caster = "CASTER",
+            string victim = "VICTIM")
+        {
+            return DescriptionOOC(ability, caster, victim);
+        }
+
         public static string DescriptionOOC(NullThrumAbilityType ability, string caster = "CASTER", string victim = "VICTIM")
         {
             switch (ability)

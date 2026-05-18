@@ -52,7 +52,13 @@ namespace OMW_Samhaphage
             Text.Font = GameFont.Medium;
             Widgets.Label(headerRect, $"Select Traits to {this.selector.Name}");
 
-            float listStartY = headerRect.yMax + 5f;
+            Text.Font = GameFont.Small;
+            string description = NullThrumUtility.Description(this.selector.AbilityType);
+            float descHeight = Text.CalcHeight(description, inRect.width);
+            Rect descRect = new Rect(inRect.x, headerRect.yMax, inRect.width, descHeight);
+            Widgets.Label(descRect, description);
+
+            float listStartY = descRect.yMax + 5f;
             Widgets.DrawLineHorizontal(0f, listStartY, inRect.width);
 
             // --- ScrollView ---
