@@ -95,6 +95,14 @@ namespace OMW_Samhaphage
                 if (plus.HasConflict()) GUI.color = Color.red;
 
                 Widgets.Label(labelRect, plus.trait.LabelCap);
+
+                if (selector.ResonanceType == NullThrumResonanceType.ResonanceTypeCredit)
+                    GUI.color = Color.green;
+                else if (selector.ResonanceType == NullThrumResonanceType.ResonanceTypeDebit)
+                    GUI.color = Color.red;
+                else
+                    GUI.color = Color.white;
+                
                 Text.Anchor = TextAnchor.MiddleRight;
                 Widgets.Label(valueRect, plus.value.ToString("F1"));
                 GUI.color = Color.white;
@@ -149,7 +157,7 @@ namespace OMW_Samhaphage
             Rect confirmRect = new Rect(inRect.width - confirmWidth, footerY, confirmWidth, 35f);
             GUI.color = selectedTraits.Count > 0 ? Color.white : Color.gray;
 
-            if (Widgets.ButtonText(confirmRect, "Confirm Selection"))
+            if (Widgets.ButtonText(confirmRect, $"Confirm Selection for {this.SelectionCurCost():F1}"))
             {
                 if (selectedTraits.Count > 0)
                 {

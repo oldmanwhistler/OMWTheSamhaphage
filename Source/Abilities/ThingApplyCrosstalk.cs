@@ -13,7 +13,6 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Crosstalk;
 
         protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multCrosstalk;
-        protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeDebit;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {

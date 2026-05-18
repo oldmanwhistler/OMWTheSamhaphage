@@ -13,7 +13,6 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Attenuate;
         // Cheap because it is destroying genes
         protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multAttenuate;
-        protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeCredit;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {

@@ -14,8 +14,6 @@ namespace OMW_Samhaphage
         // Cheap because it is destroying genes
         protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multScrub;
 
-        protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeCredit;
-
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
             return source.genes.GenesListForReading

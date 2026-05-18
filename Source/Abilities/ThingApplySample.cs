@@ -16,7 +16,6 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Sample;
         // Stealing trash genes
         protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multSample;
-        protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeCredit;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {

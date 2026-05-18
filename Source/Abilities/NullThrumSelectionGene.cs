@@ -4,13 +4,6 @@ using System.Collections.Generic;
 
 namespace OMW_Samhaphage
 {
-
-    public enum NullThrumResonanceType
-    {
-        ResonanceTypeCredit,
-        ResonanceTypeDebit
-    }
-
     public abstract class NullThrumSelectionGene : NullThrumSelectionBase
     {
         protected NullThrumSelectionGene(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest)
@@ -20,17 +13,17 @@ namespace OMW_Samhaphage
 
         public List<GenePlus> genes;
 
-        protected abstract float ResonanceTotalMultiplier { get; }
-
-        protected abstract NullThrumResonanceType ResonanceType { get; }
-
         // Abstract methods
+
+        protected abstract float ResonanceTotalMultiplier { get; }
 
         protected abstract List<Gene> GenesToSelectFrom(Pawn source, Pawn dest);
         protected abstract List<GeneDef> ConflictGeneDefs(Pawn source, Pawn dest);
 
 
         // Concrete methods
+
+        public NullThrumResonanceType ResonanceType => NullThrumUtility.ResonanceType(this.AbilityType);
 
         protected float GeneValue(Gene gene)
         {

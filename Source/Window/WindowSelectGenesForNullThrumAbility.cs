@@ -108,6 +108,14 @@ namespace OMW_Samhaphage
 
                 Widgets.Label(labelRect, plus.gene.LabelCap);
                 Text.Anchor = TextAnchor.MiddleRight;
+
+                if (selector.ResonanceType == NullThrumResonanceType.ResonanceTypeCredit)
+                    GUI.color = Color.green;
+                else if (selector.ResonanceType == NullThrumResonanceType.ResonanceTypeDebit)
+                    GUI.color = Color.red;                
+                else
+                    GUI.color = Color.white;
+
                 Widgets.Label(valueRect, plus.value.ToString("F1"));
                 GUI.color = Color.white;
                 Text.Anchor = TextAnchor.MiddleLeft;
@@ -165,7 +173,7 @@ namespace OMW_Samhaphage
 
             GUI.color = selectedGenes.Count > 0 ? Color.white : Color.gray;
 
-            if (Widgets.ButtonText(confirmRect, $"Confirm Selection for {100f * this.SelectionCurCost():F1}%"))
+            if (Widgets.ButtonText(confirmRect, $"Confirm Selection for {this.SelectionCurCost():F1}"))
             {
                 if (selectedGenes.Count > 0)
                 {

@@ -13,7 +13,6 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Bootleg;
         // Traits are spiritually heavy; stealing them requires significant resonance.
         protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multBootleg;
-        protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeDebit;
 
         protected override List<Trait> TraitsToSelectFrom(Pawn source, Pawn dest)
         {

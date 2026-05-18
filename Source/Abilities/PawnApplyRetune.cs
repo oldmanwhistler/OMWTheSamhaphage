@@ -15,8 +15,6 @@ namespace OMW_Samhaphage
         // More expensive because it is stealing genes
         protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multRetune;
 
-        protected override NullThrumResonanceType ResonanceType => NullThrumResonanceType.ResonanceTypeDebit;
-
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
             // Retune is moving Xenogenes to Endogenes on source

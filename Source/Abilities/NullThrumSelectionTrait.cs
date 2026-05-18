@@ -15,8 +15,6 @@ namespace OMW_Samhaphage
 
         protected abstract float ResonanceTotalMultiplier { get; }
 
-        protected abstract NullThrumResonanceType ResonanceType { get; }
-
         // Abstract methods
 
         protected abstract List<Trait> TraitsToSelectFrom(Pawn source, Pawn dest);
@@ -24,7 +22,8 @@ namespace OMW_Samhaphage
 
 
         // Concrete methods
-
+        public NullThrumResonanceType ResonanceType => NullThrumUtility.ResonanceType(this.AbilityType);
+        
         protected virtual float TraitValue(Trait trait)
         {
             // Traits don't have biostats. Defaulting to a flat value of 1.0 per trait 

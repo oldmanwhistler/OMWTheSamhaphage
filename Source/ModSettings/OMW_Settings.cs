@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using RimWorld;
@@ -60,6 +62,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref gainScrub, "gainScrub", 1.5f);
 
             Scribe_Values.Look(ref resonanceMax, "resonanceMax", 200f);
+            Scribe_Values.Look(ref NullThrumUtility.descMode, "descMode", NullThrumDescriptionMode.DescriptionIntro);
         }
     }
 
@@ -80,7 +83,7 @@ namespace OMW_Samhaphage
         {
             // Define a view rectangle that is taller than the window to enable scrolling.
             // The width is slightly reduced to prevent the horizontal scrollbar from appearing.
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 30f, 1050f);
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 30f, 1400f);
 
             Widgets.BeginScrollView(inRect, ref scrollPosition, viewRect);
 
@@ -102,29 +105,45 @@ namespace OMW_Samhaphage
             }
             listing.Gap();
 
+            listing.Label("Narrative Experience".Colorize(Color.yellow));
+            string currentModeLabel = NullThrumUtility.descMode.ToString().Replace("Description", "");
+            if (listing.ButtonTextLabeled("Ability Description Mode", currentModeLabel))
+            {
+                List<FloatMenuOption> options = new List<FloatMenuOption>();
+                foreach (NullThrumDescriptionMode mode in Enum.GetValues(typeof(NullThrumDescriptionMode)))
+                {
+                    string label = mode.ToString().Replace("Description", "");
+                    options.Add(new FloatMenuOption(label, () => 
+                    {
+                        NullThrumUtility.descMode = mode;
+                    }));
+                }
+                Find.WindowStack.Add(new FloatMenu(options));
+            }
+            listing.Label("<color=gray><size=10>Intro: Switches from Simple to Lore after 400 uses.\nSimple: Mechanical/Technical descriptions.\nLore: Flavor/In-universe descriptions.</size></color>");
+            listing.Gap();
+
             listing.Label("Ability Resonance Multipliers".Colorize(Color.yellow));
-            listing.Label("Adjust how expensive or rewarding specific abilities are.");
-            
-            settings.multRetune = DrawMultiplierSlider(listing, "Retune (Debit)", settings.multRetune);
-            settings.multCompress = DrawMultiplierSlider(listing, "Compress (Debit)", settings.multCompress);
-            settings.multHarrow = DrawMultiplierSlider(listing, "Harrow (Debit)", settings.multHarrow);
-            settings.multCrosstalk = DrawMultiplierSlider(listing, "Crosstalk (Debit)", settings.multCrosstalk);
-            settings.multBootleg = DrawMultiplierSlider(listing, "Bootleg (Debit)", settings.multBootleg);
-            settings.multSample = DrawMultiplierSlider(listing, "Sample (Credit)", settings.multSample);
-            settings.multScrub = DrawMultiplierSlider(listing, "Scrub (Credit)", settings.multScrub);
-            settings.multAttenuate = DrawMultiplierSlider(listing, "Attenuate (Credit)", settings.multAttenuate);
+            listing.Label("Adjust how expensive or rewarding specific abilities are.");           
+            settings.multRetune = DrawMultiplierSlider(listing, NullThrumAbilityType.Retune, settings.multRetune);
+            settings.multCompress = DrawMultiplierSlider(listing, NullThrumAbilityType.Compress, settings.multCompress);
+            settings.multHarrow = DrawMultiplierSlider(listing, NullThrumAbilityType.Harrow, settings.multHarrow);
+            settings.multCrosstalk = DrawMultiplierSlider(listing, NullThrumAbilityType.Crosstalk, settings.multCrosstalk);
+            settings.multBootleg = DrawMultiplierSlider(listing, NullThrumAbilityType.Bootleg, settings.multBootleg);
+            settings.multSample = DrawMultiplierSlider(listing, NullThrumAbilityType.Sample, settings.multSample);
+            settings.multScrub = DrawMultiplierSlider(listing, NullThrumAbilityType.Scrub, settings.multScrub);
+            settings.multAttenuate = DrawMultiplierSlider(listing, NullThrumAbilityType.Attenuate, settings.multAttenuate);
             listing.Gap();
 
             listing.Label("Ability Resonance Gains".Colorize(Color.yellow));
             listing.Label("Adjust the amount of resonance harvested from specific actions.");
-
-            settings.resonanceMax = DrawValueSlider(listing, "Maximum Resonance Capacity", settings.resonanceMax, 50f, 1000f);
+            settings.gainFlatten = DrawValueSlider(listing, NullThrumAbilityType.Flatten, settings.gainFlatten, 0f, 20f);
+            settings.gainMute = DrawValueSlider(listing, NullThrumAbilityType.Mute, settings.gainMute, 0f, 100f);
+            settings.gainScrub = DrawValueSlider(listing, NullThrumAbilityType.Scrub, settings.gainScrub, 0f, 10f);
             listing.GapLine();
-            settings.gainFlatten = DrawValueSlider(listing, "Flatten Gain", settings.gainFlatten, 0f, 20f);
-            settings.gainMute = DrawValueSlider(listing, "Mute Gain (per level)", settings.gainMute, 0f, 100f);
-            settings.gainScrub = DrawValueSlider(listing, "Scrub Gain (per carcinoma)", settings.gainScrub, 0f, 10f);
-            listing.Gap();
-
+            listing.Label($"Maximum Resonance Capacity: {settings.resonanceMax:F0}");
+            settings.resonanceMax = listing.Slider(settings.resonanceMax, 50f, 1000f);
+            listing.GapLine();
             listing.Label("Debug Logging Categories".Colorize(Color.yellow));
             listing.Label("Enable these to see detailed technical information in the console.");
             listing.Gap();
@@ -144,15 +163,21 @@ namespace OMW_Samhaphage
             base.DoSettingsWindowContents(inRect);
         }
 
-        private float DrawMultiplierSlider(Listing_Standard listing, string label, float value)
+        private float DrawMultiplierSlider(Listing_Standard listing, NullThrumAbilityType abilityType, float value)
         {
+            string label = NullThrumUtility.ToString(abilityType);
+            string desc = NullThrumUtility.DescriptionSimple(abilityType);
             listing.Label($"{label}: {value:F2}");
+            listing.Label($"<size=10>    {desc}</size>");
             return listing.Slider(value, 0f, 10f);
         }
 
-        private float DrawValueSlider(Listing_Standard listing, string label, float value, float min, float max)
+        private float DrawValueSlider(Listing_Standard listing, NullThrumAbilityType abilityType, float value, float min, float max)
         {
+            string label = NullThrumUtility.ToString(abilityType);
+            string desc = NullThrumUtility.DescriptionSimple(abilityType);
             listing.Label($"{label}: {value:F2}");
+            listing.Label($"<size=10>    {desc}</size>");
             return listing.Slider(value, min, max);
         }
 
