@@ -63,7 +63,15 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
   * Sam Keith died while I was creating this mod and I'd like to dedicate it to him.
 * The weak-to-omnipotent tropes come from litrpg/progression fantasy tropes. Go read Dungeon Crawler Carl and He Who Fights With Monsters.
 
-## Requirements
+## Other Mods
+
+### Mod Collections
+
+* TODO: Required Mods
+* TODO: Supports Mods
+* TODO: Tested Mods
+
+### Requirements
 
 * Biotech DLC
   * Additional genes with Anomaly and Royalty
@@ -72,42 +80,66 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 * [Big and Small - Genes & More](https://steamcommunity.com/sharedfiles/filedetails/?id=2920751126)
 * [WVC: Xenotypes and Genes](https://steamcommunity.com/sharedfiles/filedetails/?id=2886992038)
 
-## Optional
+### Optional But Supported
 
-* BGI: Better Gene Inheritance
+* [Better Gene Inheritance](https://steamcommunity.com/sharedfiles/filedetails/?id=3046776238) changes how genes are inherited in pregnancy.
 * PSY: Psycast Genes 
-* Genetic Drift 1.6: adds random genes to non-colonists and makes the gene collecting gameplay have a bigger dopamine hit
-* [Gene Ledger](https://steamcommunity.com/sharedfiles/filedetails/?id=3673202834)
-
-## Recommended
+* [Genetic Drift 1.6](https://steamcommunity.com/sharedfiles/filedetails/?id=3522332727) pawns will spawn with random genes.
+  * I recommend this as an alternative to [SpawnThoseGenes!](https://steamcommunity.com/workshop/filedetails/?id=2898044088)
+  * Samhaphage will autogenerate a Xenotype with blacklisted genes that can be used with Genetic Drift
+  
+### Recommended
 
 * [Tweaks Galore](https://steamcommunity.com/sharedfiles/filedetails/?id=2695164414) can add a Gene menu when viewing pawns/corpses that makes it much faster to browse genes for genes to steal.
   * It also has a "Gene Pack Tweaks" section where you can con control whether or not every gene can spawn in a genepack.
-  * This mod will respect the gene pack setting as to whether or not a gene can spawn via random mutation or be biologically extracted.
+  * Samhaphage will respect the gene pack settings as to whether or not a gene can spawn via random mutation or be biologically extracted.
+* [VRE Highmate](https://steamcommunity.com/sharedfiles/filedetails/?id=2995385834) or [Woohooer](https://steamcommunity.com/sharedfiles/filedetails/?id=2817845048) or [Way Better Romance](https://steamcommunity.com/sharedfiles/filedetails/?id=2877731755)
+  * The Cradlemold requires a method for initiating "romance".
+* [Gene for Traits](https://steamcommunity.com/sharedfiles/filedetails/?id=3681376854) ever trait from DLC/mods gets a gene.
+  * I recommend this as an alternative to [Jimothy's Genes](https://steamcommunity.com/sharedfiles/filedetails/?id=3371751009) because it is simpler.
+* [Gene Ledger](https://steamcommunity.com/sharedfiles/filedetails/?id=3673202834)
+  * Provides a way to scan the map for all genes without looking at every pawn individually.
+* [Gene Blacklist](https://steamcommunity.com/sharedfiles/filedetails/?id=3713260000)
+  * Better controls for excluding genes from gene packs and gene extraction.
+  * Samhaphage will respect the gene pack settings as to whether or not a gene can spawn via random mutation or be biologically extracted.
 
-## Save Files
+### Mod Interactions
+
+* Mods that change the complexity / metabolism costs of a gene will change the resonance cost that fuels the abilities.
+
+#### Settings for [Tweaks Galore](https://steamcommunity.com/sharedfiles/filedetails/?id=2695164414)
+
+* Go to the Biotech settings for `Tweaks Galore`
+* Enable _Show Genes Tab_ if you don't have another mod providing a Genes tab.
+* In **Gene Stats**, do not enable _Flatten Complexity_, _Flatten Metabolism_, _Flatten Archites_.
+* In **Genepacks**, enable _Genepack Tweaks_. You use this to control and enable/disable the blacklist.
+
+#### Settings for [Better Gene Inheritance](https://steamcommunity.com/sharedfiles/filedetails/?id=3046776238)
+
+* Disable _Remove Overridden Genes_.
+* Change _Lowest Permitted Metabolism_ to -99.
+
+#### Settings for [Genetic Drift 1.6](https://steamcommunity.com/sharedfiles/filedetails/?id=3522332727)
+
+* For each of the categories, click on the _Xenotypes_ button and choose **"Blacklist for genetic drift"**
+* I recommend tweaking the number of included genes so there are more random genes in your playthrough but YMMV.
+
+## Performance
+
+### Autonomous Code
+
+* Resonance resource gene ticks every 2 hours in game.
+* Three hediffs that have timers when they are active.
+* Two thought classes that are only on pawns that are part of the **Null-Thrum** or have a **Scoured Mind**.
+* Doesn't patch anything in the core game or other mods.
+
+### Save Files
 
 * Safe to add to save.
 * Safe to remove from save.
   * Could have some errors on first load after removing, like removing any mod.
 * Safe to upgrade during save.
   * If new genes were added to the xenotype XMLs then your existing pawns wouldn't have them, like any other biotech mod.
-
-## Interactions with Other Mods
-
-* Doesn't patch anything in the core game or other mods.
-* Mods that change the complexity / metabolism costs of a gene will change the resonance cost that fuels the abilities.
-
-### Performance
-
-* Resonance resource gene ticks every 2 hr
-* Hediffs doing hediff things
-
-## Mod Collections
-
-Here is the full collection of everything that adds more features to this mod:
-
-* TODO
 
 ## AI Notice
 
@@ -129,7 +161,5 @@ This project and the work it was derived is free software. You can redistribute 
 Includes modified code from the following mods:
 
 * UI is based on [BetterFloatMenus by EpicGuru](https://github.com/Epicguru/BetterFloatMenu/tree/master). MIT License.
-* abilityblah based on WVC_RacesBiotech (c)2023 WVCSergkart
-* Teratogenesis based on [AlphaGenes (c)2021 juanosarg](https://github.com/juanosarg/AlphaGenes) [License CC-BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 * Unstable Mutations based on [AlphaGenes (c)2021 juanosarg](https://github.com/juanosarg/AlphaGenes) [License CC-BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 * Parasitic Implantation based on [AlphaGenes (c)2021 juanosarg](https://github.com/juanosarg/AlphaGenes) [License CC-BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)

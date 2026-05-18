@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs MayRequire="Ludeon.RimWorld.Ideology">
+
+  <IdeoDef>
+    <defName>OMW_AbsoluteFrequency</defName>
+    <label>absolute frequency</label>
+    <description>A haunting psychic resonance that overrides individual identity, drawing all who hear it into a singular, silent purpose.</description>
+  </IdeoDef>
+
+</Defs>

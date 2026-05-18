@@ -21,6 +21,7 @@ namespace OMW_Samhaphage
         public bool logJobs = false;
         public bool logUI = false;
 
+        public bool disableGeneBlacklist = false;
         public float multSample = 0.5f;
         public float multCompress = 0.1f;
         public float multHarrow = 1.5f;
@@ -48,6 +49,8 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref logJobs, "logJobs", false);
             Scribe_Values.Look(ref logUI, "logUI", false);
 
+            Scribe_Values.Look(ref disableGeneBlacklist, "disableGeneBlacklist", false);
+
             Scribe_Values.Look(ref multSample, "multSample", 0.5f);
             Scribe_Values.Look(ref multCompress, "multCompress", 0.1f);
             Scribe_Values.Look(ref multHarrow, "multHarrow", 1.5f);
@@ -66,13 +69,22 @@ namespace OMW_Samhaphage
         }
     }
 
+    [StaticConstructorOnStartup]
     public class OMW_Mod : Mod
     {
+        private enum SettingsTab
+        {
+            Main,
+            GameBalance,
+            Debugging
+        }
+
         public static OMW_Settings settings;
 
         public string Prefix = "[SAMHAPHAGE-SETTINGS]";
 
         private Vector2 scrollPosition = Vector2.zero;
+        private SettingsTab selectedTab = SettingsTab.Main;
 
         public OMW_Mod(ModContentPack content) : base(content)
         {
@@ -81,86 +93,124 @@ namespace OMW_Samhaphage
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
-            // Define a view rectangle that is taller than the window to enable scrolling.
-            // The width is slightly reduced to prevent the horizontal scrollbar from appearing.
-            Rect viewRect = new Rect(0f, 0f, inRect.width - 30f, 1400f);
+            // Tab headers
+            List<TabRecord> tabs = new List<TabRecord>
+            {
+                new TabRecord("Main", () => { selectedTab = SettingsTab.Main; scrollPosition = Vector2.zero; }, selectedTab == SettingsTab.Main),
+                new TabRecord("Game Balance", () => { selectedTab = SettingsTab.GameBalance; scrollPosition = Vector2.zero; }, selectedTab == SettingsTab.GameBalance),
+                new TabRecord("Debugging", () => { selectedTab = SettingsTab.Debugging; scrollPosition = Vector2.zero; }, selectedTab == SettingsTab.Debugging)
+            };
 
-            Widgets.BeginScrollView(inRect, ref scrollPosition, viewRect);
+            Rect tabRect = new Rect(inRect.x, inRect.y, inRect.width, inRect.height);
+            tabRect.yMin += 40f; // Make space for tab labels
+            TabDrawer.DrawTabs(tabRect, tabs);
+
+            // Define a view rectangle that is taller than the window to enable scrolling.
+            float viewHeight = selectedTab == SettingsTab.GameBalance ? 1000f : 600f;
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 30f, viewHeight);
+
+            Widgets.BeginScrollView(tabRect, ref scrollPosition, viewRect);
 
             Listing_Standard listing = new Listing_Standard();
             listing.Begin(viewRect);
 
-            listing.Label("Resonance Calculations".Colorize(Color.yellow));
-            if (listing.ButtonText("Export CSV for debugging resonance calculations"))
+            switch (selectedTab)
             {
-                ExportGeneReports();
-            }
-            listing.Gap();
-
-            listing.Label("Regenerate the gene blacklist after tweaking with other mods (e.g.: Tweaks Galore, Gene Blacklist)".Colorize(Color.yellow));
-            if (listing.ButtonText("Regenerate Gene Blacklist"))
-            {
-                OMW_BlacklistGenes.RebuildBlacklist();
-                Messages.Message($"{Prefix} Gene blacklist regenerated, debugging CSV exported, blacklist xenotype for Genetic Drift exported.", MessageTypeDefOf.TaskCompletion, false);
-            }
-            listing.Gap();
-
-            listing.Label("Narrative Experience".Colorize(Color.yellow));
-            string currentModeLabel = NullThrumUtility.descMode.ToString().Replace("Description", "");
-            if (listing.ButtonTextLabeled("Ability Description Mode", currentModeLabel))
-            {
-                List<FloatMenuOption> options = new List<FloatMenuOption>();
-                foreach (NullThrumDescriptionMode mode in Enum.GetValues(typeof(NullThrumDescriptionMode)))
-                {
-                    string label = mode.ToString().Replace("Description", "");
-                    options.Add(new FloatMenuOption(label, () => 
+                case SettingsTab.Main:
+                    listing.Gap();
+                    listing.Label(
+                        "Gene Blacklist"
+                            .Colorize(Color.yellow));
+                   
+                    listing.CheckboxLabeled("Disable Gene Blacklist", ref settings.disableGeneBlacklist,
+                        "If checkmarked, no genes will be blacklisted.  You have to click 'Regenerate Gene Blacklist' after changing this setting.");                    
+                    listing.GapLine();
+                    
+                    listing.Label("Regenerate the gene blacklist after tweaking with other mods or changing the enable/disable (e.g.: Tweaks Galore, Gene Blacklist)");
+                    if (listing.ButtonText("Regenerate Gene Blacklist"))
                     {
-                        NullThrumUtility.descMode = mode;
-                    }));
-                }
-                Find.WindowStack.Add(new FloatMenu(options));
+                        OMW_BlacklistGenes.RebuildBlacklist();
+                        Messages.Message($"{Prefix} Gene blacklist regenerated, debugging CSV exported, blacklist xenotype for Genetic Drift exported.", MessageTypeDefOf.TaskCompletion, false);
+                    }
+                    listing.GapLine();
+
+                    listing.Label("Narrative Experience".Colorize(Color.yellow));
+                    string currentModeLabel = NullThrumUtility.descMode.ToString().Replace("Description", "");
+                    if (listing.ButtonTextLabeled("Ability Description Mode", currentModeLabel))
+                    {
+                        List<FloatMenuOption> options = new List<FloatMenuOption>();
+                        foreach (NullThrumDescriptionMode mode in Enum.GetValues(typeof(NullThrumDescriptionMode)))
+                        {
+                            string label = mode.ToString().Replace("Description", "");
+                            options.Add(new FloatMenuOption(label, () => 
+                            {
+                                NullThrumUtility.descMode = mode;
+                            }));
+                        }
+                        Find.WindowStack.Add(new FloatMenu(options));
+                    }
+                    listing.Label("<color=gray><size=10>Intro: Switches from Simple to Lore after 400 uses.\nSimple: Mechanical/Technical descriptions.\nLore: Flavor/In-universe descriptions.</size></color>");
+                    break;
+
+                case SettingsTab.GameBalance:
+                    listing.Gap();
+                    listing.Label($"Maximum Resonance Capacity: {settings.resonanceMax:F0}");
+                    settings.resonanceMax = listing.Slider(settings.resonanceMax, 50f, 1000f);
+                    listing.GapLine();
+                    listing.Label("Ability Resonance Gene Multipliers".Colorize(Color.yellow));
+                    listing.Label("Adjust the resonance spend multiplier for specific abilities. It multiplies the base gene value.");           
+                    settings.multRetune = DrawMultiplierSlider(listing, NullThrumAbilityType.Retune, settings.multRetune);
+                    settings.multCompress = DrawMultiplierSlider(listing, NullThrumAbilityType.Compress, settings.multCompress);
+                    settings.multHarrow = DrawMultiplierSlider(listing, NullThrumAbilityType.Harrow, settings.multHarrow);
+                    settings.multCrosstalk = DrawMultiplierSlider(listing, NullThrumAbilityType.Crosstalk, settings.multCrosstalk);
+                    settings.multSample = DrawMultiplierSlider(listing, NullThrumAbilityType.Sample, settings.multSample);
+                    listing.Label("Adjust how resonance gained multiplier for specific abilities. It multiplies the base gene value.");
+                    settings.multScrub = DrawMultiplierSlider(listing, NullThrumAbilityType.Scrub, settings.multScrub);
+                    settings.multAttenuate =
+                        DrawMultiplierSlider(listing, NullThrumAbilityType.Attenuate, settings.multAttenuate);
+                    listing.Gap();
+
+                    listing.Label("Ability Resonance Flat Rate".Colorize(Color.yellow));
+                    listing.Label("Adjust the resonance spent from specific abilities. Flat rate.");
+                    settings.multBootleg =
+                        DrawMultiplierSlider(listing, NullThrumAbilityType.Bootleg, settings.multBootleg);
+                    listing.Label("Adjust the resonance gained from specific abilities. Flat rate.");
+                    settings.gainFlatten = DrawValueSlider(listing, NullThrumAbilityType.Flatten, settings.gainFlatten, 0f, 20f);
+                    settings.gainMute = DrawValueSlider(listing, NullThrumAbilityType.Mute, settings.gainMute, 0f, 100f);
+                    settings.gainScrub = DrawValueSlider(listing, NullThrumAbilityType.Scrub, settings.gainScrub, 0f, 10f);
+                    break;
+
+                case SettingsTab.Debugging:
+                    listing.Gap();
+                    listing.Label("Resonance Calculations".Colorize(Color.yellow));
+                    if (listing.ButtonText("Export CSV for debugging resonance calculations"))
+                    {
+                        ExportGeneReport();
+                    }
+
+                    listing.Label("Gene Blacklist".Colorize(Color.yellow));
+                    if (listing.ButtonText("Export CSV for debugging gene blacklists"))
+                    {
+                        OMW_BlacklistGenes.ExportBlacklistReport();
+                    }
+
+                    listing.Gap();                    
+                    listing.Gap();                    
+                    listing.Label("Debug Logging Categories".Colorize(Color.yellow));
+                    listing.Label("Enable these to see detailed technical information in the console.");
+                    listing.Gap();
+                    listing.CheckboxLabeled("Log Abilities", ref settings.logAbilities, "Detailed traces for ability application and logic.");
+                    listing.CheckboxLabeled("Log Anomaly", ref settings.logAnomaly, "Traces for the anomaly logic for creating shamblers.");
+                    listing.CheckboxLabeled("Log CompAbilityEffect", ref settings.logCompAbilityEffect, "Traces for menu generation and target selection.");
+                    listing.CheckboxLabeled("Log Genes", ref settings.logGenes, "Traces for gene addition, removal, and complexity calculation.");
+                    listing.CheckboxLabeled("Log Resonance", ref settings.logResonance, "Traces for resonance consumption and gains.");
+                    listing.CheckboxLabeled("Log Hediffs", ref settings.logHediffs, "Traces for technical Hediff components (e.g. ZeroWill).");
+                    listing.CheckboxLabeled("Log Jobs", ref settings.logJobs, "Traces for the custom 'Approach and Interact' jobs.");
+                    listing.CheckboxLabeled("Log UI", ref settings.logUI, "Traces for the UIs added by the mod.");
+                    break;
             }
-            listing.Label("<color=gray><size=10>Intro: Switches from Simple to Lore after 400 uses.\nSimple: Mechanical/Technical descriptions.\nLore: Flavor/In-universe descriptions.</size></color>");
-            listing.Gap();
-
-            listing.Label("Ability Resonance Multipliers".Colorize(Color.yellow));
-            listing.Label("Adjust how expensive or rewarding specific abilities are.");           
-            settings.multRetune = DrawMultiplierSlider(listing, NullThrumAbilityType.Retune, settings.multRetune);
-            settings.multCompress = DrawMultiplierSlider(listing, NullThrumAbilityType.Compress, settings.multCompress);
-            settings.multHarrow = DrawMultiplierSlider(listing, NullThrumAbilityType.Harrow, settings.multHarrow);
-            settings.multCrosstalk = DrawMultiplierSlider(listing, NullThrumAbilityType.Crosstalk, settings.multCrosstalk);
-            settings.multBootleg = DrawMultiplierSlider(listing, NullThrumAbilityType.Bootleg, settings.multBootleg);
-            settings.multSample = DrawMultiplierSlider(listing, NullThrumAbilityType.Sample, settings.multSample);
-            settings.multScrub = DrawMultiplierSlider(listing, NullThrumAbilityType.Scrub, settings.multScrub);
-            settings.multAttenuate = DrawMultiplierSlider(listing, NullThrumAbilityType.Attenuate, settings.multAttenuate);
-            listing.Gap();
-
-            listing.Label("Ability Resonance Gains".Colorize(Color.yellow));
-            listing.Label("Adjust the amount of resonance harvested from specific actions.");
-            settings.gainFlatten = DrawValueSlider(listing, NullThrumAbilityType.Flatten, settings.gainFlatten, 0f, 20f);
-            settings.gainMute = DrawValueSlider(listing, NullThrumAbilityType.Mute, settings.gainMute, 0f, 100f);
-            settings.gainScrub = DrawValueSlider(listing, NullThrumAbilityType.Scrub, settings.gainScrub, 0f, 10f);
-            listing.GapLine();
-            listing.Label($"Maximum Resonance Capacity: {settings.resonanceMax:F0}");
-            settings.resonanceMax = listing.Slider(settings.resonanceMax, 50f, 1000f);
-            listing.GapLine();
-            listing.Label("Debug Logging Categories".Colorize(Color.yellow));
-            listing.Label("Enable these to see detailed technical information in the console.");
-            listing.Gap();
-
-            listing.CheckboxLabeled("Log Abilities", ref settings.logAbilities, "Detailed traces for ability application and logic.");
-            listing.CheckboxLabeled("Log Anomaly", ref settings.logAnomaly, "Traces for the anomaly logic for creating shamblers.");
-            listing.CheckboxLabeled("Log CompAbilityEffect", ref settings.logCompAbilityEffect, "Traces for menu generation and target selection.");
-            listing.CheckboxLabeled("Log Genes", ref settings.logGenes, "Traces for gene addition, removal, and complexity calculation.");
-            listing.CheckboxLabeled("Log Resonance", ref settings.logResonance, "Traces for resonance consumption and gains.");
-            listing.CheckboxLabeled("Log Hediffs", ref settings.logHediffs, "Traces for technical Hediff components (e.g. ZeroWill).");
-            listing.CheckboxLabeled("Log Jobs", ref settings.logJobs, "Traces for the custom 'Approach and Interact' jobs.");
-            listing.CheckboxLabeled("Log UI", ref settings.logUI, "Traces for the UIs added by the mod.");
-
             listing.End();
             Widgets.EndScrollView();
-
-            base.DoSettingsWindowContents(inRect);
         }
 
         private float DrawMultiplierSlider(Listing_Standard listing, NullThrumAbilityType abilityType, float value)
@@ -181,7 +231,7 @@ namespace OMW_Samhaphage
             return listing.Slider(value, min, max);
         }
 
-        private void ExportGeneReports()
+        private void ExportGeneReport()
         {
             try
             {

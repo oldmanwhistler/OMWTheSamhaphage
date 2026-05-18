@@ -101,4 +101,10 @@ See [OMW Performance Collection on Steam](https://github.com/oldmanwhistler/omw-
 
 ## Week #13 - May 11th, 2026
 
-I'm not happy with how using the ability "feels". It's better after changing the job so it makes the target pawn wait, and then fixing a problem where one of the menus doesn't pause.
+I'm not happy with how using the ability "feels". It's better after changing the job so it makes the target pawn wait, and then fixing a problem where one of the menus doesn't pause. This week is a *lot* of bug fixing and playtesting. Add some new abilities: compress, unmute, mute, bootleg, crosstalk. 
+
+Finally added the settings menu and started attaching all the constant values in the classes to the settings menu. Also added the various exports I need to debug game balance. 
+
+I found a pretty funny bug with Gemini, it always breaks when it comes to applying changes to the Bootleg ability... because it's called "bootleg" it must be tripping the guardrails all the time.
+
+## Week #14 - May 18th, 2026

@@ -2,16 +2,22 @@
 
 ## Next
 
-* I really need to create a logger class with a settings menu
 * "arise" needs to become an ability
 * need a ELI5 description of what stuff does on the selector menu
 
-* blacklist respect the gene pack setting in Tweaks Galore for random spawning.
+## MOD SETTINGS
+
+* Disable AI generated art
+* Ability descriptions: ELI5 or in world.
+* Add several presets for balance: default, story mode, hurt me daddy
+* Allow infinite resurrection.
+* A mod setting that shows the disabled genes in selected methods
+* A mod setting to disable the gene blacklists. "Nothing is true, everything is permitted."
+* A mod setting to control the time of silent servitude and dissonance
 
 ## BALANCE
 
 * silent servitude is too strong at recruiting
-* I need to export all genes as a CSV with the cost of different abilities so I can come up with good defaults.
 
 ## BUGS
 
@@ -24,15 +30,12 @@
 
 ## Xenotypes
 
-* transform commands should check if they are already target xenotype
-
 ## Resonance
 
 * automatically convert cancer to resonance
 * give resonance on kill? need more ways to acquire resonance
 * daily resonance amount that varies per xenotype? Doesn't seem to be working.
 * resonance level should reduce the time of genetic dissonance
-* consume a psylink for resonance
 
 ## UI
 
@@ -42,10 +45,9 @@
 
 ## Cradlemold
 
-## Hallowbound
+* Implement custom initiate lovin' of none of the other mods that implement it are available
 
-* Void Fascination trait
-* Resurrecting as Echovessel is free?
+## Hallowbound
 
 ## Fluxspawn
 
@@ -53,7 +55,6 @@
 * Faster speed
 * Stun
 * Smoke Cloud
-* Hallowbound need to be able to force Fluxspawn to self-heal with their carcinomas
 
 ## Samhaphage
 
