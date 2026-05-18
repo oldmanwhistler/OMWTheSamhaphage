@@ -26,6 +26,7 @@ namespace OMW_Samhaphage
         public float multCrosstalk = 0.5f;
         public float multScrub = 0.5f;
         public float multAttenuate = 1.0f;
+        public float multBootleg = 10.0f;
 
         public float gainFlatten = 3.0f;
         public float gainMute = 20.0f;
@@ -52,6 +53,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref multCrosstalk, "multCrosstalk", 0.5f);
             Scribe_Values.Look(ref multScrub, "multScrub", 0.5f);
             Scribe_Values.Look(ref multAttenuate, "multAttenuate", 1.0f);
+            Scribe_Values.Look(ref multBootleg, "multBootleg", 10.0f);
 
             Scribe_Values.Look(ref gainFlatten, "gainFlatten", 3.0f);
             Scribe_Values.Look(ref gainMute, "gainMute", 20.0f);
@@ -107,6 +109,7 @@ namespace OMW_Samhaphage
             settings.multCompress = DrawMultiplierSlider(listing, "Compress (Debit)", settings.multCompress);
             settings.multHarrow = DrawMultiplierSlider(listing, "Harrow (Debit)", settings.multHarrow);
             settings.multCrosstalk = DrawMultiplierSlider(listing, "Crosstalk (Debit)", settings.multCrosstalk);
+            settings.multBootleg = DrawMultiplierSlider(listing, "Bootleg (Debit)", settings.multBootleg);
             settings.multSample = DrawMultiplierSlider(listing, "Sample (Credit)", settings.multSample);
             settings.multScrub = DrawMultiplierSlider(listing, "Scrub (Credit)", settings.multScrub);
             settings.multAttenuate = DrawMultiplierSlider(listing, "Attenuate (Credit)", settings.multAttenuate);
