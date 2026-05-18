@@ -14,7 +14,7 @@ namespace OMW_Samhaphage
         private HashSet<TraitPlus> selectedTraits = new HashSet<TraitPlus>();
         private System.Action<List<TraitPlus>> onConfirm;
         private Vector2 scrollPosition;
-
+        private float selectionMaxCost;
         public override Vector2 InitialSize => new Vector2(450f, 700f);
 
         public WindowSelectTraitsForNullThrumAbility(NullThrumSelectionTrait selector, System.Action<List<TraitPlus>> callback)
@@ -26,6 +26,7 @@ namespace OMW_Samhaphage
             this.doCloseX = true;
             this.closeOnClickedOutside = false;
             this.absorbInputAroundWindow = true;
+            this.selectionMaxCost = selector.SelectionMaxCost();            
         }
 
         public float SelectionCurCost()
@@ -49,16 +50,7 @@ namespace OMW_Samhaphage
             // --- Header ---
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 40f);
             Text.Font = GameFont.Medium;
-            Widgets.Label(headerRect, $"Select Traits to {this.selector.Name} ({100f * this.SelectionCurCost() / this.SelectionMaxCost():F0}%)");
-
-            // Clear All Button
-            Rect clearBtnRect = new Rect(inRect.width - 100f, inRect.y + 5f, 100f, 25f);
-            Text.Font = GameFont.Small;
-            if (Widgets.ButtonText(clearBtnRect, "Clear All"))
-            {
-                selectedTraits.Clear();
-                SoundDefOf.Tick_Low.PlayOneShotOnCamera();
-            }
+            Widgets.Label(headerRect, $"Select Traits to {this.selector.Name}");
 
             float listStartY = headerRect.yMax + 5f;
             Widgets.DrawLineHorizontal(0f, listStartY, inRect.width);
@@ -88,14 +80,19 @@ namespace OMW_Samhaphage
 
                 // Trait icons are not standard in vanilla, but Widgets.DefIcon will handle TraitDef
                 Widgets.DefIcon(new Rect(rowRect.x + 4f, rowRect.y + 3f, 30f, 30f), plus.trait.def);
-                Rect labelRect = new Rect(rowRect.x + 40f, rowRect.y, rowRect.width - 80f, rowRect.height);
+                Rect labelRect = new Rect(rowRect.x + 40f, rowRect.y, rowRect.width - 130f, rowRect.height);
+                Rect valueRect = new Rect(rowRect.xMax - 85f, rowRect.y, 50f, rowRect.height);
+
                 Text.Anchor = TextAnchor.MiddleLeft;
 
                 // Apply color for conflicts
                 if (plus.HasConflict()) GUI.color = Color.red;
 
                 Widgets.Label(labelRect, plus.trait.LabelCap);
+                Text.Anchor = TextAnchor.MiddleRight;
+                Widgets.Label(valueRect, plus.value.ToString("F1"));
                 GUI.color = Color.white;
+                Text.Anchor = TextAnchor.MiddleLeft;
 
                 Widgets.Checkbox(new Vector2(rowRect.xMax - 30f, rowRect.y + 6f), ref isSelected, 24f, false);
 
@@ -106,14 +103,14 @@ namespace OMW_Samhaphage
                         selectedTraits.Remove(plus);
                         SoundDefOf.Tick_Low.PlayOneShotOnCamera();
                     }
-                    else if (this.SelectionCurCost() < this.SelectionMaxCost())
+                    else if (this.SelectionCurCost() < this.selectionMaxCost)
                     {
                         selectedTraits.Add(plus);
                         SoundDefOf.Tick_High.PlayOneShotOnCamera();
                     }
                     else
                     {
-                        Messages.Message($"Max cost of {this.SelectionMaxCost()} resonance reached.", MessageTypeDefOf.RejectInput, false);
+                        Messages.Message($"Max cost of {this.selectionMaxCost} resonance reached.", MessageTypeDefOf.RejectInput, false);
                         SoundDefOf.ClickReject.PlayOneShotOnCamera();
                     }
                 }
@@ -124,16 +121,26 @@ namespace OMW_Samhaphage
             Widgets.EndScrollView();
 
             // --- Footer Section ---
-            float buttonWidth = (inRect.width / 2f) - 10f;
+            float spacing = 10f;
+            float confirmWidth = inRect.width * 0.5f;
+            float otherWidth = (inRect.width - confirmWidth - (spacing * 2f)) / 2f;
             float footerY = inRect.height - 40f;
+            Text.Font = GameFont.Small;
 
-            Rect cancelRect = new Rect(0f, footerY, buttonWidth, 35f);
+            Rect clearRect = new Rect(0f, footerY, otherWidth, 35f);
+            if (Widgets.ButtonText(clearRect, "Clear All"))
+            {
+                selectedTraits.Clear();
+                SoundDefOf.Tick_Low.PlayOneShotOnCamera();
+            }
+
+            Rect cancelRect = new Rect(otherWidth + spacing, footerY, otherWidth, 35f);
             if (Widgets.ButtonText(cancelRect, "Cancel"))
             {
                 Close();
             }
 
-            Rect confirmRect = new Rect(inRect.width - buttonWidth, footerY, buttonWidth, 35f);
+            Rect confirmRect = new Rect(inRect.width - confirmWidth, footerY, confirmWidth, 35f);
             GUI.color = selectedTraits.Count > 0 ? Color.white : Color.gray;
 
             if (Widgets.ButtonText(confirmRect, "Confirm Selection"))

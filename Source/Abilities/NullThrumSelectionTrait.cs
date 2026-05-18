@@ -25,19 +25,6 @@ namespace OMW_Samhaphage
 
         // Concrete methods
 
-        public float SelectionMaxCost()
-        {
-            if (this.ResonanceType == NullThrumResonanceType.ResonanceTypeDebit)
-            {
-                return ResonanceUtility.Total(this.caster, this.ResonanceTotalMultiplier);
-            }
-            else
-            {
-                // disable the MaxCost when it's a credit.
-                return 1000;
-            }
-        }
-
         protected virtual float TraitValue(Trait trait)
         {
             // Traits don't have biostats. Defaulting to a flat value of 1.0 per trait 

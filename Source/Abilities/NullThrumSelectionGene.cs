@@ -32,19 +32,6 @@ namespace OMW_Samhaphage
 
         // Concrete methods
 
-        public float SelectionMaxCost()
-        {
-            if (this.ResonanceType == NullThrumResonanceType.ResonanceTypeDebit)
-            {
-                return ResonanceUtility.Total(this.caster, this.ResonanceTotalMultiplier);
-            }
-            else
-            {
-                // disable the MaxCost when it's a credit.
-                return 1000;
-            }
-        }
-
         protected float GeneValue(Gene gene)
         {
             return ResonanceUtility.GeneResonanceValue(gene.def) * this.ResonanceTotalMultiplier;

@@ -15,6 +15,7 @@ namespace OMW_Samhaphage
         private System.Action<List<GenePlus>> onConfirm;
         private System.Action onDismiss;
         private Vector2 scrollPosition;
+        private float selectionMaxCost;
 
         public override Vector2 InitialSize => new Vector2(450f, 700f);
 
@@ -28,6 +29,7 @@ namespace OMW_Samhaphage
             this.doCloseX = true;
             this.closeOnClickedOutside = false;
             this.absorbInputAroundWindow = true;
+            this.selectionMaxCost = selector.SelectionMaxCost();
         }
 
         public float SelectionCurCost()
@@ -38,29 +40,14 @@ namespace OMW_Samhaphage
                 tmp += plus.value;    
             }
             return tmp;
-        }
-
-        public float SelectionMaxCost()
-        {
-            return this.selector.SelectionMaxCost();
-        }
-        
+        }        
         public override void DoWindowContents(Rect inRect)
         {
             this.windowState = new WindowState();
             // --- Header ---
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 40f);
             Text.Font = GameFont.Medium;
-            Widgets.Label(headerRect, $"Select Genes to {this.selector.Name} ({100f*this.SelectionCurCost()/this.SelectionMaxCost()}%)");
-
-            // Clear All Button
-            Rect clearBtnRect = new Rect(inRect.width - 100f, inRect.y + 5f, 100f, 25f);
-            Text.Font = GameFont.Small;
-            if (Widgets.ButtonText(clearBtnRect, "Clear All"))
-            {
-                selectedGenes.Clear();
-                SoundDefOf.Tick_Low.PlayOneShotOnCamera();
-            }
+            Widgets.Label(headerRect, $"Select Genes to {this.selector.Name}");            
 
             float listStartY = headerRect.yMax + 5f;
             Widgets.DrawLineHorizontal(0f, listStartY, inRect.width);
@@ -104,16 +91,20 @@ namespace OMW_Samhaphage
                 }, plus.GetHashCode()));
 
                 Widgets.DefIcon(new Rect(rowRect.x + 4f, rowRect.y + 3f, 30f, 30f), plus.gene.def);
-                Rect labelRect = new Rect(rowRect.x + 40f, rowRect.y, rowRect.width - 80f, rowRect.height);
+                Rect labelRect = new Rect(rowRect.x + 40f, rowRect.y, rowRect.width - 130f, rowRect.height);
+                Rect valueRect = new Rect(rowRect.xMax - 85f, rowRect.y, 50f, rowRect.height);
+
                 Text.Anchor = TextAnchor.MiddleLeft;
 
                 // Apply color
                 if (plus.gene.Overridden) GUI.color = Color.gray;
                 if (plus.HasConflict()) GUI.color = Color.red;
 
-
                 Widgets.Label(labelRect, plus.gene.LabelCap);
+                Text.Anchor = TextAnchor.MiddleRight;
+                Widgets.Label(valueRect, plus.value.ToString("F1"));
                 GUI.color = Color.white;
+                Text.Anchor = TextAnchor.MiddleLeft;
 
                 Widgets.Checkbox(new Vector2(rowRect.xMax - 30f, rowRect.y + 6f), ref isSelected, 24f, false);
 
@@ -124,14 +115,14 @@ namespace OMW_Samhaphage
                         selectedGenes.Remove(plus);
                         SoundDefOf.Tick_Low.PlayOneShotOnCamera();
                     }
-                    else if (this.SelectionCurCost() < this.SelectionMaxCost())
+                    else if (this.SelectionCurCost() < this.selectionMaxCost)
                     {
                         selectedGenes.Add(plus);
                         SoundDefOf.Tick_High.PlayOneShotOnCamera();
                     }
                     else
                     {
-                        Messages.Message($"Max cost of {this.SelectionMaxCost()} resonance reached.", MessageTypeDefOf.RejectInput, false);
+                        Messages.Message($"Max cost of {this.selectionMaxCost} resonance reached.", MessageTypeDefOf.RejectInput, false);
                         SoundDefOf.ClickReject.PlayOneShotOnCamera();
                     }
                 }
@@ -142,23 +133,33 @@ namespace OMW_Samhaphage
             Widgets.EndScrollView();
 
             // --- Footer Section ---
-            float buttonWidth = (inRect.width / 2f) - 10f; // Split the width for two buttons
+            float spacing = 10f;
+            float confirmWidth = inRect.width * 0.5f;
+            float otherWidth = (inRect.width - confirmWidth - (spacing * 2f)) / 2f;
             float footerY = inRect.height - 40f;
+            Text.Font = GameFont.Small;
 
-            // Cancel Button (Left Side)
-            Rect cancelRect = new Rect(0f, footerY, buttonWidth, 35f);
-            if (Widgets.ButtonText(cancelRect, "Cancel"))
+            // Clear All Button
+            Rect clearRect = new Rect(0f, footerY, otherWidth, 35f);
+            if (Widgets.ButtonText(clearRect, "Clear All"))
             {
-                Close(); // Just close, don't invoke the callback
-            }
+                selectedGenes.Clear();
+                SoundDefOf.Tick_Low.PlayOneShotOnCamera();
+            }            
 
-            // Confirm Button (Right Side)
-            Rect confirmRect = new Rect(inRect.width - buttonWidth, footerY, buttonWidth, 35f);
+            // Cancel/Skip Button
+            Rect cancelRect = new Rect(otherWidth + spacing, footerY, otherWidth, 35f);
+            if (Widgets.ButtonText(cancelRect, onDismiss != null ? "Skip" : "Cancel"))
+            {
+                Close();
+            }           
+            
+            // Confirm Button
+            Rect confirmRect = new Rect(inRect.width - confirmWidth, footerY, confirmWidth, 35f);
 
-            // Optional: Change button color or label if nothing is selected
             GUI.color = selectedGenes.Count > 0 ? Color.white : Color.gray;
 
-            if (Widgets.ButtonText(confirmRect, "Confirm Selection"))
+            if (Widgets.ButtonText(confirmRect, $"Confirm Selection for {100f * this.SelectionCurCost():F1}%"))
             {
                 if (selectedGenes.Count > 0)
                 {

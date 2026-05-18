@@ -26,5 +26,9 @@ namespace OMW_Samhaphage
             victim.health.AddHediff(hediffDissonance);
         }
 
+        public float SelectionMaxCost()
+        {
+            return ResonanceUtility.Total(this.caster);
+        }
     }
 }
