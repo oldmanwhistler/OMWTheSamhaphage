@@ -11,10 +11,11 @@ namespace OMW_Samhaphage
         static Logger Log = new Logger("Resonance");
         private const int PassiveGainIntervalTicks = 1000; // Avoids CS0108 name conflict
 
-        public override float InitialResourceMax => 200f;
+        public override float InitialResourceMax => OMW_Mod.settings.resonanceMax;
+        public override int MaxForDisplay => Mathf.RoundToInt(OMW_Mod.settings.resonanceMax);
         protected override Color BarColor => new Color(0.36f, 0.22f, 0.42f); // Bruise-Purple
         protected override Color BarHighlightColor => new Color(0.54f, 0.17f, 0.89f); // Neon-Violet
-        public override float MinLevelForAlert => 1f;
+        public override float MinLevelForAlert => 10f;
         public override string ResourceLabel => "resonance";
 
 
@@ -43,6 +44,8 @@ namespace OMW_Samhaphage
             // Use the hash interval to prevent performance hits every frame
             if (pawn.IsHashIntervalTick(PassiveGainIntervalTicks))
             {
+                // Ensure the internal max field stays in sync with mod settings
+                this.max = OMW_Mod.settings.resonanceMax;
                 ApplyPassiveGain();
             }
         }

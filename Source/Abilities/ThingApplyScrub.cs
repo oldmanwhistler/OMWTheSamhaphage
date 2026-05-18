@@ -69,7 +69,7 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            float amount = carcinomas.Count * 1.5f;
+            float amount = carcinomas.Count * OMW_Mod.settings.gainScrub;
             ResonanceUtility.Incr("from removing carcinomas", caster, amount);
 
             foreach (Hediff carcinoma in carcinomas)

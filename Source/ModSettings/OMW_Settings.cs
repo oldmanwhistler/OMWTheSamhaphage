@@ -27,6 +27,12 @@ namespace OMW_Samhaphage
         public float multScrub = 0.5f;
         public float multAttenuate = 1.0f;
 
+        public float gainFlatten = 3.0f;
+        public float gainMute = 20.0f;
+        public float gainScrub = 1.5f;
+
+        public float resonanceMax = 200f;
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -46,6 +52,12 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref multCrosstalk, "multCrosstalk", 0.5f);
             Scribe_Values.Look(ref multScrub, "multScrub", 0.5f);
             Scribe_Values.Look(ref multAttenuate, "multAttenuate", 1.0f);
+
+            Scribe_Values.Look(ref gainFlatten, "gainFlatten", 3.0f);
+            Scribe_Values.Look(ref gainMute, "gainMute", 20.0f);
+            Scribe_Values.Look(ref gainScrub, "gainScrub", 1.5f);
+
+            Scribe_Values.Look(ref resonanceMax, "resonanceMax", 200f);
         }
     }
 
@@ -55,6 +67,8 @@ namespace OMW_Samhaphage
 
         public string Prefix = "[SAMHAPHAGE-SETTINGS]";
 
+        private Vector2 scrollPosition = Vector2.zero;
+
         public OMW_Mod(ModContentPack content) : base(content)
         {
             settings = GetSettings<OMW_Settings>();
@@ -62,8 +76,14 @@ namespace OMW_Samhaphage
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
+            // Define a view rectangle that is taller than the window to enable scrolling.
+            // The width is slightly reduced to prevent the horizontal scrollbar from appearing.
+            Rect viewRect = new Rect(0f, 0f, inRect.width - 30f, 1050f);
+
+            Widgets.BeginScrollView(inRect, ref scrollPosition, viewRect);
+
             Listing_Standard listing = new Listing_Standard();
-            listing.Begin(inRect);
+            listing.Begin(viewRect);
 
             listing.Label("Resonance Calculations".Colorize(Color.yellow));
             if (listing.ButtonText("Export CSV for debugging resonance calculations"))
@@ -92,6 +112,16 @@ namespace OMW_Samhaphage
             settings.multAttenuate = DrawMultiplierSlider(listing, "Attenuate (Credit)", settings.multAttenuate);
             listing.Gap();
 
+            listing.Label("Ability Resonance Gains".Colorize(Color.yellow));
+            listing.Label("Adjust the amount of resonance harvested from specific actions.");
+
+            settings.resonanceMax = DrawValueSlider(listing, "Maximum Resonance Capacity", settings.resonanceMax, 50f, 1000f);
+            listing.GapLine();
+            settings.gainFlatten = DrawValueSlider(listing, "Flatten Gain", settings.gainFlatten, 0f, 20f);
+            settings.gainMute = DrawValueSlider(listing, "Mute Gain (per level)", settings.gainMute, 0f, 100f);
+            settings.gainScrub = DrawValueSlider(listing, "Scrub Gain (per carcinoma)", settings.gainScrub, 0f, 10f);
+            listing.Gap();
+
             listing.Label("Debug Logging Categories".Colorize(Color.yellow));
             listing.Label("Enable these to see detailed technical information in the console.");
             listing.Gap();
@@ -106,6 +136,8 @@ namespace OMW_Samhaphage
             listing.CheckboxLabeled("Log UI", ref settings.logUI, "Traces for the UIs added by the mod.");
 
             listing.End();
+            Widgets.EndScrollView();
+
             base.DoSettingsWindowContents(inRect);
         }
 
@@ -113,6 +145,12 @@ namespace OMW_Samhaphage
         {
             listing.Label($"{label}: {value:F2}");
             return listing.Slider(value, 0f, 10f);
+        }
+
+        private float DrawValueSlider(Listing_Standard listing, string label, float value, float min, float max)
+        {
+            listing.Label($"{label}: {value:F2}");
+            return listing.Slider(value, min, max);
         }
 
         private void ExportGeneReports()
