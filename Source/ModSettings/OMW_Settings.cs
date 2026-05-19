@@ -67,6 +67,35 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref resonanceMax, "resonanceMax", 200f);
             Scribe_Values.Look(ref NullThrumUtility.descMode, "descMode", NullThrumDescriptionMode.DescriptionIntro);
         }
+
+        public void Reset()
+        {
+            logAbilities = false;
+            logAnomaly = false;
+            logCompAbilityEffect = false;
+            logGenes = false;
+            logResonance = false;
+            logHediffs = false;
+            logJobs = false;
+            logUI = false;
+
+            disableGeneBlacklist = false;
+            multSample = 0.5f;
+            multCompress = 0.1f;
+            multHarrow = 1.5f;
+            multRetune = 0.5f;
+            multCrosstalk = 0.5f;
+            multScrub = 0.5f;
+            multAttenuate = 1.0f;
+            multBootleg = 10.0f;
+
+            gainFlatten = 3.0f;
+            gainMute = 20.0f;
+            gainScrub = 1.5f;
+
+            resonanceMax = 200f;
+            NullThrumUtility.descMode = NullThrumDescriptionMode.DescriptionIntro;
+        }
     }
 
     [StaticConstructorOnStartup]
@@ -150,6 +179,15 @@ namespace OMW_Samhaphage
                         Find.WindowStack.Add(new FloatMenu(options));
                     }
                     listing.Label("<color=gray><size=10>Intro: Switches from Simple to Lore after 400 uses.\nSimple: Mechanical/Technical descriptions.\nLore: Flavor/In-universe descriptions.</size></color>");
+                    listing.GapLine();
+
+                    listing.Gap(20f);
+                    if (listing.ButtonText("Reset to Defaults"))
+                    {
+                        settings.Reset();
+                        OMW_BlacklistGenes.RebuildBlacklist(); // Rebuild blacklist as its setting might have changed
+                        Messages.Message($"{Prefix} All settings reset to default values.", MessageTypeDefOf.TaskCompletion, false);
+                    }
                     break;
 
                 case SettingsTab.GameBalance:
