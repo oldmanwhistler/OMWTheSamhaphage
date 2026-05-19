@@ -74,11 +74,17 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 ### Requirements
 
 * Biotech DLC
-  * Additional genes with Anomaly and Royalty
 * [Corpse Children 1.6](https://steamcommunity.com/sharedfiles/filedetails/?id=3525305141)
 * [Alpha Genes](https://steamcommunity.com/sharedfiles/filedetails/?id=2891845502)
 * [Big and Small - Genes & More](https://steamcommunity.com/sharedfiles/filedetails/?id=2920751126)
 * [WVC: Xenotypes and Genes](https://steamcommunity.com/sharedfiles/filedetails/?id=2886992038)
+
+### DLC Interactions
+
+* Ideology will add a saved Ideology called "The Absolute Frequency" that fits the lore of these Xenotypes. It's a Raiding meme with sacred Xenotypes.
+* Anomaly will add genes to the Xenotypes.
+* Royalty will add genes to the Xenotypes.
+* Odyssey will add vacuum resistance to the Xenotypes.
 
 ### Optional But Supported
 

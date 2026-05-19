@@ -1,4 +1,11 @@
-# Xenotype Abilities
+# TESTS TO RUN
+
+## DLC
+
+- [ ] Load without Royalty
+- [ ] Load without Ideology
+- [ ] Load without Anomaly
+- [ ] Load without Odyssey
 
 ## Fluxspawn
 
