@@ -65,7 +65,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref gainScrub, "gainScrub", 1.5f);
 
             Scribe_Values.Look(ref resonanceMax, "resonanceMax", 200f);
-            Scribe_Values.Look(ref NullThrumUtility.descMode, "descMode", NullThrumDescriptionMode.DescriptionIntro);
+            Scribe_Values.Look(ref NullThrumUtility.descMode, "descMode", NullThrumDescriptionMode.DescriptionSimple);
         }
 
         public void Reset()
@@ -94,7 +94,7 @@ namespace OMW_Samhaphage
             gainScrub = 1.5f;
 
             resonanceMax = 200f;
-            NullThrumUtility.descMode = NullThrumDescriptionMode.DescriptionIntro;
+            NullThrumUtility.descMode = NullThrumDescriptionMode.DescriptionSimple;
         }
     }
 

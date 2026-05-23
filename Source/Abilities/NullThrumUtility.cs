@@ -34,7 +34,6 @@ namespace OMW_Samhaphage
 
     public enum NullThrumDescriptionMode
     {
-        DescriptionIntro,
         DescriptionSimple,
         DescriptionLore
     }
@@ -42,7 +41,7 @@ namespace OMW_Samhaphage
 
     public static class NullThrumUtility
     {
-        public static NullThrumDescriptionMode descMode = NullThrumDescriptionMode.DescriptionIntro;
+        public static NullThrumDescriptionMode descMode = NullThrumDescriptionMode.DescriptionSimple;
 
          public static string ToString(NullThrumAbilityType ability)
         {
@@ -102,18 +101,6 @@ namespace OMW_Samhaphage
         {
             switch (descMode)
             {
-                case NullThrumDescriptionMode.DescriptionIntro:
-                    if (Current.ProgramState == ProgramState.Playing && Find.World != null)
-                    {
-                        var tracker = Find.World.GetComponent<NullThrumTracker>();
-                        if (tracker != null)
-                        {
-                            tracker.IncrementCount(ability);
-                            if (tracker.GetCount(ability) >= 400)
-                                return DescriptionLore(ability, caster, victim);
-                        }
-                    }
-                    return DescriptionSimple(ability, caster, victim);
                 case NullThrumDescriptionMode.DescriptionSimple:
                     return DescriptionSimple(ability, caster, victim);
                 case NullThrumDescriptionMode.DescriptionLore:
