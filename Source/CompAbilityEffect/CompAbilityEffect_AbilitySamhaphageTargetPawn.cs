@@ -70,7 +70,7 @@ namespace OMW_Samhaphage
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
                 ability = new PawnApplyUnmute();
-                items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));                
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));                
             }
 
             if (items.Count > 0)
