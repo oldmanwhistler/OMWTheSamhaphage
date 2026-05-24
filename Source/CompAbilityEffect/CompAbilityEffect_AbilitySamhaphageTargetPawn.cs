@@ -57,6 +57,12 @@ namespace OMW_Samhaphage
                 ability = new ThingApplyMute();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
+                if ((xeno == OMW_XenotypeDefOf.omw_sovereign_stillness))
+                {
+                    ability = new ThingApplyNullify();
+                    items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+                }
+
                 ability = new ThingApplyAttenuate();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 

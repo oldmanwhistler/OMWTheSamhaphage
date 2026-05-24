@@ -48,11 +48,23 @@ namespace OMW_Samhaphage
                 ability = new ThingApplyMute();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
+                if ((xeno == OMW_XenotypeDefOf.omw_sovereign_stillness))
+                {
+                    ability = new ThingApplyNullify();
+                    items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
+                }
+
                 ability = new ThingApplyAttenuate();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
                 ability = new ThingApplyBootleg();
-                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));                
+                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
+
+                if ((xeno == OMW_XenotypeDefOf.omw_sovereign_stillness))
+                {
+                    ability = new CorpseApplyResurrectEchovessel();
+                    items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
+                }
             }
 
             if (items.Count > 0)

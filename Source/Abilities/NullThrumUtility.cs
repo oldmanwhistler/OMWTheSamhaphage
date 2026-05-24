@@ -35,6 +35,7 @@ namespace OMW_Samhaphage
     {
         Flatten,
         Scrub,
+        Nullify,
         Retune,
         Harrow,
         Transpose,
@@ -71,6 +72,13 @@ namespace OMW_Samhaphage
             this.resourceType = resourceType;
             this.mathType = mathType;
             this.value = value;
+
+            if (this.resonanceType != NullThrumUtility.ResonanceType(this.abilityType))
+            {
+                Log.Error(
+                    $"NullThrumAbilityProps for {NullThrumUtility.ToString(abilityType)} does not match the ResonanceType case statement in NullThrumUtility.ResonanceType({NullThrumUtility.ToString(abilityType)})");
+            }
+
             switch (this.resourceType)
             {
                 case NullThrumResourceType.ResourceTypeTrait:
@@ -124,13 +132,20 @@ namespace OMW_Samhaphage
             NullThrumAbilityType.Scrub,
             NullThrumResourceType.ResourceTypeGene,
             NullThrumResonanceType.ResonanceTypeCredit,
-            NullThrumMathType.MathTypeMultiplier, 1.5f);
+            NullThrumMathType.MathTypeMultiplier, 4.0f);
 
         public NullThrumAbilityProps scrubCarcinoma = new NullThrumAbilityProps(
             NullThrumAbilityType.Scrub,
             NullThrumResourceType.ResourceTypeCarcinoma,
             NullThrumResonanceType.ResonanceTypeCredit,
-            NullThrumMathType.MathTypeOffset, 3.0f);
+            NullThrumMathType.MathTypeOffset, 5.0f);
+
+        // multiplier credit, destroy gene
+        public NullThrumAbilityProps nullify = new NullThrumAbilityProps(
+            NullThrumAbilityType.Nullify,
+            NullThrumResourceType.ResourceTypeGene,
+            NullThrumResonanceType.ResonanceTypeCredit,
+            NullThrumMathType.MathTypeMultiplier, 2.5f);
 
         // multiplier cost, select: move single xenogene to endogene
         public NullThrumAbilityProps retune = new NullThrumAbilityProps(
@@ -256,6 +271,7 @@ namespace OMW_Samhaphage
             {
                 case NullThrumAbilityType.Flatten: return "Flatten";
                 case NullThrumAbilityType.Scrub: return "Scrub";
+                case NullThrumAbilityType.Nullify: return "Nullify";
                 case NullThrumAbilityType.Retune: return "Retune";
                 case NullThrumAbilityType.Harrow: return "Harrow";
                 case NullThrumAbilityType.Transpose: return "Transpose";
@@ -316,6 +332,7 @@ namespace OMW_Samhaphage
             {
                 case NullThrumAbilityType.Flatten: return NullThrumResonanceType.ResonanceTypeCredit;
                 case NullThrumAbilityType.Scrub: return NullThrumResonanceType.ResonanceTypeCredit;
+                case NullThrumAbilityType.Nullify: return NullThrumResonanceType.ResonanceTypeCredit;
                 case NullThrumAbilityType.Retune: return NullThrumResonanceType.ResonanceTypeDebit;
                 case NullThrumAbilityType.Harrow: return NullThrumResonanceType.ResonanceTypeDebit;
                 case NullThrumAbilityType.Transpose: return NullThrumResonanceType.ResonanceTypeDebit;
@@ -368,6 +385,10 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Scrub:
                     return
                         $"{caster} gains resonance from consuming {victim}'s carcinomas. {caster} may selectively destroy overridden (disabled) genes to gain resonance.";
+                case NullThrumAbilityType.Nullify:
+                    return
+                        $"{caster} may selectively destroy genes to gain resonance.";
+
                 case NullThrumAbilityType.Retune:
                     return
                         $"{caster} spends resonance to integrate selected xenogenes into their permanent endogenic sequence.";
