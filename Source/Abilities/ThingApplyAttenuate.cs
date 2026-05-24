@@ -9,10 +9,11 @@ namespace OMW_Samhaphage
     public class SelectionAttenuate : NullThrumSelectionGene
     {
         public SelectionAttenuate(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
-        
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Attenuate;
-        // Cheap because it is destroying genes
-        protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multAttenuate;
+
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.attenuate;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
+        protected override float ResonanceTotalMultiplier => AbilityProp.value;
+
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
@@ -29,7 +30,9 @@ namespace OMW_Samhaphage
     public class ThingApplyAttenuate : NullThrumAbilityPawnCorpse
     {
         private SelectionAttenuate selector = null;
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Attenuate;
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.attenuate;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
+
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {

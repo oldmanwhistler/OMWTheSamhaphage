@@ -10,6 +10,7 @@ using Verse;
 
 namespace OMW_Samhaphage
 {
+
     public class OMW_Settings : ModSettings
     {
         public bool logAbilities = false;
@@ -23,20 +24,12 @@ namespace OMW_Samhaphage
         public bool logMutation = false;
 
         public bool disableGeneBlacklist = false;
-        public float multSample = 0.5f;
-        public float multCompress = 0.1f;
-        public float multHarrow = 1.5f;
-        public float multRetune = 0.5f;
-        public float multCrosstalk = 0.5f;
-        public float multScrub = 0.5f;
-        public float multAttenuate = 1.0f;
-        public float multBootleg = 10.0f;
-
-        public float gainFlatten = 3.0f;
-        public float gainMute = 20.0f;
-        public float gainScrub = 1.5f;
-
+        
         public float resonanceMax = 200f;
+
+        public NullThrumAbilities abilityValue = new NullThrumAbilities();
+        private NullThrumAbilities abilityDefault = new NullThrumAbilities();
+
 
         public override void ExposeData()
         {
@@ -52,21 +45,26 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref logMutation, "logMutation", false);
 
             Scribe_Values.Look(ref disableGeneBlacklist, "disableGeneBlacklist", false);
-
-            Scribe_Values.Look(ref multSample, "multSample", 0.5f);
-            Scribe_Values.Look(ref multCompress, "multCompress", 0.1f);
-            Scribe_Values.Look(ref multHarrow, "multHarrow", 1.5f);
-            Scribe_Values.Look(ref multRetune, "multRetune", 0.5f);
-            Scribe_Values.Look(ref multCrosstalk, "multCrosstalk", 0.5f);
-            Scribe_Values.Look(ref multScrub, "multScrub", 0.5f);
-            Scribe_Values.Look(ref multAttenuate, "multAttenuate", 1.0f);
-            Scribe_Values.Look(ref multBootleg, "multBootleg", 10.0f);
-
-            Scribe_Values.Look(ref gainFlatten, "gainFlatten", 3.0f);
-            Scribe_Values.Look(ref gainMute, "gainMute", 20.0f);
-            Scribe_Values.Look(ref gainScrub, "gainScrub", 1.5f);
-
-            Scribe_Values.Look(ref resonanceMax, "resonanceMax", 200f);
+            Scribe_Values.Look(ref resonanceMax, "ResonanceMax", 200f);
+            Scribe_Values.Look(ref abilityValue.flatten.value, "Flatten", abilityDefault.flatten.value);
+            Scribe_Values.Look(ref abilityValue.scrub.value, "Scrub", abilityDefault.scrub.value);
+            Scribe_Values.Look(ref abilityValue.scrubCarcinoma.value, "Scrub Carcinoma", abilityDefault.scrubCarcinoma.value);
+            Scribe_Values.Look(ref abilityValue.retune.value, "Retune", abilityDefault.retune.value);
+            Scribe_Values.Look(ref abilityValue.compress.value, "Compress", abilityDefault.compress.value);
+            Scribe_Values.Look(ref abilityValue.harrow.value, "Harrow", abilityDefault.harrow.value);
+            Scribe_Values.Look(ref abilityValue.transpose.value, "Transpose", abilityDefault.transpose.value);
+            Scribe_Values.Look(ref abilityValue.infest.value, "Infest", abilityDefault.infest.value);
+            Scribe_Values.Look(ref abilityValue.enwomb.value, "Enwomb", abilityDefault.enwomb.value);
+            Scribe_Values.Look(ref abilityValue.unmute.value, "Unmute", abilityDefault.unmute.value);
+            Scribe_Values.Look(ref abilityValue.mute.value, "Mute", abilityDefault.mute.value);
+            Scribe_Values.Look(ref abilityValue.attenuate.value, "Attenuate", abilityDefault.attenuate.value);
+            Scribe_Values.Look(ref abilityValue.sample.value, "Sample", abilityDefault.sample.value);
+            Scribe_Values.Look(ref abilityValue.bootleg.value, "Bootleg", abilityDefault.bootleg.value);
+            Scribe_Values.Look(ref abilityValue.crosstalk.value, "Crosstalk", abilityDefault.crosstalk.value);
+            Scribe_Values.Look(ref abilityValue.resurrect.value, "Resurrect", abilityDefault.resurrect.value);
+            Scribe_Values.Look(ref abilityValue.stun.value, "Stun", abilityDefault.stun.value);
+            Scribe_Values.Look(ref abilityValue.hallowbound.value, "Hallowbound", abilityDefault.hallowbound.value);
+            
             Scribe_Values.Look(ref NullThrumUtility.descMode, "descMode", NullThrumDescriptionMode.DescriptionSimple);
         }
 
@@ -83,19 +81,8 @@ namespace OMW_Samhaphage
             logMutation = false;
 
             disableGeneBlacklist = false;
-            multSample = 0.5f;
-            multCompress = 0.1f;
-            multHarrow = 1.5f;
-            multRetune = 0.5f;
-            multCrosstalk = 0.5f;
-            multScrub = 0.5f;
-            multAttenuate = 1.0f;
-            multBootleg = 10.0f;
-
-            gainFlatten = 3.0f;
-            gainMute = 20.0f;
-            gainScrub = 1.5f;
-
+            abilityValue = new NullThrumAbilities();
+            abilityDefault = new NullThrumAbilities();            
             resonanceMax = 200f;
             NullThrumUtility.descMode = NullThrumDescriptionMode.DescriptionSimple;
         }
@@ -138,7 +125,7 @@ namespace OMW_Samhaphage
             TabDrawer.DrawTabs(tabRect, tabs);
 
             // Define a view rectangle that is taller than the window to enable scrolling.
-            float viewHeight = selectedTab == SettingsTab.GameBalance ? 1000f : 600f;
+            float viewHeight = selectedTab == SettingsTab.GameBalance ? 1800f : 600f;
             Rect viewRect = new Rect(0f, 0f, inRect.width - 30f, viewHeight);
 
             Widgets.BeginScrollView(tabRect, ref scrollPosition, viewRect);
@@ -181,7 +168,7 @@ namespace OMW_Samhaphage
                         }
                         Find.WindowStack.Add(new FloatMenu(options));
                     }
-                    listing.Label("<color=gray><size=10>Intro: Switches from Simple to Lore after 400 uses.\nSimple: Mechanical/Technical descriptions.\nLore: Flavor/In-universe descriptions.</size></color>");
+                    listing.Label("<color=gray><size=10>Simple: Mechanical/Technical descriptions.\nLore: Flavor/In-universe descriptions.</size></color>");
                     listing.GapLine();
 
                     listing.Gap(20f);
@@ -197,28 +184,36 @@ namespace OMW_Samhaphage
                     listing.Gap();
                     listing.Label($"Maximum Resonance Capacity: {settings.resonanceMax:F0}");
                     settings.resonanceMax = listing.Slider(settings.resonanceMax, 50f, 1000f);
-                    listing.GapLine();
-                    listing.Label("Ability Resonance Gene Multipliers".Colorize(Color.yellow));
-                    listing.Label("Adjust the resonance spend multiplier for specific abilities. It multiplies the base gene value.");           
-                    settings.multRetune = DrawMultiplierSlider(listing, NullThrumAbilityType.Retune, settings.multRetune);
-                    settings.multCompress = DrawMultiplierSlider(listing, NullThrumAbilityType.Compress, settings.multCompress);
-                    settings.multHarrow = DrawMultiplierSlider(listing, NullThrumAbilityType.Harrow, settings.multHarrow);
-                    settings.multCrosstalk = DrawMultiplierSlider(listing, NullThrumAbilityType.Crosstalk, settings.multCrosstalk);
-                    settings.multSample = DrawMultiplierSlider(listing, NullThrumAbilityType.Sample, settings.multSample);
-                    listing.Label("Adjust how resonance gained multiplier for specific abilities. It multiplies the base gene value.");
-                    settings.multScrub = DrawMultiplierSlider(listing, NullThrumAbilityType.Scrub, settings.multScrub);
-                    settings.multAttenuate =
-                        DrawMultiplierSlider(listing, NullThrumAbilityType.Attenuate, settings.multAttenuate);
-                    listing.Gap();
 
-                    listing.Label("Ability Resonance Flat Rate".Colorize(Color.yellow));
-                    listing.Label("Adjust the resonance spent from specific abilities. Flat rate.");
-                    settings.multBootleg =
-                        DrawMultiplierSlider(listing, NullThrumAbilityType.Bootleg, settings.multBootleg);
-                    listing.Label("Adjust the resonance gained from specific abilities. Flat rate.");
-                    settings.gainFlatten = DrawValueSlider(listing, NullThrumAbilityType.Flatten, settings.gainFlatten, 0f, 20f);
-                    settings.gainMute = DrawValueSlider(listing, NullThrumAbilityType.Mute, settings.gainMute, 0f, 100f);
-                    settings.gainScrub = DrawValueSlider(listing, NullThrumAbilityType.Scrub, settings.gainScrub, 0f, 10f);
+                    listing.GapLine();
+                    listing.Label("Resonance Gains (Credits)".Colorize(Color.yellow));
+                    listing.Label("Adjust resonance acquired from harvesting or sacrifices.");
+                    DrawValueSlider(listing, settings.abilityValue.flatten);
+                    DrawValueSlider(listing, settings.abilityValue.scrubCarcinoma);
+                    DrawValueSlider(listing, settings.abilityValue.mute);
+                    listing.Gap();
+                    DrawValueSlider(listing, settings.abilityValue.scrub);
+                    DrawValueSlider(listing, settings.abilityValue.attenuate);
+
+                    // infest is free
+                    // settings.abilityValue.infest.value = DrawValueSlider(listing, settings.abilityValue.infest);
+
+                    listing.GapLine();
+                    listing.Label("Resonance Costs (Debits)".Colorize(Color.yellow));
+                    listing.Label("Adjust the resonance spend (offset or multiplier) for specific abilities.");
+                    DrawValueSlider(listing, settings.abilityValue.unmute);
+                    DrawValueSlider(listing, settings.abilityValue.bootleg);
+                    DrawValueSlider(listing, settings.abilityValue.transpose);
+                    DrawValueSlider(listing, settings.abilityValue.stun);
+                    DrawValueSlider(listing, settings.abilityValue.resurrect);
+                    DrawValueSlider(listing, settings.abilityValue.enwomb);
+                    DrawValueSlider(listing, settings.abilityValue.hallowbound);
+                    listing.Gap();
+                    DrawValueSlider(listing, settings.abilityValue.retune);
+                    DrawValueSlider(listing, settings.abilityValue.compress);
+                    DrawValueSlider(listing, settings.abilityValue.crosstalk);
+                    DrawValueSlider(listing, settings.abilityValue.sample);
+                    DrawValueSlider(listing, settings.abilityValue.harrow);
                     break;
 
                 case SettingsTab.Debugging:
@@ -255,22 +250,13 @@ namespace OMW_Samhaphage
             Widgets.EndScrollView();
         }
 
-        private float DrawMultiplierSlider(Listing_Standard listing, NullThrumAbilityType abilityType, float value)
+        private void DrawValueSlider(Listing_Standard listing, NullThrumAbilityProps abilityProps)
         {
-            string label = NullThrumUtility.ToString(abilityType);
-            string desc = NullThrumUtility.DescriptionSimple(abilityType);
-            listing.Label($"{label}: {value:F2}");
+            string label = NullThrumUtility.ToString(abilityProps.abilityType);
+            string desc = $"{abilityProps.ToString()}. {NullThrumUtility.DescriptionSimple(abilityProps.abilityType)}";
+            listing.Label($"{label}: {abilityProps.value:F2}");
             listing.Label($"<size=10>    {desc}</size>");
-            return listing.Slider(value, 0f, 10f);
-        }
-
-        private float DrawValueSlider(Listing_Standard listing, NullThrumAbilityType abilityType, float value, float min, float max)
-        {
-            string label = NullThrumUtility.ToString(abilityType);
-            string desc = NullThrumUtility.DescriptionSimple(abilityType);
-            listing.Label($"{label}: {value:F2}");
-            listing.Label($"<size=10>    {desc}</size>");
-            return listing.Slider(value, min, max);
+            abilityProps.value = listing.Slider(abilityProps.value, abilityProps.min, abilityProps.max);
         }
 
         private void ExportGeneReport()

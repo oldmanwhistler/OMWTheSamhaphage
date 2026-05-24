@@ -10,10 +10,9 @@ namespace OMW_Samhaphage
     {        
         public SelectionRetune(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) { }
 
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Retune;
-
-        // More expensive because it is stealing genes
-        protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multRetune;
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.retune;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
+        protected override float ResonanceTotalMultiplier => AbilityProp.value;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
@@ -38,7 +37,9 @@ namespace OMW_Samhaphage
     public class PawnApplyRetune : NullThrumAbilityPawnOnly
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Retune;
+
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.retune;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {

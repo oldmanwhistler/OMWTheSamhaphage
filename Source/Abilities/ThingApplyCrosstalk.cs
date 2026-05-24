@@ -10,9 +10,10 @@ namespace OMW_Samhaphage
     {
         public SelectionCrosstalk(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) { }
 
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Crosstalk;
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.crosstalk;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
+        protected override float ResonanceTotalMultiplier => AbilityProp.value;
 
-        protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multCrosstalk;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
@@ -30,8 +31,9 @@ namespace OMW_Samhaphage
 
     public class ThingApplyCrosstalk : NullThrumAbilityPawnCorpse
     {
-        PawnApplyFlatten Flatten = new PawnApplyFlatten();       
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Crosstalk;
+        PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.crosstalk;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {

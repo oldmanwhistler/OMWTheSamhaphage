@@ -7,7 +7,8 @@ namespace OMW_Samhaphage
     {
         public abstract XenotypeDef TargetXenotype();
 
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Transpose;
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.transpose;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
 
         public override bool ApplyPawn(Pawn pawn, Pawn caster)
         {

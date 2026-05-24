@@ -17,6 +17,7 @@ namespace OMW_Samhaphage
 
         // Abstract methods
         public abstract NullThrumAbilityType AbilityType { get; }
+        public abstract NullThrumAbilityProps AbilityProp { get; }
 
         public string Name => NullThrumUtility.ToString(this.AbilityType);
 

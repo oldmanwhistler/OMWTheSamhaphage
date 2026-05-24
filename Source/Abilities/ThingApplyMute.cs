@@ -7,10 +7,12 @@ namespace OMW_Samhaphage
     public class ThingApplyMute : NullThrumAbilityPawnCorpse
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
-        private float ResonanceGainPerLevel => OMW_Mod.settings.gainMute;
-        private float MaxResonanceThreshold => OMW_Mod.settings.resonanceMax;
 
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Mute;
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.mute;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
+
+        private float ResonanceGainPerLevel => AbilityProp.value;
+        private float MaxResonanceThreshold => OMW_Mod.settings.resonanceMax;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {

@@ -10,10 +10,9 @@ namespace OMW_Samhaphage
     {        
         public SelectionCompress(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) { }
 
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Compress;
-
-        // More expensive because it is stealing genes
-        protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multCompress;
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.compress;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
+        protected override float ResonanceTotalMultiplier => AbilityProp.value;
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
@@ -36,8 +35,9 @@ namespace OMW_Samhaphage
     public class PawnApplyCompress : NullThrumAbilityPawnOnly
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Compress;
 
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.compress;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {
             return $"Harmonize {victim.LabelShort}'s genetic frequency, integrating their xenogenes into their endogenic sequence.";

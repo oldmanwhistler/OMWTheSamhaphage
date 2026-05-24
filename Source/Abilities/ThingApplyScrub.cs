@@ -9,10 +9,11 @@ namespace OMW_Samhaphage
     public class SelectionScrub : NullThrumSelectionGene
     {
         public SelectionScrub(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
-        
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Scrub;
-        // Cheap because it is destroying genes
-        protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multScrub;
+
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.scrub;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
+        protected override float ResonanceTotalMultiplier => AbilityProp.value;
+
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
@@ -39,7 +40,10 @@ namespace OMW_Samhaphage
     public class ThingApplyScrub : NullThrumAbilityPawnCorpse
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Scrub;
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.scrub;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
+
+        public NullThrumAbilityProps AbilityPropCarcinoma => OMW_Mod.settings.abilityValue.scrubCarcinoma;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {
@@ -48,7 +52,7 @@ namespace OMW_Samhaphage
 
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Scrub");
 
-        public static bool RemoveCarcinomas(Pawn victim, Pawn caster)
+        public bool RemoveCarcinomas(Pawn victim, Pawn caster)
         {
             Log.Debug($"Scrub::RemoveCarcinomas({victim.LabelShort}, {caster.LabelShort})");
 
@@ -69,7 +73,7 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            float amount = carcinomas.Count * OMW_Mod.settings.gainScrub;
+            float amount = carcinomas.Count * AbilityPropCarcinoma.value;
             ResonanceUtility.Incr("from removing carcinomas", caster, amount);
 
             foreach (Hediff carcinoma in carcinomas)

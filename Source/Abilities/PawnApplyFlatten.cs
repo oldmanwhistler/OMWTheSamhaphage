@@ -8,7 +8,8 @@ namespace OMW_Samhaphage
 {
     public class PawnApplyFlatten : NullThrumAbilityPawnOnly
     {
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Flatten;
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.flatten;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         public override string AbilityDescription(Pawn victim, Pawn caster) => $"Scour {victim.LabelShort}'s mind, removing negative memories and preparing them for genetic manipulation.";
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Flatten");
 
@@ -68,7 +69,7 @@ namespace OMW_Samhaphage
             Log.Debug($"Flatten - refreshing dirty graphics on {victim.LabelShort}");
             OMWGenes.Refresh(victim);
 
-            ResonanceUtility.Incr($"from flattening {victim.LabelShort}",  caster, OMW_Mod.settings.gainFlatten);
+            ResonanceUtility.Incr($"from flattening {victim.LabelShort}", caster, AbilityProp.value);
 
             Log.Debug($"DONE::Flatten::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             return true;

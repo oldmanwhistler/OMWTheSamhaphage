@@ -8,6 +8,7 @@ namespace OMW_Samhaphage
     {
         public abstract Texture2D Icon { get; }
 
+        public abstract NullThrumAbilityProps AbilityProp { get; }        
         public abstract NullThrumAbilityType AbilityType { get; }
 
         public string AbilityName => NullThrumUtility.ToString(this.AbilityType);

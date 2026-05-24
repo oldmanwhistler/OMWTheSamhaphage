@@ -12,7 +12,8 @@ namespace OMW_Samhaphage
         public abstract Verse.HediffDef TargetHediff { get; }    
         public abstract bool SacrificeCaster { get; }
 
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Resurrect;
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.resurrect;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
 
         private bool ApplyResurrect(Corpse corpse)
         {

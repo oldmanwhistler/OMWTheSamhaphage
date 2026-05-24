@@ -3,13 +3,33 @@ using Verse;
 
 namespace OMW_Samhaphage
 {
+    public enum NullThrumResourceType
+    {
+        ResourceTypeGene,
+        ResourceTypeHediff, 
+        ResourceTypePawn,
+        ResourceTypeCorpse,        
+        ResourceTypeTrait,
+        ResourceTypePsylink,
+        ResourceTypeCarcinoma,
+        ResourceTypeChangeXenotype,
+        ResourceTypeAbility
+    }
+
     public enum NullThrumResonanceType
     {
         // Selectors classes
         ResonanceTypeCredit,
         ResonanceTypeDebit,
-        // Not a selector class
-        ResonanceTypeOther
+        ResonanceTypeSacrificeVictim,
+        ResonanceTypeSacrificeCaster
+    }
+
+    public enum NullThrumMathType
+    {
+        MathTypeMultiplier,
+        MathTypeOffset,
+        MathTypeNone
     }
     public enum NullThrumAbilityType
     {
@@ -32,6 +52,193 @@ namespace OMW_Samhaphage
         Hallowbound
     }
 
+    public struct NullThrumAbilityProps
+    {
+        public NullThrumAbilityType abilityType;
+        public NullThrumResourceType resourceType;
+
+        public NullThrumResonanceType resonanceType;
+        public NullThrumMathType mathType;
+        public float value;
+        public float min;
+        public float max;
+
+        public NullThrumAbilityProps(NullThrumAbilityType abilityType, NullThrumResourceType
+            resourceType, NullThrumResonanceType resonanceType, NullThrumMathType mathType, float value)
+        {
+            this.resonanceType = resonanceType;
+            this.abilityType = abilityType;
+            this.resourceType = resourceType;
+            this.mathType = mathType;
+            this.value = value;
+            switch (this.resourceType)
+            {
+                case NullThrumResourceType.ResourceTypeTrait:
+                    this.min = 0f;
+                    this.max = 50f;
+                    break;
+                case NullThrumResourceType.ResourceTypePsylink:
+                    this.min = 0f;
+                    this.max = 50f;
+                    break;
+                default:
+                    this.min = 0f;
+                    this.max = 10f;
+                    break;
+            }
+        }
+
+        public override string ToString()
+        {
+            string ability = NullThrumUtility.ToString(abilityType);
+            string resonance = NullThrumUtility.ToString(resonanceType);
+            string resource = NullThrumUtility.ToString(resourceType);
+
+            switch(this.mathType)
+            {                
+                case NullThrumMathType.MathTypeMultiplier: 
+                    return $"{ability}: {value} x {resource} value resonance {resonance} per {resource}";
+                case NullThrumMathType.MathTypeOffset: 
+                    return $"{ability}: {value} resonance {resonance} per {resource}";
+                case NullThrumMathType.MathTypeNone: 
+                    return $"{ability}: {resource}";
+                default:
+                    Log.Error($"Unknown MathType in NullThrumAbilityProps.ToString()");
+                    return $"{ability}";
+            }
+        }
+    }
+
+    public struct NullThrumAbilities
+    {
+        // flat gain: apply scoured mind and silent servitude once per pawn
+        public NullThrumAbilityProps flatten = new NullThrumAbilityProps(
+            NullThrumAbilityType.Flatten,
+            NullThrumResourceType.ResourceTypePawn,
+            NullThrumResonanceType.ResonanceTypeCredit, 
+            NullThrumMathType.MathTypeOffset, 
+            3.0f);
+
+        // multiplier gain, select: destroy a disabled gene
+        public NullThrumAbilityProps scrub = new NullThrumAbilityProps(
+            NullThrumAbilityType.Scrub,
+            NullThrumResourceType.ResourceTypeGene,
+            NullThrumResonanceType.ResonanceTypeCredit,
+            NullThrumMathType.MathTypeMultiplier, 1.5f);
+
+        public NullThrumAbilityProps scrubCarcinoma = new NullThrumAbilityProps(
+            NullThrumAbilityType.Scrub,
+            NullThrumResourceType.ResourceTypeCarcinoma,
+            NullThrumResonanceType.ResonanceTypeCredit,
+            NullThrumMathType.MathTypeOffset, 3.0f);
+
+        // multiplier cost, select: move single xenogene to endogene
+        public NullThrumAbilityProps retune = new NullThrumAbilityProps(
+            NullThrumAbilityType.Retune,
+            NullThrumResourceType.ResourceTypeGene,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeMultiplier, 0.5f);
+        // multiplier cost, all: moves all xenogenes to endogenes
+        public NullThrumAbilityProps compress = new NullThrumAbilityProps(
+            NullThrumAbilityType.Compress,
+            NullThrumResourceType.ResourceTypeGene,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeMultiplier, 0.1f);
+        // no control: randomly exchange xenogenes with victim
+        public NullThrumAbilityProps crosstalk = new NullThrumAbilityProps(
+            NullThrumAbilityType.Crosstalk,
+            NullThrumResourceType.ResourceTypeGene,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeMultiplier, 0.4f);
+
+        // multiplier cost: steal cosmetic gene
+        public NullThrumAbilityProps sample = new NullThrumAbilityProps(
+            NullThrumAbilityType.Sample,
+            NullThrumResourceType.ResourceTypeGene,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeMultiplier, 0.3f);
+        // multiplier cost: steal gene
+        public NullThrumAbilityProps harrow = new NullThrumAbilityProps(
+            NullThrumAbilityType.Harrow,
+            NullThrumResourceType.ResourceTypeGene,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeMultiplier, 2.0f);
+
+        // kills victim while converting genes to resonance
+        public NullThrumAbilityProps attenuate = new NullThrumAbilityProps(
+            NullThrumAbilityType.Attenuate,
+            NullThrumResourceType.ResourceTypeGene,
+            NullThrumResonanceType.ResonanceTypeCredit,
+            NullThrumMathType.MathTypeMultiplier, 2.0f);
+
+        // flat cost, psylink: add psylink
+        public NullThrumAbilityProps unmute = new NullThrumAbilityProps(
+            NullThrumAbilityType.Unmute,
+            NullThrumResourceType.ResourceTypePsylink,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeOffset, 30.0f);
+        // flat gain, psylink: destroy psylink
+        public NullThrumAbilityProps mute = new NullThrumAbilityProps(
+            NullThrumAbilityType.Mute,
+            NullThrumResourceType.ResourceTypePsylink,
+            NullThrumResonanceType.ResonanceTypeCredit,
+            NullThrumMathType.MathTypeOffset, 20.0f);
+
+        // trait: steal a trait from victim
+        public NullThrumAbilityProps bootleg = new NullThrumAbilityProps(
+            NullThrumAbilityType.Bootleg,
+            NullThrumResourceType.ResourceTypeTrait,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeOffset, 15.0f);
+
+        // flat cost: change xenotype
+        public NullThrumAbilityProps transpose = new NullThrumAbilityProps(
+            NullThrumAbilityType.Transpose,
+            NullThrumResourceType.ResourceTypeChangeXenotype,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeOffset, 1.0f);
+
+        // flat cost: change xenotype
+        public NullThrumAbilityProps hallowbound = new NullThrumAbilityProps(
+            NullThrumAbilityType.Hallowbound,
+            NullThrumResourceType.ResourceTypePawn,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeOffset, 1.0f);
+
+        // flat cost, kills pawn: parasite infestation
+        public NullThrumAbilityProps infest = new NullThrumAbilityProps(
+            NullThrumAbilityType.Infest,
+            NullThrumResourceType.ResourceTypePawn,
+            NullThrumResonanceType.ResonanceTypeSacrificeVictim,
+            NullThrumMathType.MathTypeNone, 0.0f);
+
+        // flat cost: stun enemy
+        public NullThrumAbilityProps stun = new NullThrumAbilityProps(
+            NullThrumAbilityType.Stun,
+            NullThrumResourceType.ResourceTypeAbility,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeOffset, 1.0f);
+
+        // flat cost: resurrect a corpse
+        public NullThrumAbilityProps resurrect = new NullThrumAbilityProps(
+            NullThrumAbilityType.Resurrect,
+            NullThrumResourceType.ResourceTypeCorpse,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeOffset, 1.0f);
+
+        // sacrifice caster, flat cost: change xenotype
+        public NullThrumAbilityProps enwomb = new NullThrumAbilityProps(
+            NullThrumAbilityType.Enwomb,
+            NullThrumResourceType.ResourceTypePawn,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeOffset, 1.0f);
+
+        public NullThrumAbilities()
+        {
+        }
+
+    }
+
     public enum NullThrumDescriptionMode
     {
         DescriptionSimple,
@@ -43,7 +250,7 @@ namespace OMW_Samhaphage
     {
         public static NullThrumDescriptionMode descMode = NullThrumDescriptionMode.DescriptionSimple;
 
-         public static string ToString(NullThrumAbilityType ability)
+        public static string ToString(NullThrumAbilityType ability)
         {
             switch (ability)
             {
@@ -64,7 +271,42 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Resurrect: return "Resurrect";
                 case NullThrumAbilityType.Stun: return "Stun";
                 case NullThrumAbilityType.Hallowbound: return "Hallowbound";
-                default: return "Unknown";
+                default: 
+                    Log.Error($"Unknown ability type in NullThrumUtility.ToString({ability})");
+                    return "Unknown";
+            }
+        }
+
+        public static string ToString(NullThrumResourceType resource)
+        {
+            switch (resource)
+            {
+                case NullThrumResourceType.ResourceTypeGene: return "Gene";
+                case NullThrumResourceType.ResourceTypeHediff: return "Hediff";
+                case NullThrumResourceType.ResourceTypePawn: return "Pawn";
+                case NullThrumResourceType.ResourceTypeCorpse: return "Corpse";                
+                case NullThrumResourceType.ResourceTypeCarcinoma: return "Carcinoma";
+                case NullThrumResourceType.ResourceTypeTrait: return "Trait";
+                case NullThrumResourceType.ResourceTypePsylink: return "Psylink";
+                case NullThrumResourceType.ResourceTypeChangeXenotype: return "Xenotype";
+                case NullThrumResourceType.ResourceTypeAbility: return "Ability";
+                default:
+                    Log.Error($"Unknown resource type in NullThrumUtility.ToString({resource})");
+                    return "Unknown";
+            }
+        }
+
+        public static string ToString(NullThrumResonanceType resonance)
+        {
+            switch (resonance)
+            {
+                case NullThrumResonanceType.ResonanceTypeCredit: return "Credit";
+                case NullThrumResonanceType.ResonanceTypeDebit: return "Debit";
+                case NullThrumResonanceType.ResonanceTypeSacrificeVictim: return "SacrificeVictim";
+                case NullThrumResonanceType.ResonanceTypeSacrificeCaster: return "SacrificeCaster";
+                default:
+                    Log.Error($"Unknown resonance type in NullThrumUtility.ToString({resonance})");
+                    return "Unknown";
             }
         }
 
@@ -89,7 +331,9 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Resurrect: return NullThrumResonanceType.ResonanceTypeDebit;
                 case NullThrumAbilityType.Stun: return NullThrumResonanceType.ResonanceTypeDebit;
                 case NullThrumAbilityType.Hallowbound: return NullThrumResonanceType.ResonanceTypeDebit;
-                default: return NullThrumResonanceType.ResonanceTypeOther;
+                default:
+                    Log.Error($"Unknown ability type in NullThrumUtility.ResonanceType({ability})");                                                                
+                    return NullThrumResonanceType.ResonanceTypeCredit;
             }
         }         
 
@@ -123,7 +367,7 @@ namespace OMW_Samhaphage
                         $"{victim} loses all negative memories, becomes a Psychopath, and is infected with a hediff that reduces Will and Resistance.";
                 case NullThrumAbilityType.Scrub:
                     return
-                        $"{caster} gains resonance from consuming {victim}'s carcinomas. {caster} may selectively destroys overridden (disabled) genes to gain resonance.";
+                        $"{caster} gains resonance from consuming {victim}'s carcinomas. {caster} may selectively destroy overridden (disabled) genes to gain resonance.";
                 case NullThrumAbilityType.Retune:
                     return
                         $"{caster} spends resonance to integrate selected xenogenes into their permanent endogenic sequence.";
@@ -160,6 +404,7 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Hallowbound:
                     return $"Transposes the target into a Hallowbound.";
                 default:
+                    Log.Error($"Unknown ability type in NullThrumUtility.DescriptionSimple({ability})");
                     return "Unknown ability type.";
             }
         }
@@ -221,6 +466,7 @@ namespace OMW_Samhaphage
                     return
                         $"{caster} performs the ultimate act of biological perversion, transforming {victim} into a Hallowbound. {victim} becomes an infiltrator clad in stolen skin, a perfected servant of the hivemind.";
                 default:
+                    Log.Error($"Unknown ability type in NullThrumUtility.DescriptionLore({ability})");
                     return "An unknown ability of the Null-Thrum.";
             }
         }

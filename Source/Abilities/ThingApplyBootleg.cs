@@ -10,9 +10,9 @@ namespace OMW_Samhaphage
     {
         public SelectionBootleg(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) { }
 
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Bootleg;
-        // Traits are spiritually heavy; stealing them requires significant resonance.
-        protected override float ResonanceTotalMultiplier => OMW_Mod.settings.multBootleg;
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.bootleg;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
+        protected override float ResonanceTotalMultiplier => AbilityProp.value;
 
         protected override List<Trait> TraitsToSelectFrom(Pawn source, Pawn dest)
         {
@@ -40,7 +40,8 @@ namespace OMW_Samhaphage
     public class ThingApplyBootleg : NullThrumAbilityPawnCorpse
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Bootleg;
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.bootleg;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {

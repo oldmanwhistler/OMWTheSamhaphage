@@ -6,9 +6,9 @@ namespace OMW_Samhaphage
 {
     public class PawnApplyUnmute : NullThrumAbilityPawnOnly
     {
-        private const float ResonanceCost = 30f;
-
-        public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Unmute;
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.unmute;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
+        private float ResonanceCost => AbilityProp.value;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {
