@@ -13,7 +13,7 @@
     <description>They have seen the true nature of the Samhaphage and the value of a single human life has withered away. This gene marks those whose hearts have 'gone silent.' They can watch a friend fall or a stranger burn with the same detached curiosity one might feel watching a sunset. They are not cruel because cruelty requires an understanding of pain. They are simply empty.
     </description>
       <iconPath>UI/Icons/Genes/ScouredMind</iconPath>
-    <displayOrderInCategory>1</displayOrderInCategory>
+    <displayOrderInCategory>100</displayOrderInCategory>
     <biostatCpx>1</biostatCpx>
     <biostatMet>-1</biostatMet>
     <suppressedTraits>
@@ -30,6 +30,19 @@
         <def>Psychopath</def>
       </li>
     </forcedTraits>
+    <!-- Applying this gene was crashing to desktop when the victim had a conflicting gene -->
+    <exclusionTags>
+      <li>KindInstinct</li>
+      <li>ViolenceDisabled</li>
+      <li MayRequire="obsidiaexpansion.xenos.drakonids">OE_DrakonidsGreed</li>              
+      <li MayRequire="jxw.genefortraits">Gene_Trait_BodyPurist_0</li>
+      <li MayRequire="jxw.genefortraits">Gene_Trait_Greedy_0</li>
+      <li MayRequire="jxw.genefortraits">Gene_Trait_Kind_0</li>
+      <li MayRequire="jxw.genefortraits">Gene_Trait_Gourmand_0</li>
+      <li MayRequire="jxw.genefortraits">Gene_Trait_Jealous_0</li>
+      <li MayRequire="jxw.genefortraits">Gene_Trait_Pyromaniac_0</li>
+      <li MayRequire="jxw.genefortraits">Gene_Trait_TorturedArtist_0</li>
+    </exclusionTags>
   </GeneDef>
 
   <GeneDef>
