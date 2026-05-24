@@ -58,26 +58,6 @@ namespace OMW_Samhaphage
             return metabolism;
         }
 
-        public static void RemoveDisabledGenes(Pawn pawn)
-        {
-            if (pawn?.genes == null) return;
-
-            List<Gene> genes = pawn.genes.GenesListForReading;
-
-            int count = 0;
-            // We start at the last index and move toward 0
-            for (int i = genes.Count - 1; i >= 0; i--)
-            {
-                Gene currentGene = genes[i];
-                if (!pawn.genes.HasActiveGene(currentGene.def))
-                {
-                    count++;
-                    pawn.genes.RemoveGene(currentGene);
-                }
-            }
-            Log.Debug($"{pawn.LabelShort}.RemoveDisabledGenes: Removed {count} disabled genes");
-        }
-
         private static void PrependXenotypeGenesToEndogenes(Pawn pawn, XenotypeDef xenotype)
         {
             List<GeneDef> genesToAdd = xenotype.AllGenes;
