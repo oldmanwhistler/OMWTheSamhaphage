@@ -38,8 +38,9 @@ namespace OMW_Samhaphage
 
             if (!victim.genes.HasActiveGene(OMW_GeneDefOf.OMW_ScouredMind) && (victim.genes != null))
             {
-                Log.Debug($"Flatten - adding Scoured Mind to {victim.LabelShort}");                
-                victim.genes.AddGene(OMW_GeneDefOf.OMW_ScouredMind, xenogene: false);
+                Log.Debug($"Flatten - adding Scoured Mind to {victim.LabelShort}");           
+                // have to make it a xenogene in case there are conflicting genes that effect suppressed traits
+                victim.genes.AddGene(OMW_GeneDefOf.OMW_ScouredMind, xenogene: true);
                 Log.Debug($"Flatten - done adding Scoured Mind to {victim.LabelShort}");
             }
 
@@ -106,17 +107,6 @@ namespace OMW_Samhaphage
             {
                 reason = $"{victim.LabelShort} is not humanlike.";
                 return false;
-            }
-
-            // Only care about SilentServitude if they don't have flatten
-            // This might not matter and just be a left-over when I was first coding it.
-            if (!OMWGenes.HasScouredMind(victim))
-            {
-                if (victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_SilentServitude))
-                {
-                    reason = $"{victim.LabelShort} is affected by Silent Servitude.";
-                    return false;
-                }
             }
 
             if (victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
