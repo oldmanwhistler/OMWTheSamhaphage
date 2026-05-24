@@ -12,9 +12,10 @@ namespace OMW_Samhaphage
         public override string AbilityDescription(Pawn victim, Pawn caster) => $"Scour {victim.LabelShort}'s mind, removing negative memories and preparing them for genetic manipulation.";
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Flatten");
 
-        private static void PurgeNegativeMemories(Pawn pawn)
+        private static void PurgeNegativeMemories(Pawn victim)
         {
-            var memoryHandler = pawn?.needs?.mood?.thoughts?.memories;
+            Log.Debug($"Flatten::START::PurgeNegativeMemories({victim.LabelShort})");
+            var memoryHandler = victim?.needs?.mood?.thoughts?.memories;
             if (memoryHandler == null) return;
 
             List<Thought_Memory> memories = memoryHandler.Memories;
@@ -27,35 +28,48 @@ namespace OMW_Samhaphage
                     memoryHandler.RemoveMemory(memories[i]);
                 }
             }
+            Log.Debug($"Flatten::DONE::PurgeNegativeMemories({victim.LabelShort})");
         }
 
         public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
+            Log.Debug($"START::Flatten::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             if (victim == null || caster == null) return false;
 
-            if (!victim.genes.HasActiveGene(OMW_GeneDefOf.OMW_ScouredMind))
+            if (!victim.genes.HasActiveGene(OMW_GeneDefOf.OMW_ScouredMind) && (victim.genes != null))
             {
+                Log.Debug($"Flatten - adding Scoured Mind to {victim.LabelShort}");                
                 victim.genes.AddGene(OMW_GeneDefOf.OMW_ScouredMind, xenogene: false);
+                Log.Debug($"Flatten - done adding Scoured Mind to {victim.LabelShort}");
             }
 
             if (victim.InMentalState)
             {
+                Log.Debug($"Flatten - about to remove mental state from {victim.LabelShort}");
                 victim.mindState.mentalStateHandler.CurState.RecoverFromState();
+                Log.Debug($"Flatten - done remove mental state from {victim.LabelShort}");
             }
 
-            // OMW_SilentServitude prevents repeated calls to flatten
-            Hediff hediff_Flatten = HediffMaker.MakeHediff(OMW_HediffDefOf.OMW_SilentServitude, caster);            
-            victim.health.AddHediff(hediff_Flatten);
+            if (!victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_SilentServitude))
+            {
+                Log.Debug($"Flatten - {victim.LabelShort} is getting Silent Servitude hediff");
+                // OMW_SilentServitude prevents repeated calls to flatten
+                Hediff hediff_Flatten = HediffMaker.MakeHediff(OMW_HediffDefOf.OMW_SilentServitude, caster);            
+                victim.health.AddHediff(hediff_Flatten);
+                Log.Debug($"Flatten - {victim.LabelShort} done Silent Servitude hediff");
+            }
 
             PurgeNegativeMemories(victim);
 
+            Log.Debug($"Flatten - adding Unstable Mutation Minor to {victim.LabelShort}");
             victim.genes.AddGene(OMW_GeneDefOf.OMW_UnstableMutationMinor, xenogene: true);
 
-            OMWGenes.RemoveDisabledGenes(victim);
+            Log.Debug($"Flatten - refreshing dirty graphics on {victim.LabelShort}");
             OMWGenes.Refresh(victim);
 
             ResonanceUtility.Incr($"from flattening {victim.LabelShort}",  caster, OMW_Mod.settings.gainFlatten);
 
+            Log.Debug($"DONE::Flatten::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             return true;
         }
 

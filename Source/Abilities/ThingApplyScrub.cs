@@ -50,6 +50,8 @@ namespace OMW_Samhaphage
 
         public static bool RemoveCarcinomas(Pawn victim, Pawn caster)
         {
+            Log.Debug($"Scrub::RemoveCarcinomas({victim.LabelShort}, {caster.LabelShort})");
+
             HediffDef hediffDef = HediffDefOf.Carcinoma;
 
             List<Hediff> carcinomas = new List<Hediff>();
@@ -85,6 +87,7 @@ namespace OMW_Samhaphage
         /// </summary>
         public bool ApplyPawn(Pawn victim, Pawn caster, System.Action onComplete)
         {
+            Log.Debug($"START::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             if (victim == null || caster == null) return false;
 
             SelectionScrub selector = new SelectionScrub(caster, victim, victim);
@@ -98,12 +101,13 @@ namespace OMW_Samhaphage
 
             if (selector.genes.Count == 0)
             {
+                Log.Debug($"DONE1::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
                 // If no genes to scrub, just gain the carcinoma resonance and finish.
                 onComplete?.Invoke();
                 return false;
             }
 
-            Log.Debug($"Going to open scrub for {victim.LabelShort}");
+            Log.Debug($"Scrub::Going to open scrub for {victim.LabelShort}");
 
             bool value = false;
             Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, selectedList =>
@@ -121,8 +125,10 @@ namespace OMW_Samhaphage
                 {
                     value = true;
                 }
+                Log.Debug($"DONE2::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             }, onComplete));
             
+            Log.Debug($"DONE3::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             return value;
         }
 

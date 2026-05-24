@@ -28,7 +28,7 @@ namespace OMW_Samhaphage
 
     public class ThingApplyAttenuate : NullThrumAbilityPawnCorpse
     {
-        PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        private SelectionAttenuate selector = null;
         public override NullThrumAbilityType AbilityType => NullThrumAbilityType.Attenuate;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
@@ -40,12 +40,13 @@ namespace OMW_Samhaphage
 
         public SelectionAttenuate CanApplyAttenuate(Pawn victim, Pawn caster)
         {
-            SelectionAttenuate selector = new SelectionAttenuate(caster, victim, caster);
+            if (selector != null) return selector;
+            selector = new SelectionAttenuate(caster, victim, caster);
             if (selector.genes.Count == 0)
             {
                 Messages.Message($"{victim.LabelShort} has no genes that can be Attenuated.", MessageTypeDefOf.RejectInput);
                 return null;
-            }
+            }            
             return selector;
         }
 
@@ -65,12 +66,7 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return false;
 
-            if (!OMWGenes.HasScouredMind(victim))
-            {
-                Flatten.ApplyPawn(victim, caster);
-            }
-
-            SelectionAttenuate selector = CanApplyAttenuate(victim, caster);
+            if (selector == null) selector = CanApplyAttenuate(victim, caster);
             if (selector == null) return false;
 
             bool value = false;
@@ -98,7 +94,7 @@ namespace OMW_Samhaphage
 
             Pawn victim = corpse.InnerPawn;
 
-            SelectionAttenuate selector = CanApplyAttenuate(victim, caster);
+            if (selector == null) selector = CanApplyAttenuate(victim, caster);
             if (selector == null) return false;
 
             string msg = $"{victim.LabelShort} corpse was destroyed after being attenuated for their resonance.";
@@ -126,14 +122,8 @@ namespace OMW_Samhaphage
         {
             reason = "unknown reason";
 
-            if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason))
+            if (CanApplyAttenuate(victim, caster) == null)
             {
-                return false;
-            }
-
-            if (victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
-            {
-                reason = $"{victim.LabelShort} is affected by Genetic Dissonance";
                 return false;
             }
 
@@ -155,6 +145,11 @@ namespace OMW_Samhaphage
                 reason = $"{corpse.InnerPawn.LabelShort} is not humanlike.";
                 return false;
             }
+
+            if (CanApplyAttenuate(corpse.InnerPawn, caster) == null)
+            {
+                return false;
+            }            
 
             return true;
         }

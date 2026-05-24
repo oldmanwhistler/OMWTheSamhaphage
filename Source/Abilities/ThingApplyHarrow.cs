@@ -56,6 +56,7 @@ namespace OMW_Samhaphage
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Harrow");
         public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
+            Log.Debug($"START::Harrow::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             if (victim == null || caster == null) return false;
 
             if (!OMWGenes.HasScouredMind(victim))
@@ -70,6 +71,7 @@ namespace OMW_Samhaphage
 
         private void OpenHarrowWindow(Pawn victim, Pawn caster)
         {
+            Log.Debug($"START:Harrow::OpenHarrowWindow({victim.LabelShort}, {caster.LabelShort})");
             SelectionHarrow selector = new SelectionHarrow(caster, victim, caster);
             if (selector.genes.Count == 0)
             {
@@ -99,13 +101,13 @@ namespace OMW_Samhaphage
                     selector.ApplyDissonance(victim, caster);
                 }
             }));
+            Log.Debug($"DONE::Harrow::OpenHarrowWindow({victim.LabelShort}, {caster.LabelShort})");
         }
 
         public override bool ApplyCorpse(Corpse corpse, Pawn caster)
         {
             if (corpse == null || caster == null) return false;
             if (corpse.InnerPawn == null) return false;
-
             return ApplyPawn(corpse.InnerPawn, caster);
         }
 

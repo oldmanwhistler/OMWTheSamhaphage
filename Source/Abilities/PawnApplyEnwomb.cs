@@ -117,7 +117,7 @@ namespace OMW_Samhaphage
             hediff_Pregnant.SetParents(mother, father, null);
             mother.health.AddHediff(hediff_Pregnant);
 
-            if (TargetHediff != null)
+            if (TargetHediff != null && !mother.health.hediffSet.HasHediff(TargetHediff))
             {
                 mother.health.AddHediff(TargetHediff);
             }

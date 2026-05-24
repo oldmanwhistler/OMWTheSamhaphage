@@ -21,6 +21,7 @@ namespace OMW_Samhaphage
 
         public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
+            Log.Debug($"START::Mute::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             if (victim == null || caster == null) return false;
 
             // Harvest abilities require the mind to be scoured first to remove identity interference.
@@ -50,12 +51,16 @@ namespace OMW_Samhaphage
                 Log.Debug($"Muted {victim.LabelShort}: {levelsTaken} psylink levels harvested.");
                 
                 // Apply Genetic Dissonance to prevent repeated harvesting from the same vessel in a short time.
-                Hediff hediffDissonance = HediffMaker.MakeHediff(OMW_HediffDefOf.OMW_GeneticDissonance, caster);
-                victim.health.AddHediff(hediffDissonance);
-                
+                if (!victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
+                {
+                    Hediff hediffDissonance = HediffMaker.MakeHediff(OMW_HediffDefOf.OMW_GeneticDissonance, caster);
+                    victim.health.AddHediff(hediffDissonance);
+                }
+                Log.Debug($"DONE::Mute::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
                 return true;
             }
 
+            Log.Debug($"DONE::Mute::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             return false;
         }
 
