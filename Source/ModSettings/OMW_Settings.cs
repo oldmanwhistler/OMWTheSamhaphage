@@ -20,6 +20,7 @@ namespace OMW_Samhaphage
         public bool logHediffs = false;
         public bool logJobs = false;
         public bool logUI = false;
+        public bool logMutation = false;
 
         public bool disableGeneBlacklist = false;
         public float multSample = 0.5f;
@@ -48,6 +49,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref logHediffs, "logHediffs", false);
             Scribe_Values.Look(ref logJobs, "logJobs", false);
             Scribe_Values.Look(ref logUI, "logUI", false);
+            Scribe_Values.Look(ref logMutation, "logMutation", false);
 
             Scribe_Values.Look(ref disableGeneBlacklist, "disableGeneBlacklist", false);
 
@@ -78,6 +80,7 @@ namespace OMW_Samhaphage
             logHediffs = false;
             logJobs = false;
             logUI = false;
+            logMutation = false;
 
             disableGeneBlacklist = false;
             multSample = 0.5f;
@@ -245,6 +248,7 @@ namespace OMW_Samhaphage
                     listing.CheckboxLabeled("Log Hediffs", ref settings.logHediffs, "Traces for technical Hediff components (e.g. ZeroWill).");
                     listing.CheckboxLabeled("Log Jobs", ref settings.logJobs, "Traces for the custom 'Approach and Interact' jobs.");
                     listing.CheckboxLabeled("Log UI", ref settings.logUI, "Traces for the UIs added by the mod.");
+                    listing.CheckboxLabeled("Log Mutation", ref settings.logMutation, "Traces for genes getting added by the Random Mutation genes.");
                     break;
             }
             listing.End();

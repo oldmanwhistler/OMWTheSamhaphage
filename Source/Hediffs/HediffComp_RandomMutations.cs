@@ -26,6 +26,7 @@ namespace OMW_Samhaphage
     }
     public class HediffComp_RandomMutation : HediffComp
     {
+        static Logger Log = new Logger("Mutation");
         private HediffCompProperties_RandomMutation Props => (HediffCompProperties_RandomMutation)props;
 
         public List<GeneDef> geneDefs = new List<GeneDef>();
@@ -61,6 +62,7 @@ namespace OMW_Samhaphage
 
                     if (gene != null)
                     {
+                        Log.Debug($"CompPostTick: add gene {gene.defName}");
                         this.geneDefs.Add(gene);
                         this.parent.pawn.genes?.AddGene(gene, true);
                     }
@@ -80,6 +82,7 @@ namespace OMW_Samhaphage
                             Gene gene = this.parent.pawn.genes?.GetGene(this.geneDefs[i]);
                             if (gene != null)
                             {
+                                Log.Debug($"CompPostTick: remove gene {gene.Label}");
                                 this.parent.pawn.genes?.RemoveGene(gene);
                             }
                         }
@@ -104,6 +107,7 @@ namespace OMW_Samhaphage
                     Gene gene = this.parent.pawn.genes?.GetGene(this.geneDefs[i]);
                     if (gene != null)
                     {
+                        Log.Debug($"CompPostPostRemoved: remove gene {gene.Label}");
                         this.parent.pawn.genes?.RemoveGene(gene);
                     }
                 }
