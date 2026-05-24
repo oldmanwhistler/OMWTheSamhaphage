@@ -257,3 +257,6 @@ __pycache__/
 
 # Assemblies
 1.6/Assemblies/
+
+# Image Compression
+*.dds.zstd
