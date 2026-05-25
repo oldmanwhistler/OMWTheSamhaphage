@@ -6,7 +6,7 @@ namespace OMW_Samhaphage
 {
     public abstract class NullThrumSelectionBase
     {
-        protected static Logger Log = new Logger("Abilities");
+        protected static Logger Log = new Logger("Selection");
         protected Pawn caster;
        
         protected NullThrumSelectionBase(Pawn caster, Pawn source, Pawn dest)
@@ -36,7 +36,12 @@ namespace OMW_Samhaphage
 
         public float SelectionMaxCost()
         {
-            return ResonanceUtility.Total(this.caster);
+            if (this.caster == null) return 0f;
+            if (this.AbilityProp.resonanceType == NullThrumResonanceType.ResonanceTypeDebit)
+                return ResonanceUtility.Total(this.caster);
+            if (this.AbilityProp.resonanceType == NullThrumResonanceType.ResonanceTypeCredit)
+                return OMW_Mod.settings.resonanceMax - ResonanceUtility.Total(this.caster);
+            return 0f;
         }
     }
 }

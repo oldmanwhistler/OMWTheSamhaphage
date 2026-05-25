@@ -22,6 +22,7 @@ namespace OMW_Samhaphage
         public bool logJobs = false;
         public bool logUI = false;
         public bool logMutation = false;
+        public bool logSelection = false;
 
         public bool disableGeneBlacklist = false;
         
@@ -43,6 +44,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref logJobs, "logJobs", false);
             Scribe_Values.Look(ref logUI, "logUI", false);
             Scribe_Values.Look(ref logMutation, "logMutation", false);
+            Scribe_Values.Look(ref logMutation, "logSelection", false);
 
             Scribe_Values.Look(ref disableGeneBlacklist, "disableGeneBlacklist", false);
             Scribe_Values.Look(ref resonanceMax, "ResonanceMax", 200f);
@@ -79,6 +81,7 @@ namespace OMW_Samhaphage
             logJobs = false;
             logUI = false;
             logMutation = false;
+            logSelection = false;
 
             disableGeneBlacklist = false;
             abilityValue = new NullThrumAbilities();
@@ -244,6 +247,7 @@ namespace OMW_Samhaphage
                     listing.CheckboxLabeled("Log Jobs", ref settings.logJobs, "Traces for the custom 'Approach and Interact' jobs.");
                     listing.CheckboxLabeled("Log UI", ref settings.logUI, "Traces for the UIs added by the mod.");
                     listing.CheckboxLabeled("Log Mutation", ref settings.logMutation, "Traces for genes getting added by the Random Mutation genes.");
+                    listing.CheckboxLabeled("Log Selection", ref settings.logSelection, "Traces for genes selector.");
                     break;
             }
             listing.End();

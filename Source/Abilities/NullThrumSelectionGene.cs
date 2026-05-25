@@ -27,7 +27,15 @@ namespace OMW_Samhaphage
 
         protected float GeneValue(Gene gene)
         {
-            return ResonanceUtility.GeneResonanceValue(gene.def) * this.ResonanceTotalMultiplier;
+            Log.Error(
+                $"{Name}::GeneValue() called with a null gene");
+            if (gene == null) return 0f;
+            Log.Debug(
+                $"{Name}::GeneValue({gene.Label}) has archite: {gene.def.biostatArc}, complexity: {gene.def.biostatCpx}, metabolism: {gene.def.biostatMet}");
+            float value = ResonanceUtility.GeneResonanceValue(gene.def);
+            float final = value * this.ResonanceTotalMultiplier;
+            Log.Debug($"{Name}::GeneValue({gene.Label}) = {final}   ({value} * {this.ResonanceTotalMultiplier})");
+            return final;
         }
 
         protected bool GeneIsWorthless(Gene gene)
@@ -43,8 +51,10 @@ namespace OMW_Samhaphage
         // GenesPlus is a wrapper class that has useful info for the UI, such as resonance value and conflict info
         private void SetGenesToSelectFromPlus(Pawn source, Pawn dest)
         {
+            Log.Debug($"{Name}::SetGenesToSelectFromPlus({source.LabelShort}, {dest.LabelShort})");
             List<Gene> genesToSelectFrom = this.GenesToSelectFrom(source, dest);
             List<GeneDef> conflictDefs = this.ConflictGeneDefs(source, dest) ?? new List<GeneDef>();
+            Log.Debug($"{Name}:: genesToSelectFrom.Count = {genesToSelectFrom.Count}, conflictDefs.Count = {conflictDefs.Count}");
             this.genes = GenePlusUtility.ConvertToGenePlus(source, genesToSelectFrom, conflictDefs);
             foreach (GenePlus gene in this.genes)
             {
