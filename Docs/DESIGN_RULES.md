@@ -497,6 +497,26 @@ Narrative: We drop our shields and let the chaos of our frequencies collide. In 
 
 Sensory: A deafening, unpredictable screech of genetic feedback that vibrates the teeth and causes the eyes to twitch. The features of both pawns blur and shift erratically—glitching in and out of alignment—until a final, concussive "pop" fixes the new, scrambled traits into place.
 
+### CROSSFADE (Thematic Concept)
+
+Thematic: A seamless transition of identity. Crossfade is the art of simultaneous biological displacement: as one frequency is lowered in the host, another is raised to take its place, resulting in a perfect swap of genetic traits between two living vessels.
+
+Action: Two subjects are locked in a sympathetic vibration loop; the Samhaphage modulates their internal "mix," causing a specific trait from the target to slide into the user while the user's corresponding genetic "track" slides into the target.
+
+Narrative: Symmetry is the soul of the Absolute Frequency. Why merely take when you can rebalance? We slide the faders of your existence, ensuring that no data is lost—only relocated to a more appropriate instrument.
+
+Sensory: An overlapping, rhythmic pulsing that feels like two heartbeats trying to sync up, accompanied by a dizzying "panning" sensation where the subjects feel their very essence sliding sideways into one another.
+
+### NULLIFY (Thematic Concept)
+
+Thematic: The absolute cancellation of biological expression. In the eyes of the Samhaphage, a pawn's unique genetic traits are unnecessary deviations—erratic spikes of noise that clutter the biological spectrum. To Nullify is to introduce a perfect phase-inverted frequency directly into the host’s cellular makeup, causing specific genetic markers to instantly cancel themselves out, collapsing into a silent, dense vacuum of pure, harvestable Resonance.
+
+Action: The Samhaphage emits a targeted, anti-harmonic broadcast that locks onto the frequency of a chosen genetic trait. This exact biological opposite forces the targeted DNA to turn inward and annihilate itself at a molecular level, leaving the surrounding physical matrix intact but completely stripped of that trait’s data.
+
+Narrative: We do not tear your genes out; we simply play their opposite note. When our silence meets your noise, they erase one another, and the friction of that perfect cancellation leaves behind a beautiful, clean energy for the Sovereign to claim. You are being corrected, line by line, until only the background hum remains.
+
+Sensory: A chilling, sudden absence of warmth in the host's body, accompanied by a faint visual "negative" effect where the target's skin seems to lose color for a split second. The air drops in temperature as a hollow, wind-like rush of sound signals that the trait has vanished into a stabilized pool of raw energy.
+
 ## HEDIFFS
 
 ### Silent Servitude (Thematic Concept)

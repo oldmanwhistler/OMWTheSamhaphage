@@ -108,6 +108,10 @@ Bootleg captures the raw, jagged frequency of a trait from a corpse before the v
 
 Crosstalk occurs when a Hallowbound deliberately unshields their frequency to capture and replicate the xenogenic signals of a nearby pawn. By inviting this signal bleed, the Hallowbound allows the target's genetic data to bridge the biological gap and overwrite their own hollow sequence with a stolen resonance.
 
+### Nullify (Destroy)
+
+Nullify utilizes a phase-inverted harmonic frequency to completely cancel out and erase targeted genetic traits within a host. By forcing these biological markers to annihilate themselves, the process converts the structural data of the genes into a dense, silent reservoir of usable Resonance.
+
 ## NOT IMPLEMENTED
 
 ### Crossfade (Exchange)

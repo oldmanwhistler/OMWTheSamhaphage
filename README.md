@@ -154,11 +154,10 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 1. Gen AI was used for brainstorming nomenclature and descriptions.
 2. Coded using VS Code with Intellisense and AI suggestions/review.
    * "Vibe coding" used for batch refactoring, and working with my Job class and Window UI classes.
-3. Gen AI used for icon assets. If this bugs you then I'll happily accept your hand-drawn vanilla aesthetic icons. Thanks in advance!
+3. Gen AI used for icon assets and for parts or entirety of workshop screenshots.
    * This mod has no graphical assets other than gene icons and ability icons.
-   * TODO: create an AI-free potato-pack of icons that don't use AI.
 
-[My further thoughts on how AI affects video game modding are here](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/RIMWORLD_SLOP.md). Please read before leaving an AI related comment.
+Please read this before leaving a comment about mods using AI. [My thoughts on how AI affects video game modding.](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/RIMWORLD_SLOP.md). 
 
 ## License
 

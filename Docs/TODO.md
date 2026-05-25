@@ -3,16 +3,13 @@
 ## Next
 
 * "arise" needs to become an ability
-* need a ELI5 description of what stuff does on the selector menu
 
 ## MOD SETTINGS
 
 * Disable AI generated art
-* Ability descriptions: ELI5 or in world.
 * Add several presets for balance: default, story mode, hurt me daddy
 * Allow infinite resurrection.
 * A mod setting that shows the disabled genes in selected methods
-* A mod setting to disable the gene blacklists. "Nothing is true, everything is permitted."
 * A mod setting to control the time of silent servitude and dissonance
 
 ## BALANCE
@@ -51,6 +48,7 @@
 
 ## Fluxspawn
 
+* Add resonance and scrub
 * Still working on flicker
 * Faster speed
 * Stun

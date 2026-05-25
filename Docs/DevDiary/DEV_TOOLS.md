@@ -66,3 +66,11 @@ dotnet tool install -g Converter.MarkdownToBBCodeSteam.Tool
     ]
 }
 ```
+
+## Week #14
+
+* [Mlie's rimworld modding tools](https://github.com/emipa606/RimworldModdingHelpers)
+* [ModMixer](https://modmixer.com/) wait, is this thing saying it can test your mods?
+* [RimSage MCP](https://rimsage.com/) MCP server for rimworld
+* [RiMCP Hybrid](https://github.com/h7lu/RiMCP_hybrid) MCP server for rimworld
+* [FlatIcons](https://www.flaticon.com/free-icons)
