@@ -16,7 +16,10 @@ namespace OMW_Samhaphage
         blWretch,
         blPrereq,
         blImplanter,
-        blNewCharacter
+        blManual,
+        blMisc,
+        blAscension,
+        blMetamorph
     }
 
     public class BlacklistGene
@@ -47,9 +50,6 @@ namespace OMW_Samhaphage
 
         public static readonly HashSet<GeneDef> BlacklistedGenesMutation = new HashSet<GeneDef>();
 
-        private static List<GeneDef> cachedBlacklist;
-        private static List<string> cachedDefnameStrings;
-
         static OMW_BlacklistGenes()
         {
             RebuildBlacklist();
@@ -70,8 +70,8 @@ namespace OMW_Samhaphage
             }
 
             // AlphaGenes integration: respect the Wretch
-            cachedBlacklist = new List<GeneDef>();
-            cachedDefnameStrings = new List<string>();
+            List<GeneDef> cachedBlacklist = new List<GeneDef>();
+            List<string> cachedDefnameStrings = new List<string>();
 
             List<AlphaGenes.WretchBlacklistDef> allWretchBlacklistedGenes = DefDatabase<AlphaGenes.WretchBlacklistDef>.AllDefsListForReading;
             foreach (AlphaGenes.WretchBlacklistDef individualList in allWretchBlacklistedGenes)
@@ -83,6 +83,36 @@ namespace OMW_Samhaphage
                     cachedDefnameStrings.AddRange(individualList.blackListedDefNameStrings);
             }
 
+            List<string> myBlacklistStrings = new List<string>();
+            // core
+            myBlacklistStrings.Add("ViolenceDisabled");
+            myBlacklistStrings.Add("KindInstinct");
+            myBlacklistStrings.Add("XenogermReimplanter");
+            // genes for traits
+            myBlacklistStrings.Add("Gene_Trait_Kind_0");
+            // WVC
+            myBlacklistStrings.Add("WVC_Traitless");
+            // VRE
+            myBlacklistStrings.Add("VRE_GermlineReimplanter");
+            // AG
+            myBlacklistStrings.Add("AG_InsectStinger");
+            myBlacklistStrings.Add("AG_ParasiticStinger");
+            myBlacklistStrings.Add("AG_InsectStingerEndogenes");
+            myBlacklistStrings.Add("AG_ParasiticStingerEndogenes");
+            // Path to Ascension -- this traits will kill you
+            myBlacklistStrings.Add("Gene_Trait_ARC_Arcanist_0");
+            myBlacklistStrings.Add("Gene_Trait_ASS_Assassin_0");
+            myBlacklistStrings.Add("Gene_Trait_CO_Oathbreaker_0");
+            myBlacklistStrings.Add("Gene_Trait_EBD_Earthbound_0");
+            myBlacklistStrings.Add("Gene_Trait_FLT_Flutist_0");
+            myBlacklistStrings.Add("Gene_Trait_OOV_OracleOfTheOuterVeil_0");
+            myBlacklistStrings.Add("Gene_Trait_RAN_Ranger_0");
+            myBlacklistStrings.Add("Gene_Trait_SPR_SunPriest_0");
+            myBlacklistStrings.Add("Gene_Trait_UMO_UnderworldMonarch_0");
+            myBlacklistStrings.Add("Gene_Trait_WDN_Warden_0");
+            myBlacklistStrings.Add("Gene_Trait_WAR_Warrior_0");
+            myBlacklistStrings.Add("Gene_Trait_Worldheart_0");
+            
             foreach (GeneDef geneDef in DefDatabase<GeneDef>.AllDefs)
             {
                 BlacklistGene bl = new BlacklistGene(geneDef);
@@ -94,6 +124,10 @@ namespace OMW_Samhaphage
                 {
                     bl.Add(BlacklistType.blWretch);
                 }
+                if (myBlacklistStrings.Any(s => geneDef.defName.Contains(s)))
+                {
+                    bl.Add(BlacklistType.blManual);
+                }
                 if (geneDef.prerequisite != null)
                 {
                     bl.Add(BlacklistType.blPrereq);
@@ -102,9 +136,22 @@ namespace OMW_Samhaphage
                 {
                     bl.Add(BlacklistType.blImplanter);
                 }
+                if (geneDef.displayCategory?.defName?.Contains("Ascension") == true)
+                {
+                    bl.Add(BlacklistType.blAscension);
+                }
+                if (geneDef.displayCategory?.defName?.Contains("Metamorph") == true)
+                {
+                    bl.Add(BlacklistType.blAscension);
+                }
                 if (geneDef.exclusionTags?.Contains("AG_OnlyOnCharacterCreation") == true)
                 {
-                    bl.Add(BlacklistType.blNewCharacter);
+                    bl.Add(BlacklistType.blMisc);
+                }
+
+                if (geneDef.displayCategory?.defName?.Contains("Don't pick these") == true)
+                {
+                    bl.Add(BlacklistType.blMisc);
                 }
                 if (bl.blacklistType.Count > 0)
                 {
@@ -192,14 +239,13 @@ namespace OMW_Samhaphage
                     bool blW = blEntry?.blacklistType.Contains(BlacklistType.blWretch) ?? false;
                     bool blP = blEntry?.blacklistType.Contains(BlacklistType.blPrereq) ?? false;
                     bool blI = blEntry?.blacklistType.Contains(BlacklistType.blImplanter) ?? false;
-                    bool blNC = blEntry?.blacklistType.Contains(BlacklistType.blNewCharacter) ?? false;
 
                     string abilities = (gene.abilities != null && gene.abilities.Count > 0) 
                         ? string.Join("|", gene.abilities.ConvertAll(a => a.defName)) 
                         : "";
                     string desc = gene.description?.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", "") ?? "";
 
-                    sb.AppendLine($"\"{gene.defName}\",\"{label}\",{gene.biostatCpx},{gene.biostatMet},{gene.biostatArc},\"{cat}\",\"{catDef}\",{isBl},{blGP},{blW},{blP},{blI},{blNC},\"{abilities}\",\"{desc}\"");
+                    sb.AppendLine($"\"{gene.defName}\",\"{label}\",{gene.biostatCpx},{gene.biostatMet},{gene.biostatArc},\"{cat}\",\"{catDef}\",{isBl},{blGP},{blW},{blP},{blI},\"{abilities}\",\"{desc}\"");
                 }
 
                 File.WriteAllText(path, sb.ToString());
