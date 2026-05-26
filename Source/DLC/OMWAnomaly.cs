@@ -29,7 +29,6 @@ namespace OMW_Samhaphage
                 DamageInfo.SourceCategory.ThingOrUnknown,
                 victim // Intended Target
             );
-
             victim.TakeDamage(dinfo);
 
 
@@ -55,6 +54,9 @@ namespace OMW_Samhaphage
             {
                 int lifespanTicks = 60000 * 3; // 3 Days
                 MutantUtility.ResurrectAsShambler(corpse.InnerPawn, lifespanTicks, corpse.Faction);
+                
+                // Rebuild the graphics node immediately to prevent "Node is null" drawing errors
+                corpse.InnerPawn.Drawer.renderer.EnsureGraphicsInitialized();
                 Log.Debug($"CorpseToShamblerOrDestroy made a shambler from {corpse.LabelShort}");
                 return true;
             }
