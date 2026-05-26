@@ -34,6 +34,7 @@ namespace OMW_Samhaphage
 
         public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
+            
             Log.Debug($"START::Flatten::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             if (victim == null || caster == null) return false;
 
@@ -104,17 +105,18 @@ namespace OMW_Samhaphage
                 return false;
             }
 
+            if (victim.Dead)
+            {
+                reason = "Target is dead.";
+                return false;
+            }
+
             if (!victim.RaceProps.Humanlike)
             {
                 reason = $"{victim.LabelShort} is not humanlike.";
                 return false;
             }
 
-            if (victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
-            {
-                reason = $"{victim.LabelShort} is affected by Genetic Dissonance.";
-                return false;
-            }
             return true; 
         }
     }

@@ -257,6 +257,8 @@ namespace OMW_Samhaphage
         public static bool HasScouredMind(Pawn pawn)
         {
             if (pawn == null) return false;
+            // don't flatten dead pawns
+            if (pawn.Dead) return true;
             if (pawn.genes == null) return false;
             if (pawn.genes.HasActiveGene(OMW_GeneDefOf.OMW_ScouredMind)) return true;
             return false;
