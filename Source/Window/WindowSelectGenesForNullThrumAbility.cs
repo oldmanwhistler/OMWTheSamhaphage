@@ -20,14 +20,14 @@ namespace OMW_Samhaphage
 
         public override Vector2 InitialSize => new Vector2(450f, 700f);
 
-        public WindowSelectGenesForNullThrumAbility(NullThrumSelectionGene selector, System.Action<List<GenePlus>> callback, System.Action onDismiss = null)
+        public WindowSelectGenesForNullThrumAbility(NullThrumSelectionGene selector, System.Action<List<GenePlus>> onConfirm, System.Action onDismiss = null)
         {
-            string callbackStr = callback == null ? "null" : callback.ToString();
+            string onConfirmStr = onConfirm == null ? "null" : onConfirm.ToString();
             string onDismissStr = onDismiss == null ? "null" : onDismiss.ToString();
 
-            Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name}, {callbackStr}, {onDismissStr})");
+            Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name}, onConfirm:{onConfirmStr}, onDismiss:{onDismissStr})");
             this.selector = selector;
-            this.onConfirm = callback;
+            this.onConfirm = onConfirm;
             this.onDismiss = onDismiss;
 
             this.forcePause = true;
@@ -185,7 +185,7 @@ namespace OMW_Samhaphage
             {
                 if (selectedGenes.Count > 0)
                 {
-                    Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name})::DoWindowContents() -> genes were selected");
+                    Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name})::DoWindowContents() -> {selectedGenes.Count} genes were selected");
                     onConfirm?.Invoke(selectedGenes.ToList());
                     Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name})::DoWindowContents() -> Close()");
                     Close();
