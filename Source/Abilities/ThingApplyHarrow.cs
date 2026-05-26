@@ -87,10 +87,15 @@ namespace OMW_Samhaphage
                 {
                     if (selector.ResonanceDebit(plus))
                     {
+                        Log.Debug($"START: Harrowing by removing {plus.gene.LabelCap} from {victim.LabelShort}");
                         victim.genes.RemoveGene(plus.gene);
+                        Log.Debug($"START: Harrowing by adding {plus.gene.LabelCap} to {caster.LabelShort}");
                         caster.genes.AddGene(plus.gene.def, true);
-                        Log.Debug($"Harrowed {plus.gene.LabelCap} from {victim.LabelShort}");
+                        Log.Debug($"DONE: Harrowing {plus.gene.LabelCap}");                    
                         activated = true;
+                    }
+                    else {
+                        Log.Debug($"SKIPPING: Harrowing {plus.gene.LabelCap} from {victim.LabelShort} cuz {caster.LabelShort} doesn't have enough resonance.");                                                
                     }
                 }
 
