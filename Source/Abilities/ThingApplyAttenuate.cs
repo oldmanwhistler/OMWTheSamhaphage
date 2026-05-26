@@ -106,11 +106,8 @@ namespace OMW_Samhaphage
             {
                 if (ApplyAttenuate(victim, caster, selector))
                 {
-                    OMWAnomaly.PawnToShamblerOrKillDestroy(victim, caster);
-                    // Corpes don't usually need graphic initialization, but if 
-                    // the pawn is resurrected/spawned as a shambler here, call it:
-                    victim.Drawer.renderer.EnsureGraphicsInitialized();
-
+                    // Use the Corpse-specific method to handle resurrection and initialization properly
+                    OMWAnomaly.CorpseToShamblerOrDestroy(corpse);
                     Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
                 }
             };
