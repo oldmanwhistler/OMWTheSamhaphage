@@ -34,7 +34,7 @@ namespace OMW_Samhaphage
             base.PostAdd();
             // base.PostAdd() calls Reset(), which sets Value to InitialResourceMax (200).
             // We override that here to ensure the pawn starts with a low random amount instead.
-            Value = Rand.Range(10f, 30f);
+            Value = Rand.Range(30f, 50f);
         }
 
         public override void Tick()
