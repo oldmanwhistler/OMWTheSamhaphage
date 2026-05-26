@@ -23,17 +23,6 @@ namespace OMW_Samhaphage
 
         // Concrete methods
 
-        // GeneticDissonance prevents repeatedly using the same abilities on the same pawn
-        public void ApplyDissonance(Pawn victim, Pawn caster)
-        {
-            Log.Debug($"ApplyDissonance({victim.LabelShort}, {caster.LabelShort})");            
-            if (!victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
-            {
-                Hediff hediffDissonance = HediffMaker.MakeHediff(OMW_HediffDefOf.OMW_GeneticDissonance, caster);
-                victim.health.AddHediff(hediffDissonance);
-            }
-        }
-
         public float SelectionMaxCost()
         {
             if (this.caster == null) return 0f;

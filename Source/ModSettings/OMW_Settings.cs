@@ -23,10 +23,11 @@ namespace OMW_Samhaphage
         public bool logUI = false;
         public bool logMutation = false;
         public bool logSelection = false;
+        public bool disableDissonance = false;
 
         public bool disableGeneBlacklist = false;
         
-        public float resonanceMax = 200f;
+        public float resonanceMax = 1000f;
 
         public NullThrumAbilities abilityValue = new NullThrumAbilities();
         private NullThrumAbilities abilityDefault = new NullThrumAbilities();
@@ -45,7 +46,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref logUI, "logUI", false);
             Scribe_Values.Look(ref logMutation, "logMutation", false);
             Scribe_Values.Look(ref logMutation, "logSelection", false);
-
+            Scribe_Values.Look(ref disableDissonance, "disableDissonance", false);
             Scribe_Values.Look(ref disableGeneBlacklist, "disableGeneBlacklist", false);
             Scribe_Values.Look(ref resonanceMax, "ResonanceMax", 200f);
             Scribe_Values.Look(ref abilityValue.flatten.value, "Flatten", abilityDefault.flatten.value);
@@ -82,11 +83,11 @@ namespace OMW_Samhaphage
             logUI = false;
             logMutation = false;
             logSelection = false;
-
+            disableDissonance = false;
             disableGeneBlacklist = false;
             abilityValue = new NullThrumAbilities();
             abilityDefault = new NullThrumAbilities();            
-            resonanceMax = 200f;
+            resonanceMax = 1000f;
             NullThrumUtility.descMode = NullThrumDescriptionMode.DescriptionSimple;
         }
     }
@@ -187,7 +188,9 @@ namespace OMW_Samhaphage
                     listing.Gap();
                     listing.Label($"Maximum Resonance Capacity: {settings.resonanceMax:F0}");
                     settings.resonanceMax = listing.Slider(settings.resonanceMax, 50f, 1000f);
-
+                    listing.Label($"Dissonance");
+                    listing.CheckboxLabeled("Disable Dissonance", ref settings.disableDissonance,
+                        "Dissonance is a hediff used like 'genes regrowing'");
                     listing.GapLine();
                     listing.Label("Resonance Gains (Credits)".Colorize(Color.yellow));
                     listing.Label("Adjust resonance acquired from harvesting or sacrifices.");

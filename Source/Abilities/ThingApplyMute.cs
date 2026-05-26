@@ -53,11 +53,7 @@ namespace OMW_Samhaphage
                 Log.Debug($"Muted {victim.LabelShort}: {levelsTaken} psylink levels harvested.");
                 
                 // Apply Genetic Dissonance to prevent repeated harvesting from the same vessel in a short time.
-                if (!victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
-                {
-                    Hediff hediffDissonance = HediffMaker.MakeHediff(OMW_HediffDefOf.OMW_GeneticDissonance, caster);
-                    victim.health.AddHediff(hediffDissonance);
-                }
+                OMWGenes.ApplyDissonance(victim, caster);
                 Log.Debug($"DONE::Mute::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
                 return true;
             }

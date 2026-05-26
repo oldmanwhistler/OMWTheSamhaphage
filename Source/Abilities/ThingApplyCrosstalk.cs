@@ -110,7 +110,7 @@ namespace OMW_Samhaphage
                 OMWGenes.PrependXenogenes(caster, genesFromSource);
                 OMWGenes.PrependXenogenes(victim, genesFromDest);
                 Log.Debug($"Crosstalk exchanged {genesFromSource.Count} xenogenes from {victim.LabelShort} with {genesFromDest.Count} xenogenes from {caster.LabelShort}");
-                selector1.ApplyDissonance(victim, caster);
+                OMWGenes.ApplyDissonance(victim, caster);
                 PawnApplyRetune retune = new PawnApplyRetune();
                 retune.ApplyPawn(caster, caster);            
             }

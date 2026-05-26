@@ -86,7 +86,7 @@ namespace OMW_Samhaphage
 
             if (activated)
             {
-                selector.ApplyDissonance(victim, caster);
+                OMWGenes.ApplyDissonance(victim, caster);
             }
         }
 

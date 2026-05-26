@@ -99,7 +99,7 @@ namespace OMW_Samhaphage
                     // Retune the caster after harvesting to integrate new genes
                     PawnApplyRetune retune = new PawnApplyRetune();
                     retune.ApplyPawn(caster, caster);
-                    selector.ApplyDissonance(victim, caster);
+                    OMWGenes.ApplyDissonance(victim, caster);
                 }
             }));
             Log.Debug($"DONE::Harrow::OpenHarrowWindow({victim.LabelShort}, {caster.LabelShort})");

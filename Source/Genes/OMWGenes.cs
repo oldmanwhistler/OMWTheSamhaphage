@@ -262,5 +262,16 @@ namespace OMW_Samhaphage
             return false;
         }
 
+        // GeneticDissonance prevents repeatedly using the same abilities on the same pawn
+        public static void ApplyDissonance(Pawn victim, Pawn caster)
+        {
+            if (OMW_Mod.settings.disableDissonance) return;
+            Log.Debug($"ApplyDissonance({victim.LabelShort}, {caster.LabelShort})");
+            if (!victim.health.hediffSet.HasHediff(OMW_HediffDefOf.OMW_GeneticDissonance))
+            {
+                Hediff hediffDissonance = HediffMaker.MakeHediff(OMW_HediffDefOf.OMW_GeneticDissonance, caster);
+                victim.health.AddHediff(hediffDissonance);
+            }
+        }
     }
 }
