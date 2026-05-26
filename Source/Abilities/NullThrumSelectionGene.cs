@@ -27,14 +27,22 @@ namespace OMW_Samhaphage
 
         protected float GeneValue(Gene gene)
         {
-            Log.Error(
-                $"{Name}::GeneValue() called with a null gene");
-            if (gene == null) return 0f;
+            if (gene == null)
+            {
+                Log.Error(
+                    $"{Name}::GeneValue() called with a null gene");
+                return 0f;
+            }
             Log.Debug(
                 $"{Name}::GeneValue({gene.Label}) has archite: {gene.def.biostatArc}, complexity: {gene.def.biostatCpx}, metabolism: {gene.def.biostatMet}");
             float value = ResonanceUtility.GeneResonanceValue(gene.def);
             float final = value * this.ResonanceTotalMultiplier;
             Log.Debug($"{Name}::GeneValue({gene.Label}) = {final}   ({value} * {this.ResonanceTotalMultiplier})");
+            // everywhere else it is expected that GeneValue returns a positive numbers
+            if (final < 0)
+            {
+                final = 0.1f;
+            }
             return final;
         }
 

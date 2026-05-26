@@ -52,7 +52,12 @@ namespace OMW_Samhaphage
 
         private void ApplyPassiveGain()
         {
-            if (pawn.genes == null) return;
+            // FIXME: This doesn't work.
+            if (pawn.genes == null)
+            {
+                Log.Error($"DONE: {pawn.LabelShort}.ApplyPassiveGain -- because pawn.genes == null");
+                return;
+            }
 
             // Dynamically fetch the gain from the Pawn's stats
             // This looks for OMW_StatResonance defined in your StatDefs.xml
@@ -60,11 +65,14 @@ namespace OMW_Samhaphage
 
             if (dailyGain != 0)
             {
+                Log.Debug($"START: {pawn.LabelShort}.ApplyPassiveGain");
                 // Calculate gain: (Daily Amount / 60000 ticks in a day) * Ticks Passed
                 float gainPerInterval = (dailyGain / 60000f) * (float)PassiveGainIntervalTicks;
                 Log.Debug($"{pawn.LabelShort}.ApplyPassiveGain: {gainPerInterval}");
                 OffsetResonance(gainPerInterval);
+                Log.Debug($"DONE: {pawn.LabelShort}.ApplyPassiveGain");
             }
+
         }
 
         public void OffsetResonance(float offset)

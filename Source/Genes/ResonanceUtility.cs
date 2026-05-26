@@ -20,7 +20,7 @@ namespace OMW_Samhaphage
             if (HasGene(pawn))
             {
                 Gene_Resource resonance = pawn.genes.GetGene(OMW_GeneDefOf.OMW_Resonance) as Gene_Resource;
-                Log.Debug($"[Resonance] {pawn.LabelShort} has {resonance.Value} available resonance, checking if they have {requiredAmount}.");
+                Log.Debug($"{pawn.LabelShort} has {resonance.Value} available resonance, checking if they have {requiredAmount}.");
                 return resonance.Value >= requiredAmount;
             }
             return false;
@@ -32,10 +32,10 @@ namespace OMW_Samhaphage
             {
                 Gene_Resource resonance = pawn.genes.GetGene(OMW_GeneDefOf.OMW_Resonance) as Gene_Resource;
                 Log.Debug(
-                    $"[Resonance] {pawn.LabelShort} has {resonance.Value} available resonance, incrementing by {amount}.");
+                    $"{pawn.LabelShort} has {resonance.Value} available resonance, incrementing by {amount}.");
                 resonance.Value += amount;
                 Log.Debug(
-                    $"[Resonance] {pawn.LabelShort} now has {resonance.Value} available resonance.");                
+                    $"{pawn.LabelShort} now has {resonance.Value} available resonance.");                
                 return true;
             }
             return false;
@@ -47,10 +47,10 @@ namespace OMW_Samhaphage
             {
                 Gene_Resource resonance = pawn.genes.GetGene(OMW_GeneDefOf.OMW_Resonance) as Gene_Resource;
                 Log.Debug(
-                    $"[Resonance] {pawn.LabelShort} has {resonance.Value} available resonance, decrementing by {amount}.");
+                    $"{pawn.LabelShort} has {resonance.Value} available resonance, decrementing by {amount}.");
                 resonance.Value -= amount;
                 Log.Debug(
-                    $"[Resonance] {pawn.LabelShort} now has {resonance.Value} available resonance.");
+                    $"{pawn.LabelShort} now has {resonance.Value} available resonance.");
                 if (resonance.Value < 0f) resonance.Value = 0f;
                 return true;
             }
