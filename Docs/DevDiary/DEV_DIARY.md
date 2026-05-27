@@ -101,10 +101,20 @@ See [OMW Performance Collection on Steam](https://github.com/oldmanwhistler/omw-
 
 ## Week #13 - May 11th, 2026
 
-I'm not happy with how using the ability "feels". It's better after changing the job so it makes the target pawn wait, and then fixing a problem where one of the menus doesn't pause. This week is a *lot* of bug fixing and playtesting. Add some new abilities: compress, unmute, mute, bootleg, crosstalk. 
+I'm not happy with how using the ability "feels". It's better after changing the job so it makes the target pawn wait, and then fixing a problem where one of the menus doesn't pause. This week is a *lot* of bug fixing and playtesting. Add some new abilities: compress, unmute, mute, bootleg, crosstalk.
 
 Finally added the settings menu and started attaching all the constant values in the classes to the settings menu. Also added the various exports I need to debug game balance. 
 
-I found a pretty funny bug with Gemini, it always breaks when it comes to applying changes to the Bootleg ability... because it's called "bootleg" it must be tripping the guardrails all the time.
+I found a pretty funny bug with Gemini, it always breaks when it comes to applying changes to the Bootleg ability... I wonder if "bootleg" is tripping the guardrails all the time.
 
 ## Week #14 - May 18th, 2026
+
+So many bugfixes. I'm doing a big multi-mod / trait playtest. I find some crash-to-desktop bugs with all the combinations. Some traits really have issues when there is a gene that can apply them. Like the entire _Pathway To Ascension_ mod just straight up kills pawns when they get the trait without doing the correct method.
+
+## Week #15 - May 25th, 2026
+
+This is a "neat" bug. The _Defensive Fighter_ from _Traits Plus_ causes CTD when stealing the gene with Harrow. I can get the same CTD to happen when I use Character Editor to apply the trait directly. Is the CTD is happening if the Defensive Fighter trait is added while a pawn is drafted? Kind of makes sense, and the might be a general issue that can happen when adding genes/traits to drafted pawns. I put in some code to prevent the abilities from being used while drafted, but then when I tried again it still does CTD.
+
+It's a head-scratcher. When I open up the mod the trait is in, I see from the def that this one specifically that is causing a CTD uses `<disabledWorkTags>`. That might be the culprit? I disable it and reload and it isn't, but looking at the Pawn who was trying to take the trait, and they already have another gene that gives a conflicting trait. (Defensive Fighter vs Bloodlust) so I am guessing that is the CTD? Remove Bloodlist, try adding Defensive Fighter and... CTD. ARGH.
+
+... and this is the story about why I'm just going to ban every gene that has a trait and that trait has conflicts and call it a day.

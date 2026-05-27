@@ -19,13 +19,15 @@ namespace OMW_Samhaphage
         blManual,
         blMisc,
         blAscension,
-        blMetamorph
+        blMetamorph,
+        blTrait
     }
 
     public class BlacklistGene
     {
         public GeneDef geneDef;
         public HashSet<BlacklistType> blacklistType;
+        public string blacklistReason;
 
         public BlacklistGene(GeneDef geneDef)
         {
@@ -36,13 +38,27 @@ namespace OMW_Samhaphage
         {
             blacklistType.Add(type);
         }
+
+        public void SetReason()
+        {
+            blacklistReason = "";
+            if (blacklistType.Count == 0) return;
+
+            List<string> blacklistTypeStr = new List<string>();
+            
+            foreach (BlacklistType type in blacklistType)
+            {
+                blacklistTypeStr.Add(type.ToString());
+            }
+            blacklistReason = string.Join(", ", blacklistTypeStr);
+        }
     }
 
     [StaticConstructorOnStartup]
     public static class OMW_BlacklistGenes
     {
         public static readonly string Prefix = "[SAMHAPHAGE-BLACKLIST]";
-        private static readonly HashSet<BlacklistGene> BlacklistedGenes = new HashSet<BlacklistGene>();
+        public static readonly HashSet<BlacklistGene> BlacklistedGenes = new HashSet<BlacklistGene>();
 
         public static readonly HashSet<GeneDef> BlacklistedGenesGeneticDrift = new HashSet<GeneDef>();
 
@@ -62,7 +78,7 @@ namespace OMW_Samhaphage
             BlacklistedGenesMutation.Clear();
             BlacklistedGenesGeneticDrift.Clear();
             
-            if (OMW_Mod.settings.disableGeneBlacklist)
+            if (OMW_Mod.settings == null || OMW_Mod.settings.disableGeneBlacklist)
             {
                 Log.Message($"{Prefix} Gene blacklist is disabled in mod settings. No genes will be blacklisted.");
                 ExportCustomXenotype(); // Export an empty xenotype for Genetic Drift
@@ -148,13 +164,46 @@ namespace OMW_Samhaphage
                 {
                     bl.Add(BlacklistType.blMisc);
                 }
-
                 if (geneDef.displayCategory?.defName?.Contains("Don't pick these") == true)
                 {
                     bl.Add(BlacklistType.blMisc);
                 }
+
+                if (geneDef.forcedTraits != null)
+                {
+                    foreach (GeneticTraitData traitData in geneDef.forcedTraits)
+                    {
+                        TraitDef traitDef = traitData.def;
+                        if (traitDef == null) continue;
+
+                        if (traitDef.conflictingTraits?.Count > 0)
+                        {
+                            bl.Add(BlacklistType.blTrait);
+                            break;
+                        }
+
+                        if (traitDef.conflictingPassions?.Count > 0)
+                        {
+                            bl.Add(BlacklistType.blTrait);
+                            break;
+                        }
+
+                        if (traitDef.requiredWorkTypes?.Count > 0)
+                        {
+                            bl.Add(BlacklistType.blTrait);
+                            break;
+                        }
+
+                        if (traitDef.disabledWorkTypes?.Count > 0)
+                        {
+                            bl.Add(BlacklistType.blTrait);
+                            break;
+                        }
+                    }
+                }
                 if (bl.blacklistType.Count > 0)
                 {
+                    bl.SetReason();
                     BlacklistedGenes.Add(bl);
                     // TODO: selectively add to different lists depending on the reason why it's a blacklisted gene.
                     BlacklistedGenesResonanceCopy.Add(bl.geneDef);
