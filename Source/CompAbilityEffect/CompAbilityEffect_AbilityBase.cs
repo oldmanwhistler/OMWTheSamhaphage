@@ -7,6 +7,17 @@ namespace OMW_Samhaphage
     public abstract class CompAbilityEffect_AbilityBase : CompAbilityEffect
     {
         protected static Logger Log = new Logger("CompAbilityEffect");
+
+        public override bool GizmoDisabled(out string reason)
+        {
+            if (parent.pawn.Drafted)
+            {
+                reason = "Biological restructuring cannot be performed while drafted.";
+                return true;
+            }
+            return base.GizmoDisabled(out reason);
+        }
+
         public override void Apply(LocalTargetInfo target, LocalTargetInfo dest)
         {
             Log.Debug($"{parent.pawn}.Apply called with target {target} and dest {dest}");
