@@ -68,7 +68,7 @@ namespace OMW_Samhaphage
             float footerHeight = 50f;
             Rect scrollRect = new Rect(0f, listStartY + 5f, inRect.width,
                 inRect.height - listStartY - footerHeight - 10f);
-            float viewHeight = (this.selector.genes.Count * 40f) + 60f;
+            float viewHeight = ((this.selector.genes.Count + this.selector.unselectableGenes.Count)* 40f) + 100f;
             Rect viewRect = new Rect(0f, 0f, scrollRect.width - 26f, viewHeight);
 
             Widgets.BeginScrollView(scrollRect, ref scrollPosition, viewRect);
@@ -78,7 +78,7 @@ namespace OMW_Samhaphage
             bool drawnXenoHeader = false;
 
             foreach (GenePlus plus in this.selector.genes)
-            {
+            {           
                 if (plus.isXenogene && !drawnXenoHeader)
                 {
                     DrawCategoryHeader(ref curY, viewRect.width, "Xenogenes");
@@ -148,6 +148,39 @@ namespace OMW_Samhaphage
                 }
 
                 curY += 40f;
+            }
+
+            if (this.selector.unselectableGenes.Count > 0)
+            {
+                DrawCategoryHeader(ref curY, viewRect.width, "Unselectable");
+                foreach (GenePlus plus in this.selector.unselectableGenes)
+                {
+                    Rect rowRect = new Rect(0f, curY, viewRect.width, 36f);
+                    Widgets.DrawHighlightIfMouseover(rowRect);
+
+                    // Modified Tooltip to explain conflict
+                    TooltipHandler.TipRegion(rowRect,
+                        new TipSignal(() => { return plus.ToString(); }, plus.GetHashCode()));
+
+                    Widgets.DefIcon(new Rect(rowRect.x + 4f, rowRect.y + 3f, 30f, 30f), plus.gene.def);
+                    Rect labelRect = new Rect(rowRect.x + 40f, rowRect.y, rowRect.width - 130f, rowRect.height);
+                    Rect valueRect = new Rect(rowRect.xMax - 85f, rowRect.y, 50f, rowRect.height);
+
+                    Text.Anchor = TextAnchor.MiddleLeft;
+
+                    // Apply color
+                    GUI.color = Color.gray;
+
+                    Widgets.Label(labelRect, plus.gene.LabelCap);
+                    Text.Anchor = TextAnchor.MiddleRight;
+                    GUI.color = Color.white;
+
+                    Widgets.Label(valueRect, plus.value.ToString("F1"));
+                    GUI.color = Color.white;
+                    Text.Anchor = TextAnchor.MiddleLeft;
+
+                    curY += 40f;
+                }
             }
 
             Widgets.EndScrollView();

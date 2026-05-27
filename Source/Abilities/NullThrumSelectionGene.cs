@@ -13,6 +13,8 @@ namespace OMW_Samhaphage
 
         public List<GenePlus> genes;
 
+        public List<GenePlus> unselectableGenes;
+
         // Abstract methods
 
         protected abstract float ResonanceTotalMultiplier { get; }
@@ -68,6 +70,17 @@ namespace OMW_Samhaphage
             {
                 gene.value = this.GeneValue(gene.gene);
             }
+            // Build a list of all the genes that could not be selected
+            List<Gene> genesThatCantBeSelected = new List<Gene>();
+            foreach (Gene gene in source.genes.GenesListForReading)
+            {
+                if (!genesToSelectFrom.Contains(gene))
+                {
+                    genesThatCantBeSelected.Add(gene);
+                }
+            }
+            List<GeneDef> conflictDefs2 = new List<GeneDef>();
+            this.unselectableGenes = GenePlusUtility.ConvertToGenePlus(source, genesThatCantBeSelected, conflictDefs2);
         }
 
         public bool ResonanceDebit(GenePlus plus)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Verse;
 
 namespace OMW_Samhaphage
@@ -46,6 +47,17 @@ namespace OMW_Samhaphage
                 // Adds a red warning with the specific gene name
                 tip += $"\n\n<color=#ff6666>(This gene conflicts with {destinationConflictStr})</color>";
             }
+
+            if (OMW_BlacklistGenes.BlacklistedGenes.Any(x => x.geneDef == this.gene.def))
+            {
+                // get the reason why it's blacklisted
+                BlacklistGene bl = OMW_BlacklistGenes.BlacklistedGenes.FirstOrDefault(x => x.geneDef == this.gene.def);
+                if (bl != null)
+                {
+                    tip += $"\n\n<color=#ffcc00>(Blacklisted: {bl.blacklistReason})</color>";
+                }
+            }
+
             return tip;
         }
     }
