@@ -90,30 +90,16 @@ namespace OMW_Samhaphage
             SelectionBootleg selectorBootleg = CanApplyBootleg(victim, caster);
             if (selectorBootleg == null) return false;
 
-            ThingApplyAttenuate attenuate = new ThingApplyAttenuate();            
-            SelectionAttenuate selectorAttenuate = attenuate.CanApplyAttenuate(victim, caster);
-
             bool value = false;
-            string msg = $"{victim.LabelShort} has died while being bootlegged.";
 
-            System.Action sacrificeAction = () =>
+            Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selectorBootleg, (selectedList) =>
             {
-                Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selectorBootleg, (selectedList) =>
+                if (ApplyBootleg(victim, caster, selectorBootleg, selectedList))
                 {
-                    if (ApplyBootleg(victim, caster, selectorBootleg, selectedList))
-                    {
-                        if (selectorAttenuate != null)
-                        {
-                            attenuate.ApplyAttenuate(victim, caster, selectorAttenuate);
-                        }
-                        OMWAnomaly.PawnToShamblerOrKillDestroy(victim, caster);
-                        Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                        value = true;
-                    }
-                }));
-            };
+                    value = true;
+                }
+            }));
 
-            OMW_UIHelpers.ShowLethalConfirmation(victim, sacrificeAction);
             return value;
         }
 
