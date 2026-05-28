@@ -72,7 +72,7 @@ namespace OMW_Samhaphage
             for (int i = oldGenes.Count - 1; i >= 0; i--)
             {
                 Gene gene = oldGenes[i];
-                genesToAdd.Add(gene.def);
+                if (!genesToAdd.Contains(gene.def)) genesToAdd.Add(gene.def);
                 pawn.genes.RemoveGene(gene);
             }
 
@@ -215,7 +215,7 @@ namespace OMW_Samhaphage
             return true;
         }
         
-        public static bool ChangeXenotype(Pawn pawn, XenotypeDef targetXenotype)
+        public static bool ChangeXenotype(Pawn pawn, XenotypeDef targetXenotype, bool removeSourceXenotype = true)
         {
             if (!CanChangeXenotype(pawn, targetXenotype)) return false;
 
@@ -223,7 +223,8 @@ namespace OMW_Samhaphage
             XenotypeDef sourceXenotype = pawn.genes?.Xenotype;
 
             Log.Debug($"{pawn.LabelShort}.ChangeXenotype: Start changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
-            if (sourceXenotype != null) RemoveXenotype(pawn, sourceXenotype);
+            
+            if (removeSourceXenotype && (sourceXenotype != null)) RemoveXenotype(pawn, sourceXenotype);
             XenogenesToEndogenes(pawn);
             if (targetXenotype != null) AddXenotype(pawn, targetXenotype);
 

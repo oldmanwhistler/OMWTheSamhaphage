@@ -44,7 +44,7 @@ namespace OMW_Samhaphage
         {
             List<Trait> traitsToSelectFrom = this.TraitsToSelectFrom(source, dest);
             List<TraitDef> conflictDefs = this.ConflictTraitDefs(source, dest) ?? new List<TraitDef>();
-            this.traits = TraitPlusUtility.ConvertToTraitPlus(source, traitsToSelectFrom, conflictDefs);
+            this.traits = TraitPlusUtility.ConvertToTraitPlus(dest, traitsToSelectFrom, conflictDefs);
             foreach (TraitPlus plus in this.traits)
             {
                 plus.value = this.TraitValue(plus.trait);

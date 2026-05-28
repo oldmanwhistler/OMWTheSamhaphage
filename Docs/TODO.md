@@ -3,6 +3,7 @@
 ## Next
 
 * "arise" needs to become an ability
+* Isekai traits should be blacklisted
 
 ## MOD SETTINGS
 

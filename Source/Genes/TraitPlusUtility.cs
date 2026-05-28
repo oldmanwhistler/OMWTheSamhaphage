@@ -8,11 +8,13 @@ namespace OMW_Samhaphage
     {
         public Trait trait;
         public float value = 1f;
+        public Pawn pawn;
         public string destinationConflictStr = "";
 
-        public TraitPlus(Trait trait)
+        public TraitPlus(Trait trait, Pawn pawn)
         {
-            this.trait = trait;            
+            this.trait = trait;
+            this.pawn = pawn;
         }
 
         public bool HasConflict()
@@ -28,7 +30,7 @@ namespace OMW_Samhaphage
         public override string ToString()
         {
             //var stats = $"\nResonance Value: {this.value}";            
-            var tip = $"{this.trait.LabelCap}\n\n{this.trait.TipString(this.trait.pawn)}";
+            var tip = $"{this.trait.LabelCap}\n\n{this.trait.TipString(this.pawn)}";
             return tip;
         }
     }
@@ -41,7 +43,7 @@ namespace OMW_Samhaphage
 
             foreach (Trait trait in traits)
             {
-                TraitPlus plus = new TraitPlus(trait);
+                TraitPlus plus = new TraitPlus(trait, pawn);
 
                 List<string> tmpDestConflicts = [];
                 if (destConflicts != null)

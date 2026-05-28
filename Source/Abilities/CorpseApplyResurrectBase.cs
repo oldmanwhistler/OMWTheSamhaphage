@@ -28,7 +28,7 @@ namespace OMW_Samhaphage
 
             if (this.TargetXenotype != null)
             {
-                OMWGenes.ChangeXenotype(pawn, this.TargetXenotype);
+                OMWGenes.ChangeXenotype(pawn, this.TargetXenotype, false);
             }
 
             try
