@@ -65,7 +65,7 @@ namespace OMW_Samhaphage
             float footerHeight = 50f;
             Rect scrollRect = new Rect(0f, listStartY + 5f, inRect.width,
                 inRect.height - listStartY - footerHeight - 10f);
-            float viewHeight = (this.selector.traits.Count * 40f) + 20f;
+            float viewHeight = ((this.selector.traits.Count + +this.selector.unselectableTraits.Count) * 40f) + 20f;
             Rect viewRect = new Rect(0f, 0f, scrollRect.width - 26f, viewHeight);
 
             Widgets.BeginScrollView(scrollRect, ref scrollPosition, viewRect);
@@ -79,10 +79,7 @@ namespace OMW_Samhaphage
                 if (isSelected) Widgets.DrawHighlightSelected(rowRect);
                 else Widgets.DrawHighlightIfMouseover(rowRect);
 
-                TooltipHandler.TipRegion(rowRect, new TipSignal(() =>
-                {
-                    return plus.ToString();
-                }, plus.GetHashCode()));
+                TooltipHandler.TipRegion(rowRect, new TipSignal(plus.ToString, plus.GetHashCode()));
 
                 // Trait icons are not standard in vanilla, but Widgets.DefIcon will handle TraitDef
                 Widgets.DefIcon(new Rect(rowRect.x + 4f, rowRect.y + 3f, 30f, 30f), plus.trait.def);
@@ -132,6 +129,35 @@ namespace OMW_Samhaphage
                 curY += 40f;
             }
 
+            if (this.selector.unselectableTraits.Count > 0)
+            {
+                DrawCategoryHeader(ref curY, viewRect.width, "Unselectable");
+                foreach (TraitPlus plus in this.selector.unselectableTraits)
+                {
+                    Rect rowRect = new Rect(0f, curY, viewRect.width, 36f);
+                    Widgets.DrawHighlightIfMouseover(rowRect);
+
+                    // Modified Tooltip to explain conflict
+                    TooltipHandler.TipRegion(rowRect,
+                        new TipSignal(() => { return plus.ToString(); }, plus.GetHashCode()));
+
+                    Widgets.DefIcon(new Rect(rowRect.x + 4f, rowRect.y + 3f, 30f, 30f), plus.trait.def);
+                    Rect labelRect = new Rect(rowRect.x + 40f, rowRect.y, rowRect.width - 130f, rowRect.height);
+                    Rect valueRect = new Rect(rowRect.xMax - 85f, rowRect.y, 50f, rowRect.height);
+
+                    Text.Anchor = TextAnchor.MiddleLeft;
+
+                    // Apply color
+                    GUI.color = Color.gray;
+
+                    Widgets.Label(labelRect, plus.trait.LabelCap);
+                    Text.Anchor = TextAnchor.MiddleRight;
+                    GUI.color = Color.white;
+
+                    curY += 40f;
+                }
+            }            
+
             Widgets.EndScrollView();
 
             // --- Footer Section ---
@@ -172,5 +198,19 @@ namespace OMW_Samhaphage
             GUI.color = Color.white;
             this.windowState.Restore();
         }
+
+        private void DrawCategoryHeader(ref float curY, float width, string label)
+        {
+            Rect rect = new Rect(0f, curY, width, 30f);
+            GUI.color = Color.gray;
+            Text.Font = GameFont.Tiny;
+            Text.Anchor = TextAnchor.LowerLeft;
+            Widgets.Label(rect, label.ToUpper());
+            Text.Anchor = TextAnchor.UpperLeft;
+            Text.Font = GameFont.Small;
+            GUI.color = Color.white;
+            curY += 30f;
+            Widgets.DrawLineHorizontal(0f, curY - 2f, width);
+        }        
     }
 }

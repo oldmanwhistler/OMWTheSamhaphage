@@ -28,12 +28,7 @@ namespace OMW_Samhaphage
         public override string ToString()
         {
             //var stats = $"\nResonance Value: {this.value}";            
-            var tip = $"{this.trait.LabelCap}\n\n{this.trait.def.description}";
-
-            if (destinationConflictStr != "")
-            {
-                tip += $"\n\n<color=#ff6666>(This trait conflicts with {destinationConflictStr})</color>";
-            }
+            var tip = $"{this.trait.LabelCap}\n\n{this.trait.TipString(this.trait.pawn)}";
             return tip;
         }
     }

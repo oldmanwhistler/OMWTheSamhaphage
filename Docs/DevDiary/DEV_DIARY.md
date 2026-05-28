@@ -117,4 +117,4 @@ This is a "neat" bug. The _Defensive Fighter_ from _Traits Plus_ causes CTD when
 
 It's a head-scratcher. When I open up the mod the trait is in, I see from the def that this one specifically that is causing a CTD uses `<disabledWorkTags>`. That might be the culprit? I disable it and reload and it isn't, but looking at the Pawn who was trying to take the trait, and they already have another gene that gives a conflicting trait. (Defensive Fighter vs Bloodlust) so I am guessing that is the CTD? Remove Bloodlist, try adding Defensive Fighter and... CTD. ARGH.
 
-... and this is the story about why I'm just going to ban every gene that has a trait and that trait has conflicts and call it a day.
+... and this is the story about why I'm just going to ban stealing every gene that has a trait and call it a day.

@@ -97,10 +97,7 @@ namespace OMW_Samhaphage
                 else Widgets.DrawHighlightIfMouseover(rowRect);
 
                 // Modified Tooltip to explain conflict
-                TooltipHandler.TipRegion(rowRect, new TipSignal(() =>
-                {
-                    return plus.ToString();
-                }, plus.GetHashCode()));
+                TooltipHandler.TipRegion(rowRect, new TipSignal(plus.ToString, plus.GetHashCode()));
 
                 Widgets.DefIcon(new Rect(rowRect.x + 4f, rowRect.y + 3f, 30f, 30f), plus.gene.def);
                 Rect labelRect = new Rect(rowRect.x + 40f, rowRect.y, rowRect.width - 130f, rowRect.height);

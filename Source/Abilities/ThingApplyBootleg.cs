@@ -8,7 +8,7 @@ namespace OMW_Samhaphage
 {
     public class SelectionBootleg : NullThrumSelectionTrait
     {
-        public SelectionBootleg(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) { }
+        public SelectionBootleg(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
 
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.bootleg;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
@@ -23,8 +23,24 @@ namespace OMW_Samhaphage
                 .Select(t => t.def)
                 .ToHashSet();
 
+            HashSet<TraitDef> conflicts = new HashSet<TraitDef>();
+
+            foreach (Trait trait in source.story.traits.allTraits)
+            {
+                foreach (TraitDef traitDef in trait.def.conflictingTraits)
+                {
+                    conflicts.Add(traitDef);
+                }
+            }
+
+            // No traits they have
+            // No traits that conflict with traits they have
+            // No traits from genes
             return source.story.traits.allTraits
-                .Where(t => !alreadyHas.Contains(t.def))
+                .Where(t => !alreadyHas.Contains(t.def) &&
+                            !conflicts.Contains(t.def) &&
+                            t.sourceGene == null
+                            )
                 .ToList();
         }
 
@@ -66,6 +82,8 @@ namespace OMW_Samhaphage
             bool activated = false;
             foreach (TraitPlus plus in selectedList)
             {
+                // half-price sale if the victim is alive.
+                if (!victim.Dead) plus.value = plus.value / 2f;
                 if (selector.ResonanceDebit(plus))
                 {
                     victim.story?.traits?.RemoveTrait(plus.trait);
@@ -81,7 +99,6 @@ namespace OMW_Samhaphage
         public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
             if (victim == null || caster == null) return false;
-
             if (!OMWGenes.HasScouredMind(victim))
             {
                 Flatten.ApplyPawn(victim, caster);
@@ -150,7 +167,13 @@ namespace OMW_Samhaphage
 
         public override bool CanApplyOnCorpse(Corpse corpse, Pawn caster, out string reason)
         {
-            return CanApplyOnPawn(corpse?.InnerPawn, caster, out reason);
+            reason = "unknown";
+            if (!ResonanceUtility.HasGene(caster))
+            {
+                reason = $"{caster.LabelShort} does not have a supply of resonance.";
+                return false;
+            }            
+            return true;
         }
     }
 }

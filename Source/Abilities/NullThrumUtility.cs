@@ -204,7 +204,7 @@ namespace OMW_Samhaphage
             NullThrumAbilityType.Bootleg,
             NullThrumResourceType.ResourceTypeTrait,
             NullThrumResonanceType.ResonanceTypeDebit,
-            NullThrumMathType.MathTypeOffset, 15.0f);
+            NullThrumMathType.MathTypeOffset, 20.0f);
 
         // flat cost: change xenotype
         public NullThrumAbilityProps transpose = new NullThrumAbilityProps(
@@ -415,7 +415,7 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Sample:
                     return $"{caster} steals cosmetic/appearance genes from {victim}.";
                 case NullThrumAbilityType.Bootleg:
-                    return $"{caster} steals selected traits from {victim}. Lethal to {victim}.";
+                    return $"{caster} steals selected traits from {victim}.";
                 case NullThrumAbilityType.Crosstalk:
                     return $"{caster} swaps random xenogenes with {victim}.";
                 case NullThrumAbilityType.Resurrect:

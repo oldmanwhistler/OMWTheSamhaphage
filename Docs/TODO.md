@@ -8,8 +8,6 @@
 
 * Disable AI generated art
 * Add several presets for balance: default, story mode, hurt me daddy
-* Allow infinite resurrection.
-* A mod setting that shows the disabled genes in selected methods
 * A mod setting to control the time of silent servitude and dissonance
 
 ## BALANCE
@@ -35,10 +33,6 @@
 * resonance level should reduce the time of genetic dissonance
 
 ## UI
-
-* Need to correct the "resonance cost count" and make it more obvious
-* MaxSelection isn't an accurate total
-
 
 ## Cradlemold
 

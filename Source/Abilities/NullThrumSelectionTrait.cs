@@ -13,6 +13,8 @@ namespace OMW_Samhaphage
 
         public List<TraitPlus> traits;
 
+        public List<TraitPlus> unselectableTraits;
+
         protected abstract float ResonanceTotalMultiplier { get; }
 
         // Abstract methods
@@ -47,6 +49,19 @@ namespace OMW_Samhaphage
             {
                 plus.value = this.TraitValue(plus.trait);
             }
+
+            // Build a list of all the traits that could not be selected
+            List<Trait> traitsThatCantBeSelected = new List<Trait>();
+            foreach (Trait trait in source.story.traits.allTraits)
+            {
+                if (!traitsToSelectFrom.Contains(trait))
+                {
+                    traitsThatCantBeSelected.Add(trait);
+                }
+            }
+
+            List<TraitDef> conflictDefs2 = new List<TraitDef>();
+            this.unselectableTraits = TraitPlusUtility.ConvertToTraitPlus(source, traitsThatCantBeSelected, conflictDefs2);
         }
 
         public bool ResonanceDebit(TraitPlus plus)
