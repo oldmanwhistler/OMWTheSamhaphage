@@ -175,10 +175,6 @@ namespace OMW_Samhaphage
                     Text.Anchor = TextAnchor.MiddleRight;
                     GUI.color = Color.white;
 
-                    Widgets.Label(valueRect, plus.value.ToString("F1"));
-                    GUI.color = Color.white;
-                    Text.Anchor = TextAnchor.MiddleLeft;
-
                     curY += 40f;
                 }
             }
