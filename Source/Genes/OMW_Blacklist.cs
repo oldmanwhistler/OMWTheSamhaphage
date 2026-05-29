@@ -108,6 +108,8 @@ namespace OMW_Samhaphage
             myBlacklistStrings.Add("Gene_Trait_Kind_0");
             // WVC
             myBlacklistStrings.Add("WVC_Traitless");
+            myBlacklistStrings.Add("WVC_Chimera_NullifiedLimit");
+            myBlacklistStrings.Add("WVC_Chimera_GreatlyDecreasedLimit");
             // VRE
             myBlacklistStrings.Add("VRE_GermlineReimplanter");
             // AG
@@ -128,7 +130,12 @@ namespace OMW_Samhaphage
             myBlacklistStrings.Add("Gene_Trait_WDN_Warden_0");
             myBlacklistStrings.Add("Gene_Trait_WAR_Warrior_0");
             myBlacklistStrings.Add("Gene_Trait_Worldheart_0");
-            
+            // Isekai
+            myBlacklistStrings.Add("Gene_Trait_Isekai_Rank");
+            myBlacklistStrings.Add("Gene_Trait_HVT_TTraitLocust_0");
+            myBlacklistStrings.Add("Gene_Trait_HVT_TTraitWraith_0");
+
+
             foreach (GeneDef geneDef in DefDatabase<GeneDef>.AllDefs)
             {
                 BlacklistGene bl = new BlacklistGene(geneDef);
