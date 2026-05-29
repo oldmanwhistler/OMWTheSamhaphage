@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using RimWorld;
 using Verse;
 using UnityEngine;
+using System.Linq; // Added for LINQ operations
 
 namespace OMW_Samhaphage
 {
@@ -68,33 +70,129 @@ namespace OMW_Samhaphage
             return 0;
         }
 
-        public static float GeneResonanceValueArchite(GeneDef geneDef)
+        public static float CalculateGenePowerValue(GeneDef geneDef)
         {
-            return geneDef.biostatArc * 10f;
-        }
+            // Accessing RimWorld's internal biostats
+            float comp = geneDef.biostatCpx;
+            float meta = geneDef.biostatMet;
+            float arch = geneDef.biostatArc;
 
-        public static float GeneResonanceValueComplexity(GeneDef geneDef)
-        {
-            return geneDef.biostatCpx * 2f;
-        }
+            // Compute the power scale
+            float rawValue = 2f + (((comp * 4f) - (meta * 2f) + (arch * 8f)) * Mathf.Sqrt(geneDef.marketValueFactor) / 2.5f);
 
-        public static float GeneResonanceValueMetabolism(GeneDef geneDef)
-        {
-            return ((geneDef.biostatMet < 0) ? (geneDef.biostatMet * -1.5f) : (geneDef.biostatMet * -1f));
+            return rawValue;
         }
 
         public static float GeneResonanceValue(GeneDef geneDef)
         {
-            // Archite is the primary anchor (Max 30)
-            float arcWeight = GeneResonanceValueArchite(geneDef);
-            // Complexity is the signal density (Max 10)
-            float cpxWeight = GeneResonanceValueComplexity(geneDef);
-            // Metabolism is the entropic stability. Negative (high power) costs more to stabilize.
-            float metWeight = GeneResonanceValueMetabolism(geneDef);
-
-            // negative values become 1
-            return Mathf.Max(arcWeight + cpxWeight + metWeight, 1f);
+            if (geneDef == null) return 0.1f;
+            float pv = CalculateGenePowerValue(geneDef);
+            if (pv < 0f)
+            {
+                pv = 0.1f;
+            }
+            return pv;
         }
 
+        public static float TraitNormalize(float value)
+        {
+            float factor;
+            float absVal = Mathf.Abs(value);
+            if (absVal == 0f) factor = 1f;
+            else if (absVal <= 0.0001f) factor = 100000f;
+            else if (absVal <= 0.001f) factor = 10000f;
+            else if (absVal <= 0.01f) factor = 1000f;
+            else if (absVal <= 0.1f) factor = 100f;
+            else if (absVal <= 1f) factor = 10f;
+            else if (absVal <= 10f) factor = 1f;
+            else if (absVal <= 100f) factor = 0.1f;
+            else if (absVal <= 1000f) factor = 0.01f;
+            else if (absVal <= 10000f) factor = 0.001f;
+            else if (absVal <= 100000f) factor = 0.0001f;
+            else if (absVal <= 1000000f) factor = 0.00001f;
+            else factor = 0.000001f;
+            return value * factor;
+        }
+        public static float CalculateTraitOffsetSum(TraitDegreeData degree)
+        {
+            if (degree.statOffsets.NullOrEmpty()) return 0f;
+            float total = 0f;
+            foreach (StatModifier offset in degree.statOffsets)
+            {
+                total += TraitNormalize(offset.value);
+            }
+            return total;
+        }
+
+        public static float CalculateTraitFactorSum(TraitDegreeData degree)
+        {
+            if (degree.statFactors.NullOrEmpty()) return 0f;
+            float total = 0f;
+            foreach (StatModifier offset in degree.statFactors)
+            {
+                total += TraitNormalize(offset.value);
+            }
+            return total;
+        }        
+
+        public static float CalculateTraitPowerValue(TraitDegreeData degree)
+        {
+            float marketValue = degree.marketValueFactorOffset; // MVO in csv file
+            float offsetSum = CalculateTraitOffsetSum(degree); // OFFSET_SUM in csv file
+            float factorSum = CalculateTraitFactorSum(degree); // FACTOR_SUM in csv file
+            int skillSum = degree.skillGains.NullOrEmpty() ? 0 : degree.skillGains.Sum(s => 10*s.amount); // SKILL_SUM in csv file
+            float hungerFactor = TraitNormalize(degree.hungerRateFactor); // HUNGER in csv file
+            float painOffset = TraitNormalize(degree.painOffset); // PAIN_OFFSET in csv file
+            float painFactor = TraitNormalize(degree.painFactor); // PAIN_FACTOR in csv file           
+            float hungerImpact = (hungerFactor - 10f) * -50f; // Penalizes hunger > 10, rewards hunger < 10
+            float painImpact = (painOffset * -100f) + ((painFactor - 10f) * -40f);
+            float rawPower = (marketValue * 300f) + (offsetSum * 50f) + (skillSum * 50f) + (factorSum * 50) +
+                             hungerImpact + painImpact;
+            
+
+            // 1. Define Pivot Points
+            // The Pivot is where the formula starts compressing (roughly rawPower = 5000, PV = 25.35)
+            float pivotRaw = 5000f;
+            float slope1 = 0.004269513f;
+            float intercept = 4.0f;
+
+            // Calculate the Pivot PV based on the original linear formula
+            float pivotPV = (slope1 * pivotRaw) + intercept;
+
+            // 2. Define the Target Cap
+            // We want rawPower 24000 to equal 60
+            float targetMax = 60.0f;
+            float rawMax = 24000.0f;
+            float slope2 = (targetMax - pivotPV) / (rawMax - pivotRaw);
+
+            // 3. Piecewise Calculation
+            float pv;
+            if (rawPower <= pivotRaw)
+            {
+                pv = (slope1 * rawPower) + intercept;
+            }
+            else
+            {
+                pv = pivotPV + (slope2 * (rawPower - pivotRaw));
+            }
+            return pv;
+        }        
+
+        public static float TraitResonanceValue(Trait trait)
+        {
+            if (trait == null || trait.CurrentData == null) return 0.1f;
+            return TraitResonanceValue(trait.CurrentData);
+        }
+
+        public static float TraitResonanceValue(TraitDegreeData data)
+        {
+            float pv = CalculateTraitPowerValue(data);
+            // set the negative values to positive so everything is positive
+            if (pv < 0f)
+            {
+                pv = 0.1f;
+            }
+            return pv;
+        }
     }
 }
