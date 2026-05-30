@@ -1,5 +1,6 @@
 using System;
 using Verse;
+using System.Collections.Generic;
 
 namespace OMW_Samhaphage
 {
@@ -119,6 +120,12 @@ namespace OMW_Samhaphage
 
     public struct NullThrumAbilities
     {
+        public List<NullThrumAbilityProps> listGeneMulti = new List<NullThrumAbilityProps>();
+        public List<NullThrumAbilityProps> listGeneFixed = new List<NullThrumAbilityProps>();
+        public List<NullThrumAbilityProps> listTraitMulti = new List<NullThrumAbilityProps>();
+        public List<NullThrumAbilityProps> listOther = new List<NullThrumAbilityProps>();
+
+
         // flat gain: apply scoured mind and silent servitude once per pawn
         public NullThrumAbilityProps flatten = new NullThrumAbilityProps(
             NullThrumAbilityType.Flatten,
@@ -250,6 +257,25 @@ namespace OMW_Samhaphage
 
         public NullThrumAbilities()
         {
+            listGeneFixed.Add(flatten);
+            listGeneMulti.Add(scrub);
+            listGeneMulti.Add(nullify);
+            listGeneMulti.Add(retune);
+            listGeneMulti.Add(harrow);
+            listGeneFixed.Add(transpose);
+            listGeneFixed.Add(infest);
+            listGeneFixed.Add(enwomb);
+            listGeneMulti.Add(compress);
+            listGeneMulti.Add(attenuate);
+            listGeneMulti.Add(sample);
+            listGeneMulti.Add(crosstalk);
+            listTraitMulti.Add(bootleg);
+            listOther.Add(unmute);
+            listOther.Add(mute);
+            listOther.Add(resurrect);
+            listOther.Add(hallowbound);
+            listOther.Add(stun);
+            listOther.Add(scrubCarcinoma);
         }
 
     }

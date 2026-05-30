@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Collections.Generic;
 using System.Text;
 using RimWorld;
-using UnityEngine;
-using System.Xml.Linq; // Added for XML generation
 using System.Linq; // Added for LINQ operations
 using Verse;
 
@@ -162,12 +160,110 @@ namespace OMW_Samhaphage
             }
         }
 
+        private static void GeneMultipliers()
+        {
+            try
+            {
+                string path = Path.Combine(GenFilePaths.SaveDataFolderPath,
+                    "OMW_Samhaphage_Report_Resonance_Gene_Abilities.csv");
+                StringBuilder sb = new StringBuilder();
+
+                NullThrumAbilities ab = new NullThrumAbilities();
+
+                List<string> header= new List<string>();
+                List<string> equals = new List<string>();
+                foreach (NullThrumAbilityProps prop in ab.listGeneMulti)
+                {
+                    header.Add(NullThrumUtility.ToString(prop.abilityType));
+                    equals.Add($"{prop.abilityType},{prop.value}");
+                }
+                sb.AppendLine(string.Join(",", equals));
+                
+                // Header row
+                sb.AppendLine($"TYPE,DEFNAME,RES,{string.Join(",", header)}");
+                foreach (GeneDef gene in DefDatabase<GeneDef>.AllDefs)
+                {
+                    List<string> values = new List<string>();
+                    float totalResonanceValue = ResonanceUtility.GeneResonanceValue(gene);
+                    foreach (NullThrumAbilityProps prop in ab.listGeneMulti)
+                    {
+                        float value = totalResonanceValue * prop.value;
+                        values.Add(value.ToString("F2"));
+                    }
+
+                    sb.AppendLine(
+                        $"GENE,\"{gene.defName}\",{totalResonanceValue},{string.Join(",", values)}");
+                }
+
+                File.WriteAllText(path, sb.ToString());
+                Log.Message($"{Prefix} Exported trait resonance report to {path}");
+                Messages.Message($"{Prefix} Exported resonance report to {path}", MessageTypeDefOf.TaskCompletion,
+                    false);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Error($"{Prefix} Error: Failed to export traits: " + ex.Message);
+            }
+        }
+
+        private static void TraitMultipliers()
+        {
+            try
+            {
+                string path = Path.Combine(GenFilePaths.SaveDataFolderPath,
+                    "OMW_Samhaphage_Report_Resonance_Trait_Abilities.csv");
+                StringBuilder sb = new StringBuilder();
+
+                NullThrumAbilities ab = new NullThrumAbilities();
+
+                List<string> header = new List<string>();
+                List<string> equals = new List<string>();
+                foreach (NullThrumAbilityProps prop in ab.listTraitMulti)
+                {
+                    header.Add(NullThrumUtility.ToString(prop.abilityType));
+                    equals.Add($"{prop.abilityType},{prop.value}");
+                }
+
+                sb.AppendLine(string.Join(",", equals));
+
+                // Header row
+                sb.AppendLine($"TYPE,DEFNAME,RES,{string.Join(",", header)}");
+                foreach (TraitDef trait in DefDatabase<TraitDef>.AllDefs)
+                {
+                    foreach (TraitDegreeData degree in trait.degreeDatas)
+                    {
+                        List<string> values = new List<string>();
+                        float totalResonanceValue = ResonanceUtility.TraitResonanceValue(degree);
+                        foreach (NullThrumAbilityProps prop in ab.listTraitMulti)
+                        {
+                            float value = totalResonanceValue * prop.value;
+                            values.Add(value.ToString("F2"));
+                        }
+
+                        sb.AppendLine(
+                            $"TRAIT,\"{degree.label}_{degree.degree}\",{totalResonanceValue},{string.Join(",", values)}");
+                    }
+                }
+
+                File.WriteAllText(path, sb.ToString());
+                Log.Message($"{Prefix} Exported trait resonance report to {path}");
+                Messages.Message($"{Prefix} Exported resonance report to {path}", MessageTypeDefOf.TaskCompletion,
+                    false);
+            }
+            catch (System.Exception ex)
+            {
+                Log.Error($"{Prefix} Error: Failed to export traits: " + ex.Message);
+            }
+        }        
+
 
         public static void ExportReportsResonance()
         {
             Gene();
             Trait();
             Resonance();
+            GeneMultipliers();
+            TraitMultipliers();
         }
     }
 }
