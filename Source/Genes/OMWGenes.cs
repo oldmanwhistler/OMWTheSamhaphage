@@ -57,147 +57,124 @@ namespace OMW_Samhaphage
             }
             return metabolism;
         }
-
-        private static void PrependXenotypeGenesToEndogenes(Pawn pawn, XenotypeDef xenotype)
-        {
-            List<GeneDef> genesToAdd = xenotype.AllGenes;
-            PrependGenesToEndogenes(pawn, genesToAdd);
-        }
-
-        private static void PrependGenesToEndogenes(Pawn pawn, List<GeneDef> genesToAdd)
-        {
-            List<Gene> oldGenes = pawn.genes.GenesListForReading;
-
-            // We start at the last index and move toward 0
-            for (int i = oldGenes.Count - 1; i >= 0; i--)
-            {
-                Gene gene = oldGenes[i];
-                if (!genesToAdd.Contains(gene.def)) genesToAdd.Add(gene.def);
-                pawn.genes.RemoveGene(gene);
-            }
-
-            foreach (GeneDef gene in genesToAdd)
-            {
-                pawn.genes.AddGene(gene, false);
-            }
-        }        
+   
 
         public static void XenogenesToEndogenes(Pawn pawn)        
         {
-            if (pawn == null || pawn.genes == null) return;
+            if (pawn?.genes == null) return;
 
-            if (pawn.genes.Xenogenes.Count == 0) return;
+            List<Gene> xenoList = pawn.genes.Xenogenes;
+            List<Gene> endoList = pawn.genes.Endogenes;
 
-            // 1. Snapshot the Xenogenes (copy to avoid modification-during-enumeration errors)
-            List<GeneDef> genesToMove = new List<GeneDef>();
-            foreach (Gene xenoGene in pawn.genes.Xenogenes)
+            if (xenoList.Count == 0) return;
+
+            // Move the actual Gene objects directly between lists.
+            // This bypasses the Add/Remove lifecycle (PostAdd/PostRemove).
+            for (int i = xenoList.Count - 1; i >= 0; i--)
             {
-                genesToMove.Add(xenoGene.def);
+                Gene gene = xenoList[i];
+                xenoList.RemoveAt(i);
+                endoList.Insert(0, gene); // Prepending as per your original logic
             }
 
-            // 2. Remove all Xenogenes
-            pawn.genes.ClearXenogenes();
-
-            PrependGenesToEndogenes(pawn, genesToMove);
-
-            Log.Debug($"{pawn.LabelShort}.XenogenesToEndogenes: Moved {genesToMove.Count} xenogenes to endogenes");
+            Refresh(pawn);
+            Log.Debug($"{pawn.LabelShort}.XenogenesToEndogenes: Manually moved xenogenes to endogenes.");
         }
 
         public static void PrependXenogenes(Pawn pawn, List<GeneDef> genesToAdd)
         {
-            if (pawn == null || genesToAdd.Count == 0) return;
+            if (pawn?.genes == null || genesToAdd.NullOrEmpty()) return;
 
-            Log.Debug($"{pawn.LabelShort}.PrependXenogenes: pawn has {pawn.genes.Xenogenes.Count}");
+            List<Gene> xenoList = pawn.genes.Xenogenes;
 
-            Log.Debug($"{pawn.LabelShort}.PrependXenogenes: step 1");
-
-            List<Gene> genesToRemove = new List<Gene>();
-            foreach (Gene xenoGene in pawn.genes.Xenogenes)
-            {
-                genesToRemove.Add(xenoGene);
-            }
-            Log.Debug($"{pawn.LabelShort}.PrependXenogenes: step 2");
-
-            foreach (Gene gene in genesToRemove)
-            {
-                pawn.genes.RemoveGene(gene);
-            }
-
-            Log.Debug($"{pawn.LabelShort}.PrependXenogenes: step 3");
-
-            int count = 0;
+            // 1. Add new genes normally (they append to the end)
             foreach (GeneDef geneDef in genesToAdd)
             {
                 pawn.genes.AddGene(geneDef, xenogene: true);
-                count++;
             }
 
-            Log.Debug($"{pawn.LabelShort}.PrependXenogenes: step 4");
-
-            foreach (Gene gene in genesToRemove)
+            // 2. Reorder: Move the newly added genes from the back to the front.
+            // This preserves the existing Gene instances and their internal state.
+            for (int i = 0; i < genesToAdd.Count; i++)
             {
-                pawn.genes.AddGene(gene.def, xenogene: true);
+                Gene added = xenoList[xenoList.Count - 1];
+                xenoList.RemoveAt(xenoList.Count - 1);
+                xenoList.Insert(0, added);
             }
 
-            Log.Debug($"{pawn.LabelShort}.PrependXenogenes: step 5");
-
-            Log.Debug($"{pawn.LabelShort}.PrependXenogenes: Added {count} genes to the front of xenogenes");
             Refresh(pawn);
+            Log.Debug($"{pawn.LabelShort}.PrependXenogenes: Prepended {genesToAdd.Count} xenogenes.");
         }
         
-        public static void AddXenotype(Pawn pawn, XenotypeDef xenotype)
+        public static void AddXenotype(Pawn pawn, XenotypeDef targeXenotype)
         {
-            if (pawn == null || xenotype == null) return;
+            if (pawn?.genes == null || targeXenotype == null) return;
 
-            // Update the label so the UI shows the correct Xenotype name
-            pawn.genes.SetXenotypeDirect(xenotype);
-
-            List<Gene> genesToRemove = new List<Gene>();
-            foreach (Gene xenoGene in pawn.genes.Xenogenes)
-            {
-                genesToRemove.Add(xenoGene);
-            }
-
-            foreach (Gene gene in genesToRemove)
-            {
-                pawn.genes.RemoveGene(gene);
-            }     
-
-            int count = 0;            
-            // Add all genes from the new xenotype as Xenogenes
-            foreach (GeneDef geneDef in xenotype.AllGenes)
-            {
-                pawn.genes.AddGene(geneDef, xenogene: true);
-                count++;
-            }
-            foreach (Gene gene in genesToRemove)
-            {
-                pawn.genes.AddGene(gene.def, xenogene: true);
-            }     
-
-            Refresh(pawn);
-            Log.Debug($"{pawn.LabelShort}.AddXenotype: Added {count} genes from xenotype {xenotype.LabelCap} to the front of xenogenes");
-        }
-
-        public static void RemoveXenotype(Pawn pawn, XenotypeDef xenotype)
-        {
-            if (pawn == null || xenotype == null) return;
+            List<Gene> xenoList = pawn.genes.Xenogenes;
 
             int count = 0;
-            foreach (GeneDef geneDef in xenotype.AllGenes)
+            // 2. Add the genes from the xenotype
+            foreach (GeneDef geneDef in targeXenotype.AllGenes)
             {
-                Gene gene = pawn.genes.GetGene(geneDef);
-                if (gene != null)
+                if (!pawn.genes.HasActiveGene(geneDef))
                 {
-                    pawn.genes.RemoveGene(gene);
+                    pawn.genes.AddGene(geneDef, xenogene: true);
                     count++;
                 }
             }
 
-            // this sets the xenotype name
-            pawn.genes.SetXenotypeDirect(null);
-            Refresh(pawn);
-            Log.Debug($"{pawn.LabelShort}.RemoveXenotype: Removed {count} genes and xenotype {xenotype.LabelCap}");
+            if (count > 0)
+            {
+                int numAdded = count;
+                for (int i = 0; i < numAdded; i++)
+                {
+                    Gene added = xenoList[xenoList.Count - 1];
+                    xenoList.RemoveAt(xenoList.Count - 1);
+                    xenoList.Insert(0, added);
+                }
+
+                pawn.genes.SetXenotypeDirect(targeXenotype);
+                Refresh(pawn);
+                Log.Debug(
+                    $"{pawn.LabelShort}.AddXenotype: Applied xenotype {targeXenotype.defName} while preserving existing gene state.");
+            }
+            else
+            {
+                Log.Debug(
+                    $"{pawn.LabelShort}.AddXenotype: tried to apply xenotype {targeXenotype.defName} but no genes were added.");
+            }
+        }
+
+        private static void RemoveXenotype(Pawn pawn, XenotypeDef sourceXenotype, XenotypeDef targetXenotype)
+        {
+            if (pawn == null || sourceXenotype == null) return;
+
+            int count = 0;
+            foreach (GeneDef geneDef in sourceXenotype.AllGenes)
+            {
+                Gene gene = pawn.genes.GetGene(geneDef);
+                if (gene != null)
+                {
+                    // only remove the source xenotype genes that the target xenotype doesn't have
+                    // this is to avoid retriggering the PostAdd / PostRemove for the genes.
+                    if (!targetXenotype.AllGenes.Contains(gene.def))
+                    {
+                        pawn.genes.RemoveGene(gene);
+                        count++;
+                    }
+                }
+            }
+
+            if (count > 0)
+            {
+                // this sets the xenotype name
+                pawn.genes.SetXenotypeDirect(null);
+                Refresh(pawn);
+                Log.Debug($"{pawn.LabelShort}.RemoveXenotype: Removed {count} genes and xenotype {sourceXenotype.LabelCap}");
+            }
+            else {
+                Log.Debug($"{pawn.LabelShort}.RemoveXenotype: no genes to remove from xenotype {sourceXenotype.LabelCap} because they are all in {targetXenotype.LabelCap}");                                
+            }
         }
 
 
@@ -219,12 +196,11 @@ namespace OMW_Samhaphage
         {
             if (!CanChangeXenotype(pawn, targetXenotype)) return false;
 
-            // Correctly initialize the local variable
             XenotypeDef sourceXenotype = pawn.genes?.Xenotype;
 
             Log.Debug($"{pawn.LabelShort}.ChangeXenotype: Start changing from {sourceXenotype?.LabelCap ?? "null"} to {targetXenotype?.LabelCap ?? "null"}");
             
-            if (removeSourceXenotype && (sourceXenotype != null)) RemoveXenotype(pawn, sourceXenotype);
+            if (removeSourceXenotype && (sourceXenotype != null)) RemoveXenotype(pawn, sourceXenotype, targetXenotype);
             XenogenesToEndogenes(pawn);
             if (targetXenotype != null) AddXenotype(pawn, targetXenotype);
 
