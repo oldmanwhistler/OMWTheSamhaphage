@@ -26,18 +26,26 @@ namespace OMW_Samhaphage
         // Concrete methods
         public NullThrumResonanceType ResonanceType => NullThrumUtility.ResonanceType(this.AbilityType);
         
-        protected virtual float TraitValue(Trait trait)
+        protected float TraitValue(Trait trait)
         {
-            // Traits don't have biostats. Defaulting to a flat value of 1.0 per trait 
-            // adjusted by the specific ability multiplier.
-            return 1.0f * this.ResonanceTotalMultiplier;
-        }
+            if (trait == null)
+            {
+                Log.Error(
+                    $"{Name}::TraitValue() called with a null TRait");
+                return 0f;
+            }
 
-        protected virtual bool TraitIsWorthless(Trait trait)
-        {
-            // Placeholder for trait-specific logic (e.g. ignoring 'neutral' traits)
-            return false;
-        }
+            float value = ResonanceUtility.TraitResonanceValue(trait);
+            float final = value * this.ResonanceTotalMultiplier;
+            Log.Debug($"{Name}::TraitValue({trait.Label}) = {final}   ({value} * {this.ResonanceTotalMultiplier})");
+            // everywhere else it is expected that TraitValue returns a positive numbers
+            if (final < 0)
+            {
+                final = 0.1f;
+            }
+
+            return final;
+        }        
 
         // TraitPlus is a wrapper class that has useful info for the UI
         private void SetTraitsToSelectFromPlus(Pawn source, Pawn dest)

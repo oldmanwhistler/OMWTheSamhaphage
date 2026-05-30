@@ -7,7 +7,7 @@ namespace OMW_Samhaphage
     public class TraitPlus
     {
         public Trait trait;
-        public float value = 1f;
+        public float value = 0f;
         public Pawn pawn;
         public string destinationConflictStr = "";
 

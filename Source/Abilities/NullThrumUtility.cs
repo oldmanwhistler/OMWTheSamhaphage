@@ -211,7 +211,7 @@ namespace OMW_Samhaphage
             NullThrumAbilityType.Bootleg,
             NullThrumResourceType.ResourceTypeTrait,
             NullThrumResonanceType.ResonanceTypeDebit,
-            NullThrumMathType.MathTypeOffset, 20.0f);
+            NullThrumMathType.MathTypeOffset, 1.8f);
 
         // flat cost: change xenotype
         public NullThrumAbilityProps transpose = new NullThrumAbilityProps(
