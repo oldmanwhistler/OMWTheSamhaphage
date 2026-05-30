@@ -132,8 +132,7 @@ namespace OMW_Samhaphage
             myBlacklistStrings.Add("Gene_Trait_Worldheart_0");
             // Isekai
             myBlacklistStrings.Add("Gene_Trait_Isekai_Rank");
-            myBlacklistStrings.Add("Gene_Trait_HVT_TTraitLocust_0");
-            myBlacklistStrings.Add("Gene_Trait_HVT_TTraitWraith_0");
+            myBlacklistStrings.Add("Gene_Trait_HVT_TTrait");
 
 
             foreach (GeneDef geneDef in DefDatabase<GeneDef>.AllDefs)
