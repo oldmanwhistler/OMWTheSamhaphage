@@ -49,6 +49,8 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return false;
 
+            OMWGenes.Refresh(victim);
+
             if (!OMWGenes.HasScouredMind(victim))
             {
                 Flatten.ApplyPawn(victim, caster);
@@ -75,10 +77,12 @@ namespace OMW_Samhaphage
             bool activated = false;
             foreach (GenePlus plus in selector.genes)
             {
-                if (selector.ResonanceDebit(plus))
+                if (plus.gene != null && victim.genes.GenesListForReading.Contains(plus.gene) && selector.ResonanceDebit(plus))
                 {
-                    victim.genes.RemoveGene(plus.gene);
-                    victim.genes.AddGene(plus.gene.def, false);
+                    // Atomic Move: Manipulating lists directly prevents 3rd party mods from reacting to a "removed" gene 
+                    // before the "added" gene exists, which was causing the Trait conflict NRE.
+                    victim.genes.Xenogenes.Remove(plus.gene);
+                    victim.genes.Endogenes.Insert(0, plus.gene);
                     Log.Debug($"Compressed {plus.gene.LabelCap} on {victim.LabelShort}");
                     activated = true;
                 }
@@ -87,6 +91,7 @@ namespace OMW_Samhaphage
             if (activated)
             {
                 OMWGenes.ApplyDissonance(victim, caster);
+                OMWGenes.Refresh(victim);
             }
         }
 

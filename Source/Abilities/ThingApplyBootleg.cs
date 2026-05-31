@@ -84,7 +84,7 @@ namespace OMW_Samhaphage
             {
                 // half-price sale if the victim is alive.
                 if (!victim.Dead) plus.value = plus.value / 2f;
-                if (selector.ResonanceDebit(plus))
+                if (plus.trait != null && (victim.story?.traits?.allTraits.Contains(plus.trait) ?? false) && selector.ResonanceDebit(plus))
                 {
                     victim.story?.traits?.RemoveTrait(plus.trait);
                     // Create a new trait instance for the caster to avoid reference bugs
@@ -99,6 +99,9 @@ namespace OMW_Samhaphage
         public override bool ApplyPawn(Pawn victim, Pawn caster)
         {
             if (victim == null || caster == null) return false;
+
+            OMWGenes.Refresh(victim);
+
             if (!OMWGenes.HasScouredMind(victim))
             {
                 Flatten.ApplyPawn(victim, caster);
@@ -111,10 +114,13 @@ namespace OMW_Samhaphage
 
             Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selectorBootleg, (selectedList) =>
             {
-                if (ApplyBootleg(victim, caster, selectorBootleg, selectedList))
+                LongEventHandler.ExecuteWhenFinished(() =>
                 {
-                    value = true;
-                }
+                    if (ApplyBootleg(victim, caster, selectorBootleg, selectedList))
+                    {
+                        // State updates handled inside ApplyBootleg
+                    }
+                });
             }));
 
             return value;

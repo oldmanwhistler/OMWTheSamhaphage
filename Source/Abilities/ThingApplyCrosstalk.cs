@@ -48,6 +48,9 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return false;
 
+            OMWGenes.Refresh(victim);
+            OMWGenes.Refresh(caster);
+
            if (!OMWGenes.HasScouredMind(victim))
             {
                 Flatten.ApplyPawn(victim, caster);
@@ -75,7 +78,7 @@ namespace OMW_Samhaphage
                     GenePlus plus1 = selector1.genes.RandomElement();
                     selector1.genes.Remove(plus1);
 
-                    if (selector1.ResonanceDebit(plus1))
+                    if (plus1.gene != null && victim.genes.GenesListForReading.Contains(plus1.gene) && selector1.ResonanceDebit(plus1))
                     {
                         victim.genes.RemoveGene(plus1.gene);
                         genesFromSource.Add(plus1.gene.def);
@@ -92,7 +95,7 @@ namespace OMW_Samhaphage
                     GenePlus plus2 = selector2.genes.RandomElement();
                     selector2.genes.Remove(plus2);
 
-                    if (selector2.ResonanceDebit(plus2))
+                    if (plus2.gene != null && caster.genes.GenesListForReading.Contains(plus2.gene) && selector2.ResonanceDebit(plus2))
                     {
                         caster.genes.RemoveGene(plus2.gene);
                         genesFromDest.Add(plus2.gene.def);
@@ -112,9 +115,12 @@ namespace OMW_Samhaphage
                 Log.Debug($"Crosstalk exchanged {genesFromSource.Count} xenogenes from {victim.LabelShort} with {genesFromDest.Count} xenogenes from {caster.LabelShort}");
                 OMWGenes.ApplyDissonance(victim, caster);
                 PawnApplyRetune retune = new PawnApplyRetune();
-                retune.ApplyPawn(caster, caster);            
+                retune.ApplyPawn(caster, caster);
+                OMWGenes.Refresh(victim);
+                OMWGenes.Refresh(caster);
             }
-
+            onComplete?.Invoke();
+            
             return true;
         }
 

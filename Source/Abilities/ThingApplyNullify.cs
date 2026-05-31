@@ -44,6 +44,8 @@ namespace OMW_Samhaphage
             Log.Debug($"START::Nullify::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             if (victim == null || caster == null) return false;
 
+            OMWGenes.Refresh(victim);
+
             if (!OMWGenes.HasScouredMind(victim))
             {
                 Flatten.ApplyPawn(victim, caster);
@@ -69,10 +71,13 @@ namespace OMW_Samhaphage
                 bool activated = false;
                 foreach (GenePlus plus in selectedList)
                 {
-                    selector.ResonanceCredit(plus);
-                    victim.genes.RemoveGene(plus.gene);
-                    Log.Debug($"Nullified {plus.gene.LabelCap} from {victim.LabelShort}");
-                    activated = true;
+                    if (plus.gene != null && victim.genes.GenesListForReading.Contains(plus.gene))
+                    {
+                        selector.ResonanceCredit(plus);
+                        victim.genes.RemoveGene(plus.gene);
+                        Log.Debug($"Nullified {plus.gene.LabelCap} from {victim.LabelShort}");
+                        activated = true;
+                    }
                 }
 
                 if (activated)
@@ -81,6 +86,7 @@ namespace OMW_Samhaphage
                     PawnApplyRetune retune = new PawnApplyRetune();
                     retune.ApplyPawn(caster, caster);
                     OMWGenes.ApplyDissonance(victim, caster);
+                    OMWGenes.Refresh(victim);
                 }
             }));
             Log.Debug($"DONE::Nullify::OpenNullifyWindow({victim.LabelShort}, {caster.LabelShort})");

@@ -49,6 +49,8 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return false;
 
+            OMWGenes.Refresh(victim);
+
             SelectionSample selector = new SelectionSample(caster, victim, caster);
 
             if (selector.genes.Count == 0)
@@ -64,17 +66,21 @@ namespace OMW_Samhaphage
                 bool activated = false;
                 foreach (GenePlus plus in selectedList)
                 {
-                    selector.ResonanceCredit(plus);
-                    victim.genes.RemoveGene(plus.gene);
-                    caster.genes.AddGene(plus.gene.def, true);
-                    Log.Debug($"Stole gene {plus.gene.LabelCap} from {victim.LabelShort}");
-                    activated = true;
+                    if (plus.gene != null && victim.genes.GenesListForReading.Contains(plus.gene))
+                    {
+                        selector.ResonanceCredit(plus);
+                        victim.genes.RemoveGene(plus.gene);
+                        caster.genes.AddGene(plus.gene.def, true);
+                        Log.Debug($"Stole gene {plus.gene.LabelCap} from {victim.LabelShort}");
+                        activated = true;
+                    }
                 }
                 if (activated)
                 {
                     PawnApplyRetune retune = new PawnApplyRetune();
                     retune.ApplyPawn(caster, caster);
-                    value = true;
+                    OMWGenes.Refresh(victim);
+                    OMWGenes.Refresh(caster);
                 }
             }));
             return value;

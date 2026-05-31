@@ -38,6 +38,8 @@ namespace OMW_Samhaphage
             Log.Debug($"START::Flatten::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             if (victim == null || caster == null) return false;
 
+            OMWGenes.Refresh(victim);
+
             if (!victim.genes.HasActiveGene(OMW_GeneDefOf.OMW_ScouredMind) && (victim.genes != null))
             {
                 Log.Debug($"Flatten - adding Scoured Mind to {victim.LabelShort}");           

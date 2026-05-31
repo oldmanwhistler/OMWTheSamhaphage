@@ -60,6 +60,8 @@ namespace OMW_Samhaphage
             Log.Debug($"START::Harrow::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             if (victim == null || caster == null) return false;
 
+            OMWGenes.Refresh(victim);
+
             if (!OMWGenes.HasScouredMind(victim))
             {
                 Flatten.ApplyPawn(victim, caster);
@@ -85,17 +87,18 @@ namespace OMW_Samhaphage
                 bool activated = false;
                 foreach (GenePlus plus in selectedList)
                 {
-                    if (selector.ResonanceDebit(plus))
+                    if (plus.gene != null && victim.genes.GenesListForReading.Contains(plus.gene) && selector.ResonanceDebit(plus))
                     {
                         Log.Debug($"START: Harrowing by removing {plus.gene.LabelCap} from {victim.LabelShort}");
                         victim.genes.RemoveGene(plus.gene);
                         Log.Debug($"START: Harrowing by adding {plus.gene.LabelCap} to {caster.LabelShort}");
                         caster.genes.AddGene(plus.gene.def, true);
-                        Log.Debug($"DONE: Harrowing {plus.gene.LabelCap}");                    
+                        Log.Debug($"DONE: Harrowing {plus.gene.LabelCap}");
                         activated = true;
                     }
-                    else {
-                        Log.Debug($"SKIPPING: Harrowing {plus.gene.LabelCap} from {victim.LabelShort} cuz {caster.LabelShort} doesn't have enough resonance.");                                                
+                    else
+                    {
+                        Log.Debug($"SKIPPING: Harrowing {plus.gene.LabelCap} from {victim.LabelShort} cuz {caster.LabelShort} doesn't have enough resonance.");
                     }
                 }
 
@@ -105,6 +108,8 @@ namespace OMW_Samhaphage
                     PawnApplyRetune retune = new PawnApplyRetune();
                     retune.ApplyPawn(caster, caster);
                     OMWGenes.ApplyDissonance(victim, caster);
+                    OMWGenes.Refresh(victim);
+                    OMWGenes.Refresh(caster);
                 }
             }));
             Log.Debug($"DONE::Harrow::OpenHarrowWindow({victim.LabelShort}, {caster.LabelShort})");

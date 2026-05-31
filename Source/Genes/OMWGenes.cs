@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Sockets;
 using RimWorld;
 using Verse;
@@ -12,6 +13,29 @@ namespace OMW_Samhaphage
         public static void Refresh(Pawn pawn)
         {
             if (pawn == null) return;
+
+            // I saw some cases where the traits + genes for traits broke a pawn's traits.
+            if (pawn.story?.traits?.allTraits != null)
+            {
+                foreach (Trait trait in pawn.story.traits.allTraits)
+                {
+                    // Sanitize independent suppression states to prevent NREs in Harmony patches
+                    
+                    // 1. Orphaned trait-on-trait suppression
+                    if (trait.suppressedByTrait && !pawn.story.traits.allTraits.Any(other => other != trait && other.def.ConflictsWith(trait.def)))
+                    {
+                        Log.Debug($"Sanitizing orphaned suppressedByTrait flag on {trait.def.defName} for {pawn.LabelShort}");
+                        trait.suppressedByTrait = false;
+                    }
+
+                    // 2. Orphaned gene-on-trait suppression
+                    if (trait.suppressedByGene != null && (pawn.genes == null || !pawn.genes.GenesListForReading.Contains(trait.suppressedByGene)))
+                    {
+                        Log.Debug($"Sanitizing orphaned suppressedByGene reference on {trait.def.defName} for {pawn.LabelShort}");
+                        trait.suppressedByGene = null;
+                    }
+                }
+            }
 
             pawn.needs?.AddOrRemoveNeedsAsAppropriate();
             pawn.needs?.mood?.thoughts?.situational?.Notify_SituationalThoughtsDirty();
@@ -168,7 +192,8 @@ namespace OMW_Samhaphage
                 {
                     // only remove the source xenotype genes that the target xenotype doesn't have
                     // this is to avoid retriggering the PostAdd / PostRemove for the genes.
-                    if (!targetXenotype.AllGenes.Contains(gene.def))
+                    // Defensive: check for null targetXenotype
+                    if (targetXenotype == null || !targetXenotype.AllGenes.Contains(gene.def))
                     {
                         pawn.genes.RemoveGene(gene);
                         count++;

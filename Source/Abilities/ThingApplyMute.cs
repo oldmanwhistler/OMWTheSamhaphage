@@ -26,6 +26,8 @@ namespace OMW_Samhaphage
             Log.Debug($"START::Mute::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             if (victim == null || caster == null) return false;
 
+            OMWGenes.Refresh(victim);
+
             // Harvest abilities require the mind to be scoured first to remove identity interference.
             if (!OMWGenes.HasScouredMind(victim))
             {

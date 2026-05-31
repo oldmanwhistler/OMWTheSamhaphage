@@ -94,6 +94,8 @@ namespace OMW_Samhaphage
             Log.Debug($"START::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             if (victim == null || caster == null) return false;
 
+            OMWGenes.Refresh(victim);
+
             SelectionScrub selector = new SelectionScrub(caster, victim, victim);
 
             RemoveCarcinomas(victim, caster);
@@ -119,14 +121,17 @@ namespace OMW_Samhaphage
                 bool activated = false;
                 foreach (GenePlus plus in selectedList)
                 {
-                    selector.ResonanceCredit(plus);
-                    victim.genes.RemoveGene(plus.gene);
-                    Log.Debug($"Destroyed {plus.gene.LabelCap} from {victim.LabelShort}");
-                    activated = true;
+                    if (plus.gene != null && victim.genes.GenesListForReading.Contains(plus.gene))
+                    {
+                        selector.ResonanceCredit(plus);
+                        victim.genes.RemoveGene(plus.gene);
+                        Log.Debug($"Destroyed {plus.gene.LabelCap} from {victim.LabelShort}");
+                        activated = true;
+                    }
                 }
-
                 if (activated)
                 {
+                    OMWGenes.Refresh(victim);
                     value = true;
                 }
                 Log.Debug($"DONE2::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");

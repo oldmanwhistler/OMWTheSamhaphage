@@ -52,6 +52,8 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return false;
 
+            OMWGenes.Refresh(victim);
+
             if (!OMWGenes.HasScouredMind(victim))
             {
                 Flatten.ApplyPawn(victim, caster);
@@ -82,10 +84,11 @@ namespace OMW_Samhaphage
                 bool activated = false;
                 foreach (GenePlus plus in selectedList)
                 {
-                    if (selector.ResonanceDebit(plus))
+                    if (plus.gene != null && victim.genes.GenesListForReading.Contains(plus.gene) && selector.ResonanceDebit(plus))
                     {
-                        victim.genes.RemoveGene(plus.gene);
-                        victim.genes.AddGene(plus.gene.def, false);
+                        // Atomic Move: Manual list manipulation avoids the Remove/Add Harmony cascade spam
+                        victim.genes.Xenogenes.Remove(plus.gene);
+                        victim.genes.Endogenes.Insert(0, plus.gene);
                         Log.Debug($"Retuned {plus.gene.LabelCap} on {victim.LabelShort}");
                         activated = true;
                     }
@@ -94,6 +97,7 @@ namespace OMW_Samhaphage
                 if (activated)
                 {
                     OMWGenes.ApplyDissonance(victim, caster);
+                    OMWGenes.Refresh(victim);
                 }
             }));
         }
