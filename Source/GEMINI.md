@@ -48,6 +48,9 @@
 * ✅ Use 1.6 HediffDef stages system for progression
 * ❌ Avoid deprecated 1.5 and earlier fields
 * ❌ Do not use past-version XML tags (test against vanilla RimWorld 1.6 Data folder)
+* `pawn.genes.CheckForOverrides()`: Internal method; not accessible to external assemblies.
+* `pawn.genes.Notify_GenesChanged()`: Hallucinated member; does not exist on `Pawn_GeneTracker`.
+* `pawn.Notify_GenesChanged()`: Flagged as not accessible in the current project context.
 
 ## 6. Workflow Instructions
 
