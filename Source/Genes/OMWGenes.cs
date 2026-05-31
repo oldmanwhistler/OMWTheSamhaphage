@@ -34,6 +34,17 @@ namespace OMW_Samhaphage
             return pawn.genes?.Endogenes.Count ?? 0;
         }
 
+        public static int CalculateComplexity(XenotypeDef xenotype)
+        {
+            int complexity = 0;
+            foreach (GeneDef geneDef in xenotype.AllGenes)
+            {
+                complexity += geneDef.biostatCpx;
+            }
+
+            return complexity;
+        }
+
         public static int CalculateComplexity(Pawn pawn)
         {
             if (pawn?.genes == null) return 0;

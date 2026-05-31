@@ -24,15 +24,11 @@ namespace OMW_Samhaphage
             return Mathf.RoundToInt(value);
         }
 
-        public Gene_ResourceResonance() : base()
-        {
-            this.max = InitialResourceMax;
-        }
-
         public override void PostAdd()
         {
             base.PostAdd();
-            // base.PostAdd() calls Reset(), which sets Value to InitialResourceMax (200).
+            // Initialize max from settings immediately
+            this.max = InitialResourceMax;
             // We override that here to ensure the pawn starts with a low random amount instead.
             Value = Rand.Range(30f, 50f);
         }

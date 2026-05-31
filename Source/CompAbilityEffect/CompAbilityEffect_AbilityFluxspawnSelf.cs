@@ -34,6 +34,9 @@ namespace OMW_Samhaphage
                 return;
             }
 
+            ability = new ThingApplyScrub();
+            items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
+
             if (xeno == OMW_XenotypeDefOf.omw_fluxspawn_brute)
             {
                 ability = new FluxspawnShiftHiveling();

@@ -54,7 +54,7 @@ namespace OMW_Samhaphage
 
             if (xeno == OMW_XenotypeDefOf.omw_samhaphage)
             {
-                int reqComplexity = 200; // Apex Evolution requirement
+                int reqComplexity = OMW_Mod.settings.complexitySamhaphage;
                 int currComplexity = OMWGenes.CalculateComplexity(parent.pawn);
                 if (currComplexity < reqComplexity)
                 {

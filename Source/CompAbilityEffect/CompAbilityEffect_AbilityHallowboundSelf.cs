@@ -35,7 +35,7 @@ namespace OMW_Samhaphage
                 ability = new PawnApplyRetune();
                 items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
             
-                int reqComplexity = 0;
+                int reqComplexity = OMW_Mod.settings.complexityHallowbound;
                 int currComplexity = OMWGenes.CalculateComplexity(parent.pawn);
                 if (currComplexity >= reqComplexity)
                 {

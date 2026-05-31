@@ -27,11 +27,18 @@ namespace OMW_Samhaphage
 
         public bool disableGeneBlacklist = false;
         
-        public float resonanceMax = 1000f;
+        public float resonanceMax = DefaultResonanceMax;
+        private const float DefaultResonanceMax = 1000f;
 
         public NullThrumAbilities abilityValue = new NullThrumAbilities();
-        private NullThrumAbilities abilityDefault = new NullThrumAbilities();
 
+        public float complexityMultiplierHallowbound = 1.5f;
+        public int complexityHallowbound => Mathf.RoundToInt(complexityMultiplierHallowbound * OMWGenes.CalculateComplexity(OMW_XenotypeDefOf.omw_hallowbound));
+        public float complexityMultiplierSamhaphage = 1.5f;
+        public int complexitySamhaphage =>
+            Mathf.RoundToInt(complexityMultiplierSamhaphage * OMWGenes.CalculateComplexity(OMW_XenotypeDefOf.omw_samhaphage));
+
+        
 
         public override void ExposeData()
         {
@@ -48,25 +55,30 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref logMutation, "logSelection", false);
             Scribe_Values.Look(ref disableDissonance, "disableDissonance", false);
             Scribe_Values.Look(ref disableGeneBlacklist, "disableGeneBlacklist", false);
-            Scribe_Values.Look(ref resonanceMax, "ResonanceMax", 200f);
-            Scribe_Values.Look(ref abilityValue.flatten.value, "Flatten", abilityDefault.flatten.value);
-            Scribe_Values.Look(ref abilityValue.scrub.value, "Scrub", abilityDefault.scrub.value);
-            Scribe_Values.Look(ref abilityValue.scrubCarcinoma.value, "Scrub Carcinoma", abilityDefault.scrubCarcinoma.value);
-            Scribe_Values.Look(ref abilityValue.retune.value, "Retune", abilityDefault.retune.value);
-            Scribe_Values.Look(ref abilityValue.compress.value, "Compress", abilityDefault.compress.value);
-            Scribe_Values.Look(ref abilityValue.harrow.value, "Harrow", abilityDefault.harrow.value);
-            Scribe_Values.Look(ref abilityValue.transpose.value, "Transpose", abilityDefault.transpose.value);
-            Scribe_Values.Look(ref abilityValue.infest.value, "Infest", abilityDefault.infest.value);
-            Scribe_Values.Look(ref abilityValue.enwomb.value, "Enwomb", abilityDefault.enwomb.value);
-            Scribe_Values.Look(ref abilityValue.unmute.value, "Unmute", abilityDefault.unmute.value);
-            Scribe_Values.Look(ref abilityValue.mute.value, "Mute", abilityDefault.mute.value);
-            Scribe_Values.Look(ref abilityValue.attenuate.value, "Attenuate", abilityDefault.attenuate.value);
-            Scribe_Values.Look(ref abilityValue.sample.value, "Sample", abilityDefault.sample.value);
-            Scribe_Values.Look(ref abilityValue.bootleg.value, "Bootleg", abilityDefault.bootleg.value);
-            Scribe_Values.Look(ref abilityValue.crosstalk.value, "Crosstalk", abilityDefault.crosstalk.value);
-            Scribe_Values.Look(ref abilityValue.resurrect.value, "Resurrect", abilityDefault.resurrect.value);
-            Scribe_Values.Look(ref abilityValue.stun.value, "Stun", abilityDefault.stun.value);
-            Scribe_Values.Look(ref abilityValue.hallowbound.value, "Hallowbound", abilityDefault.hallowbound.value);
+            Scribe_Values.Look(ref resonanceMax, "ResonanceMax", DefaultResonanceMax);
+            Scribe_Values.Look(ref complexityMultiplierHallowbound, "complexityMultiplierHallowbound", 1.5f);
+            Scribe_Values.Look(ref complexityMultiplierSamhaphage, "complexityMultiplierSamhaphage", 1.5f);
+
+            // Use a fresh instance as the default reference for Scribe
+            NullThrumAbilities defaults = new NullThrumAbilities();
+            Scribe_Values.Look(ref abilityValue.flatten.value, "Flatten", defaults.flatten.value);
+            Scribe_Values.Look(ref abilityValue.scrub.value, "Scrub", defaults.scrub.value);
+            Scribe_Values.Look(ref abilityValue.scrubCarcinoma.value, "Scrub Carcinoma", defaults.scrubCarcinoma.value);
+            Scribe_Values.Look(ref abilityValue.retune.value, "Retune", defaults.retune.value);
+            Scribe_Values.Look(ref abilityValue.compress.value, "Compress", defaults.compress.value);
+            Scribe_Values.Look(ref abilityValue.harrow.value, "Harrow", defaults.harrow.value);
+            Scribe_Values.Look(ref abilityValue.transpose.value, "Transpose", defaults.transpose.value);
+            Scribe_Values.Look(ref abilityValue.infest.value, "Infest", defaults.infest.value);
+            Scribe_Values.Look(ref abilityValue.enwomb.value, "Enwomb", defaults.enwomb.value);
+            Scribe_Values.Look(ref abilityValue.unmute.value, "Unmute", defaults.unmute.value);
+            Scribe_Values.Look(ref abilityValue.mute.value, "Mute", defaults.mute.value);
+            Scribe_Values.Look(ref abilityValue.attenuate.value, "Attenuate", defaults.attenuate.value);
+            Scribe_Values.Look(ref abilityValue.sample.value, "Sample", defaults.sample.value);
+            Scribe_Values.Look(ref abilityValue.bootleg.value, "Bootleg", defaults.bootleg.value);
+            Scribe_Values.Look(ref abilityValue.crosstalk.value, "Crosstalk", defaults.crosstalk.value);
+            Scribe_Values.Look(ref abilityValue.resurrect.value, "Resurrect", defaults.resurrect.value);
+            Scribe_Values.Look(ref abilityValue.stun.value, "Stun", defaults.stun.value);
+            Scribe_Values.Look(ref abilityValue.hallowbound.value, "Hallowbound", defaults.hallowbound.value);
             
             Scribe_Values.Look(ref NullThrumUtility.descMode, "descMode", NullThrumDescriptionMode.DescriptionSimple);
         }
@@ -86,8 +98,9 @@ namespace OMW_Samhaphage
             disableDissonance = false;
             disableGeneBlacklist = false;
             abilityValue = new NullThrumAbilities();
-            abilityDefault = new NullThrumAbilities();            
-            resonanceMax = 1000f;
+            resonanceMax = DefaultResonanceMax;
+            complexityMultiplierHallowbound = 1.5f;
+            complexityMultiplierSamhaphage = 1.5f;
             NullThrumUtility.descMode = NullThrumDescriptionMode.DescriptionSimple;
         }
     }
