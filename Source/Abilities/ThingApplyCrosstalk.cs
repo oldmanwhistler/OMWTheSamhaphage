@@ -19,7 +19,7 @@ namespace OMW_Samhaphage
         {
             // Crosstalk targets genes that are overridden (inactive signals)
             return source.genes.Xenogenes
-                .Where(g => !OMW_BlacklistGenes.BlacklistedGenesResonanceCopy.Contains(g.def)) 
+                .Where(g => !OMW_BlacklistGenes.BlacklistedGenesDontCopy.Contains(g.def)) 
                 .ToList();
         }
 

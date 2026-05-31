@@ -21,7 +21,7 @@ namespace OMW_Samhaphage
                 .Select(g => g.def)
                 .ToHashSet();
             return source.genes.Xenogenes
-                .Where(g => !OMW_BlacklistGenes.BlacklistedGenesResonanceCopy.Contains(g.def) && // ignore blacklisted
+                .Where(g => !OMW_BlacklistGenes.BlacklistedGenesDontCopy.Contains(g.def) && // ignore blacklisted
                             !alreadyHas.Contains(g.def) &&
                             !this.GeneIsWorthless(g)) // ignore cosmetic genes
                 .ToList();

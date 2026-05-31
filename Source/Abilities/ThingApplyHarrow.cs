@@ -21,7 +21,7 @@ namespace OMW_Samhaphage
                 .Select(g => g.def)
                 .ToHashSet();
             return source.genes.GenesListForReading
-                .Where(g => !OMW_BlacklistGenes.BlacklistedGenesResonanceCopy.Contains(g.def) && // ignore blacklisted
+                .Where(g => !OMW_BlacklistGenes.BlacklistedGenesDontCopy.Contains(g.def) && // ignore blacklisted
                             !alreadyHas.Contains(g.def) && // ignore genes the caster already has                            
                             !this.GeneIsWorthless(g)) // ignore cosmetic genes
  
@@ -32,7 +32,9 @@ namespace OMW_Samhaphage
         {
             if (dest == null || dest.genes == null || dest.genes.GenesListForReading == null)
                 return new List<GeneDef>();
-            return dest.genes.GenesListForReading.Select(g => g.def).ToList();
+
+            return dest.genes.GenesListForReading.Where(g => !g.Overridden)
+                .Select(g => g.def).ToList();
         }        
     }
 

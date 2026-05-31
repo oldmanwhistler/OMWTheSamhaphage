@@ -55,7 +55,7 @@ namespace OMW_Samhaphage
                 for (int i = 0; i < Props.numberOfGenes; i++)
                 {
                     GeneDef gene = DefDatabase<GeneDef>.AllDefs.Where((GeneDef x) =>
-                        !OMW_BlacklistGenes.BlacklistedGenesMutation.Contains(x) &&
+                        !OMW_BlacklistGenes.BlacklistedGenesDontMutate.Contains(x) &&
                         !alreadyHas.Contains(x) &&
                         x.biostatMet >= Props.minMetabolism &&
                         x.biostatMet <= Props.maxMetabolism).RandomElement();

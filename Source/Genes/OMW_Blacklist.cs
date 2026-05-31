@@ -12,15 +12,16 @@ namespace OMW_Samhaphage
 {
     public enum BlacklistType
     {
-        blGenePack,
-        blWretch,
-        blPrereq,
-        blImplanter,
-        blManual,
-        blMisc,
-        blAscension,
-        blMetamorph,
-        blTrait
+        BlGenePack,
+        BlWretch,
+        BlPrereq,
+        BlImplanter,
+        BlStringMatch,
+        BlMisc,
+        BlAscension,
+        BlMetamorph,
+        BlTrait,
+        BlSamhaphage
     }
 
     public class BlacklistGene
@@ -60,11 +61,11 @@ namespace OMW_Samhaphage
         public static readonly string Prefix = "[SAMHAPHAGE-BLACKLIST]";
         public static readonly HashSet<BlacklistGene> BlacklistedGenes = new HashSet<BlacklistGene>();
 
-        public static readonly HashSet<GeneDef> BlacklistedGenesGeneticDrift = new HashSet<GeneDef>();
+        public static readonly HashSet<GeneDef> BlacklistedGenesDontGenerate = new HashSet<GeneDef>();
 
-        public static readonly HashSet<GeneDef> BlacklistedGenesResonanceCopy = new HashSet<GeneDef>();
+        public static readonly HashSet<GeneDef> BlacklistedGenesDontCopy = new HashSet<GeneDef>();
 
-        public static readonly HashSet<GeneDef> BlacklistedGenesMutation = new HashSet<GeneDef>();
+        public static readonly HashSet<GeneDef> BlacklistedGenesDontMutate = new HashSet<GeneDef>();
 
         static OMW_BlacklistGenes()
         {
@@ -74,16 +75,27 @@ namespace OMW_Samhaphage
         public static void RebuildBlacklist()
         {
             BlacklistedGenes.Clear();
-            BlacklistedGenesResonanceCopy.Clear();
-            BlacklistedGenesMutation.Clear();
-            BlacklistedGenesGeneticDrift.Clear();
-            
+            BlacklistedGenesDontCopy.Clear();
+            BlacklistedGenesDontMutate.Clear();
+            BlacklistedGenesDontGenerate.Clear();
+           
             if (OMW_Mod.settings == null || OMW_Mod.settings.disableGeneBlacklist)
             {
                 Log.Message($"{Prefix} Gene blacklist is disabled in mod settings. No genes will be blacklisted.");
                 ExportCustomXenotype(); // Export an empty xenotype for Genetic Drift
                 return;
             }
+
+            HashSet<BlacklistType> blCanCopy = new HashSet<BlacklistType>();
+            HashSet<BlacklistType> blCanMutate = new HashSet<BlacklistType>();
+            HashSet<BlacklistType> blCanGenerate = new HashSet<BlacklistType>();
+           
+            blCanCopy.Add(BlacklistType.BlGenePack);
+            blCanCopy.Add(BlacklistType.BlWretch);
+            blCanCopy.Add(BlacklistType.BlTrait);
+            blCanCopy.Add(BlacklistType.BlPrereq);
+            blCanGenerate.Add(BlacklistType.BlImplanter);
+            blCanGenerate.Add(BlacklistType.BlWretch);
 
             // AlphaGenes integration: respect the Wretch
             List<GeneDef> cachedBlacklist = new List<GeneDef>();
@@ -104,8 +116,6 @@ namespace OMW_Samhaphage
             myBlacklistStrings.Add("ViolenceDisabled");
             myBlacklistStrings.Add("KindInstinct");
             myBlacklistStrings.Add("XenogermReimplanter");
-            // genes for traits
-            myBlacklistStrings.Add("Gene_Trait_Kind_0");
             // WVC
             myBlacklistStrings.Add("WVC_Traitless");
             myBlacklistStrings.Add("WVC_Chimera_NullifiedLimit");
@@ -117,62 +127,52 @@ namespace OMW_Samhaphage
             myBlacklistStrings.Add("AG_ParasiticStinger");
             myBlacklistStrings.Add("AG_InsectStingerEndogenes");
             myBlacklistStrings.Add("AG_ParasiticStingerEndogenes");
-            // Path to Ascension -- this traits will kill you
-            myBlacklistStrings.Add("Gene_Trait_ARC_Arcanist_0");
-            myBlacklistStrings.Add("Gene_Trait_ASS_Assassin_0");
-            myBlacklistStrings.Add("Gene_Trait_CO_Oathbreaker_0");
-            myBlacklistStrings.Add("Gene_Trait_EBD_Earthbound_0");
-            myBlacklistStrings.Add("Gene_Trait_FLT_Flutist_0");
-            myBlacklistStrings.Add("Gene_Trait_OOV_OracleOfTheOuterVeil_0");
-            myBlacklistStrings.Add("Gene_Trait_RAN_Ranger_0");
-            myBlacklistStrings.Add("Gene_Trait_SPR_SunPriest_0");
-            myBlacklistStrings.Add("Gene_Trait_UMO_UnderworldMonarch_0");
-            myBlacklistStrings.Add("Gene_Trait_WDN_Warden_0");
-            myBlacklistStrings.Add("Gene_Trait_WAR_Warrior_0");
-            myBlacklistStrings.Add("Gene_Trait_Worldheart_0");
-            // Isekai
-            myBlacklistStrings.Add("Gene_Trait_Isekai_Rank");
-            myBlacklistStrings.Add("Gene_Trait_HVT_TTrait");
-
+            // someone used Gene for Traits. Ban them all since they will break everything. See README.md
+            myBlacklistStrings.Add("Gene_Trait_");
+            
 
             foreach (GeneDef geneDef in DefDatabase<GeneDef>.AllDefs)
             {
                 BlacklistGene bl = new BlacklistGene(geneDef);
                 if (geneDef.canGenerateInGeneSet == false)
                 {
-                    bl.Add(BlacklistType.blGenePack);
+                    bl.Add(BlacklistType.BlGenePack);
                 }
                 if (cachedBlacklist.Contains(geneDef) || cachedDefnameStrings.Any(s => geneDef.defName.Contains(s)))
                 {
-                    bl.Add(BlacklistType.blWretch);
+                    bl.Add(BlacklistType.BlWretch);
                 }
                 if (myBlacklistStrings.Any(s => geneDef.defName.Contains(s)))
                 {
-                    bl.Add(BlacklistType.blManual);
+                    bl.Add(BlacklistType.BlStringMatch);
                 }
                 if (geneDef.prerequisite != null)
                 {
-                    bl.Add(BlacklistType.blPrereq);
+                    bl.Add(BlacklistType.BlPrereq);
+                }
+                if (geneDef.displayCategory?.defName?.Contains("OMW_PerfectSilence") == true)
+                {
+                    bl.Add(BlacklistType.BlSamhaphage);
                 }
                 if (geneDef.displayCategory?.defName?.Contains("Reimplanter") == true)
                 {
-                    bl.Add(BlacklistType.blImplanter);
+                    bl.Add(BlacklistType.BlImplanter);
                 }
                 if (geneDef.displayCategory?.defName?.Contains("Ascension") == true)
                 {
-                    bl.Add(BlacklistType.blAscension);
+                    bl.Add(BlacklistType.BlAscension);
                 }
                 if (geneDef.displayCategory?.defName?.Contains("Metamorph") == true)
                 {
-                    bl.Add(BlacklistType.blAscension);
+                    bl.Add(BlacklistType.BlMetamorph);
                 }
                 if (geneDef.exclusionTags?.Contains("AG_OnlyOnCharacterCreation") == true)
                 {
-                    bl.Add(BlacklistType.blMisc);
+                    bl.Add(BlacklistType.BlMisc);
                 }
                 if (geneDef.displayCategory?.defName?.Contains("Don't pick these") == true)
                 {
-                    bl.Add(BlacklistType.blMisc);
+                    bl.Add(BlacklistType.BlMisc);
                 }
 
                 if (geneDef.forcedTraits != null)
@@ -184,25 +184,25 @@ namespace OMW_Samhaphage
 
                         if (traitDef.conflictingTraits?.Count > 0)
                         {
-                            bl.Add(BlacklistType.blTrait);
+                            bl.Add(BlacklistType.BlTrait);
                             break;
                         }
 
                         if (traitDef.conflictingPassions?.Count > 0)
                         {
-                            bl.Add(BlacklistType.blTrait);
+                            bl.Add(BlacklistType.BlTrait);
                             break;
                         }
 
                         if (traitDef.requiredWorkTypes?.Count > 0)
                         {
-                            bl.Add(BlacklistType.blTrait);
+                            bl.Add(BlacklistType.BlTrait);
                             break;
                         }
 
                         if (traitDef.disabledWorkTypes?.Count > 0)
                         {
-                            bl.Add(BlacklistType.blTrait);
+                            bl.Add(BlacklistType.BlTrait);
                             break;
                         }
                     }
@@ -210,11 +210,24 @@ namespace OMW_Samhaphage
                 if (bl.blacklistType.Count > 0)
                 {
                     bl.SetReason();
+
+                    // all genes that can be blacklisted
                     BlacklistedGenes.Add(bl);
-                    // TODO: selectively add to different lists depending on the reason why it's a blacklisted gene.
-                    BlacklistedGenesResonanceCopy.Add(bl.geneDef);
-                    BlacklistedGenesMutation.Add(bl.geneDef);
-                    BlacklistedGenesGeneticDrift.Add(bl.geneDef);
+
+                    if (!bl.blacklistType.Overlaps(blCanCopy))
+                    {
+                        BlacklistedGenesDontCopy.Add(bl.geneDef);
+                    }
+
+                    if (!bl.blacklistType.Overlaps(blCanMutate))
+                    {
+                        BlacklistedGenesDontMutate.Add(bl.geneDef);
+                    }
+
+                    if (!bl.blacklistType.Overlaps(blCanGenerate))
+                    {
+                        BlacklistedGenesDontGenerate.Add(bl.geneDef);
+                    }
                 }
             }
 
@@ -252,7 +265,7 @@ namespace OMW_Samhaphage
                             new XElement("factionlessGenerationWeight", "0"),
                             new XElement("genes",
                                 from gene in DefDatabase<GeneDef>.AllDefs
-                                where OMW_BlacklistGenes.BlacklistedGenes.Any(bl => bl.geneDef == gene)
+                                where OMW_BlacklistGenes.BlacklistedGenesDontGenerate.Any(bl => bl == gene)
                                 select new XElement("li", 
                                     (gene.modContentPack != null && !gene.modContentPack.IsCoreMod && gene.modContentPack.PackageId.ToLower() != "ludeon.rimworld.biotech") ? new XAttribute("MayRequire", gene.modContentPack.PackageId) : null,
                                     gene.defName)
@@ -274,13 +287,12 @@ namespace OMW_Samhaphage
         {
            try
             {
-                string autogenPath = Path.Combine(LoadedModManager.GetMod<OMW_Mod>().Content.RootDir, "autogen");
-                Directory.CreateDirectory(autogenPath);
-                string path = Path.Combine(autogenPath, "OMW_Samhaphage_Report_Blacklisted_Genes.csv");
+
+                string path = Path.Combine(GenFilePaths.SaveDataFolderPath, "OMW_Samhaphage_Report_Blacklisted_Genes.csv");
                 StringBuilder sb = new StringBuilder();
 
                 // Header row
-                sb.AppendLine("DEFNAME,LABEL,COMPLEXITY,METABOLISM,ARCHITE,CATEGORY,CATEGORYDEF,BLACKLISTED,GENEPACK,WRETCH,PREREQ,IMPLANTER,NEWCHARACTER,ABILITIES,DESCRIPTION");
+                sb.AppendLine("DEFNAME,LABEL,COMPLEXITY,METABOLISM,ARCHITE,CATEGORY,CATEGORYDEF,BLACKLISTED,ABILITIES,DESCRIPTION");
 
                 foreach (GeneDef gene in DefDatabase<GeneDef>.AllDefs)
                 {
@@ -289,18 +301,14 @@ namespace OMW_Samhaphage
                     string catDef = gene.displayCategory?.defName ?? "None";
 
                     BlacklistGene blEntry = BlacklistedGenes.FirstOrDefault(x => x.geneDef == gene);
-                    bool isBl = blEntry != null;
-                    bool blGP = blEntry?.blacklistType.Contains(BlacklistType.blGenePack) ?? false;
-                    bool blW = blEntry?.blacklistType.Contains(BlacklistType.blWretch) ?? false;
-                    bool blP = blEntry?.blacklistType.Contains(BlacklistType.blPrereq) ?? false;
-                    bool blI = blEntry?.blacklistType.Contains(BlacklistType.blImplanter) ?? false;
+                    string bl = blEntry?.blacklistReason ?? "no blacklist";
 
                     string abilities = (gene.abilities != null && gene.abilities.Count > 0) 
                         ? string.Join("|", gene.abilities.ConvertAll(a => a.defName)) 
                         : "";
                     string desc = gene.description?.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", "") ?? "";
 
-                    sb.AppendLine($"\"{gene.defName}\",\"{label}\",{gene.biostatCpx},{gene.biostatMet},{gene.biostatArc},\"{cat}\",\"{catDef}\",{isBl},{blGP},{blW},{blP},{blI},\"{abilities}\",\"{desc}\"");
+                    sb.AppendLine($"\"{gene.defName}\",\"{label}\",{gene.biostatCpx},{gene.biostatMet},{gene.biostatArc},\"{cat}\",\"{catDef}\",{bl},\"{abilities}\",\"{desc}\"");
                 }
 
                 File.WriteAllText(path, sb.ToString());
