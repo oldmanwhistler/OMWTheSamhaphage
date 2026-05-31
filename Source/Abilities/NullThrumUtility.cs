@@ -23,7 +23,8 @@ namespace OMW_Samhaphage
         ResonanceTypeCredit,
         ResonanceTypeDebit,
         ResonanceTypeSacrificeVictim,
-        ResonanceTypeSacrificeCaster
+        ResonanceTypeSacrificeCaster,
+        ResonanceTypeNone
     }
 
     public enum NullThrumMathType
@@ -51,7 +52,8 @@ namespace OMW_Samhaphage
         Crosstalk,
         Resurrect,
         Stun,
-        Hallowbound
+        Hallowbound,
+        Amplify
     }
 
     public struct NullThrumAbilityProps
@@ -255,6 +257,13 @@ namespace OMW_Samhaphage
             NullThrumResonanceType.ResonanceTypeDebit,
             NullThrumMathType.MathTypeOffset, 1.0f);
 
+        public NullThrumAbilityProps amplify = new NullThrumAbilityProps(
+            NullThrumAbilityType.Amplify,
+            NullThrumResourceType.ResourceTypeChangeXenotype,
+            NullThrumResonanceType.ResonanceTypeNone,
+            NullThrumMathType.MathTypeNone, 0f);
+
+
         public NullThrumAbilities()
         {
             listGeneFixed.Add(flatten);
@@ -276,6 +285,7 @@ namespace OMW_Samhaphage
             listOther.Add(hallowbound);
             listOther.Add(stun);
             listOther.Add(scrubCarcinoma);
+            listOther.Add(amplify);
         }
 
     }
@@ -313,6 +323,7 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Resurrect: return "Resurrect";
                 case NullThrumAbilityType.Stun: return "Stun";
                 case NullThrumAbilityType.Hallowbound: return "Hallowbound";
+                case NullThrumAbilityType.Amplify: return "Amplify";
                 default: 
                     Log.Error($"Unknown ability type in NullThrumUtility.ToString({ability})");
                     return "Unknown";
@@ -346,6 +357,7 @@ namespace OMW_Samhaphage
                 case NullThrumResonanceType.ResonanceTypeDebit: return "Debit";
                 case NullThrumResonanceType.ResonanceTypeSacrificeVictim: return "SacrificeVictim";
                 case NullThrumResonanceType.ResonanceTypeSacrificeCaster: return "SacrificeCaster";
+                case NullThrumResonanceType.ResonanceTypeNone: return "None";
                 default:
                     Log.Error($"Unknown resonance type in NullThrumUtility.ToString({resonance})");
                     return "Unknown";
@@ -374,6 +386,7 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Resurrect: return NullThrumResonanceType.ResonanceTypeDebit;
                 case NullThrumAbilityType.Stun: return NullThrumResonanceType.ResonanceTypeDebit;
                 case NullThrumAbilityType.Hallowbound: return NullThrumResonanceType.ResonanceTypeDebit;
+                case NullThrumAbilityType.Amplify: return NullThrumResonanceType.ResonanceTypeNone;
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.ResonanceType({ability})");                                                                
                     return NullThrumResonanceType.ResonanceTypeCredit;
@@ -450,6 +463,8 @@ namespace OMW_Samhaphage
                     return $"Stuns the target.";
                 case NullThrumAbilityType.Hallowbound:
                     return $"Transposes the target into a Hallowbound.";
+                case NullThrumAbilityType.Amplify:
+                    return $"{caster} amplifies themselves to the xenotype specified by the ability.";
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.DescriptionSimple({ability})");
                     return "Unknown ability type.";
@@ -512,6 +527,9 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Hallowbound:
                     return
                         $"{caster} performs the ultimate act of biological perversion, transforming {victim} into a Hallowbound. {victim} becomes an infiltrator clad in stolen skin, a perfected servant of the hivemind.";
+                case NullThrumAbilityType.Amplify:
+                    return
+                        $"Amplify floods the {caster} with a massive surge of core Resonance to permanently elevate them into a higher tier of the genetic hierarchy. By drastically expanding their signal capacity and transmission power, this evolution turns passive vessels into predatory broadcasters, and broadcasters into the Absolute Frequency of the Thrum.";
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.DescriptionLore({ability})");
                     return "An unknown ability of the Null-Thrum.";

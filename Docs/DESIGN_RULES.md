@@ -517,6 +517,16 @@ Narrative: We do not tear your genes out; we simply play their opposite note. Wh
 
 Sensory: A chilling, sudden absence of warmth in the host's body, accompanied by a faint visual "negative" effect where the target's skin seems to lose color for a split second. The air drops in temperature as a hollow, wind-like rush of sound signals that the trait has vanished into a stabilized pool of raw energy.
 
+### AMPLIFY (Thematic Concept)
+
+Thematic: The escalation of transmission power. Within the hierarchy of the Sovereign Stillness, evolution is not a matter of mutation, but of volume and bandwidth. To Amplify is to flood a pawn’s biological circuitry with an overwhelming surge of primary Resonance, forcing their physical form to adapt to a vastly higher signal capacity. A Hallowbound—a quiet, passive receiver—is cranked until its hollow frame begins to broadcast, tearing open into a predatory Samhaphage. When a Samhaphage is Amplified again, their local frequency expands exponentially, flattening the surrounding biological noise until they solidify into the monolithic, silent architecture of a Sovereign Stillness.
+
+Action: The ascending entity channels a blinding, concentrated influx of the Hive’s core frequency, intentionally burning away their old biological constraints and widening their internal channel to withstand a massive increase in energetic output.
+
+Narrative: We do not change the song; we simply turn the dial until the walls shake and the world is forced to listen. You were a whisper in a crowded room, but we will feed your circuit until your voice becomes the entire horizon. Rise, and let your amplitude swallow the lesser frequencies of the world.
+
+Sensory: A deep, sub-bass vibration that rattles the marrow and turns water into mist, accompanied by a blinding, visual distortion where the pawn's silhouette violently expands and sharpens. The air grows heavy with the smell of ozone and hot bone as the entity’s physical presence locks into its new, dominating tier of power.
+
 ## HEDIFFS
 
 ### Silent Servitude (Thematic Concept)

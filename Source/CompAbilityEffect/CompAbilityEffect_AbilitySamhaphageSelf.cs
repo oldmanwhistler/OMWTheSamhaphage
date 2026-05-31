@@ -54,20 +54,8 @@ namespace OMW_Samhaphage
 
             if (xeno == OMW_XenotypeDefOf.omw_samhaphage)
             {
-                int reqComplexity = OMW_Mod.settings.complexitySamhaphage;
-                int currComplexity = OMWGenes.CalculateComplexity(parent.pawn);
-                if (currComplexity < reqComplexity)
-                {
-                    items.Add(new MenuItemText(null, $"At {currComplexity}/{reqComplexity} for becoming Sovereign Stillness"));
-                }
-                else if (OMWXenotypes.IsSovereignStillnessInPlayerFaction())
-                {
-                    items.Add(new MenuItemText(null, "The Sovereign Stillness is already part of the colony. There can only be one."));
-                }
-                else
-                {
-                    items.Add(new MenuItemText((Action)(() => OMWGenes.ChangeEndotype(parent.pawn, OMW_XenotypeDefOf.omw_sovereign_stillness)), "Arise to Sovereign Stillness"));
-                }
+                ability = new PawnApplyAmplifySamhaphage();
+                items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
             }
 
             if (items.Count > 0)

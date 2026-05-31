@@ -112,9 +112,10 @@ Crosstalk occurs when a Hallowbound deliberately unshields their frequency to ca
 
 Nullify utilizes a phase-inverted harmonic frequency to completely cancel out and erase targeted genetic traits within a host. By forcing these biological markers to annihilate themselves, the process converts the structural data of the genes into a dense, silent reservoir of usable Resonance.
 
-## NOT IMPLEMENTED
-
 ### Crossfade (Exchange)
 
 Crosstalk forces a volatile, unshielded feedback loop between the Hallowbound and a target, causing a chaotic and random exchange of xenogenes between both entities. This predatory signal bleed strips away control, leaving both biological sequences permanently fractured and rearranged by the mutual interference.
 
+### Amplify (Evolve)
+
+Amplify floods an entity's biological framework with a massive surge of core Resonance to permanently elevate them into a higher tier of genetic hierarchy. By drastically expanding their signal capacity and transmission power, this evolution turns passive vessels into predatory broadcasters, and broadcasters into the Absolute Frequency of the Null-Thrum.

@@ -34,17 +34,9 @@ namespace OMW_Samhaphage
             {
                 ability = new PawnApplyRetune();
                 items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
-            
-                int reqComplexity = OMW_Mod.settings.complexityHallowbound;
-                int currComplexity = OMWGenes.CalculateComplexity(parent.pawn);
-                if (currComplexity >= reqComplexity)
-                {
-                    items.Add(new MenuItemText((Action)(() => OMWGenes.ChangeEndotype(parent.pawn, OMW_XenotypeDefOf.omw_samhaphage)), "Arise to Samhaphage"));
-                }
-                else
-                {
-                    items.Add(new MenuItemText(null, $"At {currComplexity}/{reqComplexity} for becoming Samhaphage"));
-                }
+
+                ability = new PawnApplyAmplifyHallowbound();
+                items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
             }
 
             if (items.Count > 0)
