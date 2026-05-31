@@ -21,7 +21,7 @@
     </statOffsets>
 
     <statFactors>
-      <SM_BodySizeMultiplier>1.3</SM_BodySizeMultiplier>
+      <SM_BodySizeMultiplier>0.5</SM_BodySizeMultiplier>
       <EatingSpeed>2</EatingSpeed>
       <MoveSpeed>1.2</MoveSpeed>          
     </statFactors>

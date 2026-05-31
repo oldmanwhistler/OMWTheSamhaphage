@@ -13,7 +13,8 @@
       <li MayRequire="omw.samhaphage">OMW_Fluxspawn_Ferility</li>
       <li MayRequire="omw.samhaphage">OMW_FluxSpawn_Hiveling_Frame</li>
       <li MayRequire="omw.samhaphage">OMW_NullThrum</li>
-      <li MayRequire="omw.samhaphage">OMW_UnstableMutationCatastrophic</li>       
+      <li MayRequire="omw.samhaphage">OMW_UnstableMutationCatastrophic</li>
+      <li MayRequire="omw.samhaphage">OMW_Resonance</li>       
       <li MayRequire="redmattis.bigsmall.core">BS_CellPandemonium</li>
       <li MayRequire="redmattis.bigsmall.core">BS_DroneKind</li>
       <li MayRequire="redmattis.bigsmall.core">BS_CannotWearClothingOrArmor</li>
