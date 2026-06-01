@@ -73,3 +73,8 @@
 ### Samhaphage - Other
 
 - [ ] Multiple Sovereign Stillness
+
+## MOD INTERACTIONS
+
+- [ ] Gene for Traits + Hauts Added Traits
+- [ ] Gene for Traits + Pathway to Ascension
