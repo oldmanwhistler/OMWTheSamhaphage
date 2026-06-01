@@ -54,19 +54,29 @@ namespace OMW_Samhaphage
                 ability = new ThingApplyHarrow();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
-                ability = new ThingApplyMute();
-                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
-
                 if ((xeno == OMW_XenotypeDefOf.omw_sovereign_stillness))
                 {
                     ability = new ThingApplyNullify();
                     items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
                 }
 
-                ability = new ThingApplyAttenuate();
-                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
                 ability = new ThingApplyBootleg();
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+
+                if ((xeno == OMW_XenotypeDefOf.omw_sovereign_stillness))
+                {
+                    ability = new ThingApplyExcise();
+                    items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+                }
+
+                ability = new ThingApplyMute();
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+
+                ability = new PawnApplyUnmute();
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+
+                ability = new ThingApplyAttenuate();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
                 ability = new PawnApplyHallowbound();
@@ -74,9 +84,6 @@ namespace OMW_Samhaphage
 
                 ability = new PawnApplyInfestFluxspawnHiveling();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
-
-                ability = new PawnApplyUnmute();
-                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));                
             }
 
             if (items.Count > 0)

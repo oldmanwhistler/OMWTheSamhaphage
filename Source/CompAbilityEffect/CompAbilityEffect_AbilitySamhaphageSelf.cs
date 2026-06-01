@@ -48,6 +48,9 @@ namespace OMW_Samhaphage
                 ability = new ThingApplyNullify();
                 items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
 
+                ability = new ThingApplyExcise();
+                items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
+
                 ability = new PawnApplyUnmute();
                 items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
             }

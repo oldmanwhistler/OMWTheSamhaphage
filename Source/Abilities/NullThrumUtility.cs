@@ -53,7 +53,8 @@ namespace OMW_Samhaphage
         Resurrect,
         Stun,
         Hallowbound,
-        Amplify
+        Amplify,
+        Excise
     }
 
     public struct NullThrumAbilityProps
@@ -215,6 +216,13 @@ namespace OMW_Samhaphage
             NullThrumResonanceType.ResonanceTypeDebit,
             NullThrumMathType.MathTypeOffset, 1.8f);
 
+        // trait: destroy a trait to gain resonance
+        public NullThrumAbilityProps excise = new NullThrumAbilityProps(
+            NullThrumAbilityType.Excise,
+            NullThrumResourceType.ResourceTypeTrait,
+            NullThrumResonanceType.ResonanceTypeCredit,
+            NullThrumMathType.MathTypeMultiplier, 2.0f);
+
         // flat cost: change xenotype
         public NullThrumAbilityProps transpose = new NullThrumAbilityProps(
             NullThrumAbilityType.Transpose,
@@ -279,6 +287,7 @@ namespace OMW_Samhaphage
             listGeneMulti.Add(sample);
             listGeneMulti.Add(crosstalk);
             listTraitMulti.Add(bootleg);
+            listTraitMulti.Add(excise);
             listOther.Add(unmute);
             listOther.Add(mute);
             listOther.Add(resurrect);
@@ -324,6 +333,7 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Stun: return "Stun";
                 case NullThrumAbilityType.Hallowbound: return "Hallowbound";
                 case NullThrumAbilityType.Amplify: return "Amplify";
+                case NullThrumAbilityType.Excise: return "Excise";
                 default: 
                     Log.Error($"Unknown ability type in NullThrumUtility.ToString({ability})");
                     return "Unknown";
@@ -387,6 +397,7 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Stun: return NullThrumResonanceType.ResonanceTypeDebit;
                 case NullThrumAbilityType.Hallowbound: return NullThrumResonanceType.ResonanceTypeDebit;
                 case NullThrumAbilityType.Amplify: return NullThrumResonanceType.ResonanceTypeNone;
+                case NullThrumAbilityType.Excise: return NullThrumResonanceType.ResonanceTypeCredit;
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.ResonanceType({ability})");                                                                
                     return NullThrumResonanceType.ResonanceTypeCredit;
@@ -465,6 +476,9 @@ namespace OMW_Samhaphage
                     return $"Transposes the target into a Hallowbound.";
                 case NullThrumAbilityType.Amplify:
                     return $"{caster} amplifies themselves to the xenotype specified by the ability.";
+                case NullThrumAbilityType.Excise:
+                    return
+                        $"{caster} may selectively destroy traits to gain resonance.";
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.DescriptionSimple({ability})");
                     return "Unknown ability type.";
@@ -530,6 +544,9 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Amplify:
                     return
                         $"Amplify floods the {caster} with a massive surge of core Resonance to permanently elevate them into a higher tier of the genetic hierarchy. By drastically expanding their signal capacity and transmission power, this evolution turns passive vessels into predatory broadcasters, and broadcasters into the Absolute Frequency of the Thrum.";
+                case NullThrumAbilityType.Excise:
+                    return
+                        $"Your little variations are just flaws in the signal—static that ruins the perfect chord. {caster} isolates the blemish, makes a clean cut, and lifts the messy expression right out of your flesh before it can taint the rest of your form. What you call your identity, we call surplus fuel.";
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.DescriptionLore({ability})");
                     return "An unknown ability of the Null-Thrum.";
