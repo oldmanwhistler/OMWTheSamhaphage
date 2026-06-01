@@ -88,7 +88,7 @@ namespace OMW_Samhaphage
                 {
                     victim.story?.traits?.RemoveTrait(plus.trait);
                     // Create a new trait instance for the caster to avoid reference bugs
-                    caster.story.traits.GainTrait(plus.Copy(), suppressConflicts: true);
+                    caster.story.traits.GainTrait(plus.Copy(), suppressConflicts: false);
                     Log.Debug($"Bootlegged {plus.trait.LabelCap} from {victim.LabelShort}");
                     activated = true;
                 }
