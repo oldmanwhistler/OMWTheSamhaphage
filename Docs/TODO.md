@@ -41,6 +41,8 @@
 
 * Trait blacklist
 * Isekai Rank traits should be blacklisted
+* Hauts Added Traits should blacklist the woke traits
+* Should handle conflicting traits the same way as I do with genes with respect to the GUI.
 
 ### Resonance
 

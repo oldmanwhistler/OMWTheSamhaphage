@@ -119,3 +119,7 @@ Crosstalk forces a volatile, unshielded feedback loop between the Hallowbound an
 ### Amplify (Evolve)
 
 Amplify floods an entity's biological framework with a massive surge of core Resonance to permanently elevate them into a higher tier of genetic hierarchy. By drastically expanding their signal capacity and transmission power, this evolution turns passive vessels into predatory broadcasters, and broadcasters into the Absolute Frequency of the Null-Thrum.
+
+### Excise (Remove)
+
+Excise acts as a surgical harmonic filter that isolates and shears away a specific trait from a host's active biological expression. By cleanly cutting this expression out of the physical mix, the ability refines the removed trait into a concentrated runoff of pure, harvestable Resonance.

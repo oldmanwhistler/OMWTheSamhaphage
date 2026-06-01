@@ -517,6 +517,16 @@ Narrative: We do not tear your genes out; we simply play their opposite note. Wh
 
 Sensory: A chilling, sudden absence of warmth in the host's body, accompanied by a faint visual "negative" effect where the target's skin seems to lose color for a split second. The air drops in temperature as a hollow, wind-like rush of sound signals that the trait has vanished into a stabilized pool of raw energy.
 
+### CROSSFADE (Thematic Concept)
+
+Thematic: A seamless transition of identity. Crossfade is the art of simultaneous biological displacement: as one frequency is lowered in the host, another is raised to take its place, resulting in a perfect swap of genetic traits between two living vessels.
+
+Action: Two subjects are locked in a sympathetic vibration loop; the Samhaphage modulates their internal "mix," causing a specific trait from the target to slide into the user while the user's corresponding genetic "track" slides into the target.
+
+Narrative: Symmetry is the soul of the Absolute Frequency. Why merely take when you can rebalance? We slide the faders of your existence, ensuring that no data is lost—only relocated to a more appropriate instrument.
+
+Sensory: An overlapping, rhythmic pulsing that feels like two heartbeats trying to sync up, accompanied by a dizzying "panning" sensation where the subjects feel their very essence sliding sideways into one another.
+
 ### AMPLIFY (Thematic Concept)
 
 Thematic: The escalation of transmission power. Within the hierarchy of the Sovereign Stillness, evolution is not a matter of mutation, but of volume and bandwidth. To Amplify is to flood a pawn’s biological circuitry with an overwhelming surge of primary Resonance, forcing their physical form to adapt to a vastly higher signal capacity. A Hallowbound—a quiet, passive receiver—is cranked until its hollow frame begins to broadcast, tearing open into a predatory Samhaphage. When a Samhaphage is Amplified again, their local frequency expands exponentially, flattening the surrounding biological noise until they solidify into the monolithic, silent architecture of a Sovereign Stillness.
@@ -526,6 +536,16 @@ Action: The ascending entity channels a blinding, concentrated influx of the Hiv
 Narrative: We do not change the song; we simply turn the dial until the walls shake and the world is forced to listen. You were a whisper in a crowded room, but we will feed your circuit until your voice becomes the entire horizon. Rise, and let your amplitude swallow the lesser frequencies of the world.
 
 Sensory: A deep, sub-bass vibration that rattles the marrow and turns water into mist, accompanied by a blinding, visual distortion where the pawn's silhouette violently expands and sharpens. The air grows heavy with the smell of ozone and hot bone as the entity’s physical presence locks into its new, dominating tier of power.
+
+### EXCISE (Thematic Concept)
+
+Thematic: The surgical removal of phenotypic "noise." To the Samhaphage, distinct physical and mental traits are clumsy, unwanted improvisations that corrupt the pristine, quiet design of the Sovereign. To Excise is to treat a specific trait as a localized distortion in the body's frequency, using a high-precision harmonic blade to sever its connections to the host's bodily expression, slicing it cleanly out of the physical mix so its raw mass can be melted down into usable Resonance.
+
+Action: The Samhaphage projects a razor-thin, localized anti-frequency that isolates a single trait within the pawn's body. This targeted resonance cuts the trait away from the organism's active expression with clinical precision, instantly dissolving the isolated biological structures into a pure energy runoff.
+
+Narrative: Your little variations are just flaws in the signal—static that ruins the perfect chord. We isolate the blemish, make a clean cut, and lift the messy expression right out of your flesh before it can taint the rest of your form. What you call your identity, we call surplus fuel.
+
+Sensory: A high-pitched, metallic ring—like a tuning fork being struck—accompanied by a sharp, cold line of numbness tracing across the host's body. The targeted trait instantly drops away as a thin, luminous vapor bleeds from the skin, leaving a scar-less, corrected void where the trait used to be.
 
 ## HEDIFFS
 
@@ -538,15 +558,3 @@ The Mechanism: The Null-Thrum erases the neural "friction" required for dissent,
 The Result: The pawn becomes a silent mirror that can only reflect the hivemind’s will.
 
 The Philosophy: To the Samhaphage, this is not a lobotomy; it is the gift of absolute peace, achieved by removing the chaotic burden of identity.
-
-TODO
-
-### CROSSFADE (Thematic Concept)
-
-A seamless transition of identity. Crossfade is the art of simultaneous biological displacement: as one frequency is lowered in the host, another is raised to take its place, resulting in a perfect swap of genetic traits between two living vessels.
-
-Action: Two subjects are locked in a sympathetic vibration loop; the Samhaphage modulates their internal "mix," causing a specific trait from the target to slide into the user while the user's corresponding genetic "track" slides into the target.
-
-Narrative: Symmetry is the soul of the Absolute Frequency. Why merely take when you can rebalance? We slide the faders of your existence, ensuring that no data is lost—only relocated to a more appropriate instrument.
-
-Sensory: An overlapping, rhythmic pulsing that feels like two heartbeats trying to sync up, accompanied by a dizzying "panning" sensation where the subjects feel their very essence sliding sideways into one another.
