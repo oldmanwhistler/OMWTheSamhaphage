@@ -10,7 +10,7 @@ using System.Linq; // Added for LINQ operations
 
 namespace OMW_Samhaphage
 {
-    public enum BlacklistType
+    public enum BlacklistGeneType
     {
         BlGenePack,
         BlWretch,
@@ -27,31 +27,31 @@ namespace OMW_Samhaphage
     public class BlacklistGene
     {
         public GeneDef geneDef;
-        public HashSet<BlacklistType> blacklistType;
+        public HashSet<BlacklistGeneType> BlacklistGeneType;
         public string blacklistReason;
 
         public BlacklistGene(GeneDef geneDef)
         {
             this.geneDef = geneDef;
-            this.blacklistType = new HashSet<BlacklistType>();
+            this.BlacklistGeneType = new HashSet<BlacklistGeneType>();
         }
-        public void Add(BlacklistType type)
+        public void Add(BlacklistGeneType type)
         {
-            blacklistType.Add(type);
+            BlacklistGeneType.Add(type);
         }
 
         public void SetReason()
         {
             blacklistReason = "";
-            if (blacklistType.Count == 0) return;
+            if (BlacklistGeneType.Count == 0) return;
 
-            List<string> blacklistTypeStr = new List<string>();
+            List<string> BlacklistGeneTypeStr = new List<string>();
             
-            foreach (BlacklistType type in blacklistType)
+            foreach (BlacklistGeneType type in BlacklistGeneType)
             {
-                blacklistTypeStr.Add(type.ToString());
+                BlacklistGeneTypeStr.Add(type.ToString());
             }
-            blacklistReason = string.Join(", ", blacklistTypeStr);
+            blacklistReason = string.Join(", ", BlacklistGeneTypeStr);
         }
     }
 
@@ -86,16 +86,16 @@ namespace OMW_Samhaphage
                 return;
             }
 
-            HashSet<BlacklistType> blCanCopy = new HashSet<BlacklistType>();
-            HashSet<BlacklistType> blCanMutate = new HashSet<BlacklistType>();
-            HashSet<BlacklistType> blCanGenerate = new HashSet<BlacklistType>();
+            HashSet<BlacklistGeneType> blCanCopy = new HashSet<BlacklistGeneType>();
+            HashSet<BlacklistGeneType> blCanMutate = new HashSet<BlacklistGeneType>();
+            HashSet<BlacklistGeneType> blCanGenerate = new HashSet<BlacklistGeneType>();
            
-            blCanCopy.Add(BlacklistType.BlGenePack);
-            blCanCopy.Add(BlacklistType.BlWretch);
-            blCanCopy.Add(BlacklistType.BlTrait);
-            blCanCopy.Add(BlacklistType.BlPrereq);
-            blCanGenerate.Add(BlacklistType.BlImplanter);
-            blCanGenerate.Add(BlacklistType.BlWretch);
+            blCanCopy.Add(BlacklistGeneType.BlGenePack);
+            blCanCopy.Add(BlacklistGeneType.BlWretch);
+            blCanCopy.Add(BlacklistGeneType.BlTrait);
+            blCanCopy.Add(BlacklistGeneType.BlPrereq);
+            blCanGenerate.Add(BlacklistGeneType.BlImplanter);
+            blCanGenerate.Add(BlacklistGeneType.BlWretch);
 
             // AlphaGenes integration: respect the Wretch
             List<GeneDef> cachedBlacklist = new List<GeneDef>();
@@ -136,43 +136,43 @@ namespace OMW_Samhaphage
                 BlacklistGene bl = new BlacklistGene(geneDef);
                 if (geneDef.canGenerateInGeneSet == false)
                 {
-                    bl.Add(BlacklistType.BlGenePack);
+                    bl.Add(BlacklistGeneType.BlGenePack);
                 }
                 if (cachedBlacklist.Contains(geneDef) || cachedDefnameStrings.Any(s => geneDef.defName.Contains(s)))
                 {
-                    bl.Add(BlacklistType.BlWretch);
+                    bl.Add(BlacklistGeneType.BlWretch);
                 }
                 if (myBlacklistStrings.Any(s => geneDef.defName.Contains(s)))
                 {
-                    bl.Add(BlacklistType.BlStringMatch);
+                    bl.Add(BlacklistGeneType.BlStringMatch);
                 }
                 if (geneDef.prerequisite != null)
                 {
-                    bl.Add(BlacklistType.BlPrereq);
+                    bl.Add(BlacklistGeneType.BlPrereq);
                 }
                 if (geneDef.displayCategory?.defName?.Contains("OMW_PerfectSilence") == true)
                 {
-                    bl.Add(BlacklistType.BlSamhaphage);
+                    bl.Add(BlacklistGeneType.BlSamhaphage);
                 }
                 if (geneDef.displayCategory?.defName?.Contains("Reimplanter") == true)
                 {
-                    bl.Add(BlacklistType.BlImplanter);
+                    bl.Add(BlacklistGeneType.BlImplanter);
                 }
                 if (geneDef.displayCategory?.defName?.Contains("Ascension") == true)
                 {
-                    bl.Add(BlacklistType.BlAscension);
+                    bl.Add(BlacklistGeneType.BlAscension);
                 }
                 if (geneDef.displayCategory?.defName?.Contains("Metamorph") == true)
                 {
-                    bl.Add(BlacklistType.BlMetamorph);
+                    bl.Add(BlacklistGeneType.BlMetamorph);
                 }
                 if (geneDef.exclusionTags?.Contains("AG_OnlyOnCharacterCreation") == true)
                 {
-                    bl.Add(BlacklistType.BlMisc);
+                    bl.Add(BlacklistGeneType.BlMisc);
                 }
                 if (geneDef.displayCategory?.defName?.Contains("Don't pick these") == true)
                 {
-                    bl.Add(BlacklistType.BlMisc);
+                    bl.Add(BlacklistGeneType.BlMisc);
                 }
 
                 if (geneDef.forcedTraits != null)
@@ -184,47 +184,47 @@ namespace OMW_Samhaphage
 
                         if (traitDef.conflictingTraits?.Count > 0)
                         {
-                            bl.Add(BlacklistType.BlTrait);
+                            bl.Add(BlacklistGeneType.BlTrait);
                             break;
                         }
 
                         if (traitDef.conflictingPassions?.Count > 0)
                         {
-                            bl.Add(BlacklistType.BlTrait);
+                            bl.Add(BlacklistGeneType.BlTrait);
                             break;
                         }
 
                         if (traitDef.requiredWorkTypes?.Count > 0)
                         {
-                            bl.Add(BlacklistType.BlTrait);
+                            bl.Add(BlacklistGeneType.BlTrait);
                             break;
                         }
 
                         if (traitDef.disabledWorkTypes?.Count > 0)
                         {
-                            bl.Add(BlacklistType.BlTrait);
+                            bl.Add(BlacklistGeneType.BlTrait);
                             break;
                         }
                     }
                 }
-                if (bl.blacklistType.Count > 0)
+                if (bl.BlacklistGeneType.Count > 0)
                 {
                     bl.SetReason();
 
                     // all genes that can be blacklisted
                     BlacklistedGenes.Add(bl);
 
-                    if (!bl.blacklistType.Overlaps(blCanCopy))
+                    if (!bl.BlacklistGeneType.Overlaps(blCanCopy))
                     {
                         BlacklistedGenesDontCopy.Add(bl.geneDef);
                     }
 
-                    if (!bl.blacklistType.Overlaps(blCanMutate))
+                    if (!bl.BlacklistGeneType.Overlaps(blCanMutate))
                     {
                         BlacklistedGenesDontMutate.Add(bl.geneDef);
                     }
 
-                    if (!bl.blacklistType.Overlaps(blCanGenerate))
+                    if (!bl.BlacklistGeneType.Overlaps(blCanGenerate))
                     {
                         BlacklistedGenesDontGenerate.Add(bl.geneDef);
                     }
