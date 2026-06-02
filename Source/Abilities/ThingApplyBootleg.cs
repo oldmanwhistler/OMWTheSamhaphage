@@ -37,7 +37,8 @@ namespace OMW_Samhaphage
             // No traits that conflict with traits they have
             // No traits from genes
             return source.story.traits.allTraits
-                .Where(t => !alreadyHas.Contains(t.def) &&
+                .Where(t => !OMW_BlacklistTraits.BlacklistedTraitsDontCopy.Contains(t.def) && // ignore blacklisted
+                            !alreadyHas.Contains(t.def) &&
                             !conflicts.Contains(t.def) &&
                             t.sourceGene == null
                             )

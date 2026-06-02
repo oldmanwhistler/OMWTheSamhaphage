@@ -21,7 +21,8 @@ namespace OMW_Samhaphage
         BlAscension,
         BlMetamorph,
         BlTrait,
-        BlSamhaphage
+        BlSamhaphage,
+        BlReproduction
     }
 
     public class BlacklistGene
@@ -51,7 +52,7 @@ namespace OMW_Samhaphage
             {
                 BlacklistGeneTypeStr.Add(type.ToString());
             }
-            blacklistReason = string.Join(", ", BlacklistGeneTypeStr);
+            blacklistReason = string.Join(" ", BlacklistGeneTypeStr);
         }
     }
 
@@ -94,8 +95,12 @@ namespace OMW_Samhaphage
             blCanCopy.Add(BlacklistGeneType.BlWretch);
             blCanCopy.Add(BlacklistGeneType.BlTrait);
             blCanCopy.Add(BlacklistGeneType.BlPrereq);
+
             blCanGenerate.Add(BlacklistGeneType.BlImplanter);
             blCanGenerate.Add(BlacklistGeneType.BlWretch);
+            blCanGenerate.Add(BlacklistGeneType.BlReproduction);
+
+            blCanMutate.Add(BlacklistGeneType.BlReproduction);
 
             // AlphaGenes integration: respect the Wretch
             List<GeneDef> cachedBlacklist = new List<GeneDef>();
@@ -166,11 +171,15 @@ namespace OMW_Samhaphage
                 {
                     bl.Add(BlacklistGeneType.BlMetamorph);
                 }
+                if (geneDef.displayCategory?.defName?.Contains("Reproduction") == true)
+                {
+                    bl.Add(BlacklistGeneType.BlReproduction);
+                }
                 if (geneDef.exclusionTags?.Contains("AG_OnlyOnCharacterCreation") == true)
                 {
                     bl.Add(BlacklistGeneType.BlMisc);
                 }
-                if (geneDef.displayCategory?.defName?.Contains("Don't pick these") == true)
+                if (geneDef.displayCategory?.defName?.Contains("BS_DO_NOT") == true)
                 {
                     bl.Add(BlacklistGeneType.BlMisc);
                 }
@@ -292,7 +301,7 @@ namespace OMW_Samhaphage
                 StringBuilder sb = new StringBuilder();
 
                 // Header row
-                sb.AppendLine("DEFNAME,LABEL,COMPLEXITY,METABOLISM,ARCHITE,CATEGORY,CATEGORYDEF,BLACKLISTED,ABILITIES,DESCRIPTION");
+                sb.AppendLine("DEFNAME,LABEL,MOD,COMPLEXITY,METABOLISM,ARCHITE,CATEGORY,CATEGORYDEF,BLACKLISTED,ABILITIES,DESCRIPTION");
 
                 foreach (GeneDef gene in DefDatabase<GeneDef>.AllDefs)
                 {
@@ -307,8 +316,9 @@ namespace OMW_Samhaphage
                         ? string.Join("|", gene.abilities.ConvertAll(a => a.defName)) 
                         : "";
                     string desc = gene.description?.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", "") ?? "";
+                    string modName = gene.modContentPack?.Name ?? gene.modContentPack?.PackageId ?? "Unknown";
 
-                    sb.AppendLine($"\"{gene.defName}\",\"{label}\",{gene.biostatCpx},{gene.biostatMet},{gene.biostatArc},\"{cat}\",\"{catDef}\",{bl},\"{abilities}\",\"{desc}\"");
+                    sb.AppendLine($"\"{gene.defName}\",\"{label}\",\"{modName}\",{gene.biostatCpx},{gene.biostatMet},{gene.biostatArc},\"{cat}\",\"{catDef}\",{bl},\"{abilities}\",\"{desc}\"");
                 }
 
                 File.WriteAllText(path, sb.ToString());

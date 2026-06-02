@@ -22,7 +22,8 @@ namespace OMW_Samhaphage
             // For Excise, we don't care about conflicts in the destination 
             // because we aren't adding the trait to the caster, just removing it.
             return source.story.traits.allTraits
-                .Where(t => t.sourceGene == null)
+                .Where(t => (t.sourceGene == null) &&
+                            !OMW_BlacklistTraits.BlacklistedTraitsDontRemove.Contains(t.def))
                 .ToList();
         }
 

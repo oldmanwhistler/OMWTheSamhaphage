@@ -13,19 +13,20 @@ namespace OMW_Samhaphage
 
     public class OMW_Settings : ModSettings
     {
-        public bool logAbilities = false;
-        public bool logAnomaly = false;
-        public bool logCompAbilityEffect = false;
-        public bool logGenes = false;
-        public bool logResonance = false;
-        public bool logHediffs = false;
-        public bool logJobs = false;
-        public bool logUI = false;
-        public bool logMutation = false;
-        public bool logSelection = false;
-        public bool disableDissonance = false;
+        public bool logAbilities;
+        public bool logAnomaly;
+        public bool logCompAbilityEffect;
+        public bool logGenes;
+        public bool logResonance;
+        public bool logHediffs;
+        public bool logJobs;
+        public bool logUI;
+        public bool logMutation;
+        public bool logSelection;
+        public bool disableDissonance;
 
-        public bool disableGeneBlacklist = false;
+        public bool disableGeneBlacklist;
+        public bool disableTraitBlacklist;
         
         public float resonanceMax = DefaultResonanceMax;
         private const float DefaultResonanceMax = 1000f;
@@ -55,6 +56,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref logMutation, "logSelection", false);
             Scribe_Values.Look(ref disableDissonance, "disableDissonance", false);
             Scribe_Values.Look(ref disableGeneBlacklist, "disableGeneBlacklist", false);
+            Scribe_Values.Look(ref disableTraitBlacklist, "disableTraitBlacklist", false);            
             Scribe_Values.Look(ref resonanceMax, "ResonanceMax", DefaultResonanceMax);
             Scribe_Values.Look(ref complexityMultiplierHallowbound, "complexityMultiplierHallowbound", 1.5f);
             Scribe_Values.Look(ref complexityMultiplierSamhaphage, "complexityMultiplierSamhaphage", 1.5f);
@@ -97,6 +99,7 @@ namespace OMW_Samhaphage
             logSelection = false;
             disableDissonance = false;
             disableGeneBlacklist = false;
+            disableTraitBlacklist = false;
             abilityValue = new NullThrumAbilities();
             resonanceMax = DefaultResonanceMax;
             complexityMultiplierHallowbound = 1.5f;
@@ -155,18 +158,23 @@ namespace OMW_Samhaphage
                 case SettingsTab.Main:
                     listing.Gap();
                     listing.Label(
-                        "Gene Blacklist"
+                        "Blacklists"
                             .Colorize(Color.yellow));
                    
                     listing.CheckboxLabeled("Disable Gene Blacklist", ref settings.disableGeneBlacklist,
-                        "If checkmarked, no genes will be blacklisted.  You have to click 'Regenerate Gene Blacklist' after changing this setting.");                    
+                        "If checkmarked, no genes will be blacklisted.  You have to click 'Regenerate Genes Blacklist' after changing this setting.");
+                    listing.CheckboxLabeled("Disable Trait Blacklist", ref settings.disableTraitBlacklist,
+                        "If checkmarked, no traits will be blacklisted.  You have to click 'Regenerate Traits Blacklist' after changing this setting.");
                     listing.GapLine();
                     
-                    listing.Label("Regenerate the gene blacklist after tweaking with other mods or changing the enable/disable (e.g.: Tweaks Galore, Gene Blacklist)");
-                    if (listing.ButtonText("Regenerate Gene Blacklist"))
+                    listing.Label("Regenerate the gene/trait blacklist after tweaking with other mods or changing the enable/disable (e.g.: Tweaks Galore, Gene Blacklist)");
+                    if (listing.ButtonText("Regenerate Gene/Trait Blacklists"))
                     {
                         OMW_BlacklistGenes.RebuildBlacklist();
-                        Messages.Message($"{Prefix} Gene blacklist regenerated, debugging CSV exported, blacklist xenotype for Genetic Drift exported.", MessageTypeDefOf.TaskCompletion, false);
+                        OMW_BlacklistTraits.RebuildBlacklist();
+                        OMW_BlacklistGenes.ExportBlacklistGeneReport();                        
+                        OMW_BlacklistTraits.ExportBlacklistTraitReport();
+                        Messages.Message($"{Prefix} Genes/Traits blacklist regenerated, debugging CSV exported, blacklist xenotype for Genetic Drift exported.", MessageTypeDefOf.TaskCompletion, false);
                     }
                     listing.GapLine();
 
@@ -243,10 +251,11 @@ namespace OMW_Samhaphage
                         ExportReport.ExportReportsResonance();
                     }
 
-                    listing.Label("Gene Blacklist".Colorize(Color.yellow));
+                    listing.Label("Blacklists".Colorize(Color.yellow));
                     if (listing.ButtonText("Export CSV for debugging gene blacklists"))
                     {
                         OMW_BlacklistGenes.ExportBlacklistGeneReport();
+                        OMW_BlacklistTraits.ExportBlacklistTraitReport();
                     }
 
                     listing.Gap();                    

@@ -2,9 +2,7 @@
 
 ## Next
 
-* "arise" needs to become an ability
 * Genetic complexity should be calculated as a percentage * genetic complexity. The percentage could change based on the difficulty presets.
-* blPreq should only blacklist random mutations
 
 ## MOD SETTINGS
 
@@ -47,9 +45,6 @@
 
 ### Traits
 
-* Trait blacklist
-* Isekai Rank traits should be blacklisted
-* Hauts Added Traits should blacklist the woke traits
 * Should handle conflicting traits the same way as I do with genes with respect to the GUI.
 
 ### Passion
