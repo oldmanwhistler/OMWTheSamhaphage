@@ -246,7 +246,7 @@ namespace OMW_Samhaphage
                     listing.Label("Gene Blacklist".Colorize(Color.yellow));
                     if (listing.ButtonText("Export CSV for debugging gene blacklists"))
                     {
-                        OMW_BlacklistGenes.ExportBlacklistReport();
+                        OMW_BlacklistGenes.ExportBlacklistGeneReport();
                     }
 
                     listing.Gap();                    

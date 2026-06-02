@@ -283,7 +283,7 @@ namespace OMW_Samhaphage
             }
         }
 
-        public static void ExportBlacklistReport()
+        public static void ExportBlacklistGeneReport()
         {
            try
             {
