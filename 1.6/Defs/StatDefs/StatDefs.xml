@@ -7,6 +7,7 @@
     <description>A measure of this creature's ability to harness and stabilize the Null-Thrum. Resonance allows for manipulation of the Null-Thrum and enables the xenotype abilities.</description>
     <category>Genetics</category>
     <defaultBaseValue>0</defaultBaseValue>
+    <workerClass>OMW_Samhaphage.StatWorker_Resonance</workerClass>
     <hideAtValue>0</hideAtValue>
     <toStringStyle>FloatMaxTwo</toStringStyle>
     <showOnHumanlikes>true</showOnHumanlikes>   
