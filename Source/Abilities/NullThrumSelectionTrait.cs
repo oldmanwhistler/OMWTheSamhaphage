@@ -64,7 +64,10 @@ namespace OMW_Samhaphage
             {
                 if (!traitsToSelectFrom.Contains(trait))
                 {
-                    traitsThatCantBeSelected.Add(trait);
+                    if (trait.sourceGene == null)
+                    {
+                        traitsThatCantBeSelected.Add(trait);
+                    }
                 }
             }
 
