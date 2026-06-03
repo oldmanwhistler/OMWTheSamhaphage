@@ -11,22 +11,23 @@ namespace OMW_Samhaphage
     public enum BlacklistTraitType
     {
         BlStringMatch,
-        BlConflict,
-        BlWork,
         BlMod
     }
 
     public class BlacklistTrait
     {
         public TraitDef traitDef;
+        public TraitDegreeData data;
         public HashSet<BlacklistTraitType> BlacklistTraitType;
         public string blacklistReason;
 
-        public BlacklistTrait(TraitDef traitDef)
+        public BlacklistTrait(TraitDef trait, TraitDegreeData data)
         {
             this.traitDef = traitDef;
+            this.data = data;
             this.BlacklistTraitType = new HashSet<BlacklistTraitType>();
         }
+
         public void Add(BlacklistTraitType type)
         {
             BlacklistTraitType.Add(type);
@@ -75,8 +76,6 @@ namespace OMW_Samhaphage
 
             HashSet<BlacklistTraitType> blCanCopy = new HashSet<BlacklistTraitType>();
             HashSet<BlacklistTraitType> blCanRemove = new HashSet<BlacklistTraitType>();
-            blCanRemove.Add(BlacklistTraitType.BlConflict);
-            blCanRemove.Add(BlacklistTraitType.BlWork);
 
             List<string> myBlacklistStrings = new List<string>();
             myBlacklistStrings.Add("Isekai_Rank_"); // Isekai Leveling
@@ -88,45 +87,36 @@ namespace OMW_Samhaphage
             
             foreach (TraitDef traitDef in DefDatabase<TraitDef>.AllDefs)
             {
-                BlacklistTrait bl = new BlacklistTrait(traitDef);
                 string modName = traitDef.modContentPack?.Name ?? traitDef.modContentPack?.PackageId ?? "Unknown";
-                
-                if (myBlacklistStrings.Any(s => traitDef.defName.Contains(s)))
+                foreach (TraitDegreeData data in traitDef.degreeDatas)
                 {
-                    bl.Add(BlacklistTraitType.BlStringMatch);
-                }
-                
-                if (myBlacklistStrings.Any(s => s == modName))
-                {
-                    bl.Add(BlacklistTraitType.BlMod);
-                }
-                    
-                // Blacklist traits with excessive conflicts to prevent UI/Mechanic clutter
-                if (!traitDef.conflictingTraits.NullOrEmpty() && traitDef.conflictingTraits.Count > 2)
-                {
-                    bl.Add(BlacklistTraitType.BlConflict);
-                }
 
-                // Blacklist traits that restrict or mandate specific work types
-                if (!traitDef.disabledWorkTypes.NullOrEmpty() || !traitDef.requiredWorkTypes.NullOrEmpty())
-                {
-                    bl.Add(BlacklistTraitType.BlWork);
-                }
-
-                if (bl.BlacklistTraitType.Count > 0)
-                {
-                    bl.SetReason();
-                    BlacklistedTraits.Add(bl);
-
-                    if (!bl.BlacklistTraitType.Overlaps(blCanCopy))
+                    BlacklistTrait bl = new BlacklistTrait(traitDef, data);
+                    if (myBlacklistStrings.Any(s => traitDef.defName.Contains(s)))
                     {
-                        BlacklistedTraitsDontCopy.Add(bl.traitDef);
+                        bl.Add(BlacklistTraitType.BlStringMatch);
                     }
 
-                    if (!bl.BlacklistTraitType.Overlaps(blCanRemove))
+                    if (myBlacklistMods.Any(s => modName.Contains(s)))
                     {
-                        BlacklistedTraitsDontRemove.Add(bl.traitDef);
-                    }                    
+                        bl.Add(BlacklistTraitType.BlMod);
+                    }
+
+                    if (bl.BlacklistTraitType.Count > 0)
+                    {
+                        bl.SetReason();
+                        BlacklistedTraits.Add(bl);
+
+                        if (!bl.BlacklistTraitType.Overlaps(blCanCopy))
+                        {
+                            BlacklistedTraitsDontCopy.Add(bl.traitDef);
+                        }
+
+                        if (!bl.BlacklistTraitType.Overlaps(blCanRemove))
+                        {
+                            BlacklistedTraitsDontRemove.Add(bl.traitDef);
+                        }
+                    }
                 }
             }
         }
@@ -138,17 +128,29 @@ namespace OMW_Samhaphage
                 string path = Path.Combine(GenFilePaths.SaveDataFolderPath, "OMW_Samhaphage_Report_Blacklisted_Traits.csv");
                 StringBuilder sb = new StringBuilder();
 
-                sb.AppendLine("DEFNAME,LABEL,MOD,BLACKLISTED,DESCRIPTION");
+                sb.AppendLine("DEFNAME,MOD_NAME,TRAIT_LABEL,DEGREE,DEGREE_LABEL,TRAIT_DESC,DEGREE_DESC");
 
-                foreach (TraitDef trait in DefDatabase<TraitDef>.AllDefs)
+                foreach (TraitDef traitDef in DefDatabase<TraitDef>.AllDefs)
                 {
-                    string label = trait.label?.Replace("\"", "\"\"") ?? "";
-                    BlacklistTrait blEntry = BlacklistedTraits.FirstOrDefault(x => x.traitDef == trait);
-                    string bl = blEntry?.blacklistReason ?? "no blacklist";
-                    string desc = trait.description?.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", "") ?? "";
-                    string modName = trait.modContentPack?.Name ?? trait.modContentPack?.PackageId ?? "Unknown";
+                    string modName = traitDef.modContentPack?.Name ?? traitDef.modContentPack?.PackageId ?? "Unknown";
+                    string traitLabel = traitDef.label?.Replace("\"", "\"\"") ?? "";
+                    string traitDefName = traitDef.defName;
+                    string traitDesc =
+                        traitDef.description?.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", "") ??
+                        "";
+                    foreach (TraitDegreeData data in traitDef.degreeDatas)
+                    {
+                        string degreeLabel = data.label?.Replace("\"", "\"\"") ?? "";
+                        string degree = data.degree.ToString();
+                        BlacklistTrait blEntry = BlacklistedTraits.FirstOrDefault(x => x.data == data);
+                        string bl = blEntry?.blacklistReason ?? "no blacklist";
+                        string degreeDesc =
+                            data.description?.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", "") ??
+                            "";
 
-                    sb.AppendLine($"\"{trait.defName}\",\"{label}\",\"{modName}\",\"{bl}\",\"{desc}\"");
+
+                        sb.AppendLine($"\"{traitDefName}\",\"{modName}\",\"{traitLabel}\",\"{degree}\",\"{degreeLabel}\",\"{bl}\",\"{traitDesc}\",\"{degreeDesc}\"");
+                    }
                 }
 
                 File.WriteAllText(path, sb.ToString());

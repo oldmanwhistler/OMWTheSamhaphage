@@ -73,7 +73,7 @@ namespace OMW_Samhaphage
                 {
                     foreach (TraitDegreeData degree in trait.degreeDatas)
                     {
-                        string label = degree.label?.Replace("\"", "\"\"") ?? "";
+                        string label = degree.label?.CapitalizeFirst().Replace("\"", "\"\"") ?? "";
                         float marketValueOffset = degree.marketValueFactorOffset;
                         float powerValue = ResonanceUtility.CalculateTraitPowerValue(degree);
                         float totalResonanceValue = ResonanceUtility.TraitResonanceValue(degree);
