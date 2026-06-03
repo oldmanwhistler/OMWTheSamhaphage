@@ -21,7 +21,7 @@ namespace OMW_Samhaphage
         public HashSet<BlacklistTraitType> BlacklistTraitType;
         public string blacklistReason;
 
-        public BlacklistTrait(TraitDef trait, TraitDegreeData data)
+        public BlacklistTrait(TraitDef traitDef, TraitDegreeData data)
         {
             this.traitDef = traitDef;
             this.data = data;

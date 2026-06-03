@@ -1,6 +1,7 @@
-using RimWorld;
 using System.Collections.Generic;
+using System.Linq;
 using Verse;
+using RimWorld;
 
 namespace OMW_Samhaphage
 {
@@ -31,6 +32,61 @@ namespace OMW_Samhaphage
         {
             //var stats = $"\nResonance Value: {this.value}";            
             var tip = $"{this.trait.LabelCap}\n\n{this.trait.TipString(this.pawn)}";
+
+            if (this.trait.Suppressed)
+            {
+                if (this.trait.suppressedByTrait)
+                {
+                    tip +=
+                        $"\n\n<color=#999999>(This trait is suppressed another trait)</color>";
+                }
+                if (this.trait.suppressedByGene != null)
+                {
+                    tip +=
+                        $"\n\n<color=#999999>(This trait is suppressed by gene {this.trait.suppressedByGene.LabelCap})</color>";
+                }
+            }
+
+            if (!this.trait.def.disabledWorkTypes.NullOrEmpty())
+            {
+                tip +=
+                    $"\n\n<color=#999999>Disabled WorkTypes: {string.Join(", ", this.trait.def.disabledWorkTypes.Select(t => t.LabelCap))}</color>";
+            }
+
+            if (!this.trait.def.requiredWorkTypes.NullOrEmpty())
+            {
+                tip +=
+                    $"\n\n<color=#999999>Required WorkTypes: {string.Join(", ", this.trait.def.requiredWorkTypes.Select(t => t.LabelCap))}</color>";
+            }
+
+            if (!this.trait.def.conflictingTraits.NullOrEmpty())                
+            {
+                tip +=
+                    $"\n\n<color=#999999>Conflicting Traits: {string.Join(", ", this.trait.def.conflictingTraits.Select(t => t.LabelCap))}</color>";
+            }
+
+            if (!this.trait.def.conflictingPassions.NullOrEmpty())
+            {
+                tip +=
+                    $"\n\n<color=#999999>Conflicting Skills: {string.Join(", ", this.trait.def.conflictingPassions.Select(t => t.LabelCap))}</color>";
+            }
+            
+            if (destinationConflictStr != "")
+            {
+                // Adds a red warning with the specific gene name
+                tip += $"\n\n<color=#ff6666>(This trait conflicts with {destinationConflictStr})</color>";
+            }
+
+            if (OMW_BlacklistTraits.BlacklistedTraits.Any<BlacklistTrait>(x => x.traitDef == this.trait.def))
+            {
+                // get the reason why it's blacklisted
+                BlacklistTrait bl = OMW_BlacklistTraits.BlacklistedTraits.FirstOrDefault<BlacklistTrait>(x =>
+                    x.traitDef == this.trait.def);
+                if (bl != null)
+                {
+                    tip += $"\n\n<color=#ffcc00>(Blacklisted: {bl.blacklistReason})</color>";
+                }
+            }
             return tip;
         }
     }
