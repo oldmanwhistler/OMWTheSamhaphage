@@ -112,4 +112,27 @@ namespace OMW_Samhaphage
             return text;
         }        
     }
+
+    public class StatWorker_Resonance : StatWorker
+    {
+        public override bool ShouldShowFor(StatRequest req)
+        {
+            if (!base.ShouldShowFor(req)) return false;
+
+            // The Numbers mod passes a StatRequest where req.Def is the PawnKindDef (Human).
+            // We must return true here so the stat appears as an option in the Numbers UI.
+            if (req.Def is PawnKindDef pk && pk.RaceProps.Humanlike)
+            {
+                return true;
+            }
+
+            // For actual pawns in the world, only show this stat if they have the Resonance gene.
+            if (req.Thing is Pawn pawn)
+            {
+                return ResonanceUtility.HasGene(pawn);
+            }
+
+            return false;
+        }
+    }
 }
