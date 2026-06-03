@@ -29,7 +29,32 @@ namespace OMW_Samhaphage
             {
                 foreach (TraitDef traitDef in trait.def.conflictingTraits)
                 {
-                    conflicts.Add(traitDef);
+                    if (alreadyHas.Contains(traitDef))
+                    {
+                        conflicts.Add(traitDef);
+                    }
+                }
+            }
+
+            foreach (Trait trait in source.story.traits.allTraits)
+            {
+                foreach (WorkTypeDef workType in trait.def.requiredWorkTypes)
+                {
+                    if (dest.WorkTypeIsDisabled(workType))
+                    {
+                        conflicts.Add(trait.def);
+                    }                
+                }
+            }
+
+            foreach (Trait trait in source.story.traits.allTraits)
+            {
+                foreach (SkillDef skill in trait.def.conflictingPassions)
+                {
+                    if (dest.skills.skills.Any(s => s.def == skill)) 
+                    {
+                        conflicts.Add(trait.def);
+                    }
                 }
             }
 
@@ -37,11 +62,12 @@ namespace OMW_Samhaphage
             // No traits that conflict with traits they have
             // No traits from genes
             return source.story.traits.allTraits
-                .Where(t => !OMW_BlacklistTraits.BlacklistedTraitsDontCopy.Contains(t.def) && // ignore blacklisted
-                            !alreadyHas.Contains(t.def) &&
-                            !conflicts.Contains(t.def) &&
-                            t.sourceGene == null
-                            )
+                .Where(t => 
+                        (t.sourceGene == null) &&        
+                        !OMW_BlacklistTraits.BlacklistedTraitsDontCopy.Contains(t.def) &&
+                        !alreadyHas.Contains(t.def) &&
+                        !conflicts.Contains(t.def)
+                        )
                 .ToList();
         }
 

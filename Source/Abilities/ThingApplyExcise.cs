@@ -23,7 +23,8 @@ namespace OMW_Samhaphage
             // because we aren't adding the trait to the caster, just removing it.
             return source.story.traits.allTraits
                 .Where(t => (t.sourceGene == null) &&
-                            !OMW_BlacklistTraits.BlacklistedTraitsDontRemove.Contains(t.def))
+                !OMW_BlacklistTraits.BlacklistedTraitsDontRemove.Contains(t.def)
+                )
                 .ToList();
         }
 
