@@ -35,6 +35,9 @@ namespace OMW_Samhaphage
                 ability = new PawnApplyRetune();
                 items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
 
+                ability = new PawnApplyCompress();
+                items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
+                
                 ability = new PawnApplyAmplifyHallowbound();
                 items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
             }
