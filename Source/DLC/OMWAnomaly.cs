@@ -44,28 +44,29 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            if (!ModsConfig.AnomalyActive)
-            {
-                corpse.Destroy();
-                Log.Debug($"CorpseToShamblerOrDestroy anomaly isn't active so destroyed {corpse.LabelShort}");
-                return true;
-            }
-            if (MutantUtility.CanResurrectAsShambler(corpse, true))
-            {
-                int lifespanTicks = 60000 * 3; // 3 Days
-                MutantUtility.ResurrectAsShambler(corpse.InnerPawn, lifespanTicks, corpse.Faction);
+            // if (!ModsConfig.AnomalyActive)
+            // {
+            //     corpse.Destroy();
+            //     Log.Debug($"CorpseToShamblerOrDestroy anomaly isn't active so destroyed {corpse.LabelShort}");
+            //     return true;
+            // }
+            // if (MutantUtility.CanResurrectAsShambler(corpse, true))
+            // {
+            //     int lifespanTicks = 60000 * 3; // 3 Days
+            //     // Passing null for faction ensures the shambler is hostile to the player (and everyone else).
+            //     MutantUtility.ResurrectAsShambler(corpse.InnerPawn, lifespanTicks, null);
                 
-                // Rebuild the graphics node immediately to prevent "Node is null" drawing errors
-                corpse.InnerPawn.Drawer.renderer.EnsureGraphicsInitialized();
-                Log.Debug($"CorpseToShamblerOrDestroy made a shambler from {corpse.LabelShort}");
-                return true;
-            }
-            else
-            {
+            //     // Rebuild the graphics node immediately to prevent "Node is null" drawing errors
+            //     corpse.InnerPawn.Drawer.renderer.EnsureGraphicsInitialized();
+            //     Log.Debug($"CorpseToShamblerOrDestroy made a shambler from {corpse.LabelShort}");
+            //     return true;
+            // }
+            // else
+            // {
                 corpse.Destroy();
-                Log.Debug($"CorpseToShamblerOrDestroy couldn't make a shambler so destroyed {corpse.LabelShort}");
+                // Log.Debug($"CorpseToShamblerOrDestroy couldn't make a shambler so destroyed {corpse.LabelShort}");
                 return true;
-            }
+            // }
         }
 
 
@@ -77,26 +78,29 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            if (ModsConfig.AnomalyActive)
+            // if (ModsConfig.AnomalyActive)
+            // {
+                
+            //     Log.Debug($"PawnToShamblerOrKillDestroy make {victim.LabelShort} into a hostile shambler");
+            //     // Strip the faction before conversion to ensure it becomes a hostile entity.
+            //     victim.SetFaction(null);
+            //     MutantUtility.SetPawnAsMutantInstantly(victim, MutantDefOf.Shambler);
+            //     // Fix for "Node is null": Force graphics initialization 
+            //     // after the pawn state changes to Shambler.
+            //     victim.Drawer.renderer.EnsureGraphicsInitialized();
+            //     return true;
+            // }
+            // else 
+            if (ApplyBrainDamage(victim, caster))
             {
                 
-                    Log.Debug($"PawnToShamblerOrKillDestroy make {victim.LabelShort} into a shambler");
-                MutantUtility.SetPawnAsMutantInstantly(victim, MutantDefOf.Shambler);
-                // Fix for "Node is null": Force graphics initialization 
-                // after the pawn state changes to Shambler.
-                victim.Drawer.renderer.EnsureGraphicsInitialized();
-                return true;
-            }
-            else if (ApplyBrainDamage(victim, caster))
-            {
-                
-                    Log.Debug($"PawnToShamblerOrKillDestroy is killing {victim.LabelShort} brain damage");
+                Log.Debug($"PawnToShamblerOrKillDestroy is killing {victim.LabelShort} brain damage");
                 return true;
             }
             else
             {
                 
-                    Log.Debug($"PawnToShamblerOrKillDestroy is killing {victim.LabelShort} with misc damage");
+                Log.Debug($"PawnToShamblerOrKillDestroy is killing {victim.LabelShort} with misc damage");
                 // we couldn't apply damage!?
                 DamageInfo dinfo = new DamageInfo(
                     DamageDefOf.ExecutionCut,

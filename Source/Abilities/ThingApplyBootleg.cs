@@ -120,6 +120,7 @@ namespace OMW_Samhaphage
                     activated = true;
                 }
             }
+
             return activated;
         }
 
@@ -159,24 +160,24 @@ namespace OMW_Samhaphage
 
             Pawn victim = corpse.InnerPawn;
             SelectionBootleg selectorBootleg = CanApplyBootleg(victim, caster);
-            if (selectorBootleg == null) return false;
-
-            ThingApplyAttenuate attenuate = new ThingApplyAttenuate();
-            SelectionAttenuate selectorAttenuate = attenuate.CanApplyAttenuate(victim, caster);            
+            if (selectorBootleg == null) return false;  
 
             bool value = false;
-            string msg = $"{victim.LabelShort}'s corpse was destroyed after being bootlegged for their personality.";
+            string msg = $"{victim.LabelShort}'s corpse was destroyed after being bootlegged for their traits and attenuated for their genes.";
             System.Action sacrificeAction = () =>
             {
                 Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selectorBootleg, (selectedList) =>
                 {
                     if (ApplyBootleg(victim, caster, selectorBootleg, selectedList))
                     {
+                        // only attenuate corpses
+                        ThingApplyAttenuate attenuate = new ThingApplyAttenuate();
+                        SelectionAttenuate selectorAttenuate = attenuate.CanApplyAttenuate(victim, caster);
                         if (selectorAttenuate != null)
                         {
                             attenuate.ApplyAttenuate(victim, caster, selectorAttenuate);
                         }
-                        OMWAnomaly.PawnToShamblerOrKillDestroy(victim, caster);
+                        OMWAnomaly.CorpseToShamblerOrDestroy(corpse);
                         Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
                         value = true;                        
                     }

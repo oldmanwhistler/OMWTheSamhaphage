@@ -109,14 +109,21 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            string msg = $"{victim.LabelShort}'s corpse was destroyed after being excised for their personality.";
+            string msg = $"{victim.LabelShort}'s corpse was destroyed after being excised for their traits and and attenuated for their genes.";
             System.Action sacrificeAction = () =>
             {
                 Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selector, (selectedList) =>
                 {
                     if (ApplyExcise(victim, caster, selector, selectedList))
                     {
-                        OMWAnomaly.PawnToShamblerOrKillDestroy(victim, caster);
+                        // only attenuate corpses
+                        ThingApplyAttenuate attenuate = new ThingApplyAttenuate();
+                        SelectionAttenuate selectorAttenuate = attenuate.CanApplyAttenuate(victim, caster);
+                        if (selectorAttenuate != null)
+                        {
+                            attenuate.ApplyAttenuate(victim, caster, selectorAttenuate);
+                        }                        
+                        OMWAnomaly.CorpseToShamblerOrDestroy(corpse);
                         Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
                     }
                 }));
