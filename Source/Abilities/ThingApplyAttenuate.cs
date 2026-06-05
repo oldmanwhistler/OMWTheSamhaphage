@@ -43,6 +43,9 @@ namespace OMW_Samhaphage
 
         public SelectionAttenuate CanApplyAttenuate(Pawn victim, Pawn caster)
         {
+            if (victim == null || caster == null) return null;
+            // can't cast it on our core races. Prevent using fluxspawn for massive resonance factories.
+            if (OMWGenes.HasNullThrum(victim)) return null;
             if (selector != null) return selector;
             selector = new SelectionAttenuate(caster, victim, caster);
             if (selector.genes.Count == 0)
