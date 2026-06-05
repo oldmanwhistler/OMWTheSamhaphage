@@ -34,10 +34,6 @@ namespace OMW_Samhaphage
         public static void ShowCorpseConfirmation(Pawn pawn, System.Action sacrificeAction)
         {
             string msg = $"Warning: Activating this ability will destroy {pawn.LabelShort}. Are you sure?";
-            if (ModsConfig.AnomalyActive)
-            {
-                msg = $"Warning: Activating this ability could raise {pawn.LabelShort} as a shambler. Are you sure?";
-            }
             Dialog_MessageBox window = new Dialog_MessageBox(
                 text: msg,
                 buttonAText: "Confirm".Translate(),
