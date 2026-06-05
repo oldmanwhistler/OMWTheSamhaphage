@@ -12,11 +12,16 @@ namespace OMW_Samhaphage
 {
     public class HediffComp_ParasitesXenotype : HediffComp
     {
+        Logger Log = new Logger("Hediff");
+
         public Pawn mother;
         public Faction motherFaction;
         public PawnKindDef motherDef;
         public XenotypeDef motherXenotypeDef;
         public int numBabies = 1;
+        // this gets set to true if there is an error
+        private bool disableHediff = false;
+
 
         public HediffCompProperties_ParasitesXenotype Props
         {
@@ -67,22 +72,30 @@ namespace OMW_Samhaphage
 
         }
 
-        public void Hatch()
+        private void Hatch()
         {
+            if (disableHediff) return;
+
             try
             {
                 PawnGenerationRequest request;
+                Faction motherFaction = this.motherFaction;
+                
+                // Use a generic Colonist kind to avoid "disabled requiredWorkTags" conflicts 
+                // caused by specialized kinds like Mechanitors or Highmates.
+                PawnKindDef spawnKind = PawnKindDefOf.Colonist;
 
-                if (mother != null && !mother.Dead)
-                {
-                    request = new PawnGenerationRequest(mother.kindDef, mother.Faction, PawnGenerationContext.NonPlayer, -1, forceGenerateNewPawn: false, allowDead: false, allowDowned: true, canGeneratePawnRelations: true, mustBeCapableOfViolence: true, 1f, forceAddFreeWarmLayerIfNeeded: false, allowGay: true, allowPregnant: false, allowFood: true, allowAddictions: true, inhabitant: false, certainlyBeenInCryptosleep: false, forceRedressWorldPawnIfFormerColonist: false, worldPawnFactionDoesntMatter: false, 0f, 0f, null, 1f, null, null, null, null, null, null, null, null, null, null, null, null, forceNoIdeo: false, forceNoBackstory: false, forbidAnyTitle: false, forceDead: false, null, null, motherXenotypeDef, null, null, 0f, DevelopmentalStage.Newborn);
+                Log.Debug(
+                    $"Hatch() as {spawnKind.defName} with Xenotype {motherXenotypeDef?.defName}. Faction: {motherFaction?.Name}");
+                request = new PawnGenerationRequest(spawnKind, motherFaction, PawnGenerationContext.NonPlayer, -1,
+                    forceGenerateNewPawn: false, allowDead: false, allowDowned: true, canGeneratePawnRelations: true,
+                    mustBeCapableOfViolence: false, 1f, forceAddFreeWarmLayerIfNeeded: false, allowGay: true,
+                    allowPregnant: false, allowFood: true, allowAddictions: true, inhabitant: false,
+                    certainlyBeenInCryptosleep: false, forceRedressWorldPawnIfFormerColonist: false,
+                    worldPawnFactionDoesntMatter: false, 0f, 0f, null, 1f, null, null, null, null, null, null, null,
+                    null, null, null, null, null, forceNoIdeo: false, forceNoBackstory: true, forbidAnyTitle: false,
+                    forceDead: false, null, null, motherXenotypeDef, null, null, 0f, DevelopmentalStage.Newborn);
 
-                }
-                else
-                {
-                    request = new PawnGenerationRequest(motherDef, motherFaction, PawnGenerationContext.NonPlayer, -1, forceGenerateNewPawn: false, allowDead: false, allowDowned: true, canGeneratePawnRelations: true, mustBeCapableOfViolence: true, 1f, forceAddFreeWarmLayerIfNeeded: false, allowGay: true, allowPregnant: false, allowFood: true, allowAddictions: true, inhabitant: false, certainlyBeenInCryptosleep: false, forceRedressWorldPawnIfFormerColonist: false, worldPawnFactionDoesntMatter: false, 0f, 0f, null, 1f, null, null, null, null, null, null, null, null, null, null, null, null, forceNoIdeo: false, forceNoBackstory: false, forbidAnyTitle: false, forceDead: false, null, null, motherXenotypeDef, null, null, 0f, DevelopmentalStage.Newborn);
-
-                }
 
 
                 Pawn pawn = PawnGenerator.GeneratePawn(request);
@@ -94,8 +107,10 @@ namespace OMW_Samhaphage
                         {
                             if (pawn.playerSettings != null && mother.playerSettings != null)
                             {
-                                pawn.playerSettings.AreaRestrictionInPawnCurrentMap = mother.playerSettings.AreaRestrictionInPawnCurrentMap;
+                                pawn.playerSettings.AreaRestrictionInPawnCurrentMap =
+                                    mother.playerSettings.AreaRestrictionInPawnCurrentMap;
                             }
+
                             if (pawn.RaceProps.IsFlesh)
                             {
                                 pawn.relations.AddDirectRelation(PawnRelationDefOf.Parent, mother);
@@ -105,21 +120,20 @@ namespace OMW_Samhaphage
                     }
 
 
-                    Find.LetterStack.ReceiveLetter("AG_ParasitesHatchedLabel".Translate(pawn.NameShortColored), "AG_ParasitesHatched".Translate(pawn.NameShortColored), LetterDefOf.PositiveEvent, (TargetInfo)pawn);
+                    Find.LetterStack.ReceiveLetter("AG_ParasitesHatchedLabel".Translate(pawn.NameShortColored),
+                        "AG_ParasitesHatched".Translate(pawn.NameShortColored), LetterDefOf.PositiveEvent,
+                        (TargetInfo)pawn);
                 }
                 else
                 {
                     Find.WorldPawns.PassToWorld(pawn, PawnDiscardDecideMode.Discard);
                 }
-
-
-
-
             }
-            catch (Exception) { }
-
-
-
+            catch (Exception ex)
+            {
+                Log.Error($"Exception during Hatch: {ex.Message}\n{ex.StackTrace}");
+                disableHediff = true;
+            }
         }
     }
 
@@ -135,4 +149,3 @@ namespace OMW_Samhaphage
     }
 }
     
-

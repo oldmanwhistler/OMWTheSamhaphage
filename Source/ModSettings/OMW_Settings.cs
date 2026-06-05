@@ -23,6 +23,7 @@ namespace OMW_Samhaphage
         public bool logUI;
         public bool logMutation;
         public bool logSelection;
+        public bool logHediff;
         public bool disableDissonance;
 
         public bool disableGeneBlacklist;
@@ -53,7 +54,8 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref logJobs, "logJobs", false);
             Scribe_Values.Look(ref logUI, "logUI", false);
             Scribe_Values.Look(ref logMutation, "logMutation", false);
-            Scribe_Values.Look(ref logMutation, "logSelection", false);
+            Scribe_Values.Look(ref logSelection, "logSelection", false);
+            Scribe_Values.Look(ref logHediff, "logHediff", false);
             Scribe_Values.Look(ref disableDissonance, "disableDissonance", false);
             Scribe_Values.Look(ref disableGeneBlacklist, "disableGeneBlacklist", false);
             Scribe_Values.Look(ref disableTraitBlacklist, "disableTraitBlacklist", false);            
@@ -97,6 +99,7 @@ namespace OMW_Samhaphage
             logUI = false;
             logMutation = false;
             logSelection = false;
+            logHediff = false;
             disableDissonance = false;
             disableGeneBlacklist = false;
             disableTraitBlacklist = false;
@@ -273,6 +276,7 @@ namespace OMW_Samhaphage
                     listing.CheckboxLabeled("Log UI", ref settings.logUI, "Traces for the UIs added by the mod.");
                     listing.CheckboxLabeled("Log Mutation", ref settings.logMutation, "Traces for genes getting added by the Random Mutation genes.");
                     listing.CheckboxLabeled("Log Selection", ref settings.logSelection, "Traces for genes selector.");
+                    listing.CheckboxLabeled("Log Hediff", ref settings.logHediff, "Traces for Hediffs (e.g. parasite).");
                     break;
             }
             listing.End();
