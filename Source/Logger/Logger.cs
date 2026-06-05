@@ -45,13 +45,14 @@ namespace OMW_Samhaphage
             return subPrefix switch
             {
                 "Abilities" => OMW_Mod.settings.logAbilities,
-                "Anomaly" => OMW_Mod.settings.logAnomaly,
                 "CompAbilityEffect" => OMW_Mod.settings.logCompAbilityEffect,
                 "Genes" => OMW_Mod.settings.logGenes,
                 "Resonance" => OMW_Mod.settings.logResonance,
                 "Hediffs" => OMW_Mod.settings.logHediffs,
+                "Mutation" => OMW_Mod.settings.logMutation,
+                "Kill" => OMW_Mod.settings.logKill,
                 "Jobs" => OMW_Mod.settings.logJobs,
-                "UI" => OMW_Mod.settings.logUI,
+                "UI" => OMW_Mod.settings.logUI,                 
                 _ => false,
             };
         }

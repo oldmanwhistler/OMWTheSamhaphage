@@ -123,7 +123,7 @@ namespace OMW_Samhaphage
                         {
                             attenuate.ApplyAttenuate(victim, caster, selectorAttenuate);
                         }                        
-                        OMWAnomaly.CorpseToShamblerOrDestroy(corpse);
+                        KillUtility.CorpseDestroy(corpse);
                         Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
                     }
                 }));

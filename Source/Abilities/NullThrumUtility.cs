@@ -228,7 +228,7 @@ namespace OMW_Samhaphage
             NullThrumAbilityType.Transpose,
             NullThrumResourceType.ResourceTypeChangeXenotype,
             NullThrumResonanceType.ResonanceTypeDebit,
-            NullThrumMathType.MathTypeOffset, 1.0f);
+            NullThrumMathType.MathTypeOffset, 3.0f);
 
         // flat cost: change xenotype
         public NullThrumAbilityProps hallowbound = new NullThrumAbilityProps(

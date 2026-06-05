@@ -14,7 +14,7 @@ namespace OMW_Samhaphage
     public class OMW_Settings : ModSettings
     {
         public bool logAbilities;
-        public bool logAnomaly;
+        public bool logKill;
         public bool logCompAbilityEffect;
         public bool logGenes;
         public bool logResonance;
@@ -46,7 +46,7 @@ namespace OMW_Samhaphage
         {
             base.ExposeData();
             Scribe_Values.Look(ref logAbilities, "logAbilities", false);
-            Scribe_Values.Look(ref logAnomaly, "logAnomaly", false);
+            Scribe_Values.Look(ref logKill, "logKill", false);
             Scribe_Values.Look(ref logCompAbilityEffect, "logCompAbilityEffect", false);
             Scribe_Values.Look(ref logGenes, "logGenes", false);
             Scribe_Values.Look(ref logResonance, "logResonance", false);
@@ -90,7 +90,7 @@ namespace OMW_Samhaphage
         public void Reset()
         {
             logAbilities = false;
-            logAnomaly = false;
+            logKill = false;
             logCompAbilityEffect = false;
             logGenes = false;
             logResonance = false;
@@ -267,7 +267,7 @@ namespace OMW_Samhaphage
                     listing.Label("Enable these to see detailed technical information in the console.");
                     listing.Gap();
                     listing.CheckboxLabeled("Log Abilities", ref settings.logAbilities, "Detailed traces for ability application and logic.");
-                    listing.CheckboxLabeled("Log Anomaly", ref settings.logAnomaly, "Traces for the anomaly logic for creating shamblers.");
+                    listing.CheckboxLabeled("Log Kill", ref settings.logKill, "Traces for the kill logic for creating shamblers.");
                     listing.CheckboxLabeled("Log CompAbilityEffect", ref settings.logCompAbilityEffect, "Traces for menu generation and target selection.");
                     listing.CheckboxLabeled("Log Genes", ref settings.logGenes, "Traces for gene addition, removal, and complexity calculation.");
                     listing.CheckboxLabeled("Log Resonance", ref settings.logResonance, "Traces for resonance consumption and gains.");

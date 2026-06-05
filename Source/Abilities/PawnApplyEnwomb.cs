@@ -84,7 +84,7 @@ namespace OMW_Samhaphage
             {
                 if (ExecutePregnancy(mother, father))
                 {
-                    OMWAnomaly.PawnToShamblerOrKillDestroy(father, father);
+                    KillUtility.PawnKillDestroy(father, father);
                     Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
                     value = true;
                 }

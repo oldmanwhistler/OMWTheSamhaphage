@@ -82,7 +82,7 @@ namespace OMW_Samhaphage
             {
                 if (ApplyAttenuate(victim, caster, selector))
                 {
-                    OMWAnomaly.PawnToShamblerOrKillDestroy(victim, caster);
+                    KillUtility.PawnKillDestroy(victim, caster);
                     Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
                     value = true;
                 }
@@ -110,7 +110,7 @@ namespace OMW_Samhaphage
                 if (ApplyAttenuate(victim, caster, selector))
                 {
                     // Use the Corpse-specific method to handle resurrection and initialization properly
-                    OMWAnomaly.CorpseToShamblerOrDestroy(corpse);
+                    KillUtility.CorpseDestroy(corpse);
                     Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
                 }
             };

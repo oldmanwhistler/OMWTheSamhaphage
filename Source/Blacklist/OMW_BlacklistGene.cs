@@ -125,6 +125,11 @@ namespace OMW_Samhaphage
             myBlacklistStrings.Add("WVC_Traitless");
             myBlacklistStrings.Add("WVC_Chimera_NullifiedLimit");
             myBlacklistStrings.Add("WVC_Chimera_GreatlyDecreasedLimit");
+            myBlacklistStrings.Add("WVC_Aptitudes_GreatEqualizer"); // this will let you pass it around the colony and scrub any aptitudes
+            myBlacklistStrings.Add("WVC_XenotypesAndGenes_RandomEndotypeForcer");
+            myBlacklistStrings.Add("WVC_XenotypesAndGenes_RandomXenotypeForcer");
+            myBlacklistStrings.Add("WVC_HiveMind"); // being able to get in on skill sharing, thoughts etc is too powerful
+            myBlacklistStrings.Add("WVC_Morph");
             // VRE
             myBlacklistStrings.Add("VRE_GermlineReimplanter");
             // AG
@@ -132,7 +137,7 @@ namespace OMW_Samhaphage
             myBlacklistStrings.Add("AG_ParasiticStinger");
             myBlacklistStrings.Add("AG_InsectStingerEndogenes");
             myBlacklistStrings.Add("AG_ParasiticStingerEndogenes");
-            // someone used Gene for Traits. Ban them all since they will break everything. See README.md
+            // Gene for Traits. I need to test if this still breaks things.
             myBlacklistStrings.Add("Gene_Trait_");
             
 

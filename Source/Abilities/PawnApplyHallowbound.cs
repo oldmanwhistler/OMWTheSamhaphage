@@ -39,7 +39,7 @@ namespace OMW_Samhaphage
             System.Action sacrificeAction = () =>
             {
                 OMWGenes.ChangeXenotype(victim, OMW_XenotypeDefOf.omw_hallowbound);
-                OMWAnomaly.PawnToShamblerOrKillDestroy(caster, caster);
+                KillUtility.PawnKillDestroy(caster, caster);
                 Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
                 value = true;
             };

@@ -72,7 +72,7 @@ namespace OMW_Samhaphage
             {
                 if (ApplyResurrect(corpse))
                 {
-                    OMWAnomaly.PawnToShamblerOrKillDestroy(caster, caster);
+                    KillUtility.PawnKillDestroy(caster, caster);
                     Messages.Message(msg,
                         MessageTypeDefOf.NegativeEvent);
                         
