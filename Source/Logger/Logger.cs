@@ -48,13 +48,21 @@ namespace OMW_Samhaphage
                 "CompAbilityEffect" => OMW_Mod.settings.logCompAbilityEffect,
                 "Genes" => OMW_Mod.settings.logGenes,
                 "Resonance" => OMW_Mod.settings.logResonance,
+                "Hediff" => OMW_Mod.settings.logHediffs,
                 "Hediffs" => OMW_Mod.settings.logHediffs,
                 "Mutation" => OMW_Mod.settings.logMutation,
                 "Kill" => OMW_Mod.settings.logKill,
+                "Job" => OMW_Mod.settings.logJobs,
                 "Jobs" => OMW_Mod.settings.logJobs,
-                "UI" => OMW_Mod.settings.logUI,                 
-                _ => false,
+                "UI" => OMW_Mod.settings.logUI,
+                _ => UnmappedPrefixError(),
             };
+        }
+
+        private bool UnmappedPrefixError()
+        {
+            Verse.Log.ErrorOnce($"[OMW] Logger subPrefix '{subPrefix}' is not mapped in IsDebugEnabled. Please update Logger.cs.", subPrefix.GetHashCode());
+            return true;
         }
     }
 }
