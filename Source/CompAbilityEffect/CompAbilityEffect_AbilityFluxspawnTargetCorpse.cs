@@ -31,6 +31,9 @@ namespace OMW_Samhaphage
             }
             else if (target.Thing is Corpse corpse)
             {
+                ability = new CorpseApplyRender();
+                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
+
                 ability = new CorpseApplyResurrectHallowbound();
                 items.Add(ability.NewMenuItemIcon(target, parent.pawn));
             }

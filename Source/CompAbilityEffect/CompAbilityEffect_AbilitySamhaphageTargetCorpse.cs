@@ -63,7 +63,7 @@ namespace OMW_Samhaphage
                     items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
                 }
 
-                ability = new ThingApplyAttenuate();
+                ability = new CorpseApplyRender();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
                 if ((xeno == OMW_XenotypeDefOf.omw_sovereign_stillness))

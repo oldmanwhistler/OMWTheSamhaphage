@@ -54,7 +54,8 @@ namespace OMW_Samhaphage
         Stun,
         Hallowbound,
         Amplify,
-        Excise
+        Excise,
+        Render
     }
 
     public struct NullThrumAbilityProps
@@ -271,6 +272,11 @@ namespace OMW_Samhaphage
             NullThrumResonanceType.ResonanceTypeNone,
             NullThrumMathType.MathTypeNone, 0f);
 
+        public NullThrumAbilityProps render = new NullThrumAbilityProps(
+            NullThrumAbilityType.Render,
+            NullThrumResourceType.ResourceTypeCorpse,
+            NullThrumResonanceType.ResonanceTypeCredit,
+            NullThrumMathType.MathTypeOffset, 30.0f);        
 
         public NullThrumAbilities()
         {
@@ -295,6 +301,7 @@ namespace OMW_Samhaphage
             listOther.Add(stun);
             listOther.Add(scrubCarcinoma);
             listOther.Add(amplify);
+            listOther.Add(render);
         }
 
     }
@@ -334,6 +341,7 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Hallowbound: return "Hallowbound";
                 case NullThrumAbilityType.Amplify: return "Amplify";
                 case NullThrumAbilityType.Excise: return "Excise";
+                case NullThrumAbilityType.Render: return "Render";
                 default: 
                     Log.Error($"Unknown ability type in NullThrumUtility.ToString({ability})");
                     return "Unknown";
@@ -352,7 +360,7 @@ namespace OMW_Samhaphage
                 case NullThrumResourceType.ResourceTypeTrait: return "Trait";
                 case NullThrumResourceType.ResourceTypePsylink: return "Psylink";
                 case NullThrumResourceType.ResourceTypeChangeXenotype: return "Xenotype";
-                case NullThrumResourceType.ResourceTypeAbility: return "Ability";
+                case NullThrumResourceType.ResourceTypeAbility: return "Ability";            
                 default:
                     Log.Error($"Unknown resource type in NullThrumUtility.ToString({resource})");
                     return "Unknown";
@@ -398,6 +406,7 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Hallowbound: return NullThrumResonanceType.ResonanceTypeDebit;
                 case NullThrumAbilityType.Amplify: return NullThrumResonanceType.ResonanceTypeNone;
                 case NullThrumAbilityType.Excise: return NullThrumResonanceType.ResonanceTypeCredit;
+                case NullThrumAbilityType.Render: return NullThrumResonanceType.ResonanceTypeCredit;
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.ResonanceType({ability})");                                                                
                     return NullThrumResonanceType.ResonanceTypeCredit;
@@ -479,6 +488,9 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Excise:
                     return
                         $"{caster} may selectively destroy traits to gain resonance.";
+                case NullThrumAbilityType.Render:
+                    return
+                        $"{caster} dissassembles the body to it's raw materials. Lethal to {victim}.";
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.DescriptionSimple({ability})");
                     return "Unknown ability type.";
@@ -547,6 +559,9 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Excise:
                     return
                         $"Your little variations are just flaws in the signal—static that ruins the perfect chord. {caster} isolates the blemish, makes a clean cut, and lifts the messy expression right out of your flesh before it can taint the rest of your form. What you call your identity, we call surplus fuel.";
+                case NullThrumAbilityType.Render:
+                    return
+                        $"Render uses an intense, low-frequency vibration to rapidly collapse a corpse's cellular structure and separate it into its fundamental biological building blocks. It renders {victim} in to biomass ready for consumption.";
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.DescriptionLore({ability})");
                     return "An unknown ability of the Null-Thrum.";

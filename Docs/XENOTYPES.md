@@ -123,3 +123,7 @@ Amplify floods an entity's biological framework with a massive surge of core Res
 ### Excise (Remove)
 
 Excise acts as a surgical harmonic filter that isolates and shears away a specific trait from a host's active biological expression. By cleanly cutting this expression out of the physical mix, the ability refines the removed trait into a concentrated runoff of pure, harvestable Resonance.
+
+### Render (Dismantle)
+
+Render uses an intense, low-frequency vibration to rapidly collapse a corpse's cellular structure and separate it into its fundamental biological building blocks. By liquefying and sorting the dead tissue into purified pools of raw biomass, the ability prepares the remains for immediate consumption by the Hive.

@@ -45,6 +45,9 @@ namespace OMW_Samhaphage
                 ability = new ThingApplyHarrow();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
+                ability = new CorpseApplyRender();
+                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
+
                 ability = new CorpseApplyResurrectEchovessel();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
             }

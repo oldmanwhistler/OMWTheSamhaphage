@@ -547,6 +547,16 @@ Narrative: Your little variations are just flaws in the signal—static that rui
 
 Sensory: A high-pitched, metallic ring—like a tuning fork being struck—accompanied by a sharp, cold line of numbness tracing across the host's body. The targeted trait instantly drops away as a thin, luminous vapor bleeds from the skin, leaving a scar-less, corrected void where the trait used to be.
 
+### RENDER (Thematic Concept)
+
+Thematic: The industrial extraction of primal nutrients through harmonic acceleration. To the Hallowbound, a corpse is not a monument to a fallen life, but an unrefined cluster of tightly bound resources. To Render is to subject dead flesh to a violent, low-frequency oscillation that fractures the cellular scaffolding, forcing the organic matter to instantly separate and melt down into its purest chemical building blocks—purified proteins, dense marrow pastes, and raw elemental fats—optimized for immediate, ravenous consumption.
+
+Action: The Hallowbound emits a heavy, churning sub-bass vibration directly into a carcass, causing the tissues to violently liquefy and separate by density. The physical form of the dead pawn rapidly uncouples into distinct, clean pools of raw biomass that can be effortlessly absorbed or devoured.
+
+Narrative: Your name ends with your breath; your remaining flesh is merely an unrefined signal. We apply the vibration, shake the architecture of your bones apart, and distill your cold meat into the baseline fuels that keep our own engines running. You are no longer a person—you are a raw harvest.
+
+Sensory: A deep, sickening rumble that makes the ground tremble, accompanied by the wet, bubbling sound of tissue liquefying. The corpse quickly loses its shape, melting in a cloud of thick vapor into perfectly sorted, steaming reservoirs of dense organic slurry and pristine white bone.
+
 ## HEDIFFS
 
 ### Silent Servitude (Thematic Concept)
