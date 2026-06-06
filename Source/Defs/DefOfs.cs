@@ -91,4 +91,15 @@ namespace OMW_Samhaphage
             DefOfHelper.EnsureInitializedInCtor(typeof(OMW_StatDefOf));
         }
     }
+
+    [DefOf]
+    public static class OMW_EffecterDefOf
+    {
+        public static EffecterDef OMW_YumEffect;
+
+        static OMW_EffecterDefOf()
+    {
+            DefOfHelper.EnsureInitializedInCtor(typeof(OMW_EffecterDefOf));
+        }
+    }    
 }    

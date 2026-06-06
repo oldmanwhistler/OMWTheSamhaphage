@@ -105,6 +105,20 @@ namespace OMW_Samhaphage
 
             IntVec3 pos = victim.PositionHeld;
 
+            // We use .Cleanup() because our sub-effecters are SprayerTriggered one-shots.
+            EffecterDef yumEffect = OMW_EffecterDefOf.OMW_YumEffect;
+            yumEffect?.Spawn(pos, map).Cleanup();
+
+            // Leave lasting filth on the ground
+            for (int i = 0; i < 9; i++)
+            {
+                IntVec3 c = pos + GenRadial.RadialPattern[i];
+                if (c.InBounds(map))
+                {
+                    FilthMaker.TryMakeFilth(c, map, victim.RaceProps.BloodDef ?? ThingDefOf.Filth_Blood);
+                }
+            }
+
             // Drop all apparel and equipment
             victim.Strip();
 
