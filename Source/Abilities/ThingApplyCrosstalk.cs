@@ -44,7 +44,7 @@ namespace OMW_Samhaphage
 
         public override bool ApplyPawn(Pawn victim, Pawn caster) => ApplyPawn(victim, caster, null);
 
-        public bool ApplyPawn(Pawn victim, Pawn caster, System.Action onComplete)
+        public bool ApplyPawn(Pawn victim, Pawn caster, System.Action onAbilityComplete)
         {
             if (victim == null || caster == null) return false;
 
@@ -63,7 +63,7 @@ namespace OMW_Samhaphage
             {
                 Messages.Message($"{victim.LabelShort} has no xenogenetic frequencies to harvest.",
                     MessageTypeDefOf.RejectInput);
-                onComplete?.Invoke();
+                onAbilityComplete?.Invoke();
                 return false;
             }
 
@@ -119,7 +119,7 @@ namespace OMW_Samhaphage
                 OMWGenes.Refresh(victim);
                 OMWGenes.Refresh(caster);
             }
-            onComplete?.Invoke();
+            onAbilityComplete?.Invoke();
             
             return true;
         }

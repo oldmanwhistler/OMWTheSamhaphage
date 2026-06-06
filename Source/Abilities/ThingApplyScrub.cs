@@ -89,7 +89,7 @@ namespace OMW_Samhaphage
         /// <summary>
         /// Specialized ApplyPawn that allows a callback for chaining abilities.
         /// </summary>
-        public bool ApplyPawn(Pawn victim, Pawn caster, System.Action onComplete)
+        public bool ApplyPawn(Pawn victim, Pawn caster, System.Action onAbilityComplete)
         {
             Log.Debug($"START::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             if (victim == null || caster == null) return false;
@@ -109,7 +109,7 @@ namespace OMW_Samhaphage
             {
                 Log.Debug($"DONE1::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
                 // If no genes to scrub, just gain the carcinoma resonance and finish.
-                onComplete?.Invoke();
+                onAbilityComplete?.Invoke();
                 return false;
             }
 
@@ -135,7 +135,7 @@ namespace OMW_Samhaphage
                     value = true;
                 }
                 Log.Debug($"DONE2::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
-            }, onComplete));
+            }, onAbilityComplete));
             
             Log.Debug($"DONE3::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             return value;
