@@ -23,19 +23,19 @@ namespace OMW_Samhaphage
 
         public void Warning(string text)
         {
-            Log.Warning(prefix + text);
+            Log.Warning(prefix + "WARNING: " + text);
         }
 
         public void Error(string text)
         {
-            Log.Error(prefix + text);
+            Log.Error(prefix + "ERROR: " + text);
         }
 
         public void Debug(string text)
         {
             if (IsDebugEnabled())
-            {
-                Log.Message(prefix + "[DEBUG] " + text);
+            {           
+                Log.Message(prefix + "DEBUG: " + text);
             }
         }
 
@@ -55,13 +55,14 @@ namespace OMW_Samhaphage
                 "Job" => OMW_Mod.settings.logJobs,
                 "Jobs" => OMW_Mod.settings.logJobs,
                 "UI" => OMW_Mod.settings.logUI,
+                "Selection" => OMW_Mod.settings.logSelection,
                 _ => UnmappedPrefixError(),
             };
         }
 
         private bool UnmappedPrefixError()
         {
-            Verse.Log.ErrorOnce($"[OMW] Logger subPrefix '{subPrefix}' is not mapped in IsDebugEnabled. Please update Logger.cs.", subPrefix.GetHashCode());
+            Verse.Log.Error($"[OMW] Logger subPrefix '{subPrefix}' is not mapped in IsDebugEnabled. Please update Logger.cs.");
             return true;
         }
     }
