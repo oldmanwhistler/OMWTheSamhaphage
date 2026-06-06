@@ -9,10 +9,11 @@ namespace OMW_Samhaphage
 {
     public class WindowSelectTraitsForNullThrumAbility : Window
     {
+        static Logger Log = new Logger("UI");
         private NullThrumSelectionTrait selector;
         private WindowState windowState;
         private HashSet<TraitPlus> selectedTraits = new HashSet<TraitPlus>();
-        private System.Action<List<TraitPlus>> onConfirm;
+        private System.Action<List<TraitPlus>> onConfirm; // Callback for successful confirmation
         private Vector2 scrollPosition;
         private float selectionMaxCost;
         public override Vector2 InitialSize => new Vector2(450f, 700f);
@@ -44,6 +45,12 @@ namespace OMW_Samhaphage
             return this.selector.SelectionMaxCost();
         }
         
+        public override void WindowUpdate()
+        {
+            base.WindowUpdate();
+            this.selectionMaxCost = selector.SelectionMaxCost();
+        }
+
         public override void DoWindowContents(Rect inRect)
         {
             this.windowState = new WindowState();
@@ -58,7 +65,17 @@ namespace OMW_Samhaphage
             Rect descRect = new Rect(inRect.x, headerRect.yMax, inRect.width, descHeight);
             Widgets.Label(descRect, description);
 
-            float listStartY = descRect.yMax + 5f;
+            // --- Live Resonance Meter ---
+            float curCost = SelectionCurCost();
+            Rect meterRect = new Rect(inRect.x, descRect.yMax + 10f, inRect.width, 26f);
+            float fillPercent = selectionMaxCost > 0 ? Mathf.Clamp01(curCost / selectionMaxCost) : 0f;
+            Color barColor = (curCost > selectionMaxCost) ? ColorLibrary.RedReadable : new Color(0.4f, 0.1f, 0.6f); // Deep purple resonance color
+            Widgets.FillableBar(meterRect, fillPercent, SolidColorMaterials.NewSolidColorTexture(barColor), BaseContent.BlackTex, true);
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Widgets.Label(meterRect, $"Current Selection: {curCost:F1} / Available: {selectionMaxCost:F1}");
+            Text.Anchor = TextAnchor.UpperLeft;
+
+            float listStartY = meterRect.yMax + 10f;
             Widgets.DrawLineHorizontal(0f, listStartY, inRect.width);
 
             // --- ScrollView ---
@@ -181,11 +198,12 @@ namespace OMW_Samhaphage
             }
 
             Rect confirmRect = new Rect(inRect.width - confirmWidth, footerY, confirmWidth, 35f);
-            GUI.color = selectedTraits.Count > 0 ? Color.white : Color.gray;
+            bool canConfirm = selectedTraits.Count > 0 && SelectionCurCost() <= selectionMaxCost;
+            GUI.color = canConfirm ? Color.white : Color.gray;
 
             if (Widgets.ButtonText(confirmRect, $"Confirm Selection for {this.SelectionCurCost():F1}"))
             {
-                if (selectedTraits.Count > 0)
+                if (canConfirm)
                 {
                     onConfirm?.Invoke(selectedTraits.ToList());
                     Close();
@@ -193,6 +211,8 @@ namespace OMW_Samhaphage
                 else
                 {
                     Messages.Message("No traits selected.", MessageTypeDefOf.RejectInput, false);
+                    Log.Debug($"WindowSelectTraitsForNullThrumAbility({selector.Name})::DoWindowContents() -> Close()");
+                    Close();
                 }
             }
             GUI.color = Color.white;

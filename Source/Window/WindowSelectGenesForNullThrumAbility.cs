@@ -17,15 +17,15 @@ namespace OMW_Samhaphage
         private System.Action onDismiss;
         private Vector2 scrollPosition;
         private float selectionMaxCost;
-
         public override Vector2 InitialSize => new Vector2(450f, 700f);
 
-        public WindowSelectGenesForNullThrumAbility(NullThrumSelectionGene selector, System.Action<List<GenePlus>> onConfirm, System.Action onDismiss = null)
+        public WindowSelectGenesForNullThrumAbility(NullThrumSelectionGene selector,
+            System.Action<List<GenePlus>> onConfirm, System.Action onDismiss = null)
         {
             string onConfirmStr = onConfirm == null ? "null" : onConfirm.ToString();
             string onDismissStr = onDismiss == null ? "null" : onDismiss.ToString();
 
-            Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name}, onConfirm:{onConfirmStr}, onDismiss:{onDismissStr})");
+            Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name}, onConfirm:{onConfirmStr}, onDismiss:{onDismissStr})");            
             this.selector = selector;
             this.onConfirm = onConfirm;
             this.onDismiss = onDismiss;
@@ -46,6 +46,14 @@ namespace OMW_Samhaphage
             }
             return tmp;
         }        
+
+        public override void WindowUpdate()
+        {
+            base.WindowUpdate();
+            // Refresh the max cost every frame in case resonance changes externally
+            this.selectionMaxCost = selector.SelectionMaxCost();
+        }
+
         public override void DoWindowContents(Rect inRect)
         {
             Log.Debug($"START::WindowSelectGenesForNullThrumAbility({selector.Name})::DoWindowContents()");
@@ -61,7 +69,17 @@ namespace OMW_Samhaphage
             Rect descRect = new Rect(inRect.x, headerRect.yMax, inRect.width, descHeight);
             Widgets.Label(descRect, description);
 
-            float listStartY = descRect.yMax + 5f;
+            // --- Live Resonance Meter ---
+            float curCost = SelectionCurCost();
+            Rect meterRect = new Rect(inRect.x, descRect.yMax + 10f, inRect.width, 26f);
+            float fillPercent = selectionMaxCost > 0 ? Mathf.Clamp01(curCost / selectionMaxCost) : 0f;
+            Color barColor = (curCost > selectionMaxCost) ? ColorLibrary.RedReadable : new Color(0.4f, 0.1f, 0.6f); // Deep purple resonance color
+            Widgets.FillableBar(meterRect, fillPercent, SolidColorMaterials.NewSolidColorTexture(barColor), BaseContent.BlackTex, true);
+            Text.Anchor = TextAnchor.MiddleCenter;
+            Widgets.Label(meterRect, $"Current Selection: {curCost:F1} / Available: {selectionMaxCost:F1}");
+            Text.Anchor = TextAnchor.UpperLeft;
+
+            float listStartY = meterRect.yMax + 10f;
             Widgets.DrawLineHorizontal(0f, listStartY, inRect.width);
 
             // --- ScrollView ---
@@ -205,11 +223,12 @@ namespace OMW_Samhaphage
             // Confirm Button
             Rect confirmRect = new Rect(inRect.width - confirmWidth, footerY, confirmWidth, 35f);
 
-            GUI.color = selectedGenes.Count > 0 ? Color.white : Color.gray;
+            bool canConfirm = selectedGenes.Count > 0 && SelectionCurCost() <= selectionMaxCost;
+            GUI.color = canConfirm ? Color.white : Color.gray;
 
             if (Widgets.ButtonText(confirmRect, $"Confirm Selection for {this.SelectionCurCost():F1}"))
             {
-                if (selectedGenes.Count > 0)
+                if (canConfirm)
                 {
                     Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name})::DoWindowContents() -> {selectedGenes.Count} genes were selected");
                     onConfirm?.Invoke(selectedGenes.ToList());
