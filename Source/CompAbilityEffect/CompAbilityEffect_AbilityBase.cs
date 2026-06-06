@@ -42,7 +42,7 @@ namespace OMW_Samhaphage
             this.Job(target, dest, this.parent.pawn);
         }
         
-        public abstract void OpenMenu(LocalTargetInfo target, LocalTargetInfo dest);
+        public abstract bool OpenMenu(LocalTargetInfo target, LocalTargetInfo dest);
 
         // Does nothing, but makes moves the caster to the target before opening the menu.
         // Menu won't open if the caster isn't in range.
@@ -52,7 +52,7 @@ namespace OMW_Samhaphage
             LocalTargetInfo targetClosure = target;
             LocalTargetInfo destClosure = dest;
             Job_ApproachAndInteract job = Job_ApproachAndInteract.CreateAndAssign(target, caster, 
-                (actor, t) => OpenMenu(targetClosure, destClosure));
+                (actor, t) => DoJobMenu(targetClosure, destClosure));
             if (job == null)
             {
                 Log.Error($"Failed to create job for {caster} to approach and interact with {target}");
@@ -61,15 +61,15 @@ namespace OMW_Samhaphage
             {
                 Log.Debug($"Job created successfully for {caster} to approach and interact with {target}. Job: {job}");
             }
-        }        
+        }
 
-        public void OpenWindow(List<FloatMenuOption> options)
+        private void DoJobMenu(LocalTargetInfo targetClosure, LocalTargetInfo destClosure)
         {
-            // Pop the menu at the mouse location
-            if (options.Count > 0)
+            if (OpenMenu(targetClosure, destClosure))
             {
-                Find.WindowStack.Add(new Dialog_Options(options));
+                OpenMenu(targetClosure, destClosure);
             }
-        }       
+        }
+    
     }
 }

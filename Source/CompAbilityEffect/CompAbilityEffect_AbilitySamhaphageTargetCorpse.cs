@@ -17,7 +17,7 @@ namespace OMW_Samhaphage
     public class CompAbilityEffect_AbilitySamhaphageTargetCorpse :  CompAbilityEffect_AbilityBase
 
     {
-        public override void OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
+        public override bool OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
             List<MenuItemBase> items = new List<MenuItemBase>();
 
@@ -35,7 +35,7 @@ namespace OMW_Samhaphage
             {
                 // hybrids lose the ability
                 Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Samhaphage abilities.", MessageTypeDefOf.NegativeEvent);
-                return;
+                return false;
             }
             else if (target.Thing is Corpse corpse)
             {
@@ -84,7 +84,7 @@ namespace OMW_Samhaphage
                     }
                 });
             }
+            return false;
         }
-
     }
 }

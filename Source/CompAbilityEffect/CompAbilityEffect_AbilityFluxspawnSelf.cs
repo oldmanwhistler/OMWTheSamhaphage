@@ -17,7 +17,7 @@ namespace OMW_Samhaphage
     public class CompAbilityEffect_AbilityFluxspawnSelf :  CompAbilityEffect_AbilityBase
 
     {
-        public override void OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
+        public override bool OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
             List<MenuItemBase> items = new List<MenuItemBase>();
 
@@ -31,7 +31,7 @@ namespace OMW_Samhaphage
             {
                 // hybrids lose the ability
                 Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Fluxspawn abilities.", MessageTypeDefOf.NegativeEvent);
-                return;
+                return false;
             }
 
             ability = new ThingApplyScrub();
@@ -74,6 +74,7 @@ namespace OMW_Samhaphage
                     }
                 });
             }
+            return false;
         }
     }
 }

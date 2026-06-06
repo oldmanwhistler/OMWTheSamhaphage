@@ -17,7 +17,7 @@ namespace OMW_Samhaphage
     public class CompAbilityEffect_AbilityFluxspawnTargetCorpse :  CompAbilityEffect_AbilityBase
 
     {
-        public override void OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
+        public override bool OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
             List<MenuItemBase> items = new List<MenuItemBase>();
 
@@ -54,6 +54,8 @@ namespace OMW_Samhaphage
                     }
                 });
             }
+
+            return false;
         }
     }
 }
