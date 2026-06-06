@@ -12,14 +12,17 @@ namespace OMW_Samhaphage
 
         public override bool ApplyPawn(Pawn pawn, Pawn caster)
         {
-            if (PawnTeratogenics.CarcinomaCount(pawn) == 0)
+            if (ResonanceUtility.HasAvailable(caster, OMW_Mod.settings.abilityValue.transpose.value))
             {
-                Messages.Message($"{pawn.LabelShort} doesn't have any carcinomas.", MessageTypeDefOf.RejectInput);
+                ResonanceUtility.Decr(caster, OMW_Mod.settings.abilityValue.transpose.value);
+                OMWGenes.ChangeEndotype(pawn, TargetXenotype());
+                return true;
+            }
+            else
+            {
+                Messages.Message($"Not enough Resonance to transpose into {TargetXenotype()}.", MessageTypeDefOf.RejectInput);
                 return false;
             }
-
-            OMWGenes.ChangeEndotype(pawn, TargetXenotype());
-            return PawnTeratogenics.RemoveRandomCarcinoma(pawn);
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
@@ -59,9 +62,9 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            if (PawnTeratogenics.CarcinomaCount(caster) == 0)
+            if (!ResonanceUtility.HasAvailable(caster, OMW_Mod.settings.abilityValue.transpose.value))
             {
-                reason = $"{caster.LabelShort} doesn't have any carcinomas.";
+                reason = $"{caster.LabelShort} does not have enough available resonance (needs {OMW_Mod.settings.abilityValue.transpose.value})";
                 return false;
             }
 
