@@ -65,9 +65,9 @@ namespace OMW_Samhaphage
 
         private void DoJobMenu(LocalTargetInfo targetClosure, LocalTargetInfo destClosure)
         {
-            if (OpenMenu(targetClosure, destClosure))
+            while (OpenMenu(targetClosure, destClosure))
             {
-                OpenMenu(targetClosure, destClosure);
+                Log.Debug($"OpenMenu returned true, so keep running it");
             }
         }
     
