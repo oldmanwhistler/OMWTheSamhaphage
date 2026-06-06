@@ -69,21 +69,6 @@ namespace OMW_Samhaphage
             }
 
             return true;
-        }
-
-        public override MenuItemIcon NewMenuItemIconPawn(LocalTargetInfo targetInfo, Pawn pawn, Pawn caster)
-        {
-            XenotypeDef xeno = TargetXenotype();
-            string reason;
-
-            if (CanApplyOnPawn(pawn, caster, out reason))
-            {
-                return new MenuItemIcon(this.AbilityName, $"Shift {pawn.LabelShort} to {xeno.descriptionShort}", this.Icon, () => Job(targetInfo, caster));
-            }
-            else
-            {
-                return NewMenuItemIconDisabled(pawn, $"Can't shift because {reason}");
-            }
-        }        
+        }    
     }
 }
