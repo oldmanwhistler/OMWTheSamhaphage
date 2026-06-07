@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class SelectionAttenuate : NullThrumSelectionGene
+    public class SelectionAttenuateGenes : NullThrumSelectionGene
     {
-        public SelectionAttenuate(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
+        public SelectionAttenuateGenes(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest) {}
 
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.attenuate;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
@@ -26,70 +26,82 @@ namespace OMW_Samhaphage
         }        
     }
 
+    public class SelectionAttenuateTraits : NullThrumSelectionTrait
+    {
+        public SelectionAttenuateTraits(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest)
+        {
+        }
+
+        public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.attenuate;
+        public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
+        protected override float ResonanceTotalMultiplier => AbilityProp.value;
+
+
+        protected override List<Trait> TraitsToSelectFrom(Pawn source, Pawn dest)
+        {
+            if (source?.story?.traits == null)
+                return new List<Trait>();
+
+            // For Excise, we don't care about conflicts in the destination 
+            // because we aren't adding the trait to the caster, just removing it.
+            return source.story.traits.allTraits
+                .Where(t => (t.sourceGene == null) &&
+                            !OMW_BlacklistTraits.BlacklistedTraitsDontRemove.Contains(t.def)
+                )
+                .ToList();
+        }
+
+        protected override List<TraitDef> ConflictTraitDefs(Pawn source, Pawn dest)
+        {
+            return new List<TraitDef>();
+        }
+    }    
+
 
     public class ThingApplyAttenuate : NullThrumAbilityPawnCorpse
     {
-        private SelectionAttenuate selector = null;
+        private SelectionAttenuateGenes selectorGenes = null;
+        private SelectionAttenuateTraits selectorTraits = null;
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.attenuate;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
 
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {
-            return $"Attenuate {victim.LabelShort} of their genes.\nConverts victim's genes to resonance.";
+            return $"Attenuate {victim.LabelShort} of their genes.\nConverts victim's genes and traits to resonance.";
         }
         
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Attenuate");
 
-        public SelectionAttenuate CanApplyAttenuate(Pawn victim, Pawn caster)
-        {
-            if (victim == null || caster == null) return null;
-            // can't cast it on our core races. Prevent using fluxspawn for massive resonance factories.
-            if (OMWGenes.HasNullThrum(victim)) return null;
-            if (selector != null) return selector;
-            selector = new SelectionAttenuate(caster, victim, caster);
-            if (selector.genes.Count == 0)
-            {
-                Messages.Message($"{victim.LabelShort} has no genes that can be Attenuated.", MessageTypeDefOf.RejectInput);
-                return null;
-            }            
-            return selector;
-        }
-
-        public bool ApplyAttenuate(Pawn victim, Pawn caster, SelectionAttenuate selector)
+        private bool ApplyAttenuate(Pawn victim, Pawn caster)
         {
             bool activated = false;
-            foreach (GenePlus plus in selector.genes)
+            foreach (GenePlus plus in selectorGenes.genes)
             {
-                selector.ResonanceCredit(plus);
+                selectorGenes.ResonanceCredit(plus);
                 victim.genes.RemoveGene(plus.gene);
                 activated = true;
             }
+
+            foreach (TraitPlus plus in selectorTraits.traits)
+            {
+                selectorTraits.ResonanceCredit(plus);
+                victim.story?.traits?.RemoveTrait(plus.trait);
+                activated = true;
+            }                
+
             return activated;
         }
 
         public override void ApplyPawn(Pawn victim, Pawn caster)
         {
             if (victim == null || caster == null) return;
-
-            if (selector == null) selector = CanApplyAttenuate(victim, caster);
-            if (selector == null) return;
-
-            string msg = $"{victim.LabelShort} has died being attenuated for their resonance.";
-            // We define the lethal logic as an Action
-            System.Action sacrificeAction = () =>
-            {
-                if (ApplyAttenuate(victim, caster, selector))
-                {
-                    KillUtility.PawnKillDestroy(victim, caster);
-                    Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                }
-                // Needs to be false so doesn't get stuck on a loop
-                doOnComplete(false);
-            };
-
-            // Open the confirmation dialog
-            ShowLethalConfirmation(victim, sacrificeAction);
+            string reason;
+            
+            if (!CanApplyAttenuate(victim, caster, out reason)) return;            
+            
+            ApplyAttenuate(victim, caster);
+            doOnComplete(true);
         }
 
         public override void ApplyCorpse(Corpse corpse, Pawn caster)
@@ -99,39 +111,58 @@ namespace OMW_Samhaphage
 
             Pawn victim = corpse.InnerPawn;
 
-            if (selector == null) selector = CanApplyAttenuate(victim, caster);
-            if (selector == null) return;
+            string reason;
 
-            string msg = $"{victim.LabelShort} corpse was destroyed after being attenuated for their resonance.";
-            // We define the lethal logic as an Action
+            if (!CanApplyAttenuate(victim, caster, out reason)) return;
+
+            string msg =
+                $"{victim.LabelShort}'s corpse was destroyed after being attenuated.";
             System.Action sacrificeAction = () =>
             {
-                if (ApplyAttenuate(victim, caster, selector))
-                {
-                    // Use the Corpse-specific method to handle resurrection and initialization properly
-                    KillUtility.CorpseDestroy(corpse);
-                    Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                }
-
+                ApplyAttenuate(victim, caster);
+                KillUtility.CorpseDestroy(corpse);
+                Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
+                Log.Debug("Done Render, now calling doOnComplete(false)");
                 // Needs to be false so doesn't get stuck on a loop
                 doOnComplete(false);
             };
 
-            // Open the confirmation dialog
             ShowCorpseConfirmation(victim, sacrificeAction);
         }
 
+        private bool CanApplyAttenuate(Pawn victim, Pawn caster, out string reason)
+        {
+            reason = "unknown reason";
+
+            if (victim == null || caster == null) return false;
+            reason = $"{victim.LabelShort} is part of the Null-Thrum.";
+            
+            if (OMWGenes.HasNullThrum(victim)) return false;
+
+            if (this.selectorGenes == null)
+            {
+                this.selectorGenes = new SelectionAttenuateGenes(caster, victim, caster);
+            }
+
+            if (this.selectorTraits == null)
+            {
+                this.selectorTraits = new SelectionAttenuateTraits(caster, victim, caster);
+            }
+
+            if ((selectorGenes.genes.Count == 0) && (selectorTraits.traits.Count == 0))
+            {
+                reason = $"{victim.LabelShort} has no genes or traits that can be Attenuated.";
+                return false;
+            }
+
+            return true;
+        }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
         {
             reason = "unknown reason";
 
-            if (CanApplyAttenuate(victim, caster) == null)
-            {
-                return false;
-            }
-
-            return true;
+            return CanApplyAttenuate(victim, caster, out reason);
         }
 
         public override bool CanApplyOnCorpse(Corpse corpse, Pawn caster, out string reason)
@@ -150,12 +181,7 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            if (CanApplyAttenuate(corpse.InnerPawn, caster) == null)
-            {
-                return false;
-            }            
-
-            return true;
+            return CanApplyAttenuate(corpse.InnerPawn, caster, out reason);            
         }
     }
 }

@@ -14,7 +14,8 @@ namespace OMW_Samhaphage
         ResourceTypePsylink,
         ResourceTypeCarcinoma,
         ResourceTypeChangeXenotype,
-        ResourceTypeAbility
+        ResourceTypeAbility,
+        ResourceTypeGeneAndTrait
     }
 
     public enum NullThrumResonanceType
@@ -193,9 +194,9 @@ namespace OMW_Samhaphage
         // kills victim while converting genes to resonance
         public NullThrumAbilityProps attenuate = new NullThrumAbilityProps(
             NullThrumAbilityType.Attenuate,
-            NullThrumResourceType.ResourceTypeGene,
+            NullThrumResourceType.ResourceTypeGeneAndTrait,
             NullThrumResonanceType.ResonanceTypeCredit,
-            NullThrumMathType.MathTypeMultiplier, 2.0f);
+            NullThrumMathType.MathTypeMultiplier, 0.75f);
 
         // flat cost, psylink: add psylink
         public NullThrumAbilityProps unmute = new NullThrumAbilityProps(
@@ -361,6 +362,7 @@ namespace OMW_Samhaphage
                 case NullThrumResourceType.ResourceTypePsylink: return "Psylink";
                 case NullThrumResourceType.ResourceTypeChangeXenotype: return "Xenotype";
                 case NullThrumResourceType.ResourceTypeAbility: return "Ability";            
+                case NullThrumResourceType.ResourceTypeGeneAndTrait: return "Gene and Trait";
                 default:
                     Log.Error($"Unknown resource type in NullThrumUtility.ToString({resource})");
                     return "Unknown";

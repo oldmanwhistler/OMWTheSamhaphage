@@ -161,12 +161,7 @@ namespace OMW_Samhaphage
                     if (ApplyBootleg(victim, caster, selectorBootleg, selectedList))
                     {
                         // only attenuate corpses
-                        ThingApplyAttenuate attenuate = new ThingApplyAttenuate();
-                        SelectionAttenuate selectorAttenuate = attenuate.CanApplyAttenuate(victim, caster);
-                        if (selectorAttenuate != null)
-                        {
-                            attenuate.ApplyAttenuate(victim, caster, selectorAttenuate);
-                        }
+                        KillUtility.ApplyRenderOrAttenuate(victim, caster);
                         KillUtility.CorpseDestroy(corpse);
                         Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
                     }

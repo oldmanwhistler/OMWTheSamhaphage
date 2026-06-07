@@ -28,13 +28,15 @@ namespace OMW_Samhaphage
             System.Action sacrificeAction = () =>
             {
                 ResonanceUtility.Incr("Render", caster, OMW_Mod.settings.abilityValue.render.value);
+                Log.Debug(
+                    $"Pre rendering: marketValue of the corpse {corpse.MarketValue}, victim {victim.LabelShort}");
+
                 // only attenuate corpses
                 ThingApplyAttenuate attenuate = new ThingApplyAttenuate();
-                SelectionAttenuate selectorAttenuate = attenuate.CanApplyAttenuate(victim, caster);
-                if (selectorAttenuate != null)
-                {
-                    attenuate.ApplyAttenuate(victim, caster, selectorAttenuate);
-                }                
+                attenuate.ApplyPawn(victim, caster);
+                victim.Strip();
+                KillUtility.PurgeBionics(victim);
+                Log.Debug($"Post rendering: marketValue of the corpse {corpse.MarketValue}, victim {victim.LabelShort}");
                 KillUtility.CorpseDestroy(corpse);
                 Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
                 Log.Debug("Done Render, now calling doOnComplete(false)");

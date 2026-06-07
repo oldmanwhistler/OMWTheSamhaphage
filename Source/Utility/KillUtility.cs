@@ -146,6 +146,8 @@ namespace OMW_Samhaphage
             Map map = victim.MapHeld;
             if (map == null) return;
 
+            victim.Strip();
+
             IntVec3 pos = victim.PositionHeld;
 
             // We use .Cleanup() because our sub-effecters are SprayerTriggered one-shots.
@@ -161,12 +163,7 @@ namespace OMW_Samhaphage
                     FilthMaker.TryMakeFilth(c, map, victim.RaceProps.BloodDef ?? ThingDefOf.Filth_Blood);
                 }
             }
-
-            // Drop all apparel and equipment
-            victim.Strip();
-
-            PurgeBionics(victim);
-
+            
             // Spawn meat, leather, and other butcher products
             IEnumerable<Thing> products = victim.ButcherProducts(null, 1.5f);
             if (products != null)
@@ -178,5 +175,33 @@ namespace OMW_Samhaphage
             }
             
         }
+
+        public static void ApplyRenderOrAttenuate(Pawn victim, Pawn caster)
+        {
+            if (victim == null || caster == null) return;
+
+            XenotypeDef xeno = caster.genes.Xenotype;
+            if (victim.Dead && victim.Corpse != null)
+            {
+                if ((xeno == OMW_XenotypeDefOf.omw_samhaphage) || (xeno == OMW_XenotypeDefOf.omw_sovereign_stillness))
+                {
+                    // master xenotypes can render
+                    CorpseApplyRender render = new CorpseApplyRender();
+                    render.ApplyCorpse(victim.Corpse, caster);
+                    return;
+                }
+            }
+
+            // lesser xenotypes can attenuate
+            ThingApplyAttenuate attenuate = new ThingApplyAttenuate();
+            attenuate.ApplyPawn(victim, caster);
+        }
+
+        public static void ApplyRenderOrAttenuate(Corpse corpse, Pawn caster)
+        {
+            if (corpse?.InnerPawn == null || caster == null) return;
+            ApplyRenderOrAttenuate(corpse.InnerPawn, caster);
+        }
+            
     }
 }
