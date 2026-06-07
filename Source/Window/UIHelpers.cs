@@ -46,27 +46,5 @@ namespace OMW_Samhaphage
 
             Find.WindowStack.Add(window);
         }
-
-
-        public static void ShowXenogeneLossConfirmation(Pawn target, Pawn caster, System.Action sacrificeAction)
-        {
-            int xenoCountCaster = OMWGenes.CountXenogenes(caster);
-            int xenoCountTarget = OMWGenes.CountXenogenes(target);
-            string msg =
-                $"Warning: {caster.LabelShort} will lose {xenoCountCaster} xenogenes if they steal {xenoCountTarget} xenogenes from {target.LabelShort}.";
-
-
-            Dialog_MessageBox window = new Dialog_MessageBox(
-                text: msg,
-                buttonAText: "Confirm".Translate(),
-                buttonAAction: sacrificeAction,
-                buttonBText: "Cancel".Translate(),
-                buttonBAction: null,
-                buttonADestructive: true,
-                title: "Xenogene Loss".Translate()
-            );
-
-            Find.WindowStack.Add(window);
-        }        
     }
 }
