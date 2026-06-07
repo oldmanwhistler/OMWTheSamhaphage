@@ -18,12 +18,6 @@ namespace OMW_Samhaphage
 
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Render");
 
-        public bool ApplyRender(Pawn victim, Pawn caster)
-        {
-            bool activated = false;
-            return activated;
-        }
-
         public override bool ApplyCorpse(Corpse corpse, Pawn caster)
         {
             if (corpse?.InnerPawn == null || caster == null) return false;
