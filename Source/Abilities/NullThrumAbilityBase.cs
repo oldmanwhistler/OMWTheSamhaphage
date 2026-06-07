@@ -27,17 +27,11 @@ namespace OMW_Samhaphage
         {
             if (thing is Pawn pawn)
             {
-                bool success = ApplyPawn(pawn, caster);
-                onComplete?.Invoke(success);
+                ApplyPawn(pawn, caster);                
             }
             else if (thing is Corpse corpse)
             {
-                bool success = ApplyCorpse(corpse, caster);
-                onComplete?.Invoke(success);
-            }
-            else
-            {
-                onComplete?.Invoke(false);
+                ApplyCorpse(corpse, caster);                
             }
         }
 
