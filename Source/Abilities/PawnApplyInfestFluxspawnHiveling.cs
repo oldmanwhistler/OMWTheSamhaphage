@@ -20,9 +20,9 @@ namespace OMW_Samhaphage
         public virtual XenotypeDef TargetXenotypeDef => OMW_XenotypeDefOf.omw_fluxspawn_hiveling;
         public virtual int NumBabies => 5;
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster)
+        public override void ApplyPawn(Pawn victim, Pawn caster)
         {
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
 
             string msg = $"{victim.LabelShort} has been implanted by {caster.LabelShort} and will die when the egg(s) hatch.";
             // We define the lethal logic as an Action
@@ -61,11 +61,11 @@ namespace OMW_Samhaphage
                     FilthMaker.TryMakeFilth(c, victim.Map, ThingDefOf.Filth_Blood);
                 }
                 Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
+                doOnComplete(true);
             };
 
             // Open the confirmation dialog
-            OMW_UIHelpers.ShowLethalConfirmation(victim, sacrificeAction);
-            return true;
+            ShowLethalConfirmation(victim, sacrificeAction);
         }
 
 

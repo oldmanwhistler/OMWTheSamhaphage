@@ -23,6 +23,50 @@ namespace OMW_Samhaphage
         public virtual bool IsLethal => false;
 
         protected static Logger Log = new Logger("Abilities");
+
+        protected void doOnComplete(bool value)
+        {
+            this.onComplete?.Invoke(true);
+            this.onComplete = null;
+        }
+
+        protected System.Action onCompleteAction(bool value)
+        {
+            return () => doOnComplete(value);
+        }
+
+        public void ShowLethalConfirmation(Pawn pawn, System.Action sacrificeAction)
+        {
+            string msg = $"Warning: Activating this ability will kill {pawn.LabelShort}. Are you sure?";
+            Dialog_MessageBox window = new Dialog_MessageBox(
+                text: msg,
+                buttonAText: "Confirm".Translate(),
+                buttonAAction: sacrificeAction,
+                buttonBText: "Cancel".Translate(),
+                buttonBAction: onCompleteAction(false),
+                buttonADestructive: true,
+                title: "Lethal Ability".Translate()
+            );
+
+            Find.WindowStack.Add(window);
+        }
+
+        public void ShowCorpseConfirmation(Pawn pawn, System.Action sacrificeAction)
+        {
+            string msg = $"Warning: Activating this ability will destroy {pawn.LabelShort}. Are you sure?";
+            Dialog_MessageBox window = new Dialog_MessageBox(
+                text: msg,
+                buttonAText: "Confirm".Translate(),
+                buttonAAction: sacrificeAction,
+                buttonBText: "Cancel".Translate(),
+                buttonBAction: onCompleteAction(false),
+                buttonADestructive: true,
+                title: "Lethal Ability".Translate()
+            );
+
+            Find.WindowStack.Add(window);
+        }        
+
         public void ApplyThing(Thing thing, Pawn caster)
         {
             if (thing is Pawn pawn)
@@ -35,9 +79,9 @@ namespace OMW_Samhaphage
             }
         }
 
-        public abstract bool ApplyPawn(Pawn victim, Pawn caster);
+        public abstract void ApplyPawn(Pawn victim, Pawn caster);
 
-        public abstract bool ApplyCorpse(Corpse corpse, Pawn caster);
+        public abstract void ApplyCorpse(Corpse corpse, Pawn caster);
 
         public bool CanApplyOnThing(Thing thing, Pawn caster, out string reason)
         {
@@ -109,5 +153,6 @@ namespace OMW_Samhaphage
 
         public abstract MenuItemIcon NewMenuItemIconCorpse(LocalTargetInfo targetInfo, Corpse corpse,
             Pawn caster);
+            
     }
 }

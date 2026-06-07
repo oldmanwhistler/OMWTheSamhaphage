@@ -124,9 +124,9 @@ namespace OMW_Samhaphage
             return activated;
         }
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster)
+        public override void ApplyPawn(Pawn victim, Pawn caster)
         {
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
 
             OMWGenes.Refresh(victim);
 
@@ -136,33 +136,23 @@ namespace OMW_Samhaphage
             }
 
             SelectionBootleg selectorBootleg = CanApplyBootleg(victim, caster);
-            if (selectorBootleg == null) return false;
-
-            bool value = false;
+            if (selectorBootleg == null) return;
 
             Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selectorBootleg, (selectedList) =>
             {
-                LongEventHandler.ExecuteWhenFinished(() =>
-                {
-                    if (ApplyBootleg(victim, caster, selectorBootleg, selectedList))
-                    {
-                        // State updates handled inside ApplyBootleg
-                    }
-                });
+                bool activated = ApplyBootleg(victim, caster, selectorBootleg, selectedList);
+                doOnComplete(activated);
             }));
-
-            return value;
         }
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
+        public override void ApplyCorpse(Corpse corpse, Pawn caster)
         {
-            if (corpse?.InnerPawn == null || caster == null) return false;
+            if (corpse?.InnerPawn == null || caster == null) return;
 
             Pawn victim = corpse.InnerPawn;
             SelectionBootleg selectorBootleg = CanApplyBootleg(victim, caster);
-            if (selectorBootleg == null) return false;  
+            if (selectorBootleg == null) return;  
 
-            bool value = false;
             string msg = $"{victim.LabelShort}'s corpse was destroyed after being bootlegged for their traits and attenuated for their genes.";
             System.Action sacrificeAction = () =>
             {
@@ -179,13 +169,12 @@ namespace OMW_Samhaphage
                         }
                         KillUtility.CorpseDestroy(corpse);
                         Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                        value = true;                        
+                        doOnComplete(true);
                     }
                 }));
             };
 
-            OMW_UIHelpers.ShowCorpseConfirmation(victim, sacrificeAction);
-            return value;
+            ShowCorpseConfirmation(victim, sacrificeAction);
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

@@ -84,15 +84,15 @@ namespace OMW_Samhaphage
             return true;
         }
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster) => ApplyPawn(victim, caster, null);
+        public override void ApplyPawn(Pawn victim, Pawn caster) => ApplyPawn(victim, caster, null);
 
         /// <summary>
         /// Specialized ApplyPawn that allows a callback for chaining abilities.
         /// </summary>
-        public bool ApplyPawn(Pawn victim, Pawn caster, System.Action onAbilityComplete)
+        public void ApplyPawn(Pawn victim, Pawn caster, System.Action onAbilityComplete)
         {
             Log.Debug($"START::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
 
             OMWGenes.Refresh(victim);
 
@@ -109,13 +109,19 @@ namespace OMW_Samhaphage
             {
                 Log.Debug($"DONE1::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
                 // If no genes to scrub, just gain the carcinoma resonance and finish.
-                onAbilityComplete?.Invoke();
-                return false;
+                if (onAbilityComplete != null)
+                {
+                    onAbilityComplete?.Invoke();
+                }
+                else
+                {
+                    doOnComplete(false);
+                }
+                return;
             }
 
             Log.Debug($"Scrub::Going to open scrub for {victim.LabelShort}");
 
-            bool value = false;
             Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, selectedList =>
             {
                 bool activated = false;
@@ -132,21 +138,20 @@ namespace OMW_Samhaphage
                 if (activated)
                 {
                     OMWGenes.Refresh(victim);
-                    value = true;
                 }
+                doOnComplete(activated);
                 Log.Debug($"DONE2::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             }, onAbilityComplete));
             
             Log.Debug($"DONE3::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
-            return value;
         }
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
+        public override void ApplyCorpse(Corpse corpse, Pawn caster)
         {
-            if (corpse == null || caster == null) return false;
-            if (corpse.InnerPawn == null) return false;
+            if (corpse == null || caster == null) return;
+            if (corpse.InnerPawn == null) return;
 
-            return ApplyPawn(corpse.InnerPawn, caster);
+            ApplyPawn(corpse.InnerPawn, caster);
         }
 
 

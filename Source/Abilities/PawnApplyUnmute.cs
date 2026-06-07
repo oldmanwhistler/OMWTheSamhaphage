@@ -17,10 +17,11 @@ namespace OMW_Samhaphage
 
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Unmute");
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster)
+        public override void ApplyPawn(Pawn victim, Pawn caster)
         {
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
 
+            bool value = false;
             if (ResonanceUtility.HasAvailable(caster, ResonanceCost))
             {
                 // ChangePsylinkLevel adds the PsychicAmplifier hediff and increments the level
@@ -29,10 +30,9 @@ namespace OMW_Samhaphage
 
                 MoteMaker.MakeAttachedOverlay(victim, ThingDefOf.Mote_ResurrectFlash, Vector3.zero);
                 Log.Debug($"Unmuted {victim.LabelShort}: Psylink granted.");
-                return true;
+                value = true;
             }
-
-            return false;
+            doOnComplete(value);
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

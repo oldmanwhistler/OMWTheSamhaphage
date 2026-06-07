@@ -64,9 +64,9 @@ namespace OMW_Samhaphage
             return activated;
         }
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster)
+        public override void ApplyPawn(Pawn victim, Pawn caster)
         {
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
 
             OMWGenes.Refresh(victim);
 
@@ -79,34 +79,32 @@ namespace OMW_Samhaphage
             if (selector.traits.Count == 0)
             {
                 Messages.Message($"{victim.LabelShort} has no traits that can be excised.", MessageTypeDefOf.RejectInput);
-                return false;
+                return;
             }
 
-            bool value = false;
             Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selector, (selectedList) =>
             {
+                bool activated = false;
                 if (ApplyExcise(victim, caster, selector, selectedList))
                 {
                     OMWGenes.ApplyDissonance(victim, caster);
                     OMWGenes.Refresh(victim);
-                    value = true;
+                    activated = true;
                 }
-                
+                doOnComplete(activated);                
             }));
-
-            return value;
         }
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
+        public override void ApplyCorpse(Corpse corpse, Pawn caster)
         {
-            if (corpse?.InnerPawn == null || caster == null) return false;
+            if (corpse?.InnerPawn == null || caster == null) return;
 
             Pawn victim = corpse.InnerPawn;
             SelectionExcise selector = new SelectionExcise(caster, victim, caster);
             if (selector.traits.Count == 0)
             {
                 Messages.Message($"{victim.LabelShort} has no traits that can be excised.", MessageTypeDefOf.RejectInput);
-                return false;
+                return;
             }
 
             string msg = $"{victim.LabelShort}'s corpse was destroyed after being excised for their traits and and attenuated for their genes.";
@@ -114,6 +112,7 @@ namespace OMW_Samhaphage
             {
                 Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selector, (selectedList) =>
                 {
+                    bool activated = false;
                     if (ApplyExcise(victim, caster, selector, selectedList))
                     {
                         // only attenuate corpses
@@ -125,12 +124,13 @@ namespace OMW_Samhaphage
                         }                        
                         KillUtility.CorpseDestroy(corpse);
                         Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
+                        activated = true;
                     }
+                    doOnComplete(activated);
                 }));
             };
 
-            OMW_UIHelpers.ShowCorpseConfirmation(victim, sacrificeAction);
-            return true;
+            ShowCorpseConfirmation(victim, sacrificeAction);
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

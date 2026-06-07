@@ -69,16 +69,19 @@ namespace OMW_Samhaphage
             }
         }
 
-        public override bool ApplyPawn(Pawn mother, Pawn father = null)
+        public override void ApplyPawn(Pawn mother, Pawn father)
         {
-            if (mother == null || father == null) return false;
+            if (mother == null || father == null) return;
+
+            bool value = false;
 
             if (!SacrificeCaster)
             {
-                return ExecutePregnancy(mother, father);
+                value = ExecutePregnancy(mother, father);
+                doOnComplete(value);
+                return;
             }
 
-            bool value = false;
             string msg = $"{father.LabelShort} has died making {mother.LabelShort} pregnant.";
             System.Action sacrificeAction = () =>
             {
@@ -86,12 +89,11 @@ namespace OMW_Samhaphage
                 {
                     KillUtility.PawnKillDestroy(father, father);
                     Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                    value = true;
+                    doOnComplete(true);
                 }
             };
 
-            OMW_UIHelpers.ShowLethalConfirmation(father, sacrificeAction);
-            return value;
+            ShowLethalConfirmation(father, sacrificeAction);
         }
 
         private bool ExecutePregnancy(Pawn mother, Pawn father)

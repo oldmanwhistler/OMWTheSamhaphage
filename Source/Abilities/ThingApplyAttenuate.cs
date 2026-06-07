@@ -68,14 +68,13 @@ namespace OMW_Samhaphage
             return activated;
         }
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster)
+        public override void ApplyPawn(Pawn victim, Pawn caster)
         {
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
 
             if (selector == null) selector = CanApplyAttenuate(victim, caster);
-            if (selector == null) return false;
+            if (selector == null) return;
 
-            bool value = false;
             string msg = $"{victim.LabelShort} has died being attenuated for their resonance.";
             // We define the lethal logic as an Action
             System.Action sacrificeAction = () =>
@@ -84,24 +83,23 @@ namespace OMW_Samhaphage
                 {
                     KillUtility.PawnKillDestroy(victim, caster);
                     Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                    value = true;
+                    doOnComplete(true);
                 }
             };
 
             // Open the confirmation dialog
-            OMW_UIHelpers.ShowLethalConfirmation(victim, sacrificeAction);
-            return value;
+            ShowLethalConfirmation(victim, sacrificeAction);
         }
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
+        public override void ApplyCorpse(Corpse corpse, Pawn caster)
         {
-            if (corpse == null || caster == null) return false;
-            if (corpse.InnerPawn == null) return false;
+            if (corpse == null || caster == null) return;
+            if (corpse.InnerPawn == null) return;
 
             Pawn victim = corpse.InnerPawn;
 
             if (selector == null) selector = CanApplyAttenuate(victim, caster);
-            if (selector == null) return false;
+            if (selector == null) return;
 
             string msg = $"{victim.LabelShort} corpse was destroyed after being attenuated for their resonance.";
             // We define the lethal logic as an Action
@@ -112,12 +110,12 @@ namespace OMW_Samhaphage
                     // Use the Corpse-specific method to handle resurrection and initialization properly
                     KillUtility.CorpseDestroy(corpse);
                     Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
+                    doOnComplete(true);
                 }
             };
 
             // Open the confirmation dialog
-            OMW_UIHelpers.ShowCorpseConfirmation(victim, sacrificeAction);
-            return false;
+            ShowCorpseConfirmation(victim, sacrificeAction);
         }
 
 

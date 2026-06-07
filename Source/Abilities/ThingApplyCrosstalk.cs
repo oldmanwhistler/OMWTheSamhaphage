@@ -42,11 +42,11 @@ namespace OMW_Samhaphage
 
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Crosstalk");
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster) => ApplyPawn(victim, caster, null);
+        public override void ApplyPawn(Pawn victim, Pawn caster) => ApplyPawn(victim, caster, null);
 
-        public bool ApplyPawn(Pawn victim, Pawn caster, System.Action onAbilityComplete)
+        public void ApplyPawn(Pawn victim, Pawn caster, System.Action onAbilityComplete)
         {
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
 
             OMWGenes.Refresh(victim);
             OMWGenes.Refresh(caster);
@@ -64,7 +64,7 @@ namespace OMW_Samhaphage
                 Messages.Message($"{victim.LabelShort} has no xenogenetic frequencies to harvest.",
                     MessageTypeDefOf.RejectInput);
                 onAbilityComplete?.Invoke();
-                return false;
+                return;
             }
 
             bool activated = false;
@@ -119,15 +119,20 @@ namespace OMW_Samhaphage
                 OMWGenes.Refresh(victim);
                 OMWGenes.Refresh(caster);
             }
-            onAbilityComplete?.Invoke();
-            
-            return true;
+            if (onAbilityComplete != null)
+            {
+                onAbilityComplete?.Invoke();
+            }
+            else
+            {
+                doOnComplete(activated);
+            }
         }
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
+        public override void ApplyCorpse(Corpse corpse, Pawn caster)
         {
-            if (corpse?.InnerPawn == null || caster == null) return false;
-            return ApplyPawn(corpse.InnerPawn, caster);
+            if (corpse?.InnerPawn == null || caster == null) return;
+            ApplyPawn(corpse.InnerPawn, caster);
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

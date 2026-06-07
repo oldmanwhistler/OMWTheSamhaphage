@@ -39,10 +39,10 @@ namespace OMW_Samhaphage
             return $"Nullify {victim.LabelShort} and destroy their genes to gain resonance.";
         }
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Nullify");
-        public override bool ApplyPawn(Pawn victim, Pawn caster)
+        public override void ApplyPawn(Pawn victim, Pawn caster)
         {
             Log.Debug($"START::Nullify::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
 
             OMWGenes.Refresh(victim);
 
@@ -53,7 +53,7 @@ namespace OMW_Samhaphage
 
             ThingApplyScrub scrub = new ThingApplyScrub();
             // Chain Nullify window to open after Scrub is done
-            return scrub.ApplyPawn(victim, caster, () => OpenNullifyWindow(victim, caster));
+            scrub.ApplyPawn(victim, caster, () => OpenNullifyWindow(victim, caster));
         }
 
         private void OpenNullifyWindow(Pawn victim, Pawn caster)
@@ -66,9 +66,10 @@ namespace OMW_Samhaphage
                 return;
             }
 
+            bool activated = false;
+
             Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
             {
-                bool activated = false;
                 foreach (GenePlus plus in selectedList)
                 {
                     if (plus.gene != null && victim.genes.GenesListForReading.Contains(plus.gene))
@@ -88,15 +89,16 @@ namespace OMW_Samhaphage
                     OMWGenes.ApplyDissonance(victim, caster);
                     OMWGenes.Refresh(victim);
                 }
+                doOnComplete(activated);
             }));
             Log.Debug($"DONE::Nullify::OpenNullifyWindow({victim.LabelShort}, {caster.LabelShort})");
         }
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
+        public override void ApplyCorpse(Corpse corpse, Pawn caster)
         {
-            if (corpse == null || caster == null) return false;
-            if (corpse.InnerPawn == null) return false;
-            return ApplyPawn(corpse.InnerPawn, caster);
+            if (corpse == null || caster == null) return;
+            if (corpse.InnerPawn == null) return;
+            ApplyPawn(corpse.InnerPawn, caster);
         }
 
 

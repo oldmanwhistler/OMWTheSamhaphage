@@ -45,9 +45,9 @@ namespace OMW_Samhaphage
 
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Compress");
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster)
+        public override void ApplyPawn(Pawn victim, Pawn caster)
         {
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
 
             OMWGenes.Refresh(victim);
 
@@ -62,7 +62,7 @@ namespace OMW_Samhaphage
 
             ThingApplyScrub scrub = new ThingApplyScrub();
             // Chain the compression logic to run only after the scrub window is closed
-            return scrub.ApplyPawn(victim, caster, () => ExecuteCompress(victim, caster));
+            scrub.ApplyPawn(victim, caster, () => ExecuteCompress(victim, caster));
         }
 
         private void ExecuteCompress(Pawn victim, Pawn caster)
@@ -71,6 +71,7 @@ namespace OMW_Samhaphage
             if (selector.genes.Count == 0)
             {
                 Messages.Message($"{victim.LabelShort} has no genes that can be Compressed.", MessageTypeDefOf.RejectInput);
+                doOnComplete(false);
                 return;
             }
 
@@ -93,6 +94,7 @@ namespace OMW_Samhaphage
                 OMWGenes.ApplyDissonance(victim, caster);
                 OMWGenes.Refresh(victim);
             }
+            doOnComplete(activated);
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

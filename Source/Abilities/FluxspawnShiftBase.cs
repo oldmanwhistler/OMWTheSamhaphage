@@ -10,19 +10,21 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.transpose;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
 
-        public override bool ApplyPawn(Pawn pawn, Pawn caster)
+        public override void ApplyPawn(Pawn pawn, Pawn caster)
         {
+            bool activated = false;
             if (ResonanceUtility.HasAvailable(caster, OMW_Mod.settings.abilityValue.transpose.value))
             {
                 ResonanceUtility.Decr(caster, OMW_Mod.settings.abilityValue.transpose.value);
                 OMWGenes.ChangeEndotype(pawn, TargetXenotype());
-                return true;
+                activated = true;
             }
             else
             {
                 Messages.Message($"Not enough Resonance to transpose into {TargetXenotype()}.", MessageTypeDefOf.RejectInput);
-                return false;
             }
+
+            doOnComplete(activated);
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

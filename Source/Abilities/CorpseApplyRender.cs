@@ -18,13 +18,12 @@ namespace OMW_Samhaphage
 
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Render");
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
+        public override void ApplyCorpse(Corpse corpse, Pawn caster)
         {
-            if (corpse?.InnerPawn == null || caster == null) return false;
+            if (corpse?.InnerPawn == null || caster == null) return;
 
             Pawn victim = corpse.InnerPawn;
 
-            bool value = false;
             string msg = $"{victim.LabelShort}'s corpse was destroyed after being rendered for their meat and attenuated for their genes.";
             System.Action sacrificeAction = () =>
             {
@@ -38,11 +37,10 @@ namespace OMW_Samhaphage
                 }
                 KillUtility.CorpseDestroy(corpse);
                 Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                value = true;                        
+                doOnComplete(true);
             };
 
-            OMW_UIHelpers.ShowCorpseConfirmation(victim, sacrificeAction);
-            return value;
+            ShowCorpseConfirmation(victim, sacrificeAction);
         }
 
         public override bool CanApplyOnCorpse(Corpse corpse, Pawn caster, out string reason)

@@ -21,10 +21,10 @@ namespace OMW_Samhaphage
 
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Mute");
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster)
+        public override void ApplyPawn(Pawn victim, Pawn caster)
         {
             Log.Debug($"START::Mute::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
 
             OMWGenes.Refresh(victim);
 
@@ -57,17 +57,17 @@ namespace OMW_Samhaphage
                 // Apply Genetic Dissonance to prevent repeated harvesting from the same vessel in a short time.
                 OMWGenes.ApplyDissonance(victim, caster);
                 Log.Debug($"DONE::Mute::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
-                return true;
+                doOnComplete(true);
             }
 
             Log.Debug($"DONE::Mute::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
-            return false;
+            doOnComplete(false);
         }
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
+        public override void ApplyCorpse(Corpse corpse, Pawn caster)
         {
-            if (corpse?.InnerPawn == null || caster == null) return false;
-            return ApplyPawn(corpse.InnerPawn, caster);
+            if (corpse?.InnerPawn == null || caster == null) return;
+            ApplyPawn(corpse.InnerPawn, caster);
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

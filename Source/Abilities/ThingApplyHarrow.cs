@@ -57,10 +57,10 @@ namespace OMW_Samhaphage
             return $"Harrow {victim.LabelShort} and harvest their genes using resonance.";
         }
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Harrow");
-        public override bool ApplyPawn(Pawn victim, Pawn caster)
+        public override void ApplyPawn(Pawn victim, Pawn caster)
         {
             Log.Debug($"START::Harrow::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
 
             OMWGenes.Refresh(victim);
 
@@ -71,7 +71,7 @@ namespace OMW_Samhaphage
 
             ThingApplyScrub scrub = new ThingApplyScrub();
             // Chain Harrow window to open after Scrub is done
-            return scrub.ApplyPawn(victim, caster, () => OpenHarrowWindow(victim, caster));
+            scrub.ApplyPawn(victim, caster, () => OpenHarrowWindow(victim, caster));
         }
 
         private void OpenHarrowWindow(Pawn victim, Pawn caster)
@@ -113,15 +113,16 @@ namespace OMW_Samhaphage
                     OMWGenes.Refresh(victim);
                     OMWGenes.Refresh(caster);
                 }
+                doOnComplete(activated);
             }));
             Log.Debug($"DONE::Harrow::OpenHarrowWindow({victim.LabelShort}, {caster.LabelShort})");
         }
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
+        public override void ApplyCorpse(Corpse corpse, Pawn caster)
         {
-            if (corpse == null || caster == null) return false;
-            if (corpse.InnerPawn == null) return false;
-            return ApplyPawn(corpse.InnerPawn, caster);
+            if (corpse == null || caster == null) return;
+            if (corpse.InnerPawn == null) return;
+            ApplyPawn(corpse.InnerPawn, caster);
         }
 
 

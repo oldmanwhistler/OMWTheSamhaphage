@@ -57,15 +57,19 @@ namespace OMW_Samhaphage
             return true;
         }
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
+        public override void ApplyCorpse(Corpse corpse, Pawn caster)
         {
-            if (corpse == null || caster == null) return false;
-            if (! this.SacrificeCaster)
-            {
-                return ApplyResurrect(corpse);
-            }
+            if (corpse == null || caster == null) return;
 
             bool value = false;
+
+            if (!this.SacrificeCaster)
+            {
+                value = ApplyResurrect(corpse);
+                doOnComplete(value);
+                return;
+            }
+
             string msg = $"{caster.LabelShort} has died resurrecting {corpse.InnerPawn.LabelShort}.";
             // We define the lethal logic as an Action
             System.Action sacrificeAction = () =>
@@ -75,14 +79,13 @@ namespace OMW_Samhaphage
                     KillUtility.PawnKillDestroy(caster, caster);
                     Messages.Message(msg,
                         MessageTypeDefOf.NegativeEvent);
-                        
-                    value = true;
+
+                    doOnComplete(true);
                 }
             };
 
             // Open the confirmation dialog
-            OMW_UIHelpers.ShowLethalConfirmation(caster, sacrificeAction);
-            return value;
+            ShowLethalConfirmation(caster, sacrificeAction);
         }
     }
 }

@@ -19,9 +19,9 @@ namespace OMW_Samhaphage
                 : $"Transpose {victim.LabelShort} into a Hallowbound.";
         }
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster)
+        public override void ApplyPawn(Pawn victim, Pawn caster)
         {
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
 
             if (!OMWGenes.HasScouredMind(victim))
             {
@@ -31,21 +31,20 @@ namespace OMW_Samhaphage
             if (!SacrificeCaster)
             {
                 OMWGenes.ChangeXenotype(victim, OMW_XenotypeDefOf.omw_hallowbound);
-                return true;
+                doOnComplete(true);
+                return;
             }
 
-            bool value = false;
             string msg = $"{caster.LabelShort} has died making {victim.LabelShort} a Hallowbound.";
             System.Action sacrificeAction = () =>
             {
                 OMWGenes.ChangeXenotype(victim, OMW_XenotypeDefOf.omw_hallowbound);
                 KillUtility.PawnKillDestroy(caster, caster);
                 Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                value = true;
+                doOnComplete(true);
             };
 
-            OMW_UIHelpers.ShowLethalConfirmation(caster, sacrificeAction);
-            return value;
+            ShowLethalConfirmation(caster, sacrificeAction);
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

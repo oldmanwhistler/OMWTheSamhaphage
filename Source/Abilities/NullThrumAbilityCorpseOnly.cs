@@ -4,9 +4,9 @@ namespace OMW_Samhaphage
 {
     public abstract class NullThrumAbilityCorpseOnly: NullThrumAbilityBase
     {
-        public override bool ApplyPawn(Pawn pawn, Pawn caster)
+        public override void ApplyPawn(Pawn pawn, Pawn caster)
         {
-            return false;
+            return;
         }
 
         public override bool CanApplyOnPawn(Pawn pawn, Pawn caster, out string reason)

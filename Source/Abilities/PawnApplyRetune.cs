@@ -48,9 +48,9 @@ namespace OMW_Samhaphage
 
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Retune");
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster)
+        public override void ApplyPawn(Pawn victim, Pawn caster)
         {
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
 
             OMWGenes.Refresh(victim);
 
@@ -66,7 +66,7 @@ namespace OMW_Samhaphage
             ThingApplyScrub scrub = new ThingApplyScrub();
             
             // Use the callback to ensure Retune window only opens AFTER Scrub window is closed.
-            return scrub.ApplyPawn(victim, caster, () => OpenRetuneWindow(victim, caster));
+            scrub.ApplyPawn(victim, caster, () => OpenRetuneWindow(victim, caster));
         }
 
         private void OpenRetuneWindow(Pawn victim, Pawn caster)
@@ -99,6 +99,8 @@ namespace OMW_Samhaphage
                     OMWGenes.ApplyDissonance(victim, caster);
                     OMWGenes.Refresh(victim);
                 }
+
+                doOnComplete(activated);
             }));
         }
 

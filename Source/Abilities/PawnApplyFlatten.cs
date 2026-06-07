@@ -32,11 +32,11 @@ namespace OMW_Samhaphage
             Log.Debug($"Flatten::DONE::PurgeNegativeMemories({victim.LabelShort})");
         }
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster)
+        public override void ApplyPawn(Pawn victim, Pawn caster)
         {
             
             Log.Debug($"START::Flatten::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
 
             OMWGenes.Refresh(victim);
 
@@ -75,7 +75,8 @@ namespace OMW_Samhaphage
             ResonanceUtility.Incr($"from flattening {victim.LabelShort}", caster, AbilityProp.value);
 
             Log.Debug($"DONE::Flatten::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
-            return true;
+
+            doOnComplete(true);
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

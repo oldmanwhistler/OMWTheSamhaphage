@@ -22,13 +22,13 @@ namespace OMW_Samhaphage
 
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Amplify");
 
-        public override bool ApplyPawn(Pawn victim, Pawn caster)
+        public override void ApplyPawn(Pawn victim, Pawn caster)
         {
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
             OMWGenes.ChangeEndotype(victim, TargetXenotype);
             MoteMaker.MakeAttachedOverlay(victim, ThingDefOf.Mote_ResurrectFlash, Vector3.zero);
             Log.Debug($"Amplified {victim.LabelShort}: became {TargetXenotype.label}.");
-            return true;
+            doOnComplete(true);
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

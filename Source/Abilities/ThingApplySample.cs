@@ -45,9 +45,9 @@ namespace OMW_Samhaphage
             return $"Sample {victim.LabelShort} and steal their appearance to disguise yourself as one of their kind.";
         }
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Sample");
-        public override bool ApplyPawn(Pawn victim, Pawn caster)
+        public override void ApplyPawn(Pawn victim, Pawn caster)
         {
-            if (victim == null || caster == null) return false;
+            if (victim == null || caster == null) return;
 
             OMWGenes.Refresh(victim);
 
@@ -57,10 +57,9 @@ namespace OMW_Samhaphage
             {
                 Messages.Message($"{victim.LabelShort} has no genes that can be stolen.",
                     MessageTypeDefOf.RejectInput);
-                return false;
+                return;
             }
 
-            bool value = false;
             Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
             {
                 bool activated = false;
@@ -82,16 +81,16 @@ namespace OMW_Samhaphage
                     OMWGenes.Refresh(victim);
                     OMWGenes.Refresh(caster);
                 }
+                doOnComplete(activated);
             }));
-            return value;
         }
 
-        public override bool ApplyCorpse(Corpse corpse, Pawn caster)
+        public override void ApplyCorpse(Corpse corpse, Pawn caster)
         {
-            if (corpse == null || caster == null) return false;
-            if (corpse.InnerPawn == null) return false;
+            if (corpse == null || caster == null) return;
+            if (corpse.InnerPawn == null) return;
 
-            return ApplyPawn(corpse.InnerPawn, caster);
+            ApplyPawn(corpse.InnerPawn, caster);
         }
 
 
