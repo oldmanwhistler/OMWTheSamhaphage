@@ -21,7 +21,7 @@ namespace OMW_Samhaphage
 
             if (CanApplyOnPawn(pawn, caster, out reason))
             {
-                return new MenuItemIcon(this.AbilityName, this.AbilityDescription(pawn, caster), this.Icon, () => Job(targetInfo, caster));
+                return new MenuItemIcon(this, this.AbilityDescription(pawn, caster), () => Job(targetInfo, caster));
             }
             else
             {

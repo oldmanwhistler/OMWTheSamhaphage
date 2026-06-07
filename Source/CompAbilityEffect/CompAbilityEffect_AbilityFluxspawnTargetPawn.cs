@@ -46,19 +46,7 @@ namespace OMW_Samhaphage
 
             if (items.Count > 0)
             {
-                BetterFloatMenu.Open(items, (item) =>
-                {
-                    if (item.Payload is Action action)
-                    {
-                        Log.Debug($"BetterFloatMenu is invoking {item.Payload.ToString()}");
-                        action.Invoke();
-                        Log.Debug($"BetterFloatMenu is done invoking {item.Payload.ToString()}");
-                    }
-                    else
-                    {
-                        Log.Error($"[OMW] Samhaphage AbilityFluxSpawnTargetPawn does not know how to handle item.Payload={item.Payload?.ToString() ?? "null"}");
-                    }
-                });
+                return DoOpenMenu(target, dest, items);
             }
 
             return false;

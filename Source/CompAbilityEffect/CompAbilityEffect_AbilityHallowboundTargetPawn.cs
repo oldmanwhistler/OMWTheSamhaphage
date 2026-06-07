@@ -50,13 +50,7 @@ namespace OMW_Samhaphage
 
             if (items.Count > 0)
             {
-                BetterFloatMenu.Open(items, (item) =>
-                {
-                    if (item.Payload is Action action)
-                    {
-                        action.Invoke();
-                    }
-                });
+                return DoOpenMenu(target, dest, items);
             }
 
             return false;

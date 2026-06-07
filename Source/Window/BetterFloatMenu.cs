@@ -28,6 +28,8 @@ namespace OMW_Samhaphage
     public class BetterFloatMenu : Window
     {
         static Logger Log = new Logger("UI");
+        private static readonly Texture2D LethalIcon = ContentFinder<Texture2D>.Get("UI/Icons/Medical/Death", false) ?? BaseContent.BadTex;
+
         /// <summary>
         /// Opens a new float menu using the items provided.
         /// Note: by default, opening a new window will close existing windows.
@@ -36,10 +38,11 @@ namespace OMW_Samhaphage
         /// <param name="items">The list of items that the user can choose from.</param>
         /// <param name="onSelected">The method to be called when an item is selected.</param>
         /// <returns>The newly created window.</returns>
-        public static BetterFloatMenu Open(List<MenuItemBase> items, Action<MenuItemBase> onSelected)
+        public static BetterFloatMenu Open(List<MenuItemBase> items, Pawn caster, Func<MenuItemBase, bool> onSelected)
         {
             var created = new BetterFloatMenu();
             created.Items = items;
+            created.Caster = caster;
             created.OnSelected = onSelected;
             created.closeOnAccept = false;
             created.closeOnCancel = true;
@@ -100,9 +103,13 @@ namespace OMW_Samhaphage
         /// </summary>
         public List<MenuItemBase> Items;
         /// <summary>
+        /// The pawn whose resonance will be displayed.
+        /// </summary>
+        public Pawn Caster;
+        /// <summary>
         /// Action called when an item is selected (clicked on).
         /// </summary>
-        public Action<MenuItemBase> OnSelected;
+        public Func<MenuItemBase, bool> OnSelected;
         /// <summary>
         /// If true, the window will close after selecting an item.
         /// If false, <see cref="OnSelected"/> will be still be called but the window will not close.
@@ -132,6 +139,8 @@ namespace OMW_Samhaphage
         private float lastHeight, lastWidth;
         private Vector2 scroll;
 
+        public override Vector2 InitialSize => new Vector2(400f, 500f);
+
         public override void DoWindowContents(Rect inRect)
         {
             SearchString ??= "";
@@ -159,6 +168,20 @@ namespace OMW_Samhaphage
                 inRect.yMin += 36;
             }
 
+            // Draw Resonance Bar
+            if (Caster != null)
+            {
+                float curRes = ResonanceUtility.Total(Caster);
+                float maxRes = OMW_Mod.settings.resonanceMax;
+                float fillPercent = maxRes > 0 ? Mathf.Clamp01(curRes / maxRes) : 0f;
+                Rect meterRect = new Rect(inRect.x, inRect.y, inRect.width, 26f);
+                Widgets.FillableBar(meterRect, fillPercent, SolidColorMaterials.NewSolidColorTexture(new Color(0.4f, 0.1f, 0.6f)), BaseContent.BlackTex, true);
+                Text.Anchor = TextAnchor.MiddleCenter;
+                Widgets.Label(meterRect, $"Resonance: {curRes:F1} / {maxRes:F1}");
+                Text.Anchor = TextAnchor.UpperLeft;
+                inRect.yMin += 36f;
+            }
+
             if (CanSearch || preRenderItems.Count != Items.Count)
             {
                 preRenderItems.Clear();
@@ -181,7 +204,14 @@ namespace OMW_Samhaphage
                 var size = item.Draw(pos);
                 var area = new Rect(pos, size);
 
-                if (item.BoxThickness > 0 && item.BoxColor.a > 0)
+                if (item.IsLethal)
+                {
+                    Rect lethalIconRect = new Rect(area.xMax - 22f, area.y + 2f, 20f, 20f);
+                    GUI.color = Color.red;
+                    GUI.DrawTexture(lethalIconRect, LethalIcon);
+                    GUI.color = Color.white;
+                }
+                else if (item.BoxThickness > 0 && item.BoxColor.a > 0)
                 {
                     GUI.color = item.BoxColor;
                     Widgets.DrawBox(area, item.BoxThickness);
@@ -255,6 +285,10 @@ namespace OMW_Samhaphage
         /// </summary>
         public object Payload { get; set; }
         /// <summary>
+        /// If true, a visual warning (red border) will be drawn to indicate a lethal action.
+        /// </summary>
+        public bool IsLethal = false;
+        /// <summary>
         /// The color of the containing box.
         /// </summary>
         public Color BoxColor = Color.white;
@@ -324,36 +358,40 @@ namespace OMW_Samhaphage
         public Color BGColor = default;
 
         protected string drawLabel;
-        private bool consumedSearch;
         public string Label;
 
-        public MenuItemIcon() { }
+        public NullThrumAbilityBase Ability = null;
 
-        public MenuItemIcon(string label, string tooltip, Texture2D icon, object payload)
+        // Constructor for abilities with a generic payload and optional target
+        public MenuItemIcon(NullThrumAbilityBase ability, string tooltip, object payload)
         {
-            Log.Debug($"MenuItemIcon, enabled, {label}, {tooltip}");
-            this.Payload = payload;
+            this.Ability = ability;
+            this.Label = ability.AbilityName;
+            this.Icon = ability.Icon;
+            this.IsLethal = ability.IsLethal;
             this.Tooltip = tooltip;
-            this.Icon = icon;
-            this.Label = label;
+            Log.Debug($"MenuItemIcon, enabled, {this.Label}, {tooltip}");
+            this.Payload = payload;
             this.Color = Color.white;
             this.Disabled = false;
         }
 
-        public MenuItemIcon(string label, string tooltip, Texture2D icon)
+        // Constructor for disabled items
+        public MenuItemIcon(NullThrumAbilityBase ability, string tooltip)
         {
-            Log.Debug($"MenuItemIcon, disabled, {label}, {tooltip}");
-            this.Payload = null;
+            this.Ability = ability;
+            this.Label = ability.AbilityName;
+            this.Icon = ability.Icon;
+            this.IsLethal = ability.IsLethal;
             this.Tooltip = tooltip;
-            this.Icon = icon;
-            this.Label = label;
+            Log.Debug($"MenuItemIcon, disabled, {this.Label}, {tooltip}");        
+            this.Payload = null;           
             this.Color = Color.gray;
             this.Disabled = true;
         }
 
         public override bool MatchesSearch(string search)
         {
-            consumedSearch = false;
             drawLabel = BetterFloatMenu.SearchMatch(Label ?? "", search, null);
             if (drawLabel == null && Tooltip != null)
             {

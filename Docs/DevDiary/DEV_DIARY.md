@@ -118,3 +118,9 @@ This is a "neat" bug. The _Defensive Fighter_ from _Traits Plus_ causes CTD when
 It's a head-scratcher. When I open up the mod the trait is in, I see from the def that this one specifically that is causing a CTD uses `<disabledWorkTags>`. That might be the culprit? I disable it and reload and it isn't, but looking at the Pawn who was trying to take the trait, and they already have another gene that gives a conflicting trait. (Defensive Fighter vs Bloodlust) so I am guessing that is the CTD? Remove Bloodlist, try adding Defensive Fighter and... CTD. ARGH.
 
 ... and this is the story about why I'm just going to ban stealing every gene that has a trait and call it a day.
+
+## Week #16 - June 1st, 2026
+
+My son bought me "Crimson Desert" and my gf wants to watch me collect cats so this is going to slow me down. Still, good progress on bugfixes. Got trait blacklisting working. I gave up on creating shamblers and I'm just going for destroying corpses instead.
+
+I made the mistake of vibe coding a ton of changes to the UI of my abilties and now everything is fucked. 43 file changes to debug. YAAAAAY. There's like 5 hours down the drain and just a bunch of reverting to get it to work.

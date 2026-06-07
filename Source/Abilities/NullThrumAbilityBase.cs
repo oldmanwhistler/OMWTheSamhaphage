@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -14,24 +15,33 @@ namespace OMW_Samhaphage
         public string AbilityName => NullThrumUtility.ToString(this.AbilityType);
         public abstract string AbilityDescription(Pawn victim, Pawn caster);
 
+        public Action<bool> onComplete;
+
+        /// <summary>
+        /// Indicates if this specific ability is lethal to its target.
+        /// </summary>
+        public virtual bool IsLethal => false;
+
         protected static Logger Log = new Logger("Abilities");
-        public bool ApplyThing(Thing thing, Pawn caster)
+        public void ApplyThing(Thing thing, Pawn caster)
         {
             if (thing is Pawn pawn)
             {
-                return ApplyPawn(pawn, caster);
+                bool success = ApplyPawn(pawn, caster);
+                onComplete?.Invoke(success);
             }
             else if (thing is Corpse corpse)
             {
-                return ApplyCorpse(corpse, caster);
+                bool success = ApplyCorpse(corpse, caster);
+                onComplete?.Invoke(success);
             }
             else
             {
-                return false;
+                onComplete?.Invoke(false);
             }
         }
 
-        public abstract bool ApplyPawn(Pawn pawn, Pawn caster);
+        public abstract bool ApplyPawn(Pawn victim, Pawn caster);
 
         public abstract bool ApplyCorpse(Corpse corpse, Pawn caster);
 
@@ -56,15 +66,22 @@ namespace OMW_Samhaphage
 
         public abstract bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason);
 
-        public void Job(LocalTargetInfo targetInfo, Pawn caster)
+        protected void Job(LocalTargetInfo targetInfo, Pawn caster)
         {
             Job_ApproachAndInteract job = new Job_ApproachAndInteract();
             job.def = OMW_JobDefOf.OMW_ApproachAndInteract;
             job.targetA = targetInfo;
+            job.ignoreForbidden = true;
+            
             // The delegate needs to match the signature: (Pawn actor, Thing t)
-            // We use the 't' passed from the JobDriver to ensure target validity
-            job.onInteract = (actor, t) => ApplyThing(t, actor);
-            caster.jobs.TryTakeOrderedJob(job);
+            job.onInteract = (actor, t) => { ApplyThing(t, actor); };
+            
+            // Return true if the job was successfully started/queued.
+            // The actual result will be sent via onAbilityComplete later.
+            if (!caster.jobs.TryTakeOrderedJob(job))           
+            {
+                Log.Error($"{caster.LabelShort} was not able to take job {this.AbilityName}");    
+            }            
         }
 
         public MenuItemIcon NewMenuItemIconDisabled(LocalTargetInfo targetInfo, string reason = null)
@@ -74,8 +91,10 @@ namespace OMW_Samhaphage
             {
                 msg += "\n" + reason;
             }
-            return new MenuItemIcon(this.AbilityName, msg, this.Icon);
-        }        
+
+            return new MenuItemIcon(this, msg);
+        }
+
         public MenuItemIcon NewMenuItemIcon(LocalTargetInfo targetInfo, Pawn caster)
         {
             if (targetInfo.Thing is Pawn pawn)

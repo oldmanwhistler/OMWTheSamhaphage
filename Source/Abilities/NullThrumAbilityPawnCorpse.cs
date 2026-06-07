@@ -10,7 +10,7 @@ namespace OMW_Samhaphage
 
             if (CanApplyOnPawn(pawn, caster, out reason))
             {
-                return new MenuItemIcon(this.AbilityName, this.AbilityDescription(pawn, caster), this.Icon, () => Job(targetInfo, caster));
+                return new MenuItemIcon(this, this.AbilityDescription(pawn, caster), () => Job(targetInfo, caster));
             }
             else
             {
@@ -24,7 +24,7 @@ namespace OMW_Samhaphage
 
             if (CanApplyOnCorpse(corpse, caster, out reason))
             {
-                return new MenuItemIcon(this.AbilityName, this.AbilityDescription(corpse.InnerPawn, caster), this.Icon, () => Job(targetInfo, caster));
+                return new MenuItemIcon(this, this.AbilityDescription(corpse.InnerPawn, caster), () => Job(targetInfo, caster));
             }
             else
             {

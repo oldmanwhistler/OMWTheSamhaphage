@@ -3,6 +3,8 @@
 ## Next
 
 * Genetic complexity should be calculated as a percentage * genetic complexity. The percentage could change based on the difficulty presets.
+* render should mute psychic abilities
+* render should extra biotech for resonance
 
 ## MOD SETTINGS
 
@@ -23,7 +25,6 @@
 ## BUGS
 
 * flicker stun needs to be a separate ability
-* shamblers aren't hostile
 * daily resonance amount that varies per xenotype? Doesn't seem to be working. Change it to use Hauts 24 severity from psychic locust
 
 ## UI
@@ -60,6 +61,10 @@
 * gain resonance on kill based on the market value of what you killed / 100?
 * "resonance efficiency" by xenotype. +/- percentage on increases/decreases.
 * "resonance thirst" power up when hit zero resonance? maybe not useful if daily resonance is implemented.
+
+### Render
+
+* Support for extracting bionics?
 
 ## Xenotypes
 

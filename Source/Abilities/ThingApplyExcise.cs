@@ -82,19 +82,19 @@ namespace OMW_Samhaphage
                 return false;
             }
 
+            bool value = false;
             Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selector, (selectedList) =>
             {
-                LongEventHandler.ExecuteWhenFinished(() =>
+                if (ApplyExcise(victim, caster, selector, selectedList))
                 {
-                    if (ApplyExcise(victim, caster, selector, selectedList))
-                    {
-                        OMWGenes.ApplyDissonance(victim, caster);
-                        OMWGenes.Refresh(victim);
-                    }
-                });
+                    OMWGenes.ApplyDissonance(victim, caster);
+                    OMWGenes.Refresh(victim);
+                    value = true;
+                }
+                
             }));
 
-            return true;
+            return value;
         }
 
         public override bool ApplyCorpse(Corpse corpse, Pawn caster)
