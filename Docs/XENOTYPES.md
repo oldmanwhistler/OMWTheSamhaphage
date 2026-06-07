@@ -77,10 +77,9 @@ Prepares a host to act as a living biological matrix (cradlemold).
 
 ### Attenuate (Silencing)
 
-Attenuate dissolves the physical host into pure harmonic data, vibrating the body until the cellular structure collapses into a broadcast-ready signal. This lethal process harvests the subject's entire genetic profile, silencing the individual to enrich the hive's collective resonance.
+Attenuate temporarily suppresses a living host's physical amplitude, dampening their body into a weakened, translucent state without killing them. By dialing down the target's biological volume, the ability safely extracts the frequency of their active traits and converts them into harvestable Resonance.
 
 - Requires a scoured mind and blocked by dissonance.
-- Caster can sacrifice the Victim and convert their genes to resonance.
 
 ### Sample (Disguise)
 

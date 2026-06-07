@@ -459,13 +459,13 @@ Sensory: A terrifying, inward-pulling sensation—as if the marrow is becoming l
 
 ### ATTENUATE (Thematic Concept)
 
-Thematic: The total conversion of matter into signal. To Attenuate is to fade the physical form entirely, turning the host’s biological "volume" down to zero so that their genetic information can be broadcast back into the hive’s collective resonance.
+Thematic: The temporary conversion of physical mass into a broadcast signal. To Attenuate is to dial down a living host’s biological "volume," stepping down their physical presence into a weakened, ghost-like baseline state. By deliberately dampening the target's physical density, their active genes are destabilized and converted into a flowing stream of data-rich harmonic energy for the Hive to siphon, leaving the victim depleted but intact.
 
-Action: A lethal, high-frequency phase-shift that vibrates the subject’s cellular structure until the physical bonds fail, dissolving the body into a cloud of pure, data-rich harmonic energy.
+Action: The Samhaphage projects a high-frequency phase-shift that dampens the subject’s physical amplitude. This process strips the weight and potency from the host's active genes, converting that stolen biological expression into a cloud of pure resonance while leaving the target behind in a faded, fragile state.
 
-Narrative: The vessel has served its purpose and is now invited to join the silence. We do not let your genes rot in the earth; we strip away the weight of your flesh, leaving only the pure frequency of your existence to be absorbed by the Sovereign.
+Narrative: We do not destroy you; we simply turn your volume down. We dial back the loudness of your physical form, leaving you a quiet, hollowed-out echo of yourself while the Sovereign drinks the rich frequency of the genes you no longer have the strength to project.
 
-Sensory: The victim’s silhouette begins to blur and lose opacity as they emit a fading, mournful hum, eventually vanishing into a soft shimmer of static that leaves the air tasting like ozone.
+Sensory: The victim’s body blurs and loses opacity, emitting a fading, mournful hum as their physical colors and features wash out. A soft shimmer of static rises from their skin as their trait
 
 ### SAMPLE (Thematic Concept)
 
