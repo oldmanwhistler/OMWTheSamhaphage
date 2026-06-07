@@ -25,8 +25,8 @@ namespace OMW_Samhaphage
         protected static Logger Log = new Logger("Abilities");
 
         protected void doOnComplete(bool value)
-        {
-            this.onComplete?.Invoke(true);
+        {            
+            this.onComplete?.Invoke(value);
             this.onComplete = null;
         }
 
