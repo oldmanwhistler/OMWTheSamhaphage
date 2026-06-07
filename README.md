@@ -160,11 +160,15 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
   
 1. Gen AI was used for brainstorming nomenclature and descriptions.
 2. Coded using VS Code with Intellisense and AI suggestions/review.
-   * "Vibe coding" used for batch refactoring, and working with my Job class and Window UI classes.
+   * "Vibe coding" used for batch refactoring, job class, and Window UI classes.
 3. Gen AI used for icon assets and for parts or entirety of workshop screenshots.
    * This mod has no graphical assets other than gene icons and ability icons.
 
-Please read this before leaving a comment about mods using AI. [My thoughts on how AI affects video game modding.](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/RIMWORLD_SLOP.md). 
+Before you comment on AI usage, witch hunts against people who disclose AI usage is kind of nuts.
+
+You can look at the github history or my dev diary to get an idea of how long I spent this.
+
+Here's my advice on how to avoid [slop mods](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/RIMWORLD_SLOP.md).
 
 ## License
 
@@ -173,5 +177,8 @@ This project and the work it was derived is free software. You can redistribute 
 Includes modified code from the following mods:
 
 * UI is based on [BetterFloatMenus by EpicGuru](https://github.com/Epicguru/BetterFloatMenu/tree/master). MIT License.
+
+Inspirations from:
+
 * Unstable Mutations based on [AlphaGenes (c)2021 juanosarg](https://github.com/juanosarg/AlphaGenes) [License CC-BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 * Parasitic Implantation based on [AlphaGenes (c)2021 juanosarg](https://github.com/juanosarg/AlphaGenes) [License CC-BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)
