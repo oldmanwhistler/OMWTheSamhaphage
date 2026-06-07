@@ -88,7 +88,7 @@ namespace OMW_Samhaphage
                 else
                 {
                     Log.Error(
-                        $"[OMW] Samhaphage AbilityFluxSpawn does not know how to handle item.Payload={item.Payload?.ToString() ?? "null"}");
+                        $"DoOpenMenu does not know how to handle item.Payload={item.Payload?.ToString() ?? "null"}");
                 }
                 return false;
             });
