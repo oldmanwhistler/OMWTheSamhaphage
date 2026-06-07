@@ -37,6 +37,49 @@ namespace OMW_Samhaphage
             return true;
         }
 
+        public static void PurgeBionics(Pawn victim)
+        {
+            if (victim?.health?.hediffSet == null) return;
+
+            Log.Debug($"PurgeBionics::START::({victim.LabelShort})");
+            
+            Map map = victim.MapHeld;
+            IntVec3 pos = victim.PositionHeld;
+
+            // Identify all hediffs that count as artificial (bionics, prosthetics, implants)
+            List<Hediff> artificialHediffs = victim.health.hediffSet.hediffs
+                .Where(h => h.def.countsAsAddedPartOrImplant)
+                .ToList();
+
+            Log.Debug($"PurgeBionics found {artificialHediffs.Count} bionics");
+
+            foreach (Hediff hediff in artificialHediffs)
+            {
+                Log.Debug($"PurgeBionics working on bionic: {hediff.Label}");
+
+                // If the bionic/implant has a defined item product, spawn it on the ground.
+                if (map != null && hediff.def.spawnThingOnRemoved != null)
+                {
+                    Log.Debug($"PurgeBionics is creating bionic: {hediff.def.spawnThingOnRemoved.label}");
+                    Thing thing = ThingMaker.MakeThing(hediff.def.spawnThingOnRemoved);
+                    GenPlace.TryPlaceThing(thing, pos, map, ThingPlaceMode.Near);
+                    Messages.Message($"Rendered {victim.LabelShort} and extracted {hediff.def.spawnThingOnRemoved.label}.", MessageTypeDefOf.PositiveEvent);
+                }
+
+                BodyPartRecord part = hediff.Part;
+                victim.health.RemoveHediff(hediff);
+
+                // For AddedParts (like bionic limbs), removal results in a missing part.
+                // We restore the biological part to keep the victim intact but "natural".
+                if (part != null && hediff is Hediff_AddedPart)
+                {
+                    victim.health.RestorePart(part);
+                }
+            }
+
+            Log.Debug($"PurgeBionics::DONE::({victim.LabelShort})");
+        }
+
         // safe shamblerization of corpses only if AnomalyDLC is present.
         public static bool CorpseDestroy(Corpse corpse)
         {
@@ -121,6 +164,8 @@ namespace OMW_Samhaphage
 
             // Drop all apparel and equipment
             victim.Strip();
+
+            PurgeBionics(victim);
 
             // Spawn meat, leather, and other butcher products
             IEnumerable<Thing> products = victim.ButcherProducts(null, 1.5f);
