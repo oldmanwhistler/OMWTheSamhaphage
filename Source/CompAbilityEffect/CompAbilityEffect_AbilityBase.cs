@@ -68,8 +68,9 @@ namespace OMW_Samhaphage
             }
         }
 
-        protected bool DoOpenMenuAgain(LocalTargetInfo target, LocalTargetInfo dest, bool success)        
+        protected bool DoOpenMenuAgain(LocalTargetInfo target, LocalTargetInfo dest, bool success)
         {
+            if (target == null || dest == null) return false;
             Log.Debug(
                 $"DoOpenMenu is done invoking ability.onComplete and returned {success}");
             if (success) OpenMenu(target, dest);
