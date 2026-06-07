@@ -79,9 +79,10 @@ namespace OMW_Samhaphage
                     KillUtility.PawnKillDestroy(caster, caster);
                     Messages.Message(msg,
                         MessageTypeDefOf.NegativeEvent);
-
-                    doOnComplete(true);
                 }
+
+                // Needs to be false so doesn't get stuck on a loop
+                doOnComplete(false);
             };
 
             // Open the confirmation dialog

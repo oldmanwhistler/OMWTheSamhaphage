@@ -61,7 +61,8 @@ namespace OMW_Samhaphage
                     FilthMaker.TryMakeFilth(c, victim.Map, ThingDefOf.Filth_Blood);
                 }
                 Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                doOnComplete(true);
+                // Needs to be false so doesn't get stuck on a loop
+                doOnComplete(false);
             };
 
             // Open the confirmation dialog

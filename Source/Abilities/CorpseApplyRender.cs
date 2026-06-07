@@ -34,10 +34,12 @@ namespace OMW_Samhaphage
                 if (selectorAttenuate != null)
                 {
                     attenuate.ApplyAttenuate(victim, caster, selectorAttenuate);
-                }
+                }                
                 KillUtility.CorpseDestroy(corpse);
                 Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                doOnComplete(true);
+                Log.Debug("Done Render, now calling doOnComplete(false)");
+                // Needs to be false so doesn't get stuck on a loop
+                doOnComplete(false);
             };
 
             ShowCorpseConfirmation(victim, sacrificeAction);

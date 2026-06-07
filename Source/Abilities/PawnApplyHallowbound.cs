@@ -41,7 +41,8 @@ namespace OMW_Samhaphage
                 OMWGenes.ChangeXenotype(victim, OMW_XenotypeDefOf.omw_hallowbound);
                 KillUtility.PawnKillDestroy(caster, caster);
                 Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                doOnComplete(true);
+                // Needs to be false so doesn't get stuck on a loop
+                doOnComplete(false);
             };
 
             ShowLethalConfirmation(caster, sacrificeAction);

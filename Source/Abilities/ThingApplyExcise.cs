@@ -112,7 +112,6 @@ namespace OMW_Samhaphage
             {
                 Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selector, (selectedList) =>
                 {
-                    bool activated = false;
                     if (ApplyExcise(victim, caster, selector, selectedList))
                     {
                         // only attenuate corpses
@@ -124,9 +123,9 @@ namespace OMW_Samhaphage
                         }                        
                         KillUtility.CorpseDestroy(corpse);
                         Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                        activated = true;
                     }
-                    doOnComplete(activated);
+                    // Needs to be false so doesn't get stuck on a loop
+                    doOnComplete(false);                    
                 }));
             };
 

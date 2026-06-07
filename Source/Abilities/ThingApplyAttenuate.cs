@@ -83,8 +83,9 @@ namespace OMW_Samhaphage
                 {
                     KillUtility.PawnKillDestroy(victim, caster);
                     Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                    doOnComplete(true);
                 }
+                // Needs to be false so doesn't get stuck on a loop
+                doOnComplete(false);
             };
 
             // Open the confirmation dialog
@@ -110,8 +111,10 @@ namespace OMW_Samhaphage
                     // Use the Corpse-specific method to handle resurrection and initialization properly
                     KillUtility.CorpseDestroy(corpse);
                     Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                    doOnComplete(true);
                 }
+
+                // Needs to be false so doesn't get stuck on a loop
+                doOnComplete(false);
             };
 
             // Open the confirmation dialog
