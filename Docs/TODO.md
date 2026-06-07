@@ -24,14 +24,12 @@
 
 ## BUGS
 
-* flicker stun needs to be a separate ability
-* daily resonance amount that varies per xenotype? Doesn't seem to be working. Change it to use Hauts 24 severity from psychic locust
+* flicker stun needs to be a separate ability so it can be used while drafted
 
 ## UI
 
-* loop the menu until they hit cancel or close
+* loop the menu until they hit cancel or close -- make it an actual cancel button instead of a return value
 * stats panel in menu about the selected pawn's genes, skills, passions, traits
-* why is it creating vertical rows instead of horizontal rows
 
 ## Ideology
 
@@ -48,11 +46,6 @@
 
 * Should handle conflicting traits the same way as I do with genes with respect to the GUI.
 
-### Passion
-
-* Sovereign Stillness can consume passions from other pawns. Only increase from 1->2->3 despite vanilla skills and alpha skills.
-* 1 passion level per pawn and it destroys them.
-
 ### Resonance
 
 * automatically convert cancer to resonance?
@@ -61,10 +54,17 @@
 * gain resonance on kill based on the market value of what you killed / 100?
 * "resonance efficiency" by xenotype. +/- percentage on increases/decreases.
 * "resonance thirst" power up when hit zero resonance? maybe not useful if daily resonance is implemented.
+* Daily resonance based on complexity?
+
 
 ### Render
 
-* Support for extracting bionics?
+* Resonance gain based on market value of pawn after the stripped and bionics removed and genes removed?
+* attenuated should destroy the corpse.. and anything that does destroy corpses should render
+
+### Backstories
+
+* some kind of ability that wipes out backstories and relationships? and social mood? maybe take that out of flatten
 
 ## Xenotypes
 
