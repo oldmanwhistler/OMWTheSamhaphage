@@ -68,6 +68,8 @@ namespace OMW_Samhaphage
 
         public static readonly HashSet<GeneDef> BlacklistedGenesDontMutate = new HashSet<GeneDef>();
 
+        public static readonly HashSet<GeneDef> PreggoGenes = new HashSet<GeneDef>();
+
         static OMW_BlacklistGenes()
         {
             RebuildBlacklist();
@@ -227,6 +229,11 @@ namespace OMW_Samhaphage
 
                     // all genes that can be blacklisted
                     BlacklistedGenes.Add(bl);
+
+                    if (bl.BlacklistGeneType.Contains(BlacklistGeneType.BlReproduction))
+                    {
+                        PreggoGenes.Add(bl.geneDef);
+                    }
 
                     if (!bl.BlacklistGeneType.IsSubsetOf(blCanCopy))
                     {
