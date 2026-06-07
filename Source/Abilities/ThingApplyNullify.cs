@@ -89,9 +89,10 @@ namespace OMW_Samhaphage
                     OMWGenes.ApplyDissonance(victim, caster);
                     OMWGenes.Refresh(victim);
                 }
-                doOnComplete(activated);
+
+                Log.Debug($"DONE::Nullify::OpenNullifyWindow({victim.LabelShort}, {caster.LabelShort})");
+                doOnComplete(true);
             }));
-            Log.Debug($"DONE::Nullify::OpenNullifyWindow({victim.LabelShort}, {caster.LabelShort})");
         }
 
         public override void ApplyCorpse(Corpse corpse, Pawn caster)

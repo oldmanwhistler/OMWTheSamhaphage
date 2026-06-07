@@ -115,7 +115,7 @@ namespace OMW_Samhaphage
                 }
                 else
                 {
-                    doOnComplete(false);
+                    doOnComplete(true);
                 }
                 return;
             }
@@ -139,11 +139,10 @@ namespace OMW_Samhaphage
                 {
                     OMWGenes.Refresh(victim);
                 }
-                doOnComplete(activated);
+
                 Log.Debug($"DONE2::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
+                if (onAbilityComplete == null) doOnComplete(true);
             }, onAbilityComplete));
-            
-            Log.Debug($"DONE3::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
         }
 
         public override void ApplyCorpse(Corpse corpse, Pawn caster)

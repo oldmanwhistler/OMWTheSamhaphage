@@ -15,7 +15,7 @@ namespace OMW_Samhaphage
         public string AbilityName => NullThrumUtility.ToString(this.AbilityType);
         public abstract string AbilityDescription(Pawn victim, Pawn caster);
 
-        public Action<bool> onComplete;
+        private Action<bool> onComplete;
 
         /// <summary>
         /// Indicates if this specific ability is lethal to its target.
@@ -25,9 +25,17 @@ namespace OMW_Samhaphage
         protected static Logger Log = new Logger("Abilities");
 
         protected void doOnComplete(bool value)
-        {            
+        {
+            Log.Debug(
+                $"{AbilityName}::doOnComplete(value={value}); called when onComplete?==null is {onComplete == null}");
+            if (this.onComplete == null) return;
             this.onComplete?.Invoke(value);
             this.onComplete = null;
+        }
+
+        public void SetOnComplete(Action<bool> onComplete)
+        {
+            this.onComplete = onComplete;
         }
 
         protected System.Action onCompleteAction(bool value)
@@ -43,7 +51,7 @@ namespace OMW_Samhaphage
                 buttonAText: "Confirm".Translate(),
                 buttonAAction: sacrificeAction,
                 buttonBText: "Cancel".Translate(),
-                buttonBAction: onCompleteAction(false),
+                buttonBAction: onCompleteAction(true),
                 buttonADestructive: true,
                 title: "Lethal Ability".Translate()
             );
@@ -59,7 +67,7 @@ namespace OMW_Samhaphage
                 buttonAText: "Confirm".Translate(),
                 buttonAAction: sacrificeAction,
                 buttonBText: "Cancel".Translate(),
-                buttonBAction: onCompleteAction(false),
+                buttonBAction: onCompleteAction(true),
                 buttonADestructive: true,
                 title: "Lethal Ability".Translate()
             );

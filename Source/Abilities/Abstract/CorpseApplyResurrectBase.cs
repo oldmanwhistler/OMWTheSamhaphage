@@ -14,7 +14,6 @@ namespace OMW_Samhaphage
 
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.resurrect;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
-
         private bool ApplyResurrect(Corpse corpse)
         {
             if (corpse == null || corpse.InnerPawn == null) return false;
@@ -61,12 +60,10 @@ namespace OMW_Samhaphage
         {
             if (corpse == null || caster == null) return;
 
-            bool value = false;
-
             if (!this.SacrificeCaster)
             {
-                value = ApplyResurrect(corpse);
-                doOnComplete(value);
+                ApplyResurrect(corpse);
+                doOnComplete(true);
                 return;
             }
 

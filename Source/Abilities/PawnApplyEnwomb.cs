@@ -16,8 +16,7 @@ namespace OMW_Samhaphage
         public virtual HediffDef TargetHediff => null;
         public virtual XenotypeDef TargetXenotype => null;
         public virtual bool SacrificeCaster => false;
-
-        private static List<GeneDef> cachedPreggoGenes;
+        public override bool IsLethal => false;
 
         private void PregnancyGenesTransfer(Pawn mother, Pawn father)
         {
@@ -26,38 +25,8 @@ namespace OMW_Samhaphage
                 .Where(g => !g.Overridden)
                 .ToList();
 
-            if (cachedPreggoGenes == null)
-            {
-                List<string> preggoGeneNames = new List<string>
-                {
-                    "AG_EggLaying",
-                    "BS_AutoPregnancy",
-                    "WVC_IncestLover",
-                    "BS_VeryEarlyMaturity",
-                    "BS_EarlyMaturity",
-                    "BS_BirthLitter",
-                    "BS_BirthTwins",
-                    "BS_MinimalPregnancy",
-                    "BS_ShortPregnancy",
-                    "AG_FastGestation",
-                    "AG_SlowGestation",
-                    "Sterile",
-                    "VU_NearSterile",
-                    "WVC_AgeDebuff_Sterile",
-                    "BS_EverFertile",
-                    "AG_FertilityIndoors",
-                    "AG_FertilityDarkness",
-                    "WVC_BaselinerFertility",
-                    "Fertile",
-                    "AG_ReducedFertile"
-                };
-
-                // Get a list of the actual GeneDefs for those names, filtering out any that don't exist in the current mod setup
-                cachedPreggoGenes = preggoGeneNames.Select(name => DefDatabase<GeneDef>.GetNamed(name)).ToList();
-            }
-
             List<Gene> genesToTransfer = daddyGenes
-                .Where(g => cachedPreggoGenes.Contains(g.def))
+                .Where(g => OMW_BlacklistGenes.PreggoGenes.Contains(g.def))
                 .ToList();
 
             foreach (Gene gene in genesToTransfer)
@@ -73,19 +42,17 @@ namespace OMW_Samhaphage
         {
             if (mother == null || father == null) return;
 
-            bool value = false;
-
             if (!SacrificeCaster)
             {
-                value = ExecutePregnancy(mother, father);
-                doOnComplete(value);
+                ApplyPregnancy(mother, father);
+                doOnComplete(true);
                 return;
             }
 
             string msg = $"{father.LabelShort} has died making {mother.LabelShort} pregnant.";
             System.Action sacrificeAction = () =>
             {
-                if (ExecutePregnancy(mother, father))
+                if (ApplyPregnancy(mother, father))
                 {
                     KillUtility.PawnKillDestroy(father, father);
                     Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
@@ -98,7 +65,7 @@ namespace OMW_Samhaphage
             ShowLethalConfirmation(father, sacrificeAction);
         }
 
-        private bool ExecutePregnancy(Pawn mother, Pawn father)
+        private bool ApplyPregnancy(Pawn mother, Pawn father)
         {
             // Life finds a way.
             if (mother.gender != Gender.Female)
@@ -166,6 +133,7 @@ namespace OMW_Samhaphage
         public override HediffDef TargetHediff => OMW_HediffDefOf.OMW_SilentServitude;
         public override XenotypeDef TargetXenotype => OMW_XenotypeDefOf.omw_cradlemold;
         public override bool SacrificeCaster => true;
+        public override bool IsLethal => true;
         public override string AbilityDescription(Pawn victim, Pawn caster) => $"Sacrifice yourself to transform {victim.LabelShort} into a Cradlemold factory.";
     }
 }

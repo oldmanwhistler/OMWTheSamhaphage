@@ -12,19 +12,17 @@ namespace OMW_Samhaphage
 
         public override void ApplyPawn(Pawn pawn, Pawn caster)
         {
-            bool activated = false;
             if (ResonanceUtility.HasAvailable(caster, OMW_Mod.settings.abilityValue.transpose.value))
             {
                 ResonanceUtility.Decr(caster, OMW_Mod.settings.abilityValue.transpose.value);
                 OMWGenes.ChangeEndotype(pawn, TargetXenotype());
-                activated = true;
             }
             else
             {
                 Messages.Message($"Not enough Resonance to transpose into {TargetXenotype()}.", MessageTypeDefOf.RejectInput);
             }
 
-            doOnComplete(activated);
+            doOnComplete(true);
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

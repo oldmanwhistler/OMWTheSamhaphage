@@ -11,6 +11,7 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Hallowbound");
         public virtual bool SacrificeCaster => false;
+        public override bool IsLethal => false;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {
@@ -64,5 +65,6 @@ namespace OMW_Samhaphage
     public class PawnApplyHallowboundSacrifice : PawnApplyHallowbound
     {
         public override bool SacrificeCaster => true;
+        public override bool IsLethal => true;
     }
 }

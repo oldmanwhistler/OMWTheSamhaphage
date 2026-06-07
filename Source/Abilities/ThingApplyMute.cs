@@ -56,12 +56,10 @@ namespace OMW_Samhaphage
                 
                 // Apply Genetic Dissonance to prevent repeated harvesting from the same vessel in a short time.
                 OMWGenes.ApplyDissonance(victim, caster);
-                Log.Debug($"DONE::Mute::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
-                doOnComplete(true);
             }
 
             Log.Debug($"DONE::Mute::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
-            doOnComplete(false);
+            doOnComplete(true);
         }
 
         public override void ApplyCorpse(Corpse corpse, Pawn caster)

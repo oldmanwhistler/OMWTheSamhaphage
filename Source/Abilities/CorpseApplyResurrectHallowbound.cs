@@ -8,6 +8,7 @@ namespace OMW_Samhaphage
         public override Verse.HediffDef TargetHediff => OMW_HediffDefOf.OMW_SilentServitude;
         public override RimWorld.XenotypeDef TargetXenotype => OMW_XenotypeDefOf.omw_hallowbound;
         public override bool SacrificeCaster => true;
+        public override bool IsLethal => true;
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/ResurrectHallowbound");
 
         public override string AbilityDescription(Pawn victim, Pawn caster)

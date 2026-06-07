@@ -85,7 +85,7 @@ namespace OMW_Samhaphage
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.bootleg;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
-
+        public override bool IsLethal => true;
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {
             return $"Bootleg {victim.LabelShort}'s personality traits, stripping them of their identity to bolster your own.";
@@ -140,8 +140,8 @@ namespace OMW_Samhaphage
 
             Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selectorBootleg, (selectedList) =>
             {
-                bool activated = ApplyBootleg(victim, caster, selectorBootleg, selectedList);
-                doOnComplete(activated);
+                ApplyBootleg(victim, caster, selectorBootleg, selectedList);
+                doOnComplete(true);
             }));
         }
 
@@ -164,10 +164,8 @@ namespace OMW_Samhaphage
                         KillUtility.ApplyRenderOrAttenuate(victim, caster);
                         KillUtility.CorpseDestroy(corpse);
                         Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
+                        doOnComplete(false);
                     }
-
-                    // Needs to be false so doesn't get stuck on a loop
-                    doOnComplete(false);                    
                 }));
             };
 

@@ -81,7 +81,7 @@ namespace OMW_Samhaphage
                     OMWGenes.Refresh(victim);
                     OMWGenes.Refresh(caster);
                 }
-                doOnComplete(activated);
+                doOnComplete(true);
             }));
         }
 

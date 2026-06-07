@@ -71,7 +71,6 @@ namespace OMW_Samhaphage
             if (selector.genes.Count == 0)
             {
                 Messages.Message($"{victim.LabelShort} has no genes that can be Compressed.", MessageTypeDefOf.RejectInput);
-                doOnComplete(false);
                 return;
             }
 
@@ -94,7 +93,7 @@ namespace OMW_Samhaphage
                 OMWGenes.ApplyDissonance(victim, caster);
                 OMWGenes.Refresh(victim);
             }
-            doOnComplete(activated);
+            doOnComplete(true);
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

@@ -27,7 +27,8 @@ namespace OMW_Samhaphage
                 // Prevent targeting hostiles if the ability is meant for the hive/allies
                 if (targetPawn.HostileTo(parent.pawn))
                 {
-                    Messages.Message("Cannot target hostile creatures with this ability.", targetPawn, MessageTypeDefOf.RejectInput, false);
+                    Messages.Message("Cannot target hostile creatures with this ability.", targetPawn,
+                        MessageTypeDefOf.RejectInput, false);
                     return;
                 }
 
@@ -41,8 +42,6 @@ namespace OMW_Samhaphage
             Log.Debug($"{parent.pawn}.Apply is calling Job to move to target");
             this.Job(target, dest, this.parent.pawn);
         }
-        
-        public abstract bool OpenMenu(LocalTargetInfo target, LocalTargetInfo dest);
 
         // Does nothing, but makes moves the caster to the target before opening the menu.
         public void Job(LocalTargetInfo target, LocalTargetInfo dest, Pawn caster)
@@ -50,13 +49,14 @@ namespace OMW_Samhaphage
             Log.Debug($"{parent.pawn}.Job");
             if (target.Thing is Pawn targetPawn && targetPawn.HostileTo(caster))
             {
-                Messages.Message("Cannot target hostile creatures with this ability.", targetPawn, MessageTypeDefOf.RejectInput, false);
+                Messages.Message("Cannot target hostile creatures with this ability.", targetPawn,
+                    MessageTypeDefOf.RejectInput, false);
                 return;
             }
 
             LocalTargetInfo targetClosure = target;
             LocalTargetInfo destClosure = dest;
-            Job_ApproachAndInteract job = Job_ApproachAndInteract.CreateAndAssign(target, caster, 
+            Job_ApproachAndInteract job = Job_ApproachAndInteract.CreateAndAssign(target, caster,
                 (actor, t) => OpenMenu(targetClosure, destClosure));
             if (job == null)
             {
@@ -66,24 +66,37 @@ namespace OMW_Samhaphage
             {
                 Log.Debug($"Job created successfully for {caster}. Job: {job}");
             }
-        }
+        }        
+        public abstract bool OpenMenu(LocalTargetInfo target, LocalTargetInfo dest);
 
-        protected bool DoOpenMenuAgain(LocalTargetInfo target, LocalTargetInfo dest, bool success)
+        public void OpenMenuAgain(LocalTargetInfo target, LocalTargetInfo dest, bool openAgain)
         {
-            if (target == null || dest == null) return false;
-            Log.Debug(
-                $"DoOpenMenu is done invoking ability.onComplete and returned {success}");
-            if (success) OpenMenu(target, dest);
-            return success;
+            if (!openAgain)
+            {
+                Log.Debug($"OpenMenuAgain is aborting because openAgain={openAgain}");
+                return;
+            }
+            if (target == null)
+            {
+                Log.Error($"OpenMenuAgain has target=null and openAgain={openAgain}");
+                return;
+            }
+            if (dest == null)
+            {
+                Log.Error($"OpenMenuAgain has dest=null and openAgain={openAgain}");
+                return;
+            }
+            Log.Debug("OpenMenuAgain is running OpenMenu");
+            OpenMenu(target, dest);
         }
         protected bool DoOpenMenu(LocalTargetInfo target, LocalTargetInfo dest, List<MenuItemBase> items)
         {
-            BetterFloatMenu.Open(items, parent.pawn, (item) => // OnSelected now expects Func<MenuItemBase, bool>
+            BetterFloatMenu.Open(items, parent.pawn, (item) => 
             {
                 if ((item is MenuItemIcon menuItem) && (item.Payload is System.Action action))
                 {
                     Log.Debug($"DoOpenMenu is invoking {item.Payload?.ToString() ?? "null"}");
-                    menuItem.Ability.onComplete = (success) => DoOpenMenuAgain(target, dest, success);
+                    menuItem.Ability.SetOnComplete((openAgain) => OpenMenuAgain(target, dest, openAgain));
                     action.Invoke();
                 }
                 else

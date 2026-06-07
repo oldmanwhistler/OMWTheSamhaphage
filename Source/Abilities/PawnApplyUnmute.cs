@@ -21,7 +21,6 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return;
 
-            bool value = false;
             if (ResonanceUtility.HasAvailable(caster, ResonanceCost))
             {
                 // ChangePsylinkLevel adds the PsychicAmplifier hediff and increments the level
@@ -30,9 +29,8 @@ namespace OMW_Samhaphage
 
                 MoteMaker.MakeAttachedOverlay(victim, ThingDefOf.Mote_ResurrectFlash, Vector3.zero);
                 Log.Debug($"Unmuted {victim.LabelShort}: Psylink granted.");
-                value = true;
             }
-            doOnComplete(value);
+            doOnComplete(true);
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

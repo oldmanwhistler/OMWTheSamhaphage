@@ -100,7 +100,7 @@ namespace OMW_Samhaphage
                     OMWGenes.Refresh(victim);
                 }
 
-                doOnComplete(activated);
+                doOnComplete(true);
             }));
         }
 

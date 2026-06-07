@@ -46,7 +46,7 @@ namespace OMW_Samhaphage
         }
 
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Excise");
-
+        public override bool IsLethal => true;
         public bool ApplyExcise(Pawn victim, Pawn caster, SelectionExcise selector, List<TraitPlus> selectedList)
         {
             bool activated = false;
@@ -84,14 +84,12 @@ namespace OMW_Samhaphage
 
             Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selector, (selectedList) =>
             {
-                bool activated = false;
                 if (ApplyExcise(victim, caster, selector, selectedList))
                 {
                     OMWGenes.ApplyDissonance(victim, caster);
                     OMWGenes.Refresh(victim);
-                    activated = true;
                 }
-                doOnComplete(activated);                
+                doOnComplete(true);                
             }));
         }
 

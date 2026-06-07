@@ -65,13 +65,15 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.attenuate;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
 
+        // FIXME only Lethal is this is a corpse
+        public override bool IsLethal => true;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {
             return $"Attenuate {victim.LabelShort} of their genes.\nConverts victim's genes and traits to resonance.";
         }
         
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Attenuate");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Attenuate");    
 
         private bool ApplyAttenuate(Pawn victim, Pawn caster)
         {

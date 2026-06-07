@@ -113,9 +113,9 @@ namespace OMW_Samhaphage
                     OMWGenes.Refresh(victim);
                     OMWGenes.Refresh(caster);
                 }
-                doOnComplete(activated);
+                Log.Debug($"DONE::Harrow::OpenHarrowWindow({victim.LabelShort}, {caster.LabelShort})");
+                doOnComplete(true);
             }));
-            Log.Debug($"DONE::Harrow::OpenHarrowWindow({victim.LabelShort}, {caster.LabelShort})");
         }
 
         public override void ApplyCorpse(Corpse corpse, Pawn caster)

@@ -11,6 +11,8 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.render;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
 
+        public override bool IsLethal => true;
+
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {
             return $"Render {victim.LabelShort}'s body into raw biomass, ready for consumption.";
