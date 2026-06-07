@@ -228,17 +228,17 @@ namespace OMW_Samhaphage
                     // all genes that can be blacklisted
                     BlacklistedGenes.Add(bl);
 
-                    if (!bl.BlacklistGeneType.Overlaps(blCanCopy))
+                    if (!bl.BlacklistGeneType.IsSubsetOf(blCanCopy))
                     {
                         BlacklistedGenesDontCopy.Add(bl.geneDef);
                     }
 
-                    if (!bl.BlacklistGeneType.Overlaps(blCanMutate))
+                    if (!bl.BlacklistGeneType.IsSubsetOf(blCanMutate))
                     {
                         BlacklistedGenesDontMutate.Add(bl.geneDef);
                     }
 
-                    if (!bl.BlacklistGeneType.Overlaps(blCanGenerate))
+                    if (!bl.BlacklistGeneType.IsSubsetOf(blCanGenerate))
                     {
                         BlacklistedGenesDontGenerate.Add(bl.geneDef);
                     }

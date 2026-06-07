@@ -107,12 +107,12 @@ namespace OMW_Samhaphage
                         bl.SetReason();
                         BlacklistedTraits.Add(bl);
 
-                        if (!bl.BlacklistTraitType.Overlaps(blCanCopy))
+                        if (!bl.BlacklistTraitType.IsSubsetOf(blCanCopy))
                         {
                             BlacklistedTraitsDontCopy.Add(bl.traitDef);
                         }
 
-                        if (!bl.BlacklistTraitType.Overlaps(blCanRemove))
+                        if (!bl.BlacklistTraitType.IsSubsetOf(blCanRemove))
                         {
                             BlacklistedTraitsDontRemove.Add(bl.traitDef);
                         }
