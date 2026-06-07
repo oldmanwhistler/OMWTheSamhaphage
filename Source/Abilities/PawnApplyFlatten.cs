@@ -119,6 +119,12 @@ namespace OMW_Samhaphage
                 reason = $"{victim.LabelShort} is not humanlike.";
                 return false;
             }
+            
+            if (victim.WorkTagIsDisabled(WorkTags.Violent))
+            {
+                reason = $"{victim.LabelShort} is incapable of violence.";
+                return false;
+            }
 
             return true; 
         }
