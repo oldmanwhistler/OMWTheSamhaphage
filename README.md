@@ -156,7 +156,7 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 
 ## AI Notice
 
-  This project was to learn how to mod RimWorld and to gain experience using different gen AI tools I don't use at work.
+This project was to learn how to mod RimWorld and to gain experience using different gen AI tools I don't use at work.
   
 1. Gen AI was used for brainstorming nomenclature and descriptions.
 2. Coded using VS Code with Intellisense and AI suggestions/review.
@@ -164,9 +164,9 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 3. Gen AI used for icon assets and for parts or entirety of workshop screenshots.
    * This mod has no graphical assets other than gene icons and ability icons.
 
-Before you comment on AI usage, witch hunts against people who disclose AI usage is kind of nuts.
+Before you comment something anti-AI, witch hunts against people who **actually** disclose AI usage is a bad look. Pick your lane.
 
-You can look at the github history or my dev diary to get an idea of how long I spent this.
+You can look at the [github history](https://github.com/oldmanwhistler/OMWTheSamhaphage/commits/main/) or my [dev diary](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DevDiary/DEV_DIARY.md) to get an idea of how long I spent this. AI is just a tool.
 
 Here's my advice on how to avoid [slop mods](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/RIMWORLD_SLOP.md).
 
