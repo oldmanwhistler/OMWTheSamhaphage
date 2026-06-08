@@ -19,13 +19,7 @@ namespace OMW_Samhaphage
     {
         public override bool OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            List<MenuItemBase> items = new List<MenuItemBase>();
-
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
-            NullThrumAbilityBase ability;
-
-            // Add the gene state as a non-interactive header
-
             if ((xeno != OMW_XenotypeDefOf.omw_fluxspawn_hiveling) && (xeno != OMW_XenotypeDefOf.omw_fluxspawn_brute) &&
                 (xeno != OMW_XenotypeDefOf.omw_fluxspawn_flicker))
             {
@@ -34,6 +28,8 @@ namespace OMW_Samhaphage
                 return false;
             }
 
+            List<MenuItemBase> items = new List<MenuItemBase>();
+            NullThrumAbilityBase ability;
             ability = new ThingApplyScrub();
             items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
 

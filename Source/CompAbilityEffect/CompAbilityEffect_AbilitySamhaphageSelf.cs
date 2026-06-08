@@ -19,10 +19,7 @@ namespace OMW_Samhaphage
     {
         public override bool OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            List<MenuItemBase> items = new List<MenuItemBase>();
-
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
-            NullThrumAbilityBase ability;
 
             if (xeno == OMW_XenotypeDefOf.omw_sovereign_stillness)
             {
@@ -38,23 +35,23 @@ namespace OMW_Samhaphage
                     MessageTypeDefOf.NegativeEvent);
                 return false;
             }
-            else
-            {
-                ability = new ThingApplyScrub();
-                items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
 
-                ability = new PawnApplyRetune();
-                items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
+            List<MenuItemBase> items = new List<MenuItemBase>();
+            NullThrumAbilityBase ability;
+            ability = new ThingApplyScrub();
+            items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
 
-                ability = new ThingApplyNullify();
-                items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
+            ability = new PawnApplyRetune();
+            items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
 
-                ability = new ThingApplyExcise();
-                items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
+            ability = new ThingApplyNullify();
+            items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
 
-                ability = new PawnApplyUnmute();
-                items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
-            }
+            ability = new ThingApplyExcise();
+            items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
+
+            ability = new PawnApplyUnmute();
+            items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
 
             if (xeno == OMW_XenotypeDefOf.omw_samhaphage)
             {

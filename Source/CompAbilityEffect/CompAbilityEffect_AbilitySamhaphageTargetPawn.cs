@@ -19,10 +19,7 @@ namespace OMW_Samhaphage
     {
         public override bool OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            List<MenuItemBase> items = new List<MenuItemBase>();
-
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
-            NullThrumAbilityBase ability;
 
             if (xeno == OMW_XenotypeDefOf.omw_sovereign_stillness)
             {
@@ -37,7 +34,11 @@ namespace OMW_Samhaphage
                 Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Samhaphage abilities.", MessageTypeDefOf.NegativeEvent);
                 return false;
             }
-            else if (target.Thing is Pawn otherPawn)
+
+            List<MenuItemBase> items = new List<MenuItemBase>();
+            NullThrumAbilityBase ability;
+
+            if (target.Thing is Pawn otherPawn)
             {
                 ability = new PawnApplyFlatten();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));

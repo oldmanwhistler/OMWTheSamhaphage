@@ -19,18 +19,18 @@ namespace OMW_Samhaphage
     {
         public override bool OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            List<MenuItemBase> items = new List<MenuItemBase>();
-
-            NullThrumAbilityBase ability;
             XenotypeDef xeno = parent.pawn.genes.Xenotype;            
-
             if ((xeno != OMW_XenotypeDefOf.omw_fluxspawn_hiveling) && (xeno != OMW_XenotypeDefOf.omw_fluxspawn_brute) && (xeno != OMW_XenotypeDefOf.omw_fluxspawn_flicker))
             {
                 // hybrids lose the ability
                 Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Fluxspawn abilities.", MessageTypeDefOf.NegativeEvent);
+                return false;                
             }
-            else if (target.Thing is Corpse corpse)
-            {
+
+            List<MenuItemBase> items = new List<MenuItemBase>();
+            NullThrumAbilityBase ability;
+            if (target.Thing is Corpse corpse)
+            {                
                 ability = new ThingApplyAttenuate();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
