@@ -25,6 +25,7 @@
       <li MayRequire="redmattis.bigsmall.core">BS_Skin_Marble_White</li>
       <li MayRequire="redmattis.bigsmall.core">BS_PilotRequired</li>            
       <li MayRequire="redmattis.bettergeneinheritance">BGI_RecessiveGenes</li>
+      <li MayRequire="resplice.xotr.charmweavers">RS_MultiPregnancy</li>
       <li MayRequire="sarg.alphagenes">AG_Teratophilia</li>
       <li MayRequire="sarg.alphagenes">AG_VolatileMood</li>
       <li MayRequire="sarg.alphagenes">AG_DangerousRaidPresence</li>

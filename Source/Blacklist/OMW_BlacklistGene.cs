@@ -83,6 +83,8 @@ namespace OMW_Samhaphage
             BlacklistedGenesDontCopy.Clear();
             BlacklistedGenesDontMutate.Clear();
             BlacklistedGenesDontGenerate.Clear();
+            BlacklistedGenesDontRemove.Clear();
+            PreggoGenes.Clear();
            
             if (OMW_Mod.settings == null || OMW_Mod.settings.disableGeneBlacklist)
             {
@@ -143,7 +145,9 @@ namespace OMW_Samhaphage
             myBlacklistStrings.Add("AG_ParasiticStingerEndogenes");
             // Gene for Traits. I need to test if this still breaks things.
             myBlacklistStrings.Add("Gene_Trait_");
-            
+
+            List<string> myPreggoStrings = new List<string>();
+            myPreggoStrings.Add("RS_MultiPregnancy");
 
             foreach (GeneDef geneDef in DefDatabase<GeneDef>.AllDefs)
             {
@@ -160,6 +164,10 @@ namespace OMW_Samhaphage
                 {
                     bl.Add(BlacklistGeneType.BlStringMatch);
                 }
+                if (myPreggoStrings.Any(s => geneDef.defName.Contains(s)))
+                {
+                    bl.Add(BlacklistGeneType.BlReproduction);
+                }                
                 if (geneDef.prerequisite != null)
                 {
                     bl.Add(BlacklistGeneType.BlPrereq);
