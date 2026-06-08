@@ -36,7 +36,9 @@ namespace OMW_Samhaphage
 
     public class ThingApplyExcise : NullThrumAbilityPawnCorpse
     {
-        PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        private PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        private SelectionExcise selectorExcise;
+
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.excise;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
 
@@ -73,23 +75,16 @@ namespace OMW_Samhaphage
             if (!OMWGenes.HasScouredMind(victim))
             {
                 Flatten.ApplyPawn(victim, caster);
-            }
+            }            
 
-            SelectionExcise selector = new SelectionExcise(caster, victim, caster);
-            if (selector.traits.Count == 0)
+            Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selectorExcise, onCompleteAction(), (selectedList) =>
             {
-                Messages.Message($"{victim.LabelShort} has no traits that can be excised.", MessageTypeDefOf.RejectInput);
-                return;
-            }
-
-            Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selector, (selectedList) =>
-            {
-                if (ApplyExcise(victim, caster, selector, selectedList))
+                if (ApplyExcise(victim, caster, selectorExcise, selectedList))
                 {
                     OMWGenes.ApplyDissonance(victim, caster);
                     OMWGenes.Refresh(victim);
                 }
-                doOnComplete(true);                
+                doOnComplete();                
             }));
         }
 
@@ -108,16 +103,15 @@ namespace OMW_Samhaphage
             string msg = $"{victim.LabelShort}'s corpse was destroyed after being excised for their traits and and attenuated for their genes.";
             System.Action sacrificeAction = () =>
             {
-                Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selector, (selectedList) =>
+                Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selector, onCompleteAction(), (selectedList) =>
                 {
                     if (ApplyExcise(victim, caster, selector, selectedList))
                     {
                         KillUtility.ApplyRenderOrAttenuate(victim, caster);
                         KillUtility.CorpseDestroy(corpse);
                         Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                    }
-                    // Needs to be false so doesn't get stuck on a loop
-                    doOnComplete(false);                    
+                    }        
+                    // don't go back to OpenWindow cuz it's a sacrifice
                 }));
             };
 
@@ -126,24 +120,44 @@ namespace OMW_Samhaphage
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
         {
-            if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason)) return false;
+            reason = "unknown";
+            if (!victim.Dead)
+            {
+                if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason)) return false;
+            }
+
             if (!ResonanceUtility.HasGene(caster))
             {
                 reason = $"{caster.LabelShort} does not have a supply of resonance.";
                 return false;
             }
+
+            selectorExcise = new SelectionExcise(caster, victim, caster);
+            if (selectorExcise.traits.Count == 0)
+            {
+                reason = $"{victim.LabelShort} has no traits that can be excised.";
+                return false;
+            }
+
             return true;
         }
 
         public override bool CanApplyOnCorpse(Corpse corpse, Pawn caster, out string reason)
         {
             reason = "unknown";
-            if (!ResonanceUtility.HasGene(caster))
+            if (corpse == null)
             {
-                reason = $"{caster.LabelShort} does not have a supply of resonance.";
+                reason = "Target is null.";
                 return false;
             }
-            return true;
+
+            if (!corpse.InnerPawn.RaceProps.Humanlike)
+            {
+                reason = $"{corpse.InnerPawn.LabelShort} is not humanlike.";
+                return false;
+            }
+
+            return CanApplyOnPawn(corpse.InnerPawn, caster, out reason);
         }
     }
 }

@@ -14,14 +14,17 @@ namespace OMW_Samhaphage
         private WindowState windowState;
         private HashSet<TraitPlus> selectedTraits = new HashSet<TraitPlus>();
         private System.Action<List<TraitPlus>> onConfirm; // Callback for successful confirmation
+        private System.Action onDismiss;
+        private bool onDismissClicked;
         private Vector2 scrollPosition;
         private float selectionMaxCost;
         public override Vector2 InitialSize => new Vector2(450f, 700f);
 
-        public WindowSelectTraitsForNullThrumAbility(NullThrumSelectionTrait selector, System.Action<List<TraitPlus>> callback)
+        public WindowSelectTraitsForNullThrumAbility(NullThrumSelectionTrait selector, System.Action onDismiss, System.Action<List<TraitPlus>> onConfirm)
         {
             this.selector = selector;
-            this.onConfirm = callback;
+            this.onConfirm = onConfirm;
+            this.onDismiss = onDismiss;
 
             this.forcePause = true;
             this.doCloseX = true;
@@ -191,8 +194,11 @@ namespace OMW_Samhaphage
                 SoundDefOf.Tick_Low.PlayOneShotOnCamera();
             }
 
+
+            onDismissClicked = true;
+            
             Rect cancelRect = new Rect(otherWidth + spacing, footerY, otherWidth, 35f);
-            if (Widgets.ButtonText(cancelRect, "Cancel"))
+            if (Widgets.ButtonText(cancelRect, onDismiss != null ? "Skip" : "Cancel"))
             {
                 Close();
             }
@@ -204,7 +210,8 @@ namespace OMW_Samhaphage
             if (Widgets.ButtonText(confirmRect, $"Confirm Selection for {this.SelectionCurCost():F1}"))
             {
                 if (canConfirm)
-                {
+                {                 
+                    onDismissClicked = false;
                     onConfirm?.Invoke(selectedTraits.ToList());
                     Close();
                 }
@@ -217,6 +224,15 @@ namespace OMW_Samhaphage
             }
             GUI.color = Color.white;
             this.windowState.Restore();
+        }
+
+        public override void PostClose()
+        {
+            base.PostClose();
+            if (onDismissClicked)
+            {
+                onDismiss?.Invoke();
+            }
         }
 
         private void DrawCategoryHeader(ref float curY, float width, string label)

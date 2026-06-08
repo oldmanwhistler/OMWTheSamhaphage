@@ -22,7 +22,7 @@ namespace OMW_Samhaphage
                 Messages.Message($"Not enough Resonance to transpose into {TargetXenotype()}.", MessageTypeDefOf.RejectInput);
             }
 
-            doOnComplete(true);
+            doOnComplete();
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

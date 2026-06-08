@@ -191,23 +191,45 @@ namespace OMW_Samhaphage
         }
 
 
-        public static bool CanChangeXenotype(Pawn pawn, XenotypeDef targetXenotype)
+        public static bool CanChangeXenotype(Pawn pawn, XenotypeDef targetXenotype, out string reason)
         {
+            reason = "unknown reason";
+            
             if (pawn == null) return false;
-            if (targetXenotype == null) return false;
-            if (pawn.genes == null) return false;
+            if (targetXenotype == null)
+            {
+                reason = "targetXenotype is null";
+                return false;
+            }
+
+            if (pawn.genes == null)
+            {
+                reason = $"{pawn.LabelShort} has pawn.genes == null";
+                return false;
+            }
 
             if (pawn.genes?.Xenotype == targetXenotype)
             {
-                Log.Debug($"{pawn.LabelShort} is already targetXenotype");
+                reason = $"{pawn.LabelShort} is already {targetXenotype}";
                 return false;
+            }
+
+            if (targetXenotype == OMW_XenotypeDefOf.omw_sovereign_stillness)
+            {
+                reason = $"There already is a Sovereign Stillness and there can only be one.";
+                return !OMWXenotypes.IsSovereignStillnessInPlayerFaction();
             }
             return true;
         }
         
         public static bool ChangeXenotype(Pawn pawn, XenotypeDef targetXenotype, bool removeSourceXenotype = true)
         {
-            if (!CanChangeXenotype(pawn, targetXenotype)) return false;
+            string reason;
+            if (!CanChangeXenotype(pawn, targetXenotype, out reason))
+            {
+                Log.Error($"{pawn.LabelShort}.ChangeXenotype not possible: {reason}");
+                return false;
+            }
 
             XenotypeDef sourceXenotype = pawn.genes?.Xenotype;
 
@@ -224,7 +246,13 @@ namespace OMW_Samhaphage
 
         public static bool ChangeEndotype(Pawn pawn, XenotypeDef targetXenotype)
         {
-            if (!CanChangeXenotype(pawn, targetXenotype)) return false;
+            string reason;
+            if (!CanChangeXenotype(pawn, targetXenotype, out reason))
+            {
+                Log.Error($"{pawn.LabelShort}.ChangeXenotype not possible: {reason}");
+                return false;
+            }
+
 
             XenotypeDef sourceXenotype = pawn.genes?.Xenotype;
 

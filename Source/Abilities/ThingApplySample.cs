@@ -60,7 +60,7 @@ namespace OMW_Samhaphage
                 return;
             }
 
-            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
+            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, onCompleteAction(), (selectedList) =>
             {
                 bool activated = false;
                 foreach (GenePlus plus in selectedList)
@@ -81,7 +81,7 @@ namespace OMW_Samhaphage
                     OMWGenes.Refresh(victim);
                     OMWGenes.Refresh(caster);
                 }
-                doOnComplete(true);
+                doOnComplete();
             }));
         }
 

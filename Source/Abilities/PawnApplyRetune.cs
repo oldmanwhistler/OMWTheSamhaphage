@@ -36,7 +36,8 @@ namespace OMW_Samhaphage
 
     public class PawnApplyRetune : NullThrumAbilityPawnOnly
     {
-        PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        private PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        private SelectionRetune selectorRetune;
 
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.retune;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
@@ -71,20 +72,21 @@ namespace OMW_Samhaphage
 
         private void OpenRetuneWindow(Pawn victim, Pawn caster)
         {
-            SelectionRetune selector = new SelectionRetune(caster, victim, victim);
-
-            if (selector.genes.Count == 0)
+            // scrub could have changed the genes so make sure things still apply
+            string reason;
+            if (!CanApplyOnPawn(victim, caster, out reason))
             {
-                Messages.Message($"{victim.LabelShort} has no genes that can be retuned.", MessageTypeDefOf.RejectInput);
+                Messages.Message(reason, MessageTypeDefOf.RejectInput);
+                doOnComplete();
                 return;
             }
 
-            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
+            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selectorRetune, onCompleteAction(), (selectedList) =>
             {
                 bool activated = false;
                 foreach (GenePlus plus in selectedList)
                 {
-                    if (plus.gene != null && victim.genes.GenesListForReading.Contains(plus.gene) && selector.ResonanceDebit(plus))
+                    if (plus.gene != null && victim.genes.GenesListForReading.Contains(plus.gene) && selectorRetune.ResonanceDebit(plus))
                     {
                         // Atomic Move: Manual list manipulation avoids the Remove/Add Harmony cascade spam
                         victim.genes.Xenogenes.Remove(plus.gene);
@@ -100,7 +102,7 @@ namespace OMW_Samhaphage
                     OMWGenes.Refresh(victim);
                 }
 
-                doOnComplete(true);
+                doOnComplete();
             }));
         }
 
@@ -108,9 +110,12 @@ namespace OMW_Samhaphage
         {
             reason = "unknown reason";
 
-            if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason))
+            if (!victim.Dead)
             {
-                return false;
+                if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason))
+                {
+                    return false;
+                }
             }
 
             if (!ResonanceUtility.HasAvailable(caster))
@@ -123,6 +128,16 @@ namespace OMW_Samhaphage
             {            
                 reason = $"{victim.LabelShort} is not part of the harmony of the Null-Thrum.";
                 return false;
+            }
+
+            if (selectorRetune == null)
+            {
+                selectorRetune = new SelectionRetune(caster, victim, victim);
+                if (selectorRetune.genes.Count == 0)
+                {
+                    reason = $"{victim.LabelShort} has no genes that can be retuned.";
+                    return false;
+                }
             }
 
             return true;

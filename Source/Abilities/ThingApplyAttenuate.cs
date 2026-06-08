@@ -103,7 +103,7 @@ namespace OMW_Samhaphage
             if (!CanApplyAttenuate(victim, caster, out reason)) return;            
             
             ApplyAttenuate(victim, caster);
-            doOnComplete(true);
+            doOnComplete();
         }
 
         public override void ApplyCorpse(Corpse corpse, Pawn caster)
@@ -123,10 +123,7 @@ namespace OMW_Samhaphage
             {
                 ApplyAttenuate(victim, caster);
                 KillUtility.CorpseDestroy(corpse);
-                Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                Log.Debug("Done Render, now calling doOnComplete(false)");
-                // Needs to be false so doesn't get stuck on a loop
-                doOnComplete(false);
+                Messages.Message(msg, MessageTypeDefOf.NegativeEvent);               
             };
 
             ShowCorpseConfirmation(victim, sacrificeAction);

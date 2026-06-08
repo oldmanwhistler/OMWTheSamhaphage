@@ -48,7 +48,9 @@ namespace OMW_Samhaphage
 
     public class ThingApplyHarrow : NullThrumAbilityPawnCorpse
     {
-        PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        private PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        private SelectionHarrow selectorHarrow;
+
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.harrow;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
 
@@ -77,19 +79,20 @@ namespace OMW_Samhaphage
         private void OpenHarrowWindow(Pawn victim, Pawn caster)
         {
             Log.Debug($"START:Harrow::OpenHarrowWindow({victim.LabelShort}, {caster.LabelShort})");
-            SelectionHarrow selector = new SelectionHarrow(caster, victim, caster);
-            if (selector.genes.Count == 0)
+            // previous abilities could have changed the genes so make sure things still apply
+            string reason;
+            if (!CanApplyOnPawn(victim, caster, out reason))
             {
-                Messages.Message($"{victim.LabelShort} has no genes that can be harrowed.", MessageTypeDefOf.RejectInput);
+                Messages.Message(reason, MessageTypeDefOf.RejectInput);
+                doOnComplete();
                 return;
             }
-
-            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
+            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selectorHarrow, onCompleteAction(),(selectedList) =>
             {
                 bool activated = false;
                 foreach (GenePlus plus in selectedList)
                 {
-                    if (plus.gene != null && victim.genes.GenesListForReading.Contains(plus.gene) && selector.ResonanceDebit(plus))
+                    if (plus.gene != null && victim.genes.GenesListForReading.Contains(plus.gene) && selectorHarrow.ResonanceDebit(plus))
                     {
                         Log.Debug($"START: Harrowing by removing {plus.gene.LabelCap} from {victim.LabelShort}");
                         victim.genes.RemoveGene(plus.gene);
@@ -114,7 +117,7 @@ namespace OMW_Samhaphage
                     OMWGenes.Refresh(caster);
                 }
                 Log.Debug($"DONE::Harrow::OpenHarrowWindow({victim.LabelShort}, {caster.LabelShort})");
-                doOnComplete(true);
+                doOnComplete();
             }));
         }
 
@@ -130,9 +133,12 @@ namespace OMW_Samhaphage
         {
             reason = "unknown reason";
 
-            if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason))
+            if (!victim.Dead)
             {
-                return false;
+                if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason))
+                {
+                    return false;
+                }
             }
 
             if (!ResonanceUtility.HasGene(caster))
@@ -146,6 +152,13 @@ namespace OMW_Samhaphage
                 reason = $"{caster.LabelShort} does not have enough resonance to {this.AbilityName}.";
                 return false;
             }
+
+            selectorHarrow = new SelectionHarrow(caster, victim, caster);
+            if (selectorHarrow.genes.Count == 0)
+            {
+                reason = $"{victim.LabelShort} has no genes that can be harrowed.";
+                return false;   
+            }            
 
             return true;
         }
@@ -166,13 +179,7 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            if (!ResonanceUtility.HasGene(caster))
-            {
-                reason = $"{caster.LabelShort} does not have a supply of resonance.";
-                return false;
-            }
-
-            return true;
+            return CanApplyOnPawn(corpse.InnerPawn, caster, out reason);
         }
     }
 }

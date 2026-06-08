@@ -18,7 +18,8 @@ namespace OMW_Samhaphage
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
             return source.genes.GenesListForReading
-                .Where(g => g.Overridden) // must be overridden to be scrubbed
+                .Where(g => !OMW_BlacklistGenes.BlacklistedGenesDontRemove.Contains(g.def) &&
+                        g.Overridden) // must be overridden to be scrubbed
                 .ToList();            
         }
     
@@ -39,7 +40,9 @@ namespace OMW_Samhaphage
 
     public class ThingApplyScrub : NullThrumAbilityPawnCorpse
     {
-        PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        private PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        private SelectionScrub selectorScrub;
+
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.scrub;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
 
@@ -94,42 +97,38 @@ namespace OMW_Samhaphage
             Log.Debug($"START::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
             if (victim == null || caster == null) return;
 
-            OMWGenes.Refresh(victim);
+            if (onAbilityComplete == null)
+            {
+                onAbilityComplete = onCompleteAction();
+            }
 
-            SelectionScrub selector = new SelectionScrub(caster, victim, victim);
+            Log.Debug($"START::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
+
+            OMWGenes.Refresh(victim);
 
             RemoveCarcinomas(victim, caster);
 
             if (!OMWGenes.HasScouredMind(victim))
             {
                 Flatten.ApplyPawn(victim, caster);
-            } 
+            }
 
-            if (selector.genes.Count == 0)
+            // it this happens it means "can apply on" was skipped
+            if (selectorScrub == null)
             {
-                Log.Debug($"DONE1::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
-                // If no genes to scrub, just gain the carcinoma resonance and finish.
-                if (onAbilityComplete != null)
-                {
-                    onAbilityComplete?.Invoke();
-                }
-                else
-                {
-                    doOnComplete(true);
-                }
-                return;
+                selectorScrub = new SelectionScrub(caster, victim, victim);
             }
 
             Log.Debug($"Scrub::Going to open scrub for {victim.LabelShort}");
 
-            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, selectedList =>
+            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selectorScrub, onAbilityComplete,selectedList =>
             {
                 bool activated = false;
                 foreach (GenePlus plus in selectedList)
                 {
                     if (plus.gene != null && victim.genes.GenesListForReading.Contains(plus.gene))
                     {
-                        selector.ResonanceCredit(plus);
+                        selectorScrub.ResonanceCredit(plus);
                         victim.genes.RemoveGene(plus.gene);
                         Log.Debug($"Destroyed {plus.gene.LabelCap} from {victim.LabelShort}");
                         activated = true;
@@ -141,8 +140,8 @@ namespace OMW_Samhaphage
                 }
 
                 Log.Debug($"DONE2::Scrub::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
-                if (onAbilityComplete == null) doOnComplete(true);
-            }, onAbilityComplete));
+                onAbilityComplete?.Invoke();
+            }));
         }
 
         public override void ApplyCorpse(Corpse corpse, Pawn caster)
@@ -158,10 +157,24 @@ namespace OMW_Samhaphage
         {
             reason = "unknown reason";
 
-            if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason))
+            if (!victim.Dead)
             {
-                return false;
+                if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason))
+                {
+                    return false;
+                }
             }
+
+            if (selectorScrub == null)
+            {
+                selectorScrub = new SelectionScrub(caster, victim, victim);
+                if (selectorScrub.genes.Count == 0)
+                {
+                    reason = $"{victim.LabelShort} has no genes that can be scrubbed.";
+                    return false;
+                }
+            }
+
 
             return true;
         }
@@ -182,7 +195,7 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            return true;
+            return CanApplyOnPawn(corpse.InnerPawn, caster, out reason);
         }
     }
 }

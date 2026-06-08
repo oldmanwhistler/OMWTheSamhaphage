@@ -8,6 +8,8 @@ namespace OMW_Samhaphage
     {
         protected static Logger Log = new Logger("CompAbilityEffect");
 
+        private bool canApplyAgain = false;
+
         public override bool GizmoDisabled(out string reason)
         {
             if (parent.pawn.Drafted)
@@ -69,26 +71,39 @@ namespace OMW_Samhaphage
         }        
         public abstract bool OpenMenu(LocalTargetInfo target, LocalTargetInfo dest);
 
-        public void OpenMenuAgain(LocalTargetInfo target, LocalTargetInfo dest, bool openAgain)
+        public void ApplyAgain(LocalTargetInfo target, LocalTargetInfo dest)
         {
-            if (!openAgain)
+            if (!canApplyAgain)
             {
-                Log.Debug($"OpenMenuAgain is aborting because openAgain={openAgain}");
+                Log.Debug("ApplyAgain can't do anything because canApplyAgain is false.");
                 return;
             }
-            if (target == null)
+            canApplyAgain = false;
+
+            // LocalTargetInfo is a struct; check IsValid instead of null.
+            if (!target.IsValid)
             {
-                Log.Error($"OpenMenuAgain has target=null and openAgain={openAgain}");
+                Log.Debug($"ApplyAgain: Target is invalid, not re-opening.");
                 return;
             }
-            if (dest == null)
+            // Ensure the target still exists before re-opening (e.g., corpse wasn't consumed/destroyed)
+            if (target.HasThing && (target.Thing == null || target.Thing.Destroyed))
             {
-                Log.Error($"OpenMenuAgain has dest=null and openAgain={openAgain}");
+                Log.Debug("ApplyAgain: Target was destroyed, not re-opening menu.");
                 return;
             }
-            Log.Debug("OpenMenuAgain is running OpenMenu");
-            OpenMenu(target, dest);
+
+            // Dest is optional. Only block the re-open if dest WAS valid but the thing it pointed to 
+            // is now gone (e.g. the secondary target was consumed/destroyed).
+            if (dest.IsValid && dest.HasThing && (dest.Thing == null || dest.Thing.Destroyed))
+            {
+                Log.Debug("ApplyAgain: Dest was destroyed, not re-opening menu.");
+                return;
+            }
+            Log.Debug("ApplyAgain is running Apply again after the window closed.");
+            Apply(target, dest);
         }
+
         protected bool DoOpenMenu(LocalTargetInfo target, LocalTargetInfo dest, List<MenuItemBase> items)
         {
             BetterFloatMenu.Open(items, parent.pawn, (item) => 
@@ -96,7 +111,8 @@ namespace OMW_Samhaphage
                 if ((item is MenuItemIcon menuItem) && (item.Payload is System.Action action))
                 {
                     Log.Debug($"DoOpenMenu is invoking {item.Payload?.ToString() ?? "null"}");
-                    menuItem.Ability.SetOnComplete((openAgain) => OpenMenuAgain(target, dest, openAgain));
+                    this.canApplyAgain = true;
+                    menuItem.Ability.SetOnComplete(() => ApplyAgain(target, dest));
                     action.Invoke();
                 }
                 else

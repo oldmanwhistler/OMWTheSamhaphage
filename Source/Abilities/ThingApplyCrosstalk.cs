@@ -125,7 +125,7 @@ namespace OMW_Samhaphage
             }
             else
             {
-                doOnComplete(true);
+                doOnComplete();
             }
         }
 

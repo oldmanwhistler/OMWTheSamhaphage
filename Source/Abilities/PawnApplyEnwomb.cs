@@ -45,7 +45,7 @@ namespace OMW_Samhaphage
             if (!SacrificeCaster)
             {
                 ApplyPregnancy(mother, father);
-                doOnComplete(true);
+                doOnComplete();
                 return;
             }
 
@@ -59,7 +59,7 @@ namespace OMW_Samhaphage
                 }
 
                 // Needs to be false so doesn't get stuck on a loop
-                doOnComplete(false);                
+                                
             };
 
             ShowLethalConfirmation(father, sacrificeAction);

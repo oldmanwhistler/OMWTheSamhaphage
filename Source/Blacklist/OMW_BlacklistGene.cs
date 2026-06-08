@@ -68,6 +68,8 @@ namespace OMW_Samhaphage
 
         public static readonly HashSet<GeneDef> BlacklistedGenesDontMutate = new HashSet<GeneDef>();
 
+        public static readonly HashSet<GeneDef> BlacklistedGenesDontRemove = new HashSet<GeneDef>();
+
         public static readonly HashSet<GeneDef> PreggoGenes = new HashSet<GeneDef>();
 
         static OMW_BlacklistGenes()
@@ -232,22 +234,27 @@ namespace OMW_Samhaphage
 
                     if (bl.BlacklistGeneType.Contains(BlacklistGeneType.BlReproduction))
                     {
-                        PreggoGenes.Add(bl.geneDef);
+                        PreggoGenes.Add(geneDef);
+                    }
+
+                    if (bl.BlacklistGeneType.Contains(BlacklistGeneType.BlSamhaphage))
+                    {
+                        BlacklistedGenesDontRemove.Add(geneDef);
                     }
 
                     if (!bl.BlacklistGeneType.IsSubsetOf(blCanCopy))
                     {
-                        BlacklistedGenesDontCopy.Add(bl.geneDef);
+                        BlacklistedGenesDontCopy.Add(geneDef);
                     }
 
                     if (!bl.BlacklistGeneType.IsSubsetOf(blCanMutate))
                     {
-                        BlacklistedGenesDontMutate.Add(bl.geneDef);
+                        BlacklistedGenesDontMutate.Add(geneDef);
                     }
 
                     if (!bl.BlacklistGeneType.IsSubsetOf(blCanGenerate))
                     {
-                        BlacklistedGenesDontGenerate.Add(bl.geneDef);
+                        BlacklistedGenesDontGenerate.Add(geneDef);
                     }
                 }
             }

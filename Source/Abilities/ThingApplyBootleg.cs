@@ -138,10 +138,10 @@ namespace OMW_Samhaphage
             SelectionBootleg selectorBootleg = CanApplyBootleg(victim, caster);
             if (selectorBootleg == null) return;
 
-            Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selectorBootleg, (selectedList) =>
+            Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selectorBootleg, onCompleteAction(), (selectedList) =>
             {
                 ApplyBootleg(victim, caster, selectorBootleg, selectedList);
-                doOnComplete(true);
+                doOnComplete();
             }));
         }
 
@@ -156,7 +156,7 @@ namespace OMW_Samhaphage
             string msg = $"{victim.LabelShort}'s corpse was destroyed after being bootlegged for their traits and attenuated for their genes.";
             System.Action sacrificeAction = () =>
             {
-                Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selectorBootleg, (selectedList) =>
+                Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selectorBootleg, onCompleteAction(), (selectedList) =>
                 {
                     if (ApplyBootleg(victim, caster, selectorBootleg, selectedList))
                     {
@@ -164,7 +164,7 @@ namespace OMW_Samhaphage
                         KillUtility.ApplyRenderOrAttenuate(victim, caster);
                         KillUtility.CorpseDestroy(corpse);
                         Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                        doOnComplete(false);
+                        
                     }
                 }));
             };

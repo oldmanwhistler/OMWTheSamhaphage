@@ -59,7 +59,7 @@ namespace OMW_Samhaphage
             }
 
             Log.Debug($"DONE::Mute::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
-            doOnComplete(true);
+            doOnComplete();
         }
 
         public override void ApplyCorpse(Corpse corpse, Pawn caster)

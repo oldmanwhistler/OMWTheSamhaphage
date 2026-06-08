@@ -15,17 +15,15 @@ namespace OMW_Samhaphage
         private HashSet<GenePlus> selectedGenes = new HashSet<GenePlus>();
         private System.Action<List<GenePlus>> onConfirm;
         private System.Action onDismiss;
+        private bool onDismissClicked;
         private Vector2 scrollPosition;
         private float selectionMaxCost;
         public override Vector2 InitialSize => new Vector2(450f, 700f);
 
-        public WindowSelectGenesForNullThrumAbility(NullThrumSelectionGene selector,
-            System.Action<List<GenePlus>> onConfirm, System.Action onDismiss = null)
+        public WindowSelectGenesForNullThrumAbility(NullThrumSelectionGene selector, System.Action onDismiss,
+            System.Action<List<GenePlus>> onConfirm)
         {
-            string onConfirmStr = onConfirm == null ? "null" : onConfirm.ToString();
-            string onDismissStr = onDismiss == null ? "null" : onDismiss.ToString();
-
-            Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name}, onConfirm:{onConfirmStr}, onDismiss:{onDismissStr})");            
+            Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name})");            
             this.selector = selector;
             this.onConfirm = onConfirm;
             this.onDismiss = onDismiss;
@@ -56,7 +54,7 @@ namespace OMW_Samhaphage
 
         public override void DoWindowContents(Rect inRect)
         {
-            Log.Debug($"START::WindowSelectGenesForNullThrumAbility({selector.Name})::DoWindowContents()");
+            Log.Debug($"START::{selector.Name}::DoWindowContents()");
             this.windowState = new WindowState();
             // --- Header ---
             Rect headerRect = new Rect(inRect.x, inRect.y, inRect.width, 40f);
@@ -207,17 +205,19 @@ namespace OMW_Samhaphage
             Rect clearRect = new Rect(0f, footerY, otherWidth, 35f);
             if (Widgets.ButtonText(clearRect, "Clear All"))
             {
-                Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name})::DoWindowContents() -> Clear()");
+                Log.Debug($"{selector.Name}::DoWindowContents() -> Clear()");
                 selectedGenes.Clear();
                 SoundDefOf.Tick_Low.PlayOneShotOnCamera();
-            }            
+            }
+
+            onDismissClicked = true;
 
             // Cancel/Skip Button
             Rect cancelRect = new Rect(otherWidth + spacing, footerY, otherWidth, 35f);
-            if (Widgets.ButtonText(cancelRect, onDismiss != null ? "Skip" : "Cancel"))
+            if (Widgets.ButtonText(cancelRect, "Skip"))
             {
-                Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name})::DoWindowContents() -> Cancel/Skip -> Close()");
-                Close();
+                Log.Debug($"{selector.Name}::DoWindowContents() -> Cancel/Skip -> Close()");
+                Close();                
             }           
             
             // Confirm Button
@@ -230,17 +230,19 @@ namespace OMW_Samhaphage
             {
                 if (canConfirm)
                 {
-                    Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name})::DoWindowContents() -> {selectedGenes.Count} genes were selected");
+                    onDismissClicked = false;
+                    Log.Debug($"{selector.Name}::DoWindowContents() -> {selectedGenes.Count} genes were selected");
                     onConfirm?.Invoke(selectedGenes.ToList());
-                    Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name})::DoWindowContents() -> Close()");
+                    Log.Debug($"{selector.Name}::DoWindowContents() -> Close()");
+
                     Close();
                 }
                 else
                 {
-                    Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name})::DoWindowContents() -> genes were NOT selected");
+                    Log.Debug($"{selector.Name}::DoWindowContents() -> genes were NOT selected");
                     // If they confirm with 0, we could treat it as a cancel or just close
                     Messages.Message("No genes selected.", MessageTypeDefOf.RejectInput, false);
-                    Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name})::DoWindowContents() -> Close()");
+                    Log.Debug($"{selector.Name}::DoWindowContents() -> Close()");
                     Close();
                 }
             }
@@ -250,10 +252,12 @@ namespace OMW_Samhaphage
 
         public override void PostClose()
         {
-            Log.Debug($"WindowSelectGenesForNullThrumAbility({selector.Name})::PostClose()");
             base.PostClose();
-            onDismiss?.Invoke();
-        }
+            if (onDismissClicked)
+            {
+                onDismiss?.Invoke();
+            }
+        }        
 
         private void DrawCategoryHeader(ref float curY, float width, string label)
         {

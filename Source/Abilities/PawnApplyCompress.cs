@@ -34,7 +34,8 @@ namespace OMW_Samhaphage
 
     public class PawnApplyCompress : NullThrumAbilityPawnOnly
     {
-        PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        private PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        private SelectionCompress selectorCompress;
 
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.compress;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
@@ -67,17 +68,19 @@ namespace OMW_Samhaphage
 
         private void ExecuteCompress(Pawn victim, Pawn caster)
         {
-            SelectionCompress selector = new SelectionCompress(caster, victim, victim);
-            if (selector.genes.Count == 0)
+            // previous abilities could have changed the genes so make sure things still apply
+            string reason;
+            if (!CanApplyOnPawn(victim, caster, out reason))
             {
-                Messages.Message($"{victim.LabelShort} has no genes that can be Compressed.", MessageTypeDefOf.RejectInput);
+                Messages.Message(reason, MessageTypeDefOf.RejectInput);
+                doOnComplete();
                 return;
             }
 
             bool activated = false;
-            foreach (GenePlus plus in selector.genes)
+            foreach (GenePlus plus in selectorCompress.genes)
             {
-                if (plus.gene != null && victim.genes.GenesListForReading.Contains(plus.gene) && selector.ResonanceDebit(plus))
+                if (plus.gene != null && victim.genes.GenesListForReading.Contains(plus.gene) && selectorCompress.ResonanceDebit(plus))
                 {
                     // Atomic Move: Manipulating lists directly prevents 3rd party mods from reacting to a "removed" gene 
                     // before the "added" gene exists, which was causing the Trait conflict NRE.
@@ -93,7 +96,7 @@ namespace OMW_Samhaphage
                 OMWGenes.ApplyDissonance(victim, caster);
                 OMWGenes.Refresh(victim);
             }
-            doOnComplete(true);
+            doOnComplete();
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
@@ -114,6 +117,13 @@ namespace OMW_Samhaphage
             if (!OMWGenes.HasNullThrum(victim))
             {            
                 reason = $"{victim.LabelShort} is not part of the harmony of the Null-Thrum.";
+                return false;
+            }
+
+            selectorCompress = new SelectionCompress(caster, victim, victim);
+            if (selectorCompress.genes.Count == 0)
+            {
+                reason = $"{victim.LabelShort} has no genes that can be compressed.";
                 return false;
             }
 

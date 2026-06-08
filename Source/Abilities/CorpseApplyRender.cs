@@ -29,21 +29,19 @@ namespace OMW_Samhaphage
             string msg = $"{victim.LabelShort}'s corpse was destroyed after being rendered for their meat and attenuated for their genes.";
             System.Action sacrificeAction = () =>
             {
-                ResonanceUtility.Incr("Render", caster, OMW_Mod.settings.abilityValue.render.value);
                 Log.Debug(
                     $"Pre rendering: marketValue of the corpse {corpse.MarketValue}, victim {victim.LabelShort}");
 
-                // only attenuate corpses
                 ThingApplyAttenuate attenuate = new ThingApplyAttenuate();
                 attenuate.ApplyPawn(victim, caster);
+                ThingApplyMute mute = new ThingApplyMute();
+                mute.ApplyPawn(victim, caster);
                 victim.Strip();
                 KillUtility.PurgeBionics(victim);
                 Log.Debug($"Post rendering: marketValue of the corpse {corpse.MarketValue}, victim {victim.LabelShort}");
+                ResonanceUtility.Incr("Render", caster, OMW_Mod.settings.abilityValue.render.value);                
                 KillUtility.CorpseDestroy(corpse);
                 Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                Log.Debug("Done Render, now calling doOnComplete(false)");
-                // Needs to be false so doesn't get stuck on a loop
-                doOnComplete(false);
             };
 
             ShowCorpseConfirmation(victim, sacrificeAction);

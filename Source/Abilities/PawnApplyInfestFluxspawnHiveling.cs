@@ -63,7 +63,7 @@ namespace OMW_Samhaphage
                 }
                 Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
                 // Needs to be false so doesn't get stuck on a loop
-                doOnComplete(false);
+                
             };
 
             // Open the confirmation dialog

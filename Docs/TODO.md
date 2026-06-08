@@ -4,11 +4,9 @@
 
 * Genetic complexity should be calculated as a percentage * genetic complexity. The percentage could change based on the difficulty presets.
 * render should mute psychic abilities
-* render should extra biotech for resonance
 
 ## MOD SETTINGS
 
-* Disable AI generated art
 * Add several presets for balance: default, story mode, hurt me daddy
 * A mod setting to control the time of silent servitude and dissonance
 
@@ -20,16 +18,21 @@
 * max # of genes, story mode unlimited
 * max # of traits, story mode unlimited
 * Dissonance: level 1: off, level 2: scales to 0 based off of resonance, level3: fixed amount of time
-* Sacrifice: level 1: corpse died, brain destroyed, level 2: percentage shambler, level3: always shambler. Need to destroy the body so further abilities can't be used.
+
 
 ## BUGS
 
+* need a nullify blacklist that blocks blSamhaphage from being nullified
 * flicker stun needs to be a separate ability so it can be used while drafted
+* replace tetragenic abilities with resonance and add them to the blacklist
+* Excise isn't lethal if target is self
+* block samhaphage ampify when there already is a sovereign???
+* Multipregnancy isn't picked up as preggers
 
 ## UI
 
-* loop the menu until they hit cancel or close -- make it an actual cancel button instead of a return value
-* stats panel in menu about the selected pawn's genes, skills, passions, traits
+* loop the menu until they hit cancel or close -- make it an actual cancel button instead of a return value. Frig this is hard to implement properly.
+* stats panel in menu about the selected pawn's genes, traits, hediffs - hediffs would list bionics and psylinks
 
 ## Ideology
 

@@ -76,7 +76,7 @@ namespace OMW_Samhaphage
 
             Log.Debug($"DONE::Flatten::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");
 
-            doOnComplete(true);
+            doOnComplete();
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

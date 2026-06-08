@@ -28,16 +28,15 @@ namespace OMW_Samhaphage
             OMWGenes.ChangeEndotype(victim, TargetXenotype);
             MoteMaker.MakeAttachedOverlay(victim, ThingDefOf.Mote_ResurrectFlash, Vector3.zero);
             Log.Debug($"Amplified {victim.LabelShort}: became {TargetXenotype.label}.");
-            doOnComplete(true);
+            doOnComplete();
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
         {
             reason = "unknown reason";
 
-            if (!OMWGenes.CanChangeXenotype(victim, TargetXenotype))
+            if (!OMWGenes.CanChangeXenotype(victim, TargetXenotype, out reason))
             {
-                reason = $"{victim} can't become {TargetXenotype.label}";
                 return false;
             }
 

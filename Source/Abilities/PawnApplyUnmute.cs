@@ -30,7 +30,7 @@ namespace OMW_Samhaphage
                 MoteMaker.MakeAttachedOverlay(victim, ThingDefOf.Mote_ResurrectFlash, Vector3.zero);
                 Log.Debug($"Unmuted {victim.LabelShort}: Psylink granted.");
             }
-            doOnComplete(true);
+            doOnComplete();
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

@@ -17,8 +17,22 @@ namespace OMW_Samhaphage
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
+            // include metabolism = 0 if it has complexity or archites
+            HashSet<GeneDef> metabolismZero = dest.genes.GenesListForReading
+                .Select(g => g.def)
+                .Where(g => ((g.biostatMet == 0) && (g.biostatCpx <= 0) && (g.biostatArc <= 0)))
+                .ToHashSet();
+            // never include positive metabolisms
+            HashSet<GeneDef> metabolismPositive = dest.genes.GenesListForReading
+                .Select(g => g.def)
+                .Where(g => g.biostatMet > 0)
+                .ToHashSet();
+
             return source.genes.GenesListForReading
-                .Where(g => g.def.biostatMet < 0) // genes have to be "valuable"
+                .Where(g => !OMW_BlacklistGenes.BlacklistedGenesDontRemove.Contains(g.def) &&
+                            !metabolismZero.Contains(g.def) &&
+                            !metabolismPositive.Contains(g.def)
+                )
                 .ToList();
         }
 
@@ -30,7 +44,9 @@ namespace OMW_Samhaphage
 
     public class ThingApplyNullify : NullThrumAbilityPawnCorpse
     {
-        PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        private PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        private SelectionNullify selectorNullify;
+
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.nullify;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
 
@@ -59,22 +75,25 @@ namespace OMW_Samhaphage
         private void OpenNullifyWindow(Pawn victim, Pawn caster)
         {
             Log.Debug($"START:Nullify::OpenNullifyWindow({victim.LabelShort}, {caster.LabelShort})");
-            SelectionNullify selector = new SelectionNullify(caster, victim, caster);
-            if (selector.genes.Count == 0)
+
+            // previous abilities could have changed the genes so make sure things still apply
+            string reason;
+            if (!CanApplyOnPawn(victim, caster, out reason))
             {
-                Messages.Message($"{victim.LabelShort} has no genes that can be Nullifyed.", MessageTypeDefOf.RejectInput);
+                Messages.Message(reason, MessageTypeDefOf.RejectInput);
+                doOnComplete();
                 return;
             }
 
             bool activated = false;
 
-            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selector, (selectedList) =>
+            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selectorNullify, onCompleteAction(), (selectedList) =>
             {
                 foreach (GenePlus plus in selectedList)
                 {
                     if (plus.gene != null && victim.genes.GenesListForReading.Contains(plus.gene))
                     {
-                        selector.ResonanceCredit(plus);
+                        selectorNullify.ResonanceCredit(plus);
                         victim.genes.RemoveGene(plus.gene);
                         Log.Debug($"Nullified {plus.gene.LabelCap} from {victim.LabelShort}");
                         activated = true;
@@ -91,7 +110,7 @@ namespace OMW_Samhaphage
                 }
 
                 Log.Debug($"DONE::Nullify::OpenNullifyWindow({victim.LabelShort}, {caster.LabelShort})");
-                doOnComplete(true);
+                doOnComplete();
             }));
         }
 
@@ -107,15 +126,28 @@ namespace OMW_Samhaphage
         {
             reason = "unknown reason";
 
-            if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason))
+            if (!victim.Dead)
             {
-                return false;
+                if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason))
+                {
+                    return false;
+                }
             }
 
             if (!ResonanceUtility.HasGene(caster))
             {
                 reason = $"{caster.LabelShort} does not have a supply of resonance.";
                 return false;
+            }
+
+            if (selectorNullify == null)
+            {
+                selectorNullify = new SelectionNullify(caster, victim, victim);
+                if (selectorNullify.genes.Count == 0)
+                {
+                    reason = $"{victim.LabelShort} has no genes that can be nullified.";
+                    return false;
+                }
             }
 
             return true;
@@ -137,13 +169,7 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            if (!ResonanceUtility.HasGene(caster))
-            {
-                reason = $"{caster.LabelShort} does not have a supply of resonance.";
-                return false;
-            }
-
-            return true;
+            return CanApplyOnPawn(corpse.InnerPawn, caster, out reason);
         }
     }
 }

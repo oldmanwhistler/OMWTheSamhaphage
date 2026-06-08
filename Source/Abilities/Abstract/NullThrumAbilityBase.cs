@@ -15,7 +15,7 @@ namespace OMW_Samhaphage
         public string AbilityName => NullThrumUtility.ToString(this.AbilityType);
         public abstract string AbilityDescription(Pawn victim, Pawn caster);
 
-        private Action<bool> onComplete;
+        private Action onComplete;
 
         /// <summary>
         /// Indicates if this specific ability is lethal to its target.
@@ -24,23 +24,28 @@ namespace OMW_Samhaphage
 
         protected static Logger Log = new Logger("Abilities");
 
-        protected void doOnComplete(bool value)
+        protected void doOnComplete()
         {
+            if (this.onComplete == null)
+            {
+                Log.Debug(
+                    $"{AbilityName}::doOnComplete(); called when onComplete==null so doing nothing.");
+                return;
+            }
             Log.Debug(
-                $"{AbilityName}::doOnComplete(value={value}); called when onComplete?==null is {onComplete == null}");
-            if (this.onComplete == null) return;
-            this.onComplete?.Invoke(value);
+                $"{AbilityName}::doOnComplete(); called when onComplete!=null so Invoking.");
+            this.onComplete?.Invoke();
             this.onComplete = null;
         }
 
-        public void SetOnComplete(Action<bool> onComplete)
+        public void SetOnComplete(Action onComplete)
         {
             this.onComplete = onComplete;
         }
 
-        protected System.Action onCompleteAction(bool value)
+        protected System.Action onCompleteAction()
         {
-            return () => doOnComplete(value);
+            return () => doOnComplete();
         }
 
         public void ShowLethalConfirmation(Pawn pawn, System.Action sacrificeAction)
@@ -51,7 +56,7 @@ namespace OMW_Samhaphage
                 buttonAText: "Confirm".Translate(),
                 buttonAAction: sacrificeAction,
                 buttonBText: "Cancel".Translate(),
-                buttonBAction: onCompleteAction(true),
+                buttonBAction: onCompleteAction(),
                 buttonADestructive: true,
                 title: "Lethal Ability".Translate()
             );
@@ -67,7 +72,7 @@ namespace OMW_Samhaphage
                 buttonAText: "Confirm".Translate(),
                 buttonAAction: sacrificeAction,
                 buttonBText: "Cancel".Translate(),
-                buttonBAction: onCompleteAction(true),
+                buttonBAction: onCompleteAction(),
                 buttonADestructive: true,
                 title: "Lethal Ability".Translate()
             );
