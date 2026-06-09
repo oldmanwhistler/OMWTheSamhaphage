@@ -60,10 +60,8 @@ namespace OMW_Samhaphage
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogermReplicating);
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogermLossShock);
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogerminationComa);
-
-            ThingApplyScrub scrub = new ThingApplyScrub();
-            // Chain the compression logic to run only after the scrub window is closed
-            scrub.ApplyPawn(victim, caster, () => ExecuteCompress(victim, caster));
+            
+            ThingApplyScrub.DoAbility(victim, caster, () => ExecuteCompress(victim, caster));
         }
 
         private void ExecuteCompress(Pawn victim, Pawn caster)

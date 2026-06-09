@@ -48,6 +48,8 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return;
 
+            if (onAbilityComplete == null) onAbilityComplete = onCompleteAction();
+
             OMWGenes.Refresh(victim);
             OMWGenes.Refresh(caster);
 
@@ -114,18 +116,12 @@ namespace OMW_Samhaphage
                 OMWGenes.PrependXenogenes(victim, genesFromDest);
                 Log.Debug($"Crosstalk exchanged {genesFromSource.Count} xenogenes from {victim.LabelShort} with {genesFromDest.Count} xenogenes from {caster.LabelShort}");
                 OMWGenes.ApplyDissonance(victim, caster);
-                PawnApplyRetune retune = new PawnApplyRetune();
-                retune.ApplyPawn(caster, caster);
-                OMWGenes.Refresh(victim);
-                OMWGenes.Refresh(caster);
-            }
-            if (onAbilityComplete != null)
-            {
-                onAbilityComplete?.Invoke();
+                OMWGenes.Refresh(caster);                
+                PawnApplyRetune.DoAbility(victim, caster, onAbilityComplete);            
             }
             else
             {
-                doOnComplete();
+                onAbilityComplete.Invoke();
             }
         }
 

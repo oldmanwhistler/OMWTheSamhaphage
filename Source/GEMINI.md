@@ -12,7 +12,7 @@
 
 * **Nomenclature:** Always use `OMW_` prefix for `defName` to avoid mod conflicts.
 * **Biostats:** Use `<biostatMet>`, `<biostatCpx>`, and `<biostatArc>`. DO NOT use `<biostats><metabolism>`.
-* **Categories:** Genes should generally belong to `<displayCategory>OMW_PerfectSilence</displayCategory>`.
+* **Categories:** Genes should belong to `<displayCategory>OMW_PerfectSilence</displayCategory>`.
 * **Version Sensitivity:** Ensure tags are compatible with RimWorld 1.6. If a tag is from a DLC, include `MayRequire="Ludeon.RimWorld.Biotech"`.
 * **Validation:** Before providing XML, double-check that every tag exists in the vanilla 1.6 source code.
 
@@ -34,7 +34,7 @@
 ## 4. Lore & Nomenclature Rules
 
 * **The Cycle:** Fluxspawn (Brood) -> Hallowbound (Workers) -> Samhaphage (Elite) -> Sovereign Stillness (Apex).
-* **Resources:** "Resonance" is the primary resource. Carcinomas/Cancers are treated as a biological fuel for evolution.
+* **Resources:** "Resonance" is the primary resource. Carcinomas/Cancers are treated as a biological fuel for resonance.
 * **Terminology:** Use words like "Harrowing," "Stillness," "Echo," "Thrum," and "Frequency." Avoid generic "Zombie" or "Alien" terms.
 
 ## 5. Specific Fixes for AI Hallucinations
@@ -51,11 +51,14 @@
 * `pawn.genes.CheckForOverrides()`: Internal method; not accessible to external assemblies.
 * `pawn.genes.Notify_GenesChanged()`: Hallucinated member; does not exist on `Pawn_GeneTracker`.
 * `pawn.Notify_GenesChanged()`: Flagged as not accessible in the current project context.
+* **Double-Callback Bug:** When opening a window with both a selection lambda and a close action, the `onAbilityComplete` callback can be triggered twice. Always use a `bool selectionMade = false;` flag within the method to ensure the callback only fires once.
+* **Premature Completion in Chained Abilities:** Abilities that chain (e.g., `Retune` calling `Scrub`) must pass the `onAbilityComplete` action down the line. If a helper ability (like `Flatten`) signals completion via `doOnComplete()`, it may end the pawn's job while the user is still interacting with a selection UI.
+* **Lifecycle & State:** `PawnApply[Action]` classes (like `PawnApplyRetune`) are **short-lived**. They are instantiated via a static `DoAbility` method for a single execution context and do not persist state between different target pawns.
+* **Initialization in CanApply:** Because instances are fresh per-use, initialization of selectors (e.g., `selectorRetune`) should happen inside `CanApplyOnPawn` to ensure validity before the UI attempt.
 
 ## 6. Workflow Instructions
 
 * When asked to create a new ability, provide both the **C# Class** and the **XML Def**.
-* If the user asks for "vibe coding," prioritize logic based on existing examples from `AlphaGenes` or `WVC`.
 * Always check if a suggested method or field was deprecated in 1.6.
 
 ## 7. Memory & References

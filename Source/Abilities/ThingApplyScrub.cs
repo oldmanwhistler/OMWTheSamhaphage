@@ -55,6 +55,22 @@ namespace OMW_Samhaphage
 
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Scrub");
 
+
+        public static void DoAbility(Pawn victim, Pawn caster, System.Action OnComplete)
+        {
+            ThingApplyScrub ability = new ThingApplyScrub();
+            string reason;
+            if (ability.CanApplyOnPawn(victim, caster, out reason))
+            {
+                // Use the callback to ensure next window only opens AFTER ability window is closed.
+                ability.ApplyPawn(victim, caster, OnComplete);
+            }
+            else
+            {
+                OnComplete.Invoke();
+            }
+        }
+
         public bool RemoveCarcinomas(Pawn victim, Pawn caster)
         {
             Log.Debug($"Scrub::RemoveCarcinomas({victim.LabelShort}, {caster.LabelShort})");

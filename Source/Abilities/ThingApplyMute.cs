@@ -21,6 +21,18 @@ namespace OMW_Samhaphage
 
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Mute");
 
+        public static void DoAbility(Pawn victim, Pawn caster, System.Action OnComplete)
+        {
+            ThingApplyMute ability = new ThingApplyMute();
+            string reason;
+            if (ability.CanApplyOnPawn(victim, caster, out reason))
+            {
+                ability.ApplyPawn(victim, caster);
+            }
+
+            OnComplete.Invoke();
+        }        
+
         public override void ApplyPawn(Pawn victim, Pawn caster)
         {
             Log.Debug($"START::Mute::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");

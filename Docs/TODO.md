@@ -18,11 +18,15 @@
 * max # of genes, story mode unlimited
 * max # of traits, story mode unlimited
 * Dissonance: level 1: off, level 2: scales to 0 based off of resonance, level3: fixed amount of time
+* limit number of samhaphage?
+* the fluxspawn aren't dying fast enough
+* get rid of the shambler genes since I don't shamble anymore
+* asexual fission
 
 
 ## BUGS
 
-* need a nullify blacklist that blocks blSamhaphage from being nullified
+* retune is completely broken
 * flicker stun needs to be a separate ability so it can be used while drafted
 * replace tetragenic abilities with resonance and add them to the blacklist
 * Excise isn't lethal if target is self
@@ -31,7 +35,8 @@
 
 ## UI
 
-* loop the menu until they hit cancel or close -- make it an actual cancel button instead of a return value. Frig this is hard to implement properly.
+* don't have search on the ability UI
+* five icons per row
 * stats panel in menu about the selected pawn's genes, traits, hediffs - hediffs would list bionics and psylinks
 
 ## Ideology

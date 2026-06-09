@@ -71,9 +71,7 @@ namespace OMW_Samhaphage
                 Flatten.ApplyPawn(victim, caster);
             }
 
-            ThingApplyScrub scrub = new ThingApplyScrub();
-            // Chain Harrow window to open after Scrub is done
-            scrub.ApplyPawn(victim, caster, () => OpenHarrowWindow(victim, caster));
+            ThingApplyScrub.DoAbility(victim, caster, () => OpenHarrowWindow(victim, caster));
         }
 
         private void OpenHarrowWindow(Pawn victim, Pawn caster)
@@ -109,15 +107,14 @@ namespace OMW_Samhaphage
 
                 if (activated)
                 {
-                    // Retune the caster after harvesting to integrate new genes
-                    PawnApplyRetune retune = new PawnApplyRetune();
-                    retune.ApplyPawn(caster, caster);
-                    OMWGenes.ApplyDissonance(victim, caster);
-                    OMWGenes.Refresh(victim);
                     OMWGenes.Refresh(caster);
+                    // Retune the caster after harvesting to integrate new genes
+                    PawnApplyRetune.DoAbility(caster, caster, onCompleteAction());
                 }
-                Log.Debug($"DONE::Harrow::OpenHarrowWindow({victim.LabelShort}, {caster.LabelShort})");
-                doOnComplete();
+                else
+                {
+                    doOnComplete();                        
+                }                
             }));
         }
 

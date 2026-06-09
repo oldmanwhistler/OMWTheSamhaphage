@@ -74,14 +74,17 @@ namespace OMW_Samhaphage
                         activated = true;
                     }
                 }
+
                 if (activated)
                 {
-                    PawnApplyRetune retune = new PawnApplyRetune();
-                    retune.ApplyPawn(caster, caster);
-                    OMWGenes.Refresh(victim);
                     OMWGenes.Refresh(caster);
+                    // Retune the caster after harvesting to integrate new genes
+                    PawnApplyRetune.DoAbility(caster, caster, onCompleteAction());
                 }
-                doOnComplete();
+                else
+                {
+                    doOnComplete();
+                }                
             }));
         }
 

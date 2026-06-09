@@ -9,15 +9,14 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.amplify;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         private float ResonanceCost => AbilityProp.value;
-
-        public int CurrentComplexity;
         public abstract int RequiredComplexity { get; }
         public abstract RimWorld.XenotypeDef TargetXenotype { get; }
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {
+            // Assuming victim is always the caster for this self-amplification ability.
             return
-                $"{caster} reaches the genetic threshold to elevate themselves to the next level of the genetic hierarchy and become {TargetXenotype.label}";
+                $"{caster.LabelShort} reaches the genetic threshold to elevate themselves to the next level of the genetic hierarchy and become {TargetXenotype.label}. (Cost: {ResonanceCost} Resonance)";
         }
 
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Amplify");
@@ -25,6 +24,14 @@ namespace OMW_Samhaphage
         public override void ApplyPawn(Pawn victim, Pawn caster)
         {
             if (victim == null || caster == null) return;
+            
+            // Consume resonance
+            if (!ResonanceUtility.Decr(caster, ResonanceCost))
+            {
+                Log.Error($"[OMW_Samhaphage] Failed to decrement resonance for {caster.LabelShort} during Amplify ability. This indicates a logic error where CanApplyOnPawn did not prevent the ability.");
+                doOnComplete();
+                return;
+            }
             OMWGenes.ChangeEndotype(victim, TargetXenotype);
             MoteMaker.MakeAttachedOverlay(victim, ThingDefOf.Mote_ResurrectFlash, Vector3.zero);
             Log.Debug($"Amplified {victim.LabelShort}: became {TargetXenotype.label}.");
@@ -40,11 +47,17 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            CurrentComplexity = OMWGenes.CalculateComplexity(victim);
-            if (CurrentComplexity < RequiredComplexity)
+            // Check for resonance cost
+            if (!ResonanceUtility.HasAvailable(caster, ResonanceCost))
+            {
+                reason = $"{caster.LabelShort} does not have enough resonance (needs {ResonanceCost}).";
+                return false;
+            }
+            int currentComplexity = OMWGenes.CalculateComplexity(victim);
+            if (currentComplexity < RequiredComplexity)
             {
                 reason =
-                    $"Not enough genetic complexity to become {TargetXenotype.label}. At {CurrentComplexity}/{RequiredComplexity}. Keep harrowing.";
+                    $"Not enough genetic complexity to become {TargetXenotype.label}. At {currentComplexity}/{RequiredComplexity}. Keep harrowing.";
                 return false;
             }
 

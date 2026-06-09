@@ -49,7 +49,24 @@ namespace OMW_Samhaphage
 
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Retune");
 
-        public override void ApplyPawn(Pawn victim, Pawn caster)
+        public static void DoAbility(Pawn victim, Pawn caster, System.Action OnComplete)
+        {
+            PawnApplyRetune ability = new PawnApplyRetune();
+            string reason;
+            if (ability.CanApplyOnPawn(victim, caster, out reason))
+            {
+                // Use the callback to ensure next window only opens AFTER ability window is closed.
+                ability.ApplyPawn(victim, caster, OnComplete);
+            }
+            else
+            {
+                OnComplete.Invoke();
+            }
+        }
+
+        public override void ApplyPawn(Pawn victim, Pawn caster) => ApplyPawn(victim, caster, null);
+        
+        public void ApplyPawn(Pawn victim, Pawn caster, System.Action onAbilityComplete)
         {
             if (victim == null || caster == null) return;
 
@@ -64,24 +81,26 @@ namespace OMW_Samhaphage
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogermLossShock);
             OMWHediffs.RemoveHediff(victim, HediffDefOf.XenogerminationComa);
 
-            ThingApplyScrub scrub = new ThingApplyScrub();
-            
-            // Use the callback to ensure Retune window only opens AFTER Scrub window is closed.
-            scrub.ApplyPawn(victim, caster, () => OpenRetuneWindow(victim, caster));
+            ThingApplyScrub.DoAbility(victim, caster, () => OpenRetuneWindow(victim, caster, onAbilityComplete));
         }
 
-        private void OpenRetuneWindow(Pawn victim, Pawn caster)
+        private void OpenRetuneWindow(Pawn victim, Pawn caster, System.Action onAbilityComplete)
         {
-            // scrub could have changed the genes so make sure things still apply
+            // scrub could have changed the genes so make sure there is a reason to retune
             string reason;
             if (!CanApplyOnPawn(victim, caster, out reason))
             {
                 Messages.Message(reason, MessageTypeDefOf.RejectInput);
-                doOnComplete();
+                onAbilityComplete.Invoke();
                 return;
             }
 
-            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selectorRetune, onCompleteAction(), (selectedList) =>
+            // Pass null for the window close action if we are handling completion 
+            // inside the selection callback to avoid double-invocation. 
+            // Alternatively, only invoke completion if selection didn't occur.
+            bool selectionMade = false;
+
+            Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selectorRetune, () => { if(!selectionMade) onAbilityComplete?.Invoke(); }, (selectedList) =>
             {
                 bool activated = false;
                 foreach (GenePlus plus in selectedList)
@@ -102,7 +121,8 @@ namespace OMW_Samhaphage
                     OMWGenes.Refresh(victim);
                 }
 
-                doOnComplete();
+                selectionMade = true;
+                onAbilityComplete?.Invoke();
             }));
         }
 
@@ -130,14 +150,12 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            if (selectorRetune == null)
+            // Ensure the selector is initialized and valid
+            selectorRetune = new SelectionRetune(caster, victim, victim);
+            if (selectorRetune.genes.Count == 0)
             {
-                selectorRetune = new SelectionRetune(caster, victim, victim);
-                if (selectorRetune.genes.Count == 0)
-                {
-                    reason = $"{victim.LabelShort} has no genes that can be retuned.";
-                    return false;
-                }
+                reason = $"{victim.LabelShort} has no genes that can be retuned.";
+                return false;
             }
 
             return true;
