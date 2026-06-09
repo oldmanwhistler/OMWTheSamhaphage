@@ -136,13 +136,22 @@ namespace OMW_Samhaphage
             myBlacklistStrings.Add("WVC_XenotypesAndGenes_RandomXenotypeForcer");
             myBlacklistStrings.Add("WVC_HiveMind"); // being able to get in on skill sharing, thoughts etc is too powerful
             myBlacklistStrings.Add("WVC_Morph");
-            // VRE
+            myBlacklistStrings.Add("WVC_Chimera_GenelineHiveMind");
+            myBlacklistStrings.Add("WVC_Hivemind_DeafDrone");
+            myBlacklistStrings.Add("WVC_StartGestation");
+            myBlacklistStrings.Add("WVC_XenotypeGestator");
+            myBlacklistStrings.Add("WVC_Hivemind_Gestator");
+            myBlacklistStrings.Add("WVC_StorageGestator");
+            myBlacklistStrings.Add("WVC_Hivemind");
+// VRE
             myBlacklistStrings.Add("VRE_GermlineReimplanter");
             // AG
             myBlacklistStrings.Add("AG_InsectStinger");
             myBlacklistStrings.Add("AG_ParasiticStinger");
             myBlacklistStrings.Add("AG_InsectStingerEndogenes");
             myBlacklistStrings.Add("AG_ParasiticStingerEndogenes");
+            myBlacklistStrings.Add("AG_AsexualFission");
+
             // Gene for Traits. I need to test if this still breaks things.
             myBlacklistStrings.Add("Gene_Trait_");
 
