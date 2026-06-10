@@ -91,7 +91,7 @@
             <CancerRate>15</CancerRate>
         </statFactors>
         <iconPath>UI/Icons/Genes/AG_UnstableMutationCatastrophic</iconPath>
-        <displayCategory>Healing</displayCategory>
+        <displayCategory>OMW_PerfectSilence</displayCategory>
         <displayOrderInCategory>114.1</displayOrderInCategory>
         <biostatMet>10</biostatMet>
         <biostatCpx>3</biostatCpx>
