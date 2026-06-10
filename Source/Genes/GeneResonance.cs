@@ -126,13 +126,35 @@ namespace OMW_Samhaphage
                 return true;
             }
 
-            // For actual pawns in the world, only show this stat if they have the Resonance gene.
-            if (req.Thing is Pawn pawn)
+            // Unwrap pawn from Thing or Corpse
+            Pawn p = req.Thing as Pawn;
+            if (req.Thing is Corpse corpse) p = corpse.InnerPawn;
+
+            if (p != null)
             {
-                return ResonanceUtility.HasGene(pawn);
+                return ResonanceUtility.HasGene(p);
             }
 
             return false;
+        }
+
+        public override float GetValueUnfinalized(StatRequest req, bool applyPostProcess = true)
+        {
+            // Handle requests for the Def itself (e.g., UI menus/Numbers)
+            if (!req.HasThing) return 0f;
+
+            Pawn p = req.Thing as Pawn;
+            if (req.Thing is Corpse corpse) p = corpse.InnerPawn;
+
+            // Only calculate for pawns that actually have the resonance gene
+            if (p != null && ResonanceUtility.HasGene(p))
+            {
+                // This should return your desired "Daily Gain" amount.
+                // You can link this to your mod settings or a base value.
+                return 5f; 
+            }
+
+            return 0f;
         }
     }
 }
