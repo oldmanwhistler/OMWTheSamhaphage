@@ -97,7 +97,8 @@ namespace OMW_Samhaphage
             HashSet<BlacklistGeneType> blCanCopy = new HashSet<BlacklistGeneType>();
             HashSet<BlacklistGeneType> blCanMutate = new HashSet<BlacklistGeneType>();
             HashSet<BlacklistGeneType> blCanGenerate = new HashSet<BlacklistGeneType>();
-           
+            HashSet<BlacklistGeneType> blCanRemove = new HashSet<BlacklistGeneType>();
+
             blCanCopy.Add(BlacklistGeneType.BlGenePack);
             blCanCopy.Add(BlacklistGeneType.BlWretch);
             blCanCopy.Add(BlacklistGeneType.BlTrait);
@@ -108,6 +109,12 @@ namespace OMW_Samhaphage
             blCanGenerate.Add(BlacklistGeneType.BlReproduction);
 
             blCanMutate.Add(BlacklistGeneType.BlReproduction);
+
+            blCanRemove.Add(BlacklistGeneType.BlAscension);
+            blCanRemove.Add(BlacklistGeneType.BlMetamorph);
+            blCanRemove.Add(BlacklistGeneType.BlDontCopy);
+            blCanRemove.Add(BlacklistGeneType.BlPrereq);
+            blCanRemove.Add(BlacklistGeneType.BlGenePack);
 
             // AlphaGenes integration: respect the Wretch
             List<GeneDef> cachedBlacklist = new List<GeneDef>();
@@ -135,15 +142,12 @@ namespace OMW_Samhaphage
             myDontCopy.Add("WVC_Aptitudes_GreatEqualizer"); // this will let you pass it around the colony and scrub any aptitudes
             myDontCopy.Add("WVC_XenotypesAndGenes_RandomEndotypeForcer");
             myDontCopy.Add("WVC_XenotypesAndGenes_RandomXenotypeForcer");
-            myDontCopy.Add("WVC_HiveMind"); // being able to get in on skill sharing, thoughts etc is too powerful
+            myDontCopy.Add("WVC_Hive"); // being able to get in on skill sharing, thoughts etc is too powerful
             myDontCopy.Add("WVC_Morph");
             myDontCopy.Add("WVC_Chimera_GenelineHiveMind");
-            myDontCopy.Add("WVC_Hivemind_DeafDrone");
             myDontCopy.Add("WVC_StartGestation");
             myDontCopy.Add("WVC_XenotypeGestator");
-            myDontCopy.Add("WVC_Hivemind_Gestator");
             myDontCopy.Add("WVC_StorageGestator");
-            myDontCopy.Add("WVC_Hivemind");
             // VRE
             myDontCopy.Add("VRE_GermlineReimplanter");
             // AG
@@ -158,7 +162,7 @@ namespace OMW_Samhaphage
             myDontCopy.Add("Gene_Trait_");
 
             List<string> myDontRemove = new List<string>();
-            myDontRemove.Add("WVC_HiveMind"); // needed to make the fluxspawn work
+            myDontRemove.Add("WVC_Hive"); // needed to make the fluxspawn work
             myDontRemove.Add("BS_CellPandemonium");
             myDontRemove.Add("BS_Diet_Carnivore");
             myDontRemove.Add("BS_CannotWearClothingOrArmor");
@@ -167,6 +171,8 @@ namespace OMW_Samhaphage
             List<string> myPreggoStrings = new List<string>();
             myPreggoStrings.Add("RS_MultiPregnancy");
             myPreggoStrings.Add("AG_AsexualFission");
+            myPreggoStrings.Add("BS_SlimeProliferation");
+
 
             foreach (GeneDef geneDef in DefDatabase<GeneDef>.AllDefs)
             {
@@ -270,14 +276,12 @@ namespace OMW_Samhaphage
                         PreggoGenes.Add(geneDef);
                     }
 
-                    if (bl.BlacklistGeneType.Contains(BlacklistGeneType.BlSamhaphage) ||
-                        bl.BlacklistGeneType.Contains(BlacklistGeneType.BlDontRemove))
+                    if (!bl.BlacklistGeneType.IsSubsetOf(blCanRemove))
                     {
                         BlacklistedGenesDontRemove.Add(geneDef);
                     }
 
-                    if (!bl.BlacklistGeneType.Contains(BlacklistGeneType.BlDontCopy) &&
-                        !bl.BlacklistGeneType.IsSubsetOf(blCanCopy))
+                    if (!bl.BlacklistGeneType.IsSubsetOf(blCanCopy))
                     {
                         BlacklistedGenesDontCopy.Add(geneDef);
                     }
@@ -355,7 +359,7 @@ namespace OMW_Samhaphage
                 StringBuilder sb = new StringBuilder();
 
                 // Header row
-                sb.AppendLine("DEFNAME,LABEL,MOD,COMPLEXITY,METABOLISM,ARCHITE,CATEGORY,CATEGORYDEF,BLACKLISTED,ABILITIES,DESCRIPTION");
+                sb.AppendLine("DEFNAME,LABEL,MOD,COMPLEXITY,METABOLISM,ARCHITE,CATEGORY,CATEGORYDEF,BLACKLISTED,HASHSETS,ABILITIES,DESCRIPTION");
 
                 foreach (GeneDef gene in DefDatabase<GeneDef>.AllDefs)
                 {
@@ -372,7 +376,31 @@ namespace OMW_Samhaphage
                     string desc = gene.description?.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", "") ?? "";
                     string modName = gene.modContentPack?.Name ?? gene.modContentPack?.PackageId ?? "Unknown";
 
-                    sb.AppendLine($"\"{gene.defName}\",\"{label}\",\"{modName}\",{gene.biostatCpx},{gene.biostatMet},{gene.biostatArc},\"{cat}\",\"{catDef}\",{bl},\"{abilities}\",\"{desc}\"");
+                    List<string> hashset = new List<string>();
+
+                    if (BlacklistedGenesDontGenerate.Contains(gene))
+                    {
+                        hashset.Add("DontGenerate");
+                    }
+                    if (BlacklistedGenesDontCopy.Contains(gene))
+                    {
+                        hashset.Add("DontCopy");
+                    }
+                    if (BlacklistedGenesDontMutate.Contains(gene))
+                    {
+                        hashset.Add("DontMutate");
+                    }
+                    if (BlacklistedGenesDontRemove.Contains(gene))
+                    {
+                        hashset.Add("DontRemove");
+                    }
+                    if (PreggoGenes.Contains(gene))
+                    {
+                        hashset.Add("Preggo");
+                    }
+                    string hashsetStr = string.Join("|", hashset);
+                    
+                    sb.AppendLine($"\"{gene.defName}\",\"{label}\",\"{modName}\",{gene.biostatCpx},{gene.biostatMet},{gene.biostatArc},\"{cat}\",\"{catDef}\",{bl},{hashsetStr},\"{abilities}\",\"{desc}\"");
                 }
 
                 File.WriteAllText(path, sb.ToString());
