@@ -31,11 +31,6 @@
       <li MayRequire="redmattis.bigsmall.core">VU_LightPallorSkin</li>
       <li MayRequire="redmattis.bigsmall.core">VU_DarkPallorSkin</li>
       <li MayRequire="redmattis.bigsmall.core">BS_PilotAssistible</li>      
-      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_LightningFast</li>
-      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_Timeless</li>
-      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_Plagued</li>
-      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_Tough</li>
-      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_HighMelee</li>
       <li MayRequire="sarg.alphagenes">AG_Teratophilia</li>
       <li MayRequire="sarg.alphagenes">AG_EfficientMandibles</li>
       <li MayRequire="sarg.alphagenes">AG_ReducedFertile</li>

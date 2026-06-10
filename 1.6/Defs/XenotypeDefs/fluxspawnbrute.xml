@@ -34,8 +34,7 @@
       <li MayRequire="redmattis.bigsmall.core">BS_ShortPregnancy</li>
       <li MayRequire="redmattis.bigsmall.core">VU_Libido_Succubus</li>
       <li MayRequire="redmattis.bettergeneinheritance">BGI_SecondaryGenes</li>
-      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_VenomFangs</li>
-      <li MayRequire="sarg.alphagenes">AG_Teratophilia</li>
+       <li MayRequire="sarg.alphagenes">AG_Teratophilia</li>
       <li MayRequire="sarg.alphagenes">AG_DeadlyRaidPresence</li>
       <li MayRequire="sarg.alphagenes">AG_InsectBlood</li>    
       <li MayRequire="sarg.alphagenes">AG_JellyFlesh</li>

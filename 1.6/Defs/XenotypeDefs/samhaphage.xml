@@ -37,12 +37,6 @@
       <li MayRequire="sarg.alphagenes">AG_Teratophilia</li>
       <li MayRequire="sarg.alphagenes">AG_InsanityBlast</li>
       <li MayRequire="sarg.alphagenes">AG_UnstableMind</li>
-      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_LightningFast</li>
-      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_Timeless</li>
-      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_DeadlifeBelcher</li>
-      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_Plagued</li>
-      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_Tough</li>
-      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_HighMelee</li>
       <li MayRequire="sarg.alphagenes">AG_DangerousRaidPresence</li>
       <li MayRequire="sarg.alphagenes">AG_PukeBile</li>
       <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_TwistedFlesh</li>

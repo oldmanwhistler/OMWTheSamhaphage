@@ -34,7 +34,6 @@
       <li MayRequire="redmattis.bigsmall.core">BS_LightGreenSkin</li>
       <li MayRequire="redmattis.bigsmall.core">BS_Parasite</li>      
       <li MayRequire="redmattis.bettergeneinheritance">BGI_SecondaryGenes</li>
-      <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_Shambler_Acidic</li>
       <li MayRequire="sarg.alphagenes">AG_Teratophilia</li>
       <li MayRequire="sarg.alphagenes">AG_DeadlyRaidPresence</li>
       <li MayRequire="sarg.alphagenes">AG_InsectBlood</li>    
