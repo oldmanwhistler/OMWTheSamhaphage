@@ -16,7 +16,8 @@ namespace OMW_Samhaphage
         BlWretch,
         BlPrereq,
         BlImplanter,
-        BlStringMatch,
+        BlDontCopy,
+        BlDontRemove,        
         BlMisc,
         BlAscension,
         BlMetamorph,
@@ -122,41 +123,50 @@ namespace OMW_Samhaphage
                     cachedDefnameStrings.AddRange(individualList.blackListedDefNameStrings);
             }
 
-            List<string> myBlacklistStrings = new List<string>();
+            List<string> myDontCopy = new List<string>();
             // core
-            myBlacklistStrings.Add("ViolenceDisabled");
-            myBlacklistStrings.Add("KindInstinct");
-            myBlacklistStrings.Add("XenogermReimplanter");
+            myDontCopy.Add("ViolenceDisabled");
+            myDontCopy.Add("KindInstinct");
+            myDontCopy.Add("XenogermReimplanter");
             // WVC
-            myBlacklistStrings.Add("WVC_Traitless");
-            myBlacklistStrings.Add("WVC_Chimera_NullifiedLimit");
-            myBlacklistStrings.Add("WVC_Chimera_GreatlyDecreasedLimit");
-            myBlacklistStrings.Add("WVC_Aptitudes_GreatEqualizer"); // this will let you pass it around the colony and scrub any aptitudes
-            myBlacklistStrings.Add("WVC_XenotypesAndGenes_RandomEndotypeForcer");
-            myBlacklistStrings.Add("WVC_XenotypesAndGenes_RandomXenotypeForcer");
-            myBlacklistStrings.Add("WVC_HiveMind"); // being able to get in on skill sharing, thoughts etc is too powerful
-            myBlacklistStrings.Add("WVC_Morph");
-            myBlacklistStrings.Add("WVC_Chimera_GenelineHiveMind");
-            myBlacklistStrings.Add("WVC_Hivemind_DeafDrone");
-            myBlacklistStrings.Add("WVC_StartGestation");
-            myBlacklistStrings.Add("WVC_XenotypeGestator");
-            myBlacklistStrings.Add("WVC_Hivemind_Gestator");
-            myBlacklistStrings.Add("WVC_StorageGestator");
-            myBlacklistStrings.Add("WVC_Hivemind");
-// VRE
-            myBlacklistStrings.Add("VRE_GermlineReimplanter");
+            myDontCopy.Add("WVC_Traitless");
+            myDontCopy.Add("WVC_Chimera_NullifiedLimit");
+            myDontCopy.Add("WVC_Chimera_GreatlyDecreasedLimit");
+            myDontCopy.Add("WVC_Aptitudes_GreatEqualizer"); // this will let you pass it around the colony and scrub any aptitudes
+            myDontCopy.Add("WVC_XenotypesAndGenes_RandomEndotypeForcer");
+            myDontCopy.Add("WVC_XenotypesAndGenes_RandomXenotypeForcer");
+            myDontCopy.Add("WVC_HiveMind"); // being able to get in on skill sharing, thoughts etc is too powerful
+            myDontCopy.Add("WVC_Morph");
+            myDontCopy.Add("WVC_Chimera_GenelineHiveMind");
+            myDontCopy.Add("WVC_Hivemind_DeafDrone");
+            myDontCopy.Add("WVC_StartGestation");
+            myDontCopy.Add("WVC_XenotypeGestator");
+            myDontCopy.Add("WVC_Hivemind_Gestator");
+            myDontCopy.Add("WVC_StorageGestator");
+            myDontCopy.Add("WVC_Hivemind");
+            // VRE
+            myDontCopy.Add("VRE_GermlineReimplanter");
             // AG
-            myBlacklistStrings.Add("AG_InsectStinger");
-            myBlacklistStrings.Add("AG_ParasiticStinger");
-            myBlacklistStrings.Add("AG_InsectStingerEndogenes");
-            myBlacklistStrings.Add("AG_ParasiticStingerEndogenes");
-            myBlacklistStrings.Add("AG_AsexualFission");
+            myDontCopy.Add("AG_InsectStinger");
+            myDontCopy.Add("AG_ParasiticStinger");
+            myDontCopy.Add("AG_InsectStingerEndogenes");
+            myDontCopy.Add("AG_ParasiticStingerEndogenes");
+            myDontCopy.Add("AG_AsexualFission");
+            myDontCopy.Add("BS_CellPandemonium");
 
             // Gene for Traits. I need to test if this still breaks things.
-            myBlacklistStrings.Add("Gene_Trait_");
+            myDontCopy.Add("Gene_Trait_");
+
+            List<string> myDontRemove = new List<string>();
+            myDontRemove.Add("WVC_HiveMind"); // needed to make the fluxspawn work
+            myDontRemove.Add("BS_CellPandemonium");
+            myDontRemove.Add("BS_Diet_Carnivore");
+            myDontRemove.Add("BS_CannotWearClothingOrArmor");
+            myDontRemove.Add("BS_NoEquip");
 
             List<string> myPreggoStrings = new List<string>();
             myPreggoStrings.Add("RS_MultiPregnancy");
+            myPreggoStrings.Add("AG_AsexualFission");
 
             foreach (GeneDef geneDef in DefDatabase<GeneDef>.AllDefs)
             {
@@ -169,10 +179,16 @@ namespace OMW_Samhaphage
                 {
                     bl.Add(BlacklistGeneType.BlWretch);
                 }
-                if (myBlacklistStrings.Any(s => geneDef.defName.Contains(s)))
+                if (myDontCopy.Any(s => geneDef.defName.Contains(s)))
                 {
-                    bl.Add(BlacklistGeneType.BlStringMatch);
+                    bl.Add(BlacklistGeneType.BlDontCopy);
                 }
+
+                if (myDontRemove.Any(s => geneDef.defName.Contains(s)))
+                {
+                    bl.Add(BlacklistGeneType.BlDontRemove);
+                }
+
                 if (myPreggoStrings.Any(s => geneDef.defName.Contains(s)))
                 {
                     bl.Add(BlacklistGeneType.BlReproduction);
@@ -254,12 +270,14 @@ namespace OMW_Samhaphage
                         PreggoGenes.Add(geneDef);
                     }
 
-                    if (bl.BlacklistGeneType.Contains(BlacklistGeneType.BlSamhaphage))
+                    if (bl.BlacklistGeneType.Contains(BlacklistGeneType.BlSamhaphage) ||
+                        bl.BlacklistGeneType.Contains(BlacklistGeneType.BlDontRemove))
                     {
                         BlacklistedGenesDontRemove.Add(geneDef);
                     }
 
-                    if (!bl.BlacklistGeneType.IsSubsetOf(blCanCopy))
+                    if (!bl.BlacklistGeneType.Contains(BlacklistGeneType.BlDontCopy) &&
+                        !bl.BlacklistGeneType.IsSubsetOf(blCanCopy))
                     {
                         BlacklistedGenesDontCopy.Add(geneDef);
                     }
