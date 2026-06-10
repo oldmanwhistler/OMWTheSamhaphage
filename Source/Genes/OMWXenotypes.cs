@@ -37,24 +37,25 @@ namespace OMW_Samhaphage
             List<Pawn> specificXenos = playerPawns.Where(p => p.genes?.Xenotype == OMW_XenotypeDefOf
                 .omw_sovereign_stillness).ToList();
 
-            int complexity = 0;
-            Pawn choice = null;
-
-            if (specificXenos.Count() == 0)
+            if (specificXenos.Count == 0)
             {
                 theSovereignStillness = null;
                 return;
             }
 
-            if (specificXenos.Count() == 1)
+            if (specificXenos.Count == 1)
             {
                 theSovereignStillness = specificXenos[0];
                 return;
             }
 
-            // find the "best" Sovereign
-            foreach (Pawn pawn in specificXenos)
+            // find the "best" Sovereign. Default to the first entry to ensure a choice is made.
+            Pawn choice = specificXenos[0];
+            int complexity = OMWGenes.CalculateComplexity(choice);
+
+            for (int i = 1; i < specificXenos.Count; i++)
             {
+                Pawn pawn = specificXenos[i];
                 int currComplexity = OMWGenes.CalculateComplexity(pawn);
                 if (currComplexity > complexity)
                 {
@@ -68,10 +69,15 @@ namespace OMW_Samhaphage
             // convert the rest to Samhaphage
             foreach (Pawn pawn in specificXenos)
             {
-                if (pawn != choice)
+                if (pawn == choice)
                 {
+                    Log.Message($"{pawn.Name} remains the Sovereign Stillness.");
+                }
+                else 
+                {
+                    Log.Message($"{pawn.Name} forced to become a Samhaphage from ThereCanOnlyBeOne().");
                     OMWGenes.ChangeEndotype(pawn, OMW_XenotypeDefOf.omw_samhaphage);
-                    Find.LetterStack.ReceiveLetter($"{pawn.LabelShort} xenotype changed.", $"{pawn.LabelShort} lost the role of Sovereign Stillness and has returned to being a Samhaphage.", LetterDefOf.PositiveEvent,(TargetInfo)pawn);
+                    Find.LetterStack.ReceiveLetter($"{pawn.LabelShort} xenotype changed.", $"{pawn.LabelShort} lost the role of Sovereign Stillness and has returned to being a Samhaphage.", LetterDefOf.NegativeEvent,(TargetInfo)pawn);
                 }
             }
         }
