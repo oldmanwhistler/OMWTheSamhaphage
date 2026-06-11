@@ -99,22 +99,31 @@ namespace OMW_Samhaphage
             HashSet<BlacklistGeneType> blCanGenerate = new HashSet<BlacklistGeneType>();
             HashSet<BlacklistGeneType> blCanRemove = new HashSet<BlacklistGeneType>();
 
+
+            // For generate/mutate we want to avoid traits since they can cause pawn generation failures
+            // because of worktags etc. Randomizing genes-for-traits causes a lot of crash-to-desktop problems.
+
+            blCanGenerate.Add(BlacklistGeneType.BlImplanter);
+            blCanGenerate.Add(BlacklistGeneType.BlReproduction);
+
+            blCanMutate.Add(BlacklistGeneType.BlReproduction);
+            blCanMutate.Add(BlacklistGeneType.BlPrereq);
+            blCanMutate.Add(BlacklistGeneType.BlGenePack);
+            // blWretch is generated from AlphaGenes' rules for the Random Mutation gene.
+            blCanMutate.Add(BlacklistGeneType.BlWretch);
+
             blCanCopy.Add(BlacklistGeneType.BlGenePack);
             blCanCopy.Add(BlacklistGeneType.BlWretch);
             blCanCopy.Add(BlacklistGeneType.BlTrait);
             blCanCopy.Add(BlacklistGeneType.BlPrereq);
-
-            blCanGenerate.Add(BlacklistGeneType.BlImplanter);
-            blCanGenerate.Add(BlacklistGeneType.BlWretch);
-            blCanGenerate.Add(BlacklistGeneType.BlReproduction);
-
-            blCanMutate.Add(BlacklistGeneType.BlReproduction);
 
             blCanRemove.Add(BlacklistGeneType.BlAscension);
             blCanRemove.Add(BlacklistGeneType.BlMetamorph);
             blCanRemove.Add(BlacklistGeneType.BlDontCopy);
             blCanRemove.Add(BlacklistGeneType.BlPrereq);
             blCanRemove.Add(BlacklistGeneType.BlGenePack);
+            blCanRemove.Add(BlacklistGeneType.BlWretch);
+            blCanRemove.Add(BlacklistGeneType.BlTrait);
 
             // AlphaGenes integration: respect the Wretch
             List<GeneDef> cachedBlacklist = new List<GeneDef>();
