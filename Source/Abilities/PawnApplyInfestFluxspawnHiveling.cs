@@ -19,7 +19,6 @@ namespace OMW_Samhaphage
         
         public virtual HediffDef TargetHediffDef => OMW_HediffDefOf.OMW_ParasiticImplantation;
         public virtual XenotypeDef TargetXenotypeDef => OMW_XenotypeDefOf.omw_fluxspawn_hiveling;        
-        public virtual int NumBabies => 5;
 
         public override void ApplyPawn(Pawn victim, Pawn caster)
         {
@@ -43,7 +42,8 @@ namespace OMW_Samhaphage
                 comp.mother = caster;
                 comp.motherFaction = caster.Faction;
                 comp.motherXenotypeDef = TargetXenotypeDef;
-                comp.numBabies = NumBabies;
+                comp.numBabiesMin = 2;
+                comp.numBabiesMax = 5;
 
                 FleckMaker.AttachedOverlay(victim, FleckDefOf.FlashHollow, new Vector3(0f, 0f, 0.26f));
 
