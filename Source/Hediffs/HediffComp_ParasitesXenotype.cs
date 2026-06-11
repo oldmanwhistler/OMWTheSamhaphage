@@ -18,7 +18,8 @@ namespace OMW_Samhaphage
         public Faction motherFaction;
         public PawnKindDef motherDef;
         public XenotypeDef motherXenotypeDef;
-        public int numBabies = 1;
+        public int numBabiesMin = 1;
+        public int numBabiesMax = 1;
         // this gets set to true if there is an error
         private bool disableHediff = false;
 
@@ -39,7 +40,8 @@ namespace OMW_Samhaphage
             Scribe_References.Look(ref this.motherFaction, nameof(this.motherFaction));
             Scribe_Defs.Look(ref this.motherDef, nameof(this.motherDef));
             Scribe_Defs.Look(ref this.motherXenotypeDef, nameof(this.motherXenotypeDef));
-            Scribe_Values.Look(ref this.numBabies, nameof(this.numBabies));
+            Scribe_Values.Look(ref this.numBabiesMin, nameof(this.numBabiesMin));
+            Scribe_Values.Look(ref this.numBabiesMax, nameof(this.numBabiesMax));
         }
 
 
@@ -51,6 +53,8 @@ namespace OMW_Samhaphage
             Map map = this.parent.pawn.Corpse.Map;
             if (map != null && this.parent.Severity > severityToTurn)
             {
+                int numBabies = UnityEngine.Random.Range(numBabiesMin, numBabiesMax + 1);                
+                if (numBabiesMin == numBabiesMax) numBabies = numBabiesMin;
 
                 for(int ii=0; ii<numBabies; ii++)
                     Hatch();
