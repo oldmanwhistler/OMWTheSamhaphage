@@ -20,9 +20,12 @@ namespace OMW_Samhaphage
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
-            List<Gene> alreadyHas = dest.genes.GenesListForReading ?? new List<Gene>();
+            HashSet<GeneDef> alreadyHas = dest.genes.GenesListForReading
+                                                            .Where(g => !g.Overridden)
+                                                            .Select(g => g.def)
+                                                            .ToHashSet();
             return source.genes.GenesListForReading
-                .Where(g => !alreadyHas.Contains(g) && // ignore genes the caster already has
+                .Where(g => !alreadyHas.Contains(g.def) && // ignore genes the caster already has
                             !g.Overridden && // can't steal a face if it's already overridden
                             this.GeneIsWorthless(g)) // want cosmetic genes only
                 .ToList();

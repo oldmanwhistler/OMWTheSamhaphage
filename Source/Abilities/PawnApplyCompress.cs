@@ -18,6 +18,7 @@ namespace OMW_Samhaphage
         {
             // Compress is moving Xenogenes to Endogenes on source
             HashSet<GeneDef> alreadyHas = source.genes.Endogenes
+                .Where(g => !g.Overridden)
                 .Select(g => g.def)
                 .ToHashSet();
             return source.genes.Xenogenes

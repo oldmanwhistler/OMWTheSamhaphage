@@ -18,6 +18,7 @@ namespace OMW_Samhaphage
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
         {
             HashSet<GeneDef> alreadyHas = dest.genes.GenesListForReading
+                .Where(g => !g.Overridden)
                 .Select(g => g.def)
                 .ToHashSet();
             return source.genes.GenesListForReading
