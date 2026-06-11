@@ -32,6 +32,75 @@ namespace OMW_Samhaphage
             Log.Debug($"Flatten::DONE::PurgeNegativeMemories({victim.LabelShort})");
         }
 
+        private static void PurgeGenesIncapableViolence(Pawn victim, Pawn caster)
+        {
+            Log.Debug($"Flatten::START::PurgeGenesIncapableViolence({victim.LabelShort})");
+            if (victim?.genes == null) return;
+
+            List<Gene> genes = victim.genes.GenesListForReading;
+            for (int i = genes.Count - 1; i >= 0; i--)
+            {
+                if ((genes[i].def.disabledWorkTags & WorkTags.Violent) != 0)
+                {
+                    Log.Debug($"Flatten::Purging gene {genes[i].def.defName} from {victim.LabelShort} because it disables violence.");
+                    float value = ResonanceUtility.GeneResonanceValue(genes[i].def);
+                    ResonanceUtility.Incr($"Purging gene that prevents violence: {genes[i].def.defName}", caster, value);
+                    victim.genes.RemoveGene(genes[i]);
+                }
+            }
+            Log.Debug($"Flatten::DONE::PurgeGenesIncapableViolence({victim.LabelShort})");
+        }
+
+        private static void PurgeTraitsIncapableViolence(Pawn victim, Pawn caster)
+        {
+            Log.Debug($"Flatten::START::PurgeTraitsIncapableViolence({victim.LabelShort})");
+            if (victim?.story?.traits == null) return;
+
+            List<Trait> traits = victim.story.traits.allTraits;
+            for (int i = traits.Count - 1; i >= 0; i--)
+            {
+                if ((traits[i].def.disabledWorkTags & WorkTags.Violent) != 0)
+                {
+                    Log.Debug($"Flatten::Purging trait {traits[i].def.defName} from {victim.LabelShort} because it disables violence.");
+                    float value = ResonanceUtility.TraitResonanceValue(traits[i]);
+                    ResonanceUtility.Incr($"Purging trait that prevents violence: {traits[i].def.defName}", caster, value);
+                    victim.story.traits.RemoveTrait(traits[i]);
+                }
+            }
+            
+            Log.Debug($"Flatten::DONE::PurgeTraitsIncapableViolence({victim.LabelShort})");
+        }        
+
+        private static void PurgeBackstoryIncapableViolence(Pawn victim, Pawn caster)
+        {
+            Log.Debug($"Flatten::START::PurgeBackstoryIncapableViolence({victim.LabelShort})");
+            if (victim?.story == null) return;
+
+            // Replace childhood if it disables violence
+            if (victim.story.Childhood != null && (victim.story.Childhood.workDisables & WorkTags.Violent) != 0)
+            {
+                Log.Debug($"Flatten::Purging childhood backstory {victim.story.Childhood.defName} from {victim.LabelShort} because it disables violence.");
+                // Replace with generic vanilla "Childhood" backstory
+                victim.story.Childhood = DefDatabase<BackstoryDef>.GetNamed("Child6");
+            }
+
+            // Replace adulthood if it disables violence
+            if (victim.story.Adulthood != null && (victim.story.Adulthood.workDisables & WorkTags.Violent) != 0)
+            {
+                Log.Debug($"Flatten::Purging adulthood backstory {victim.story.Adulthood.defName} from {victim.LabelShort} because it disables violence.");
+                // Replace with generic vanilla "Colonist" backstory
+                victim.story.Adulthood = DefDatabase<BackstoryDef>.GetNamed("Colonist7");
+            }
+            Log.Debug($"Flatten::DONE::PurgeBackstoryIncapableViolence({victim.LabelShort})");
+        }    
+
+        private static void PurgeIncapableViolence(Pawn victim, Pawn caster)
+        {
+            PurgeGenesIncapableViolence(victim, caster);
+            PurgeTraitsIncapableViolence(victim, caster);
+            PurgeBackstoryIncapableViolence(victim, caster);        
+        }
+
         public override void ApplyPawn(Pawn victim, Pawn caster)
         {
             
@@ -39,6 +108,11 @@ namespace OMW_Samhaphage
             if (victim == null || caster == null) return;
 
             OMWGenes.Refresh(victim);
+
+           if (victim.WorkTagIsDisabled(WorkTags.Violent))
+            {
+                PurgeIncapableViolence(victim, caster);
+            }            
 
             if (!victim.genes.HasActiveGene(OMW_GeneDefOf.OMW_ScouredMind) && (victim.genes != null))
             {
@@ -65,6 +139,9 @@ namespace OMW_Samhaphage
             }
 
             PurgeNegativeMemories(victim);
+            PurgeGenesIncapableViolence(victim, caster);
+            PurgeTraitsIncapableViolence(victim, caster);
+            PurgeBackstoryIncapableViolence(victim, caster);
 
             Log.Debug($"Flatten - adding Unstable Mutation Minor to {victim.LabelShort}");
             victim.genes.AddGene(OMW_GeneDefOf.OMW_UnstableMutationMinor, xenogene: true);
@@ -117,12 +194,6 @@ namespace OMW_Samhaphage
             if (!victim.RaceProps.Humanlike)
             {
                 reason = $"{victim.LabelShort} is not humanlike.";
-                return false;
-            }
-            
-            if (victim.WorkTagIsDisabled(WorkTags.Violent))
-            {
-                reason = $"{victim.LabelShort} is incapable of violence.";
                 return false;
             }
 
