@@ -2,8 +2,25 @@
 
 ## Next
 
-* Genetic complexity should be calculated as a percentage * genetic complexity. The percentage could change based on the difficulty presets.
+* Genetic complexity should be calculated as a percentage * genetic complexity. The percentage could change based on the difficulty presets and the xenotype.
 * render should mute psychic abilities
+* how does WVC make genes always override anything else? Adds a gene class with 
+
+```C#
+		public virtual void Notify_OverriddenBy(Gene overriddenBy)
+		{
+			if (!WVC_Biotech.settings.enable_OverOverridableGenesMechanic)
+			{
+				return;
+			}
+			if (overriddenBy is not IGeneUnoverridable && overrideTries < 100 && overriddenBy.def.ConflictsWith(def))
+			{
+				this.OverrideBy(null);
+				overriddenBy.OverrideBy(this);
+			}
+			overrideTries++;
+		}
+```
 
 ## MOD SETTINGS
 
@@ -18,20 +35,18 @@
 * max # of genes, story mode unlimited
 * max # of traits, story mode unlimited
 * Dissonance: level 1: off, level 2: scales to 0 based off of resonance, level3: fixed amount of time
-* limit number of samhaphage?
+* limit number of samhaphage? based on percentage of colony size, configurable setting?
 * the fluxspawn aren't dying fast enough
-* get rid of the shambler genes since I don't shamble anymore
-* asexual fission
+* control for what to include in random mutation (e.g. blWretch)
+* can genes modify worktags? need a blacklist trigger for randomly mutating those
+* flatten strips genes/traits with Kind?
 
 
 ## BUGS
 
-* retune is completely broken
-* flicker stun needs to be a separate ability so it can be used while drafted
 * replace tetragenic abilities with resonance and add them to the blacklist
 * Excise isn't lethal if target is self
-* block samhaphage ampify when there already is a sovereign???
-* Multipregnancy isn't picked up as preggers
+* Flatten does not return to main menu
 
 ## UI
 
@@ -53,22 +68,15 @@
 ### Traits
 
 * Should handle conflicting traits the same way as I do with genes with respect to the GUI.
-
+* trait abilities should cause brain damage and be blocked by missing brain
+  
 ### Resonance
 
-* automatically convert cancer to resonance?
-* give resonance on kill? need more ways to acquire resonance
 * resonance level should reduce the time of genetic dissonance
 * gain resonance on kill based on the market value of what you killed / 100?
 * "resonance efficiency" by xenotype. +/- percentage on increases/decreases.
 * "resonance thirst" power up when hit zero resonance? maybe not useful if daily resonance is implemented.
 * Daily resonance based on complexity?
-
-
-### Render
-
-* Resonance gain based on market value of pawn after the stripped and bionics removed and genes removed?
-* attenuated should destroy the corpse.. and anything that does destroy corpses should render
 
 ### Backstories
 
@@ -85,14 +93,16 @@
 
 ### Cradlemold
 
-* Implement custom initiate lovin' (beer goggles) if none of the other mods that implement it are available?
+* Implement custom initiate lovin' (psychite goggles) if none of the other mods that implement it are available?
 * Just don't include cradlemold without a lovin' system?
 
 ### Hallowbound
 
+* inverse of scrub... flip a disabled gene to front of xenogenes
+
 ### Fluxspawn
 
-* Add resonance and scrub
+* flicker stun needs to be a separate ability so it can be used while drafted
 * Still working on flicker
 * Faster speed
 * Stun

@@ -43,16 +43,22 @@ namespace OMW_Samhaphage
         public override void CompPostTick(ref float severityAdjustment)
         {
             base.CompPostTick(ref severityAdjustment);
+            // do nothing
+            if (this.parent?.pawn.Map == null) return;
 
-            if (!Active && this.parent.pawn.Map != null)
+            if (!Active) 
             {
                 Active = true;
                 this.geneDefs?.Clear();
 
-                HashSet<GeneDef> alreadyHas = this.parent.pawn.genes.GenesListForReading
+                HashSet<GeneDef> alreadyHas = this.parent.pawn.genes?.GenesListForReading
+                    .Where(g => !g.Overridden)
                     .Select(g => g.def)
-                    .ToHashSet();
-                for (int i = 0; i < Props.numberOfGenes; i++)
+                    .ToHashSet() ?? new HashSet<GeneDef>();
+
+                // BlacklistedGenesDontMutate will contain all the genes that force/suppress traits
+
+                for (int ii = 0; ii < Props.numberOfGenes; ii++)
                 {
                     GeneDef gene = DefDatabase<GeneDef>.AllDefs.Where((GeneDef x) =>
                         !OMW_BlacklistGenes.BlacklistedGenesDontMutate.Contains(x) &&
@@ -62,8 +68,8 @@ namespace OMW_Samhaphage
 
                     if (gene != null)
                     {
-                        Log.Debug($"CompPostTick: add gene {gene.defName}");
-                        this.geneDefs.Add(gene);
+                        Log.Debug($"CompPostTick: {this.parent.pawn.Name} add mutated xenogene # {ii} {gene.defName}");
+                        this.geneDefs?.Add(gene);
                         this.parent.pawn.genes?.AddGene(gene, true);
                     }
                 }
@@ -71,19 +77,23 @@ namespace OMW_Samhaphage
 
             if (this.parent.pawn.IsHashIntervalTick(Props.period))
             {
-
                 if (!this.geneDefs.NullOrEmpty())
                 {
-                    // only remove genes if they didn't become endogenes, otherwise the player would lose the gene permanently and it would be more frustrating than fun. This also means that if a gene becomes an endogene, it will stay with the pawn permanently, which fits with the headcanon of these mutations being a way for the xenotypes to evolve and adapt to their environment over time.
-                    for (int i = 0; i < this.geneDefs.Count; i++)
+                    // Iterate backwards to safely remove items without corrupting the loop or collection state.
+                    // Only remove if they didn't become endogenes (preserving the "evolution" mechanic).
+                    for (int ii = this.geneDefs.Count - 1; ii >= 0; ii--)
                     {
-                        if (this.parent.pawn.genes?.HasXenogene(this.geneDefs[i]) == true)
+                        if (this.parent?.pawn?.genes?.HasXenogene(this.geneDefs[ii]) == true)
                         {
-                            Gene gene = this.parent.pawn.genes?.GetGene(this.geneDefs[i]);
+                            Gene gene = this.parent.pawn.genes.GetGene(this.geneDefs[ii]);
                             if (gene != null)
                             {
-                                Log.Debug($"CompPostTick: remove gene {gene.Label}");
+                                Log.Debug($"CompPostTick: {this.parent.pawn.Name} remove mutated xenogene # {ii} {gene.def.defName}");
                                 this.parent.pawn.genes?.RemoveGene(gene);
+                            }
+                            else
+                            {
+                                Log.Debug($"CompPostTick: skipping invalid gene[{ii}]");
                             }
                         }
                     }
@@ -99,12 +109,12 @@ namespace OMW_Samhaphage
         {
             base.CompPostPostRemoved();
 
-            // only remove genes if they didn't become endogenes, otherwise the player would lose the gene permanently and it would be more frustrating than fun. This also means that if a gene becomes an endogene, it will stay with the pawn permanently, which fits with the headcanon of these mutations being a way for the xenotypes to evolve and adapt to their environment over time.
-            for (int i = 0; i < this.geneDefs.Count; i++)
+            // Iterate backwards for safety during removal
+            for (int i = this.geneDefs.Count - 1; i >= 0; i--)
             {
-                if (this.parent.pawn.genes?.HasXenogene(this.geneDefs[i]) == true)
+                if (this.parent?.pawn?.genes?.HasXenogene(this.geneDefs[i]) == true)
                 {
-                    Gene gene = this.parent.pawn.genes?.GetGene(this.geneDefs[i]);
+                    Gene gene = this.parent.pawn.genes.GetGene(this.geneDefs[i]);
                     if (gene != null)
                     {
                         Log.Debug($"CompPostPostRemoved: remove gene {gene.Label}");

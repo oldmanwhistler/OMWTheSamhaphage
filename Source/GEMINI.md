@@ -46,6 +46,8 @@
 * ✅ Use 1.6 AbilityDef valid fields only (check vanilla for reference)
 * ✅ Use 1.6 GeneDef fields: `biostatCpx`, `biostatMet`, `biostatArc`, `displayOrderInCategory`, `exclusionTags`, `statOffsets`, `statFactors`
 * ✅ Use 1.6 HediffDef stages system for progression
+* ✅ `Pawn_StoryTracker`: Use public properties `Childhood` and `Adulthood`. The fields `childhood` and `adulthood` are private and inaccessible.
+* ✅ `BackstoryDef`: Use the `workDisables` field for checked work tags. Do not confuse this with `disabledWorkTags` which is used by Traits and Genes.
 * ❌ Avoid deprecated 1.5 and earlier fields
 * ❌ Do not use past-version XML tags (test against vanilla RimWorld 1.6 Data folder)
 * `pawn.genes.CheckForOverrides()`: Internal method; not accessible to external assemblies.
