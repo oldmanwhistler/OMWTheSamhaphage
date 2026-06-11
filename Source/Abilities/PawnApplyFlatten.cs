@@ -139,9 +139,6 @@ namespace OMW_Samhaphage
             }
 
             PurgeNegativeMemories(victim);
-            PurgeGenesIncapableViolence(victim, caster);
-            PurgeTraitsIncapableViolence(victim, caster);
-            PurgeBackstoryIncapableViolence(victim, caster);
 
             Log.Debug($"Flatten - adding Unstable Mutation Minor to {victim.LabelShort}");
             victim.genes.AddGene(OMW_GeneDefOf.OMW_UnstableMutationMinor, xenogene: true);
