@@ -18,7 +18,13 @@ namespace OMW_Samhaphage
         protected override float ResonanceTotalMultiplier => AbilityProp.value;
 
 
-        protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
+        protected override List<NullThrumSelectionGeneBlocked> GenesBlockedFromSelection(Pawn source, Pawn dest)
+        {
+            List<NullThrumSelectionGeneBlocked> blocked = new List<NullThrumSelectionGeneBlocked>();
+            return blocked;
+        }
+
+        protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, List<NullThrumSelectionGeneBlocked> blocked)
         {
             HashSet<GeneDef> alreadyHas = dest.genes.GenesListForReading
                                                             .Where(g => !g.Overridden)

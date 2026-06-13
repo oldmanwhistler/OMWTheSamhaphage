@@ -14,8 +14,13 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         protected override float ResonanceTotalMultiplier => AbilityProp.value;
 
+        protected override List<NullThrumSelectionGeneBlocked> GenesBlockedFromSelection(Pawn source, Pawn dest)
+        {
+            List<NullThrumSelectionGeneBlocked> blocked = new List<NullThrumSelectionGeneBlocked>();
+            return blocked;
+        }
 
-        protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest)
+        protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, List<NullThrumSelectionGeneBlocked> blocked)
         {
             // include metabolism = 0 if it has complexity or archites
             HashSet<GeneDef> metabolismZero = dest.genes.GenesListForReading

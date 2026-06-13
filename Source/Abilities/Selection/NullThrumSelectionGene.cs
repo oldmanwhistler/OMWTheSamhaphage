@@ -4,6 +4,17 @@ using System.Collections.Generic;
 
 namespace OMW_Samhaphage
 {
+    public class NullThrumSelectionGeneBlocked
+    {
+        GeneDef geneDef;
+        string reason;
+
+        NullThrumSelectionGeneBlocked(GeneDef geneDef, string reason)
+        {
+            this.geneDef = geneDef;
+            this.reason = reason;
+        }
+    }    
     public abstract class NullThrumSelectionGene : NullThrumSelectionBase
     {
         protected NullThrumSelectionGene(Pawn caster, Pawn source, Pawn dest) : base(caster, source, dest)
@@ -19,7 +30,8 @@ namespace OMW_Samhaphage
 
         protected abstract float ResonanceTotalMultiplier { get; }
 
-        protected abstract List<Gene> GenesToSelectFrom(Pawn source, Pawn dest);
+        protected abstract List<NullThrumSelectionGeneBlocked> GenesBlockedFromSelection(Pawn source, Pawn dest);
+        protected abstract List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, List<NullThrumSelectionGeneBlocked> blocked);
         protected abstract List<GeneDef> ConflictGeneDefs(Pawn source, Pawn dest);
 
 
@@ -62,7 +74,8 @@ namespace OMW_Samhaphage
         private void SetGenesToSelectFromPlus(Pawn source, Pawn dest)
         {
             Log.Debug($"{Name}::SetGenesToSelectFromPlus({source.LabelShort}, {dest.LabelShort})");
-            List<Gene> genesToSelectFrom = this.GenesToSelectFrom(source, dest);
+            List<NullThrumSelectionGeneBlocked> blocked = this.GenesBlockedFromSelection(source, dest);
+            List<Gene> genesToSelectFrom = this.GenesToSelectFrom(source, dest, blocked);
             List<GeneDef> conflictDefs = this.ConflictGeneDefs(source, dest) ?? new List<GeneDef>();
             Log.Debug($"{Name}:: genesToSelectFrom.Count = {genesToSelectFrom.Count}, conflictDefs.Count = {conflictDefs.Count}");
             this.genes = GenePlusUtility.ConvertToGenePlus(source, genesToSelectFrom, conflictDefs);
