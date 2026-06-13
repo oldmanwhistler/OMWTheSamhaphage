@@ -69,6 +69,7 @@
 
 * Should handle conflicting traits the same way as I do with genes with respect to the GUI.
 * trait abilities should cause brain damage and be blocked by missing brain
+* need to blacklist traits that disable worktypes
   
 ### Resonance
 

@@ -14,13 +14,13 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         protected override float ResonanceTotalMultiplier => AbilityProp.value;
 
-        protected override Dictionary<GeneDef,string> GenesBlockedFromSelection(Pawn source, Pawn dest)
+        protected override NullThrumSelectionGeneBlocked  GenesBlockedFromSelection(Pawn source, Pawn dest)
         {
-            Dictionary<GeneDef,string> blocked = new Dictionary<GeneDef,string>();
+            NullThrumSelectionGeneBlocked blocked = new NullThrumSelectionGeneBlocked();
             return blocked;
         }
 
-        protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, Dictionary<GeneDef,string> blocked)
+        protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionGeneBlocked blocked)
         {
             return source.genes.GenesListForReading.ToList();            
         }

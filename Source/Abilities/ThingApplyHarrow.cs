@@ -14,13 +14,30 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         protected override float ResonanceTotalMultiplier => AbilityProp.value;
 
-        protected override Dictionary<GeneDef,string> GenesBlockedFromSelection(Pawn source, Pawn dest)
+        protected override NullThrumSelectionGeneBlocked GenesBlockedFromSelection(Pawn source, Pawn dest)
         {
-            Dictionary<GeneDef,string> blocked = new Dictionary<GeneDef,string>();
+            NullThrumSelectionGeneBlocked blocked = new();
+            foreach (GeneDef geneDef in dest.genes.GenesListForReading.Where(g => g.Overridden).Select(g => g.def))
+            {
+                blocked.Append(geneDef, "Overridden");
+            }
+            foreach (GeneDef geneDef in dest.genes.GenesListForReading.Where(g => OMW_BlacklistGenes.BlacklistedGenesDontCopy.Contains(g.def)).Select(g => g.def))
+            {
+                blocked.Append(geneDef, "Don't Copy");
+            }
+            foreach (GeneDef geneDef in dest.genes.GenesListForReading.Where(g => g.Overridden).Select(g => g.def))
+            {
+                blocked.Append(geneDef, "Overridden");
+            }
+
+            foreach (GeneDef geneDef in dest.genes.GenesListForReading.Where(g => GeneIsWorthless(g)).Select(g => g.def))
+            {                
+                blocked.Append(geneDef, "Cosmetic");
+            }
             return blocked;
         }
 
-        protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, Dictionary<GeneDef,string> blocked)
+        protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionGeneBlocked blocked)
         {
             HashSet<GeneDef> alreadyHas = dest.genes.GenesListForReading
                 .Where(g => !g.Overridden)
