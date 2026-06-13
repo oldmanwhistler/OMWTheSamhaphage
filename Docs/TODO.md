@@ -40,6 +40,7 @@
 * control for what to include in random mutation (e.g. blWretch)
 * can genes modify worktags? need a blacklist trigger for randomly mutating those
 * flatten strips genes/traits with Kind?
+* will raising market value of the pawns just make selling fluxspawn into slavery very profitable?
 
 
 ## BUGS

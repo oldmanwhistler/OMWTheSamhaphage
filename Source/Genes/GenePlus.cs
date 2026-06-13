@@ -8,6 +8,7 @@ namespace OMW_Samhaphage
     {
         public Gene gene;
         public float value = 0f;
+        public string blockedStr = "";
         public string destinationConflictStr = "";
         public bool isXenogene;
         
@@ -47,6 +48,12 @@ namespace OMW_Samhaphage
                 // Adds a red warning with the specific gene name
                 tip += $"\n\n<color=#ff6666>(This gene conflicts with {destinationConflictStr})</color>";
             }
+
+            if (blockedStr != "")
+            {
+                tip += $"\n\n<color=#ffcc00>(Blocked: {blockedStr})</color>";
+            }
+                
 
             if (OMW_BlacklistGenes.BlacklistedGenes.Any(x => x.geneDef == this.gene.def))
             {

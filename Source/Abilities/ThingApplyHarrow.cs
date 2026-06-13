@@ -17,37 +17,40 @@ namespace OMW_Samhaphage
         protected override NullThrumSelectionGeneBlocked GenesBlockedFromSelection(Pawn source, Pawn dest)
         {
             NullThrumSelectionGeneBlocked blocked = new();
-            foreach (GeneDef geneDef in dest.genes.GenesListForReading.Where(g => g.Overridden).Select(g => g.def))
+            if ((source == null) || (source.genes == null)) return blocked;
+            foreach (Gene gene in source.genes.GenesListForReading)
             {
-                blocked.Append(geneDef, "Overridden");
-            }
-            foreach (GeneDef geneDef in dest.genes.GenesListForReading.Where(g => OMW_BlacklistGenes.BlacklistedGenesDontCopy.Contains(g.def)).Select(g => g.def))
-            {
-                blocked.Append(geneDef, "Don't Copy");
-            }
-            foreach (GeneDef geneDef in dest.genes.GenesListForReading.Where(g => g.Overridden).Select(g => g.def))
-            {
-                blocked.Append(geneDef, "Overridden");
-            }
-
-            foreach (GeneDef geneDef in dest.genes.GenesListForReading.Where(g => GeneIsWorthless(g)).Select(g => g.def))
-            {                
-                blocked.Append(geneDef, "Cosmetic");
+                bool isBlocked = false;
+                if (gene.Overridden)
+                {
+                    Log.Debug($"blocking {gene.def} because overridden");
+                    blocked.Append(gene.def, "Overridden");
+                    isBlocked = true;
+                }
+                if (OMW_BlacklistGenes.BlacklistedGenesDontCopy.Contains(gene.def))
+                {
+                    Log.Debug($"blocking {gene.def} because don't copy");
+                    blocked.Append(gene.def, "Don't Copy");
+                    isBlocked = true;
+                }
+                if (GeneIsWorthless(gene))
+                {
+                    Log.Debug($"blocking {gene.def} because cosmetic");
+                    blocked.Append(gene.def, "Cosmetic");
+                    isBlocked = true;
+                }
+                if (!isBlocked)
+                {
+                    Log.Debug($"not blocking {gene.def}: {gene.Label}");
+                }
             }
             return blocked;
         }
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionGeneBlocked blocked)
         {
-            HashSet<GeneDef> alreadyHas = dest.genes.GenesListForReading
-                .Where(g => !g.Overridden)
-                .Select(g => g.def)
-                .ToHashSet();
             return source.genes.GenesListForReading
-                .Where(g => !OMW_BlacklistGenes.BlacklistedGenesDontCopy.Contains(g.def) && // ignore blacklisted
-                            !alreadyHas.Contains(g.def) && // ignore genes the caster already has                            
-                            !this.GeneIsWorthless(g)) // ignore cosmetic genes
- 
+                .Where(g => !blocked.Has(g.def))
                 .ToList();
         }
 

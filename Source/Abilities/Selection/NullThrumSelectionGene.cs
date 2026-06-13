@@ -67,8 +67,8 @@ namespace OMW_Samhaphage
             NullThrumSelectionGeneBlocked blocked = this.GenesBlockedFromSelection(source, dest);
             List<Gene> genesToSelectFrom = this.GenesToSelectFrom(source, dest, blocked);
             List<GeneDef> conflictDefs = this.ConflictGeneDefs(source, dest) ?? new List<GeneDef>();
-            Log.Debug($"{Name}:: genesToSelectFrom.Count = {genesToSelectFrom.Count}, conflictDefs.Count = {conflictDefs.Count}");
-            this.genes = GenePlusUtility.ConvertToGenePlus(source, genesToSelectFrom, conflictDefs);
+            Log.Debug($"{Name}:: genesToSelectFrom.Count = {genesToSelectFrom.Count}, blocked.Count = {blocked.Count}, conflictDefs.Count = {conflictDefs.Count}");
+            this.genes = GenePlusUtility.ConvertToGenePlus(source, genesToSelectFrom, blocked, conflictDefs);
             foreach (GenePlus gene in this.genes)
             {
                 gene.value = this.GeneValue(gene.gene);
@@ -82,9 +82,10 @@ namespace OMW_Samhaphage
                     genesThatCantBeSelected.Add(gene);
                 }
             }
-            List<GeneDef> conflictDefs2 = new List<GeneDef>();
-            this.unselectableGenes = GenePlusUtility.ConvertToGenePlus(source, genesThatCantBeSelected, conflictDefs2);
+            this.unselectableGenes = GenePlusUtility.ConvertToGenePlus(source, genesThatCantBeSelected, blocked, null);
         }
+
+
 
         public bool ResonanceDebit(GenePlus plus)
         {

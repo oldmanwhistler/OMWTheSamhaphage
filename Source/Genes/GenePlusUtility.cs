@@ -7,7 +7,7 @@ namespace OMW_Samhaphage
     public static class GenePlusUtility
     {
 
-        public static List<GenePlus> ConvertToGenePlus(Pawn pawn, List<Gene> genes, List<GeneDef> destConflicts = null)
+        public static List<GenePlus> ConvertToGenePlus(Pawn pawn, List<Gene> genes, NullThrumSelectionGeneBlocked blocked, List<GeneDef> destConflicts = null)
         {
             List<GenePlus> endoGenes = new List<GenePlus>();
             List<GenePlus> xenoGenes = new List<GenePlus>();
@@ -16,6 +16,8 @@ namespace OMW_Samhaphage
             {
                 GenePlus plus = new GenePlus(gene);
                 plus.isXenogene = pawn.genes.Xenogenes.Contains(gene);
+
+                plus.blockedStr = blocked?.Str(gene.def) ?? "";
 
                 List<string> tmpDestConflicts = [];
                 if (destConflicts != null)
