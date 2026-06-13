@@ -18,8 +18,8 @@ namespace OMW_Samhaphage
         BlImplanter,
         BlDontCopy,
         BlDontRemove,        
-        BlMisc,
-        BlAscension,
+        BlBanned,
+        BlOutlandGenetics,
         BlMetamorph,
         BlTrait,
         BlSamhaphage,
@@ -94,38 +94,68 @@ namespace OMW_Samhaphage
                 return;
             }
 
+
             HashSet<BlacklistGeneType> blCanCopy = new HashSet<BlacklistGeneType>();
             HashSet<BlacklistGeneType> blCanMutate = new HashSet<BlacklistGeneType>();
             HashSet<BlacklistGeneType> blCanGenerate = new HashSet<BlacklistGeneType>();
             HashSet<BlacklistGeneType> blCanRemove = new HashSet<BlacklistGeneType>();
 
-
             // For generate/mutate we want to avoid traits since they can cause pawn generation failures
             // because of worktags etc. Randomizing genes-for-traits causes a lot of crash-to-desktop problems.
 
-            blCanGenerate.Add(BlacklistGeneType.BlImplanter);
-            blCanGenerate.Add(BlacklistGeneType.BlReproduction);
+            // ALWAYS EXCLUDE
+            // BlacklistGeneType.BlSamhaphage - genes from the samhaphage xenos where removing them would really mess stuff up
+            // BlacklistGeneType.BlImplanter - implantation genes which can make this race trivial
+            // BlacklistGeneType.BlBanned - genes from other mods that aren't considered safe to use except for their specific race
+            // BlacklistGeneType.BlMetamorph - WVC metamorph genes           
 
-            blCanMutate.Add(BlacklistGeneType.BlReproduction);
+            // SOMETIMES EXCLUDE
+            // BlacklistGeneType.BlGenePack -- prevent genes that aren't allowed to spawn in genepacks. This is usually how a mod says a gene can't be randomized.
+            // BlacklistGeneType.BlWretch -- this a copy of AlphaGenes' blacklist for the wretch which contains genes that cause issues with random mutations
+            // BlacklistGeneType.BlPrereq -- genes with pre-requisites on other genes. Will likely spawn disabled.
+            // BlacklistGeneType.BlTrait -- genes that implement traits which can create pawngeneration loops and CTD if other traits or backstories create impossible to solve conditions.
+            // BlacklistGeneType.BlOutlandGenetics -- outland genetics' ascension and morph system. Generates genes for every xeno in the game. Because these are randomly selected they usually are just unusable for Samhaphages.
+            // BlacklistGeneType.BlReproduction -- baby making genes. Can break the reproductive aspect of the mod balance.
+            // BlacklistGeneType.BlDontCopy -- prevent copying as it would trivialize game balance
+
+            // The CanGenerate blacklist is only used with Genetic Drift            
+            // blCanGenerate.Add(BlacklistGeneType.BlGenePack);
+            // blCanGenerate.Add(BlacklistGeneType.BlWretch);
+            // blCanGenerate.Add(BlacklistGeneType.BlPrereq);
+            // blCanGenerate.Add(BlacklistGeneType.BlTrait);
+            // blCanGenerate.Add(BlacklistGeneType.BlOutlandGenetics);           
+            blCanGenerate.Add(BlacklistGeneType.BlReproduction);
+            blCanGenerate.Add(BlacklistGeneType.BlDontCopy);
+            blCanGenerate.Add(BlacklistGeneType.BlDontRemove);        
+
+            // blCanMutate.Add(BlacklistGeneType.BlGenePack);
+            // blCanMutate.Add(BlacklistGeneType.BlWretch);
             blCanMutate.Add(BlacklistGeneType.BlPrereq);
-            blCanMutate.Add(BlacklistGeneType.BlGenePack);
-            // blWretch is generated from AlphaGenes' rules for the Random Mutation gene.
-            blCanMutate.Add(BlacklistGeneType.BlWretch);
+            // blCanMutate.Add(BlacklistGeneType.BlTrait);
+            // blCanMutate.Add(BlacklistGeneType.BlOutlandGenetics);           
+            blCanMutate.Add(BlacklistGeneType.BlReproduction);
+            blCanMutate.Add(BlacklistGeneType.BlDontCopy);
+            blCanMutate.Add(BlacklistGeneType.BlDontRemove);        
 
             blCanCopy.Add(BlacklistGeneType.BlGenePack);
             blCanCopy.Add(BlacklistGeneType.BlWretch);
-            blCanCopy.Add(BlacklistGeneType.BlTrait);
             blCanCopy.Add(BlacklistGeneType.BlPrereq);
+            blCanCopy.Add(BlacklistGeneType.BlTrait);
+            blCanCopy.Add(BlacklistGeneType.BlOutlandGenetics);           
+            // blCanCopy.Add(BlacklistGeneType.BlReproduction);
+            // blCanCopy.Add(BlacklistGeneType.BlDontCopy);
+            blCanCopy.Add(BlacklistGeneType.BlDontRemove);                    
 
-            blCanRemove.Add(BlacklistGeneType.BlAscension);
-            blCanRemove.Add(BlacklistGeneType.BlMetamorph);
-            blCanRemove.Add(BlacklistGeneType.BlDontCopy);
-            blCanRemove.Add(BlacklistGeneType.BlPrereq);
             blCanRemove.Add(BlacklistGeneType.BlGenePack);
             blCanRemove.Add(BlacklistGeneType.BlWretch);
+            blCanRemove.Add(BlacklistGeneType.BlPrereq);
             blCanRemove.Add(BlacklistGeneType.BlTrait);
+            blCanRemove.Add(BlacklistGeneType.BlOutlandGenetics);           
+            // blCanRemove.Add(BlacklistGeneType.BlReproduction);
+            blCanRemove.Add(BlacklistGeneType.BlDontCopy);
+            // blCanRemove.Add(BlacklistGeneType.BlDontRemove);        
 
-            // AlphaGenes integration: respect the Wretch
+            // AlphaGenes integration: wrespect the Wretch
             List<GeneDef> cachedBlacklist = new List<GeneDef>();
             List<string> cachedDefnameStrings = new List<string>();
 
@@ -143,44 +173,53 @@ namespace OMW_Samhaphage
             // core
             myDontCopy.Add("ViolenceDisabled");
             myDontCopy.Add("KindInstinct");
-            myDontCopy.Add("XenogermReimplanter");
             // WVC
             myDontCopy.Add("WVC_Traitless");
             myDontCopy.Add("WVC_Chimera_NullifiedLimit");
             myDontCopy.Add("WVC_Chimera_GreatlyDecreasedLimit");
             myDontCopy.Add("WVC_Aptitudes_GreatEqualizer"); // this will let you pass it around the colony and scrub any aptitudes
-            myDontCopy.Add("WVC_XenotypesAndGenes_RandomEndotypeForcer");
-            myDontCopy.Add("WVC_XenotypesAndGenes_RandomXenotypeForcer");
             myDontCopy.Add("WVC_Hive"); // being able to get in on skill sharing, thoughts etc is too powerful
+            myDontCopy.Add("WVC_PsychicAbility_Hivemind");
             myDontCopy.Add("WVC_Morph");
             myDontCopy.Add("WVC_Chimera_GenelineHiveMind");
-            myDontCopy.Add("WVC_StartGestation");
-            myDontCopy.Add("WVC_XenotypeGestator");
-            myDontCopy.Add("WVC_StorageGestator");
             // VRE
-            myDontCopy.Add("VRE_GermlineReimplanter");
             // AG
-            myDontCopy.Add("AG_InsectStinger");
-            myDontCopy.Add("AG_ParasiticStinger");
-            myDontCopy.Add("AG_InsectStingerEndogenes");
-            myDontCopy.Add("AG_ParasiticStingerEndogenes");
-            myDontCopy.Add("AG_AsexualFission");
             myDontCopy.Add("BS_CellPandemonium");
-
             // Gene for Traits. I need to test if this still breaks things.
             myDontCopy.Add("Gene_Trait_");
+            myDontCopy.Add("Cannibal");
+            myDontCopy.Add("BS_Diet_Carnivore");
 
             List<string> myDontRemove = new List<string>();
             myDontRemove.Add("WVC_Hive"); // needed to make the fluxspawn work
+            myDontRemove.Add("WVC_PsychicAbility_Hivemind");
             myDontRemove.Add("BS_CellPandemonium");
             myDontRemove.Add("BS_Diet_Carnivore");
             myDontRemove.Add("BS_CannotWearClothingOrArmor");
             myDontRemove.Add("BS_NoEquip");
+            myDontRemove.Add("Cannibal");
 
-            List<string> myPreggoStrings = new List<string>();
-            myPreggoStrings.Add("RS_MultiPregnancy");
-            myPreggoStrings.Add("AG_AsexualFission");
-            myPreggoStrings.Add("BS_SlimeProliferation");
+            List<string> myPreggo = new List<string>();
+            myPreggo.Add("RS_MultiPregnancy");
+            myPreggo.Add("AG_AsexualFission");
+            myPreggo.Add("BS_SlimeProliferation");
+            myPreggo.Add("AG_InsectStinger");
+            myPreggo.Add("AG_ParasiticStinger");
+            myPreggo.Add("AG_AsexualFission");
+            myPreggo.Add("WVC_StartGestation");
+            myPreggo.Add("WVC_XenotypeGestator");
+            myPreggo.Add("WVC_StorageGestator");
+            myPreggo.Add("WVC_Dustogenic_ImmaculateConception");
+            myPreggo.Add("BugParts_honeypot");
+
+
+            List<string> myImplanter = new List<string>();
+            myImplanter.Add("XenogermReimplanter");
+            myImplanter.Add("VRE_GermlineReimplanter");
+            myImplanter.Add("AG_InsectStingerEndogenes");
+            myImplanter.Add("AG_ParasiticStingerEndogenes");
+            myImplanter.Add("WVC_XenotypesAndGenes_RandomEndotypeForcer");
+            myImplanter.Add("WVC_XenotypesAndGenes_RandomXenotypeForcer");
 
 
             foreach (GeneDef geneDef in DefDatabase<GeneDef>.AllDefs)
@@ -204,10 +243,15 @@ namespace OMW_Samhaphage
                     bl.Add(BlacklistGeneType.BlDontRemove);
                 }
 
-                if (myPreggoStrings.Any(s => geneDef.defName.Contains(s)))
+                if (myPreggo.Any(s => geneDef.defName.Contains(s)))
                 {
                     bl.Add(BlacklistGeneType.BlReproduction);
-                }                
+                } 
+                if (myImplanter.Any(s => geneDef.defName.Contains(s)))
+                {
+                    bl.Add(BlacklistGeneType.BlImplanter);
+                }                  
+
                 if (geneDef.prerequisite != null)
                 {
                     bl.Add(BlacklistGeneType.BlPrereq);
@@ -222,7 +266,7 @@ namespace OMW_Samhaphage
                 }
                 if (geneDef.displayCategory?.defName?.Contains("Ascension") == true)
                 {
-                    bl.Add(BlacklistGeneType.BlAscension);
+                    bl.Add(BlacklistGeneType.BlOutlandGenetics);
                 }
                 if (geneDef.displayCategory?.defName?.Contains("Metamorph") == true)
                 {
@@ -234,11 +278,11 @@ namespace OMW_Samhaphage
                 }
                 if (geneDef.exclusionTags?.Contains("AG_OnlyOnCharacterCreation") == true)
                 {
-                    bl.Add(BlacklistGeneType.BlMisc);
+                    bl.Add(BlacklistGeneType.BlBanned);
                 }
                 if (geneDef.displayCategory?.defName?.Contains("BS_DO_NOT") == true)
                 {
-                    bl.Add(BlacklistGeneType.BlMisc);
+                    bl.Add(BlacklistGeneType.BlBanned);
                 }
 
                 if (geneDef.forcedTraits != null)
