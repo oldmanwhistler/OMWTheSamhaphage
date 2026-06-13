@@ -18,6 +18,7 @@
       <li>Learning_Slow</li>
       <li MayRequire="omw.samhaphage">OMW_CorpseReassembler</li>
       <li MayRequire="omw.samhaphage">OMW_ScouredMind</li>
+      <li MayRequire="omw.samhaphage">OMW_Resonance</li>      
       <li MayRequire="redmattis.bigsmall.core">BS_PilotAssistible</li>      
     </genes>
   </XenotypeDef>

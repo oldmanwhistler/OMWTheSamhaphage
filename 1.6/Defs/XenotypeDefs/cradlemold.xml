@@ -11,6 +11,7 @@
       <li MayRequire="omw.samhaphage">OMW_Fluxspawn_Ferility</li>
       <li MayRequire="omw.samhaphage">OMW_Cradlemold_Frame</li>
       <li MayRequire="omw.samhaphage">OMW_UnstableMutationPositive</li>
+      <li MayRequire="omw.samhaphage">OMW_Resonance</li>      
       <li MayRequire="sarg.alphagenes">AG_Female</li>
       <li MayRequire="redmattis.betterprerequisites">Body_FemaleOnly</li>
       <li MayRequire="redmattis.bigsmall.core">BS_DroneKind</li>
@@ -23,7 +24,7 @@
       <li MayRequire="redmattis.bigsmall.core">BS_ShortPregnancy</li>
       <li MayRequire="redmattis.bigsmall.core">VU_Libido_Succubus</li>
       <li MayRequire="redmattis.bigsmall.core">BS_Skin_Marble_White</li>
-      <li MayRequire="redmattis.bigsmall.core">BS_PilotRequired</li>            
+      <li MayRequire="redmattis.bigsmall.core">BS_PilotAssistible</li>                  
       <li MayRequire="redmattis.bettergeneinheritance">BGI_RecessiveGenes</li>
       <li MayRequire="resplice.xotr.charmweavers">RS_MultiPregnancy</li>
       <li MayRequire="sarg.alphagenes">AG_Teratophilia</li>
