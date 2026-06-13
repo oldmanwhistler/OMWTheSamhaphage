@@ -16,22 +16,53 @@ namespace OMW_Samhaphage
 
         protected override NullThrumSelectionGeneBlocked  GenesBlockedFromSelection(Pawn source, Pawn dest)
         {
-            NullThrumSelectionGeneBlocked blocked = new NullThrumSelectionGeneBlocked();
+            NullThrumSelectionGeneBlocked blocked = new();
+            if (source?.genes == null) return blocked;
+
+            HashSet<GeneDef> endogeneDefs = source.genes.Endogenes
+                .Where(g => !g.Overridden)
+                .Select(g => g.def)
+                .ToHashSet();
+
+            foreach (Gene gene in source.genes.GenesListForReading)
+            {
+                bool isBlocked = false;
+                if (!source.genes.Xenogenes.Contains(gene))
+                {
+                    Log.Debug($"blocking {gene.def} because germline");
+                    blocked.Append(gene.def, "Germline");
+                    isBlocked = true;
+                }
+                else if (OMW_BlacklistGenes.BlacklistedGenesDontCopy.Contains(gene.def))
+                {
+                    Log.Debug($"blocking {gene.def} because don't copy");
+                    blocked.Append(gene.def, "Don't Copy");
+                    isBlocked = true;
+                }
+                else if (endogeneDefs.Contains(gene.def))
+                {
+                    Log.Debug($"blocking {gene.def} because already harmonized");
+                    blocked.Append(gene.def, "Already Harmonized");
+                    isBlocked = true;
+                }
+                else if (GeneIsCosmetic(gene))
+                {
+                    Log.Debug($"blocking {gene.def} because cosmetic");
+                    blocked.Append(gene.def, "Cosmetic");
+                    isBlocked = true;
+                }
+                if (!isBlocked)
+                {
+                    Log.Debug($"not blocking {gene.def}: {gene.Label}");
+                }
+            }
             return blocked;
         }
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionGeneBlocked blocked)
         {
-            // Retune is moving Xenogenes to Endogenes on source
-            HashSet<GeneDef> alreadyHas = source.genes.Endogenes
-                .Where(g => !g.Overridden)
-                .Select(g => g.def)
-                .ToHashSet();
-            return source.genes.Xenogenes
-                .Where(g => !OMW_BlacklistGenes.BlacklistedGenesDontCopy.Contains(g.def) && // ignore blacklisted
-                            !alreadyHas.Contains(g.def) &&
-                            !this.GeneIsWorthless(g)) // ignore cosmetic genes
-                .ToList();
+            if (source?.genes == null) return new List<Gene>();
+            return source.genes.GenesListForReading.Where(g => !blocked.Has(g.def)).ToList();
         }
 
         protected override List<GeneDef> ConflictGeneDefs(Pawn source, Pawn dest)

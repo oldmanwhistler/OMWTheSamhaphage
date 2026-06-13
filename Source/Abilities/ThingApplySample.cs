@@ -20,21 +20,46 @@ namespace OMW_Samhaphage
 
         protected override NullThrumSelectionGeneBlocked  GenesBlockedFromSelection(Pawn source, Pawn dest)
         {
-            NullThrumSelectionGeneBlocked blocked = new NullThrumSelectionGeneBlocked();
+            NullThrumSelectionGeneBlocked blocked = new();
+            if (source?.genes == null || dest?.genes == null) return blocked;
+
+            HashSet<GeneDef> alreadyHas = dest.genes.GenesListForReading
+                .Where(g => !g.Overridden)
+                .Select(g => g.def)
+                .ToHashSet();
+
+            foreach (Gene gene in source.genes.GenesListForReading)
+            {
+                bool isBlocked = false;
+                if (alreadyHas.Contains(gene.def))
+                {
+                    Log.Debug($"blocking {gene.def} because already possessed");
+                    blocked.Append(gene.def, "Already have");
+                    isBlocked = true;
+                }
+                else if (gene.Overridden)
+                {
+                    Log.Debug($"blocking {gene.def} because overridden");
+                    blocked.Append(gene.def, "Overridden");
+                    isBlocked = true;
+                }
+                else if (!GeneIsCosmetic(gene))
+                {
+                    Log.Debug($"blocking {gene.def} because not cosmetic");
+                    blocked.Append(gene.def, "Not Cosmetic");
+                    isBlocked = true;
+                }
+                if (!isBlocked)
+                {
+                    Log.Debug($"not blocking {gene.def}: {gene.Label}");
+                }
+            }
             return blocked;
         }
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionGeneBlocked blocked)
         {
-            HashSet<GeneDef> alreadyHas = dest.genes.GenesListForReading
-                                                            .Where(g => !g.Overridden)
-                                                            .Select(g => g.def)
-                                                            .ToHashSet();
-            return source.genes.GenesListForReading
-                .Where(g => !alreadyHas.Contains(g.def) && // ignore genes the caster already has
-                            !g.Overridden && // can't steal a face if it's already overridden
-                            this.GeneIsWorthless(g)) // want cosmetic genes only
-                .ToList();
+            return source.genes.GenesListForReading.Where(g => !blocked.Has(g.def)).ToList();
         }
 
         protected override List<GeneDef> ConflictGeneDefs(Pawn source, Pawn dest)

@@ -16,28 +16,42 @@ namespace OMW_Samhaphage
 
         protected override NullThrumSelectionGeneBlocked  GenesBlockedFromSelection(Pawn source, Pawn dest)
         {
-            NullThrumSelectionGeneBlocked blocked = new NullThrumSelectionGeneBlocked();
+            NullThrumSelectionGeneBlocked blocked = new();
+            if (source?.genes == null) return blocked;
+
+            foreach (Gene gene in source.genes.GenesListForReading)
+            {
+                bool isBlocked = false;
+                if (OMW_BlacklistGenes.BlacklistedGenesDontRemove.Contains(gene.def))
+                {
+                    Log.Debug($"blocking {gene.def} because don't remove");
+                    blocked.Append(gene.def, "Don't Remove");
+                    isBlocked = true;
+                }
+                else if (gene.def.biostatMet > 0)
+                {
+                    Log.Debug($"blocking {gene.def} because positive metabolism");
+                    blocked.Append(gene.def, "Positive Metabolism");
+                    isBlocked = true;
+                }
+                else if (gene.def.biostatMet == 0 && gene.def.biostatCpx <= 0 && gene.def.biostatArc <= 0)
+                {
+                    Log.Debug($"blocking {gene.def} because zero metabolism");
+                    blocked.Append(gene.def, "Zero Metabolism");
+                    isBlocked = true;
+                }
+                if (!isBlocked)
+                {
+                    Log.Debug($"not blocking {gene.def}: {gene.Label}");
+                }
+            }
             return blocked;
         }
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionGeneBlocked blocked)
         {
-            // include metabolism = 0 if it has complexity or archites
-            HashSet<GeneDef> metabolismZero = dest.genes.GenesListForReading
-                .Select(g => g.def)
-                .Where(g => ((g.biostatMet == 0) && (g.biostatCpx <= 0) && (g.biostatArc <= 0)))
-                .ToHashSet();
-            // never include positive metabolisms
-            HashSet<GeneDef> metabolismPositive = dest.genes.GenesListForReading
-                .Select(g => g.def)
-                .Where(g => g.biostatMet > 0)
-                .ToHashSet();
-
             return source.genes.GenesListForReading
-                .Where(g => !OMW_BlacklistGenes.BlacklistedGenesDontRemove.Contains(g.def) &&
-                            !metabolismZero.Contains(g.def) &&
-                            !metabolismPositive.Contains(g.def)
-                )
+                .Where(g => !blocked.Has(g.def))
                 .ToList();
         }
 

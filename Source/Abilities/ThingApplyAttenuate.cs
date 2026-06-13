@@ -16,13 +16,13 @@ namespace OMW_Samhaphage
 
         protected override NullThrumSelectionGeneBlocked  GenesBlockedFromSelection(Pawn source, Pawn dest)
         {
-            NullThrumSelectionGeneBlocked blocked = new NullThrumSelectionGeneBlocked();
+            NullThrumSelectionGeneBlocked blocked = new();
             return blocked;
         }
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionGeneBlocked blocked)
         {
-            return source.genes.GenesListForReading.ToList();            
+            return source.genes.GenesListForReading.Where(g => !blocked.Has(g.def)).ToList();
         }
     
         protected override List<GeneDef> ConflictGeneDefs(Pawn source, Pawn dest)

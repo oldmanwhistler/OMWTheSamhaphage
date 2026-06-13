@@ -41,7 +41,7 @@
 * can genes modify worktags? need a blacklist trigger for randomly mutating those
 * flatten strips genes/traits with Kind?
 * will raising market value of the pawns just make selling fluxspawn into slavery very profitable?
-
+* Resurrect needs should calculate the genes/traits and then use that to charge the resonance. Ability would have a yes/no selection pop up about continuing.
 
 ## BUGS
 

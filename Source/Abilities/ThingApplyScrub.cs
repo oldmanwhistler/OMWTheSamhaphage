@@ -16,16 +16,37 @@ namespace OMW_Samhaphage
 
         protected override NullThrumSelectionGeneBlocked  GenesBlockedFromSelection(Pawn source, Pawn dest)
         {
-            NullThrumSelectionGeneBlocked blocked = new NullThrumSelectionGeneBlocked();
+            NullThrumSelectionGeneBlocked blocked = new();
+            if (source?.genes == null) return blocked;
+
+            foreach (Gene gene in source.genes.GenesListForReading)
+            {
+                bool isBlocked = false;
+                if (OMW_BlacklistGenes.BlacklistedGenesDontRemove.Contains(gene.def))
+                {
+                    Log.Debug($"blocking {gene.def} because don't remove");
+                    blocked.Append(gene.def, "Don't Remove");
+                    isBlocked = true;
+                }
+                else if (!gene.Overridden)
+                {
+                    Log.Debug($"blocking {gene.def} because active gene");
+                    blocked.Append(gene.def, "Active Gene");
+                    isBlocked = true;
+                }
+                if (!isBlocked)
+                {
+                    Log.Debug($"not blocking {gene.def}: {gene.Label}");
+                }
+            }
             return blocked;
         }
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionGeneBlocked blocked)
         {
             return source.genes.GenesListForReading
-                .Where(g => !OMW_BlacklistGenes.BlacklistedGenesDontRemove.Contains(g.def) &&
-                        g.Overridden) // must be overridden to be scrubbed
-                .ToList();            
+                .Where(g => !blocked.Has(g.def))
+                .ToList();
         }
     
         protected override List<GeneDef> ConflictGeneDefs(Pawn source, Pawn dest)

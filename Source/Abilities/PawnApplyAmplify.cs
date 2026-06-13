@@ -26,7 +26,7 @@ namespace OMW_Samhaphage
             if (victim == null || caster == null) return;
             
             // Consume resonance
-            if (!ResonanceUtility.Decr(caster, ResonanceCost))
+            if (!ResonanceUtility.Incr("Amplified", caster, ResonanceCost))
             {
                 Log.Error($"[OMW_Samhaphage] Failed to decrement resonance for {caster.LabelShort} during Amplify ability. This indicates a logic error where CanApplyOnPawn did not prevent the ability.");
                 doOnComplete();
@@ -35,7 +35,8 @@ namespace OMW_Samhaphage
             OMWGenes.ChangeEndotype(victim, TargetXenotype);
             MoteMaker.MakeAttachedOverlay(victim, ThingDefOf.Mote_ResurrectFlash, Vector3.zero);
             Log.Debug($"Amplified {victim.LabelShort}: became {TargetXenotype.label}.");
-            doOnComplete();
+            // DON'T GO BACK TO THE MENU because the pawn changes xenotypes
+            //doOnComplete();
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

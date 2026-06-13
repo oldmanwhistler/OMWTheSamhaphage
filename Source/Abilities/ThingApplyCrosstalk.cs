@@ -16,15 +16,39 @@ namespace OMW_Samhaphage
 
         protected override NullThrumSelectionGeneBlocked  GenesBlockedFromSelection(Pawn source, Pawn dest)
         {
-            NullThrumSelectionGeneBlocked blocked = new NullThrumSelectionGeneBlocked();
+            NullThrumSelectionGeneBlocked blocked = new();
+            if (source?.genes == null) return blocked;
+
+            foreach (Gene gene in source.genes.GenesListForReading)
+            {
+                bool isBlocked = false;
+                if (!source.genes.Xenogenes.Contains(gene))
+                {
+                    Log.Debug($"blocking {gene.def} because germline");
+                    blocked.Append(gene.def, "Germline");
+                    isBlocked = true;
+                }
+                else if (OMW_BlacklistGenes.BlacklistedGenesDontCopy.Contains(gene.def))
+                {
+                    Log.Debug($"blocking {gene.def} because don't copy");
+                    blocked.Append(gene.def, "Don't Copy");
+                    isBlocked = true;
+                }
+                if (!isBlocked)
+                {
+                    Log.Debug($"not blocking {gene.def}: {gene.Label}");
+                }
+            }
             return blocked;
         }
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionGeneBlocked blocked)
         {
-            // Crosstalk targets genes that are overridden (inactive signals)
-            return source.genes.Xenogenes
-                .Where(g => !OMW_BlacklistGenes.BlacklistedGenesDontCopy.Contains(g.def)) 
+            if (source?.genes == null) return new List<Gene>();
+
+            // Crosstalk effectively targets xenogenes
+            return source.genes.GenesListForReading
+                .Where(g => !blocked.Has(g.def))
                 .ToList();
         }
 

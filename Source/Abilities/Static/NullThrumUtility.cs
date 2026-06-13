@@ -270,8 +270,8 @@ namespace OMW_Samhaphage
         public NullThrumAbilityProps amplify = new NullThrumAbilityProps(
             NullThrumAbilityType.Amplify,
             NullThrumResourceType.ResourceTypeChangeXenotype,
-            NullThrumResonanceType.ResonanceTypeNone,
-            NullThrumMathType.MathTypeNone, 0f);
+            NullThrumResonanceType.ResonanceTypeCredit,
+            NullThrumMathType.MathTypeOffset, 75f);
 
         public NullThrumAbilityProps render = new NullThrumAbilityProps(
             NullThrumAbilityType.Render,

@@ -33,7 +33,7 @@ namespace OMW_Samhaphage
                     blocked.Append(gene.def, "Don't Copy");
                     isBlocked = true;
                 }
-                if (GeneIsWorthless(gene))
+                if (GeneIsCosmetic(gene))
                 {
                     Log.Debug($"blocking {gene.def} because cosmetic");
                     blocked.Append(gene.def, "Cosmetic");

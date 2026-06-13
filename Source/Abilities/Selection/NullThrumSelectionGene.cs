@@ -50,7 +50,7 @@ namespace OMW_Samhaphage
             return final;
         }
 
-        protected bool GeneIsWorthless(Gene gene)
+        protected bool GeneIsCosmetic(Gene gene)
         {
 
             if (gene.def.displayCategory.defName.Contains("Cosmetic"))

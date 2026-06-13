@@ -16,19 +16,42 @@ namespace OMW_Samhaphage
 
         protected override NullThrumSelectionGeneBlocked  GenesBlockedFromSelection(Pawn source, Pawn dest)
         {
-            NullThrumSelectionGeneBlocked blocked = new NullThrumSelectionGeneBlocked();
+            NullThrumSelectionGeneBlocked blocked = new();
+            if (source?.genes == null) return blocked;
+
+            HashSet<GeneDef> endogeneDefs = source.genes.Endogenes
+                .Where(g => !g.Overridden)
+                .Select(g => g.def)
+                .ToHashSet();
+
+            foreach (Gene gene in source.genes.GenesListForReading)
+            {
+                bool isBlocked = false;
+                if (!source.genes.Xenogenes.Contains(gene))
+                {
+                    Log.Debug($"blocking {gene.def} because germline");
+                    blocked.Append(gene.def, "Germline");
+                    isBlocked = true;
+                }
+                else if (endogeneDefs.Contains(gene.def))
+                {
+                    Log.Debug($"blocking {gene.def} because already harmonized");
+                    blocked.Append(gene.def, "Already Harmonized");
+                    isBlocked = true;
+                }
+                if (!isBlocked)
+                {
+                    Log.Debug($"not blocking {gene.def}: {gene.Label}");
+                }
+            }
             return blocked;
         }
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionGeneBlocked blocked)
         {
-            // Compress is moving Xenogenes to Endogenes on source
-            HashSet<GeneDef> alreadyHas = source.genes.Endogenes
-                .Where(g => !g.Overridden)
-                .Select(g => g.def)
-                .ToHashSet();
-            return source.genes.Xenogenes
-                .Where(g => !alreadyHas.Contains(g.def))
+            if (source?.genes == null) return new List<Gene>();
+            return source.genes.GenesListForReading
+                .Where(g => !blocked.Has(g.def))
                 .ToList();
         }
 

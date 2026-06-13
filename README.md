@@ -107,13 +107,19 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
   * The Cradlemold requires a method for initiating "romance".
 * [Gene Ledger - 11,799 subs](https://steamcommunity.com/sharedfiles/filedetails/?id=3673202834)
   * Provides a way to scan the map for all genes without looking at every pawn individually.
+* [Metabolic Adjusters V2 - 6113 subs](https://steamcommunity.com/sharedfiles/filedetails/?id=3232610163)
+  * Genes that provide huge amounts of metabolism
 * [Gene Blacklist - 77 subs](https://steamcommunity.com/sharedfiles/filedetails/?id=3713260000)
   * Better controls for excluding genes from gene packs and gene extraction.
 
 ### Mod Conflicts
 
+I didn't hardcoded this as conflicts because YMMV, but they conceptually break the game balance of this mod.
+
+* [No Metabolic Efficiency - 8732 subs](https://steamcommunity.com/sharedfiles/filedetails/?id=3345995667)
+  * Because it removes metabolism from all genes it will screw up all the math in my mod for game balance.
 * [Gene for Traits - 336 subs](https://steamcommunity.com/sharedfiles/filedetails/?id=3681376854)
-  * This mod works ok for Vanilla, but for any traits that have complex code behind them, then were only tested as traits at pawn generation.
+  * I ran into crash-to-desktop problems with this and traits from other mods.
 
 
 ### Mod Interactions
