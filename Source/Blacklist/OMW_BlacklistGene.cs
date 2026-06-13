@@ -189,6 +189,12 @@ namespace OMW_Samhaphage
             myDontCopy.Add("Gene_Trait_");
             myDontCopy.Add("Cannibal");
             myDontCopy.Add("BS_Diet_Carnivore");
+            myDontCopy.Add("BS_OverrideDummyGene");
+            myDontCopy.Add("BS_CannotWearClothingOrArmor");
+            myDontCopy.Add("BS_NoEquip");
+
+
+
 
             List<string> myDontRemove = new List<string>();
             myDontRemove.Add("WVC_Hive"); // needed to make the fluxspawn work
@@ -225,6 +231,8 @@ namespace OMW_Samhaphage
             foreach (GeneDef geneDef in DefDatabase<GeneDef>.AllDefs)
             {
                 BlacklistGene bl = new BlacklistGene(geneDef);
+                string modName = geneDef.modContentPack?.Name ?? geneDef.modContentPack?.PackageId ?? "Unknown";
+
                 if (geneDef.canGenerateInGeneSet == false)
                 {
                     bl.Add(BlacklistGeneType.BlGenePack);
@@ -280,9 +288,18 @@ namespace OMW_Samhaphage
                 {
                     bl.Add(BlacklistGeneType.BlBanned);
                 }
-                if (geneDef.displayCategory?.defName?.Contains("BS_DO_NOT") == true)
+                if (geneDef.displayCategory?.defName == "SZSpecial")
                 {
                     bl.Add(BlacklistGeneType.BlBanned);
+                }                
+                if (geneDef.displayCategory?.defName == "BS_DO_NOT")
+                {
+                    bl.Add(BlacklistGeneType.BlBanned);
+                }
+                if (geneDef.displayCategory?.defName == "Body_Size")
+                {
+                    // all of these conflict with Soul Form
+                    bl.Add(BlacklistGeneType.BlDontCopy);
                 }
 
                 if (geneDef.forcedTraits != null)
