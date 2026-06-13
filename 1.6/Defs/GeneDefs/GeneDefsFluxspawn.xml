@@ -57,7 +57,7 @@
     <immuneToVacuumBurns>true</immuneToVacuumBurns>   
     <statOffsets>    
       <VacuumResistance MayRequire="ludeon.rimworld.odyssey">0.8</VacuumResistance>
-      <SM_RaidWealthOffset>1500.0</SM_RaidWealthOffset>
+      <SM_RaidWealthOffset>10000.0</SM_RaidWealthOffset>
       <SM_HeadSize_Cosmetic>-0.1</SM_HeadSize_Cosmetic>
       <MeleeDodgeChance>50</MeleeDodgeChance>
       <MeleeHitChance>30</MeleeHitChance>   
@@ -66,7 +66,7 @@
     <statFactors>
       <LifespanFactor>1.3</LifespanFactor>
       <SM_BodySizeMultiplier>0.05</SM_BodySizeMultiplier>
-      <SM_RaidWealthMultiplier>2.0</SM_RaidWealthMultiplier>
+      <SM_RaidWealthMultiplier>2000.0</SM_RaidWealthMultiplier>
       <IncomingDamageFactor>1.5</IncomingDamageFactor>
       <MeleeDamageFactor>0.5</MeleeDamageFactor>
       <CarryingCapacity>40</CarryingCapacity>
