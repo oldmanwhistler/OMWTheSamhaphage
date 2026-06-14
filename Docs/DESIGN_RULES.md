@@ -4,14 +4,14 @@
 
 ### QUICK REFERENCE - XENOTYPE ESSENCES
 
-| Xenotype | Essence | Flavor | Role |
-|----------|---------|--------|------|
-| **Samhaphage** | Unmakers | Rift-born predators harvesting souls | Masters, strategists, gene hunters |
-| **Hallowbound** | Infiltrators | Dead who walk in daylight wearing stolen faces | Workers, guards, propagators |
-| **Echovessel** | Salvagers | Patchwork constructs of conquered dead | Laborers, knowledge absorbers |
-| **Fluxspawn** | Vermin | Living glitch, static in the silence | Breeders, mutation engines, weapons |
-| **Cradlemold** | Foundries | Living nurseries of the waxy, screaming void | Brood mothers, gene-bankers, population engines |
-| **Sovereign Stillness** | Avatar | Incarnate Silence itself | Endgame, psychic anchor, doomsday |
+| Xenotype                | Essence      | Flavor                                         | Role                                            |
+| -------------------------| --------------| ------------------------------------------------| -------------------------------------------------|
+| **Samhaphage**          | Unmakers     | Rift-born predators harvesting souls           | Masters, strategists, gene hunters              |
+| **Hallowbound**         | Infiltrators | Dead who walk in daylight wearing stolen faces | Workers, guards, propagators                    |
+| **Echovessel**          | Salvagers    | Patchwork constructs of conquered dead         | Laborers, knowledge absorbers                   |
+| **Fluxspawn**           | Vermin       | Living glitch, static in the silence           | Breeders, mutation engines, weapons             |
+| **Cradlemold**          | Foundries    | Living nurseries of the waxy, screaming void   | Brood mothers, gene-bankers, population engines |
+| **Sovereign Stillness** | Avatar       | Incarnate Silence itself                       | Endgame, psychic anchor, doomsday               |
 
 ### QUICK REFERENCE - ABILITIES
 

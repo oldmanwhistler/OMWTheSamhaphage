@@ -55,15 +55,6 @@ namespace OMW_Samhaphage
         }        
     }
 
-// ### Scrub (Harvest)
-
-// Collect carcinomas and disabled genes as resonance.
-
-// - Requires a scoured mind / blocked by dissonance.
-// - Victim loses carcinomas and Caster gains resonance.
-// - Caster can pay resonance to destroy disabled genes on Victim.
-// - Applies dissonance to Victim.
-
     public class ThingApplyScrub : NullThrumAbilityPawnCorpse
     {
         private PawnApplyFlatten Flatten = new PawnApplyFlatten();

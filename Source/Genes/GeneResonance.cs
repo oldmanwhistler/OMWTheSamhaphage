@@ -18,6 +18,11 @@ namespace OMW_Samhaphage
         public override float MinLevelForAlert => 10f;
         public override string ResourceLabel => "resonance";
 
+        protected float CachedDailyGainValue = -1f;
+        protected XenotypeDef CachedXenotype;
+        protected int CachedGeneCount = -1;
+
+        private static StatDef ResonanceStat = StatDef.Named("OMW_StatResonance");
 
         public override int PostProcessValue(float value)
         {
@@ -46,29 +51,41 @@ namespace OMW_Samhaphage
             }
         }
 
+        private void CachedDailyGain()
+        {
+            XenotypeDef currentXeno = pawn.genes?.Xenotype;
+            int currentGeneCount = pawn.genes?.GenesListForReading.Count ?? 0;
+
+            // Only update the cached value if the xenotype has changed, the gene count has changed, or if it hasn't been initialized yet.
+            if (this.CachedXenotype == currentXeno && this.CachedGeneCount == currentGeneCount && CachedDailyGainValue >= 0f) return;
+
+            this.CachedXenotype = currentXeno;
+            this.CachedGeneCount = currentGeneCount;
+
+            // Calculate the daily resonance gain from stats, which can be modified by xenotype and genes via XML.
+            this.CachedDailyGainValue = pawn.GetStatValue(ResonanceStat);
+            Log.Debug($"{pawn.LabelShort} CachedDailyGain updated to {CachedDailyGainValue} for {currentXeno?.defName ?? "Baseline"} (GeneCount: {currentGeneCount})");
+        }
+
         private void ApplyPassiveGain()
         {
-            // FIXME: This doesn't work.
             if (pawn.genes == null)
             {
                 Log.Error($"DONE: {pawn.LabelShort}.ApplyPassiveGain -- because pawn.genes == null");
                 return;
             }
 
-            // Dynamically fetch the gain from the Pawn's stats
-            // This looks for OMW_StatResonance defined in your StatDefs.xml
-            float dailyGain = pawn.GetStatValue(StatDef.Named("OMW_StatResonance"));
+            CachedDailyGain();
 
-            if (dailyGain != 0)
+            if (CachedDailyGainValue > 0)
             {
                 Log.Debug($"START: {pawn.LabelShort}.ApplyPassiveGain");
                 // Calculate gain: (Daily Amount / 60000 ticks in a day) * Ticks Passed
-                float gainPerInterval = (dailyGain / 60000f) * (float)PassiveGainIntervalTicks;
+                float gainPerInterval = (CachedDailyGainValue / 60000f) * (float)PassiveGainIntervalTicks;
                 Log.Debug($"{pawn.LabelShort}.ApplyPassiveGain: {gainPerInterval}");
                 OffsetResonance(gainPerInterval);
                 Log.Debug($"DONE: {pawn.LabelShort}.ApplyPassiveGain");
             }
-
         }
 
         public void OffsetResonance(float offset)
@@ -140,21 +157,15 @@ namespace OMW_Samhaphage
 
         public override float GetValueUnfinalized(StatRequest req, bool applyPostProcess = true)
         {
-            // Handle requests for the Def itself (e.g., UI menus/Numbers)
             if (!req.HasThing) return 0f;
+            // Base logic handles StatDef offsets and factors from XML automatically.
+            return base.GetValueUnfinalized(req, applyPostProcess);
+        }
 
-            Pawn p = req.Thing as Pawn;
-            if (req.Thing is Corpse corpse) p = corpse.InnerPawn;
-
-            // Only calculate for pawns that actually have the resonance gene
-            if (p != null && ResonanceUtility.HasGene(p))
-            {
-                // This should return your desired "Daily Gain" amount.
-                // You can link this to your mod settings or a base value.
-                return 5f; 
-            }
-
-            return 0f;
+        public override string GetExplanationUnfinalized(StatRequest req, ToStringNumberSense numberSense)
+        {
+            if (!req.HasThing) return base.GetExplanationUnfinalized(req, numberSense);
+            return "Passive daily resonance gain calculated from biological frequency (xenotype and genes).\n\n" + base.GetExplanationUnfinalized(req, numberSense);
         }
     }
 }

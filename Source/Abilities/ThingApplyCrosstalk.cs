@@ -66,6 +66,8 @@ namespace OMW_Samhaphage
     public class ThingApplyCrosstalk : NullThrumAbilityPawnCorpse
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        SelectionCrosstalk selector1;
+        SelectionCrosstalk selector2;
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.crosstalk;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
 
@@ -92,9 +94,6 @@ namespace OMW_Samhaphage
                 Flatten.ApplyPawn(victim, caster);
             }
 
-            SelectionCrosstalk selector1 = new SelectionCrosstalk(caster, victim, caster);
-            SelectionCrosstalk selector2 = new SelectionCrosstalk(caster, caster, victim);
-
             if ((selector1.genes.Count == 0) && (selector2.genes.Count == 0))
             {
                 Messages.Message($"{victim.LabelShort} has no xenogenetic frequencies to harvest.",
@@ -115,7 +114,9 @@ namespace OMW_Samhaphage
             int amount = Mathf.Min(selector1.genes.Count, selector2.genes.Count);
             int max = Mathf.Max(selector1.genes.Count, selector2.genes.Count);
 
-            // go through the entire list until you've gotten the correct amount for each source or run out of resonance.
+            // Go through the entire list until you've gotten the correct amount for each source or run out of resonance.
+            // Because you will skip over some of the genes because they are too expensive w.r.t. resonance you need to
+            // go over the entire list.
             for(int ii=0; ii<max; ii++)
             {
                 GenePlus plus1 = null;
@@ -208,6 +209,22 @@ namespace OMW_Samhaphage
                 reason = $"{caster.LabelShort} does not have enough resonance to {this.AbilityName}.";
                 return false;
             }
+
+            if (selector1 == null) selector1 = new SelectionCrosstalk(caster, victim, caster);
+            if (selector2 == null) selector2 = new SelectionCrosstalk(caster, caster, victim);
+
+            if (selector1.genes.Count == 0)
+            {
+                reason = $"{victim.LabelShort} has no xenogenes for crosstalk.";
+                return false;
+            }
+
+            if (selector2.genes.Count == 0)
+            {
+                reason = $"{caster.LabelShort} has no xenogenes for crosstalk.";
+                return false;
+            }
+
 
             return true;
         }
