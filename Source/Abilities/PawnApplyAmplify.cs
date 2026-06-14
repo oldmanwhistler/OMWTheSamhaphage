@@ -49,9 +49,9 @@ namespace OMW_Samhaphage
             }
 
             // Check for resonance cost
-            if (!ResonanceUtility.HasAvailable(caster, ResonanceCost))
+            if (!ResonanceUtility.HasAvailable(caster))
             {
-                reason = $"{caster.LabelShort} does not have enough resonance (needs {ResonanceCost}).";
+                reason = $"{caster.LabelShort} does not have enough resonance.";
                 return false;
             }
             int currentComplexity = OMWGenes.CalculateComplexity(victim);
