@@ -10,7 +10,8 @@ namespace OMW_Samhaphage
 {
     public enum BlacklistTraitType
     {
-        BlStringMatch,
+        BlDontCopy,
+        BlDontRemove,
         BlMod
     }
 
@@ -82,9 +83,22 @@ namespace OMW_Samhaphage
             myBlacklistStrings.Add("HVT_Awakened"); // Hauts Added Traits' Awakened Psychics
             myBlacklistStrings.Add("HVT_Test");
 
+            List<string> myBlacklistDontCopy = new List<string>();
+            List<string> myBlacklistDontRemove = new List<string>();
+            foreach (string str in myBlacklistStrings)
+            {
+                myBlacklistDontCopy.Add(str);
+                myBlacklistDontRemove.Add(str);
+            }
+
             List<string> myBlacklistMods = new List<string>();
             myBlacklistMods.Add("Shadow Monarch");
             
+            blCanCopy.Add(BlacklistTraitType.BlDontRemove);
+            blCanRemove.Add(BlacklistTraitType.BlDontCopy);
+
+
+
             foreach (TraitDef traitDef in DefDatabase<TraitDef>.AllDefs)
             {
                 string modName = traitDef.modContentPack?.Name ?? traitDef.modContentPack?.PackageId ?? "Unknown";
@@ -92,9 +106,13 @@ namespace OMW_Samhaphage
                 {
 
                     BlacklistTrait bl = new BlacklistTrait(traitDef, data);
-                    if (myBlacklistStrings.Any(s => traitDef.defName.Contains(s)))
+                    if (myBlacklistDontCopy.Any(s => traitDef.defName.Contains(s)))
                     {
-                        bl.Add(BlacklistTraitType.BlStringMatch);
+                        bl.Add(BlacklistTraitType.BlDontCopy);
+                    }
+                    if (myBlacklistDontRemove.Any(s => traitDef.defName.Contains(s)))
+                    {
+                        bl.Add(BlacklistTraitType.BlDontRemove);
                     }
 
                     if (myBlacklistMods.Any(s => modName.Contains(s)))

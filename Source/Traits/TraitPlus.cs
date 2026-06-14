@@ -43,32 +43,32 @@ namespace OMW_Samhaphage
                 if (this.trait.suppressedByGene != null)
                 {
                     tip +=
-                        $"\n\n<color=#999999>(This trait is suppressed by gene {this.trait.suppressedByGene.LabelCap})</color>";
+                        $"\n\n<color=#999999>(This trait is suppressed by gene {this.trait.suppressedByGene.def.defName})</color>";
                 }
             }
-
+           
             if (!this.trait.def.disabledWorkTypes.NullOrEmpty())
             {
                 tip +=
-                    $"\n\n<color=#999999>Disabled WorkTypes: {string.Join(", ", this.trait.def.disabledWorkTypes.Select(t => t.LabelCap))}</color>";
+                    $"\n\n<color=#999999>Disabled WorkTypes: {string.Join(", ", this.trait.def.disabledWorkTypes.Select(w => w.defName))}</color>";
             }
 
             if (!this.trait.def.requiredWorkTypes.NullOrEmpty())
             {
                 tip +=
-                    $"\n\n<color=#999999>Required WorkTypes: {string.Join(", ", this.trait.def.requiredWorkTypes.Select(t => t.LabelCap))}</color>";
+                    $"\n\n<color=#999999>Required WorkTypes: {string.Join(", ", this.trait.def.requiredWorkTypes.Select(w => w.defName))}</color>";
             }
 
             if (!this.trait.def.conflictingTraits.NullOrEmpty())                
             {
                 tip +=
-                    $"\n\n<color=#999999>Conflicting Traits: {string.Join(", ", this.trait.def.conflictingTraits.Select(t => t.LabelCap))}</color>";
+                    $"\n\n<color=#999999>Conflicting Traits: {string.Join(", ", this.trait.def.conflictingTraits.Select(t =>  t.defName))}</color>";
             }
 
             if (!this.trait.def.conflictingPassions.NullOrEmpty())
             {
                 tip +=
-                    $"\n\n<color=#999999>Conflicting Skills: {string.Join(", ", this.trait.def.conflictingPassions.Select(t => t.LabelCap))}</color>";
+                    $"\n\n<color=#999999>Conflicting Skills: {string.Join(", ", this.trait.def.conflictingPassions.Select(s =>  s.defName))}</color>";
             }
             
             if (destinationConflictStr != "")
@@ -77,6 +77,7 @@ namespace OMW_Samhaphage
                 tip += $"\n\n<color=#ff6666>(This trait conflicts with {destinationConflictStr})</color>";
             }
 
+            // TODO: fix this to be blocked like for genes
             if (OMW_BlacklistTraits.BlacklistedTraits.Any<BlacklistTrait>(x => x.traitDef == this.trait.def))
             {
                 // get the reason why it's blacklisted
