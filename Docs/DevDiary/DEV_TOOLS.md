@@ -74,3 +74,7 @@ dotnet tool install -g Converter.MarkdownToBBCodeSteam.Tool
 * [RimSage MCP](https://rimsage.com/) MCP server for rimworld
 * [RiMCP Hybrid](https://github.com/h7lu/RiMCP_hybrid) MCP server for rimworld
 * [FlatIcons](https://www.flaticon.com/free-icons)
+
+## Week #17 - June 8th, 2026
+
+* [waif2x upscaler](https://github.com/Moebytes/Waifu2x-Upscaler) apparently this is good for upscaling low res pixel graphics.

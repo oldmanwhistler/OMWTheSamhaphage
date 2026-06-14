@@ -123,4 +123,14 @@ It's a head-scratcher. When I open up the mod the trait is in, I see from the de
 
 My son bought me "Crimson Desert" and my gf wants to watch me collect cats so this is going to slow me down. Still, good progress on bugfixes. Got trait blacklisting working. I gave up on creating shamblers and I'm just going for destroying corpses instead.
 
-I made the mistake of vibe coding a ton of changes to the UI of my abilties and now everything is fucked. 43 file changes to debug. YAAAAAY. There's like 5 hours down the drain and just a bunch of reverting to get it to work.
+I made the mistake of vibe coding a ton of changes for the UI control my abilties and now everything is fucked. 43 file changes to debug. YAAAAAY. There's like 5 hours down the drain and just a bunch of reverting to get it to work.
+
+It's a common pattern I've seen with LLMs where they don't realize there is abstraction/common methods to use and they do a change like 4 different ways.
+
+## Week #17 - June 8th, 2026
+
+Finally finished the UI stuff and I have a better understanding of the async nature of jumping between menus. It's a big improvement having it always return back to the main ability menu. More refactoring of the blacklist genes so that it's easier to read and I added the blacklist reason to the tool tips when you are in the gene selection menus.
+
+## Week #18 - June 15th, 2026
+
+Sadness. Microsoft Paint is paywalling their Copilot features. The remove background one was actually decent for PNGs. It still worked.
