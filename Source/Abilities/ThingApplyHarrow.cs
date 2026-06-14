@@ -41,21 +41,21 @@ namespace OMW_Samhaphage
                     blocked.Append(gene.def, "Cosmetic");
                     isBlocked = true;
                 }
-                if (!isBlocked)
-                {
-                    Log.Debug($"not blocking {gene.def}: {gene.Label}");
-                }
-                if (alreadyHas.Contains(gene.def))
+                 if (alreadyHas.Contains(gene.def))
                 {
                     foreach (Gene geneDest in dest.genes?.GenesListForReading.Where(g => g.def == gene.def))
                     {
                         if (!geneDest.Overridden)
                         {
-                            Log.Debug($"blocking {gene.def} because already has is as an active gene");
+                            Log.Debug($"blocking {gene.def} because already has it as an active gene");
                             blocked.Append(gene.def, "Already Has");
                         }
                     }
                 }
+                if (!isBlocked)
+                {
+                    Log.Debug($"not blocking {gene.def}: {gene.Label}");
+                }                
             }
             return blocked;
         }
@@ -76,14 +76,6 @@ namespace OMW_Samhaphage
                 .Select(g => g.def).ToList();
         }        
     }
-
-// ### Harrow (Theft)
-
-// Reclaims and archives specific genes from the host.
-
-// - Requires a scoured mind / blocked by dissonance.
-// - Caster can pay resonance to take genes from Victim.
-// - Applies dissonance to Victim.
 
     public class ThingApplyHarrow : NullThrumAbilityPawnCorpse
     {
@@ -189,7 +181,7 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            selectorHarrow = new SelectionHarrow(caster, victim, caster);
+            if (selectorHarrow == null) selectorHarrow = new SelectionHarrow(caster, victim, caster);
             if (selectorHarrow.genes.Count == 0)
             {
                 reason = $"{victim.LabelShort} has no genes that can be harrowed.";
