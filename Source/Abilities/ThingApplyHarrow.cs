@@ -18,6 +18,8 @@ namespace OMW_Samhaphage
         {
             NullThrumSelectionGeneBlocked blocked = new();
             if ((source == null) || (source.genes == null)) return blocked;
+
+            HashSet<GeneDef> alreadyHas = dest.genes?.GenesListForReading.Select(g => g.def).ToHashSet() ?? new HashSet<GeneDef>();
             foreach (Gene gene in source.genes.GenesListForReading)
             {
                 bool isBlocked = false;
@@ -42,6 +44,17 @@ namespace OMW_Samhaphage
                 if (!isBlocked)
                 {
                     Log.Debug($"not blocking {gene.def}: {gene.Label}");
+                }
+                if (alreadyHas.Contains(gene.def))
+                {
+                    foreach (Gene geneDest in dest.genes?.GenesListForReading.Where(g => g.def == gene.def))
+                    {
+                        if (!geneDest.Overridden)
+                        {
+                            Log.Debug($"blocking {gene.def} because already has is as an active gene");
+                            blocked.Append(gene.def, "Already Has");
+                        }
+                    }
                 }
             }
             return blocked;
