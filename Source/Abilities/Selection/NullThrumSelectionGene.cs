@@ -113,5 +113,10 @@ namespace OMW_Samhaphage
             float value = this.GeneValue(plus.gene);
             ResonanceUtility.Incr($"Apply credit", caster, value);
         }
+
+        public void Shuffle()
+        {
+            genes.Shuffle();
+        }
     }
 }

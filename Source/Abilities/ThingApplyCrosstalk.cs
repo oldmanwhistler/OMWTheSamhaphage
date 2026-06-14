@@ -34,6 +34,12 @@ namespace OMW_Samhaphage
                     blocked.Append(gene.def, "Don't Copy");
                     isBlocked = true;
                 }
+                else if (OMW_BlacklistGenes.BlacklistedGenesDontRemove.Contains(gene.def))
+                {
+                    Log.Debug($"blocking {gene.def} because don't remove");
+                    blocked.Append(gene.def, "Don't Remove");
+                    isBlocked = true;
+                }
                 if (!isBlocked)
                 {
                     Log.Debug($"not blocking {gene.def}: {gene.Label}");
@@ -46,7 +52,6 @@ namespace OMW_Samhaphage
         {
             if (source?.genes == null) return new List<Gene>();
 
-            // Crosstalk effectively targets xenogenes
             return source.genes.GenesListForReading
                 .Where(g => !blocked.Has(g.def))
                 .ToList();
@@ -99,43 +104,35 @@ namespace OMW_Samhaphage
             }
 
             bool activated = false;
+
+            // shuffle the selectors in place because crosstalk should be very random which is what makes it cheap
+            selector1.Shuffle();
+            selector2.Shuffle();
+
             List<GeneDef> genesFromSource = new List<GeneDef>();
             List<GeneDef> genesFromDest = new List<GeneDef>();
 
-            while (selector1.genes.Count > 0 || selector2.genes.Count > 0)
+            int amount = Mathf.Min(selector1.genes.Count, selector2.genes.Count);
+            int max = Mathf.Max(selector1.genes.Count, selector2.genes.Count);
+
+            // go through the entire list until you've gotten the correct amount for each source or run out of resonance.
+            for(int ii=0; ii<max; ii++)
             {
-                if (selector1.genes.Count > 0)
+                GenePlus plus1 = null;
+                if (selector1.genes.Count > ii) plus1 = selector1.genes[ii];
+                if ((genesFromSource.Count < amount) && plus1.gene != null && victim.genes.GenesListForReading.Contains(plus1.gene) && selector1.ResonanceDebit(plus1))
                 {
-                    GenePlus plus1 = selector1.genes.RandomElement();
-                    selector1.genes.Remove(plus1);
-
-                    if (plus1.gene != null && victim.genes.GenesListForReading.Contains(plus1.gene) && selector1.ResonanceDebit(plus1))
-                    {
-                        victim.genes.RemoveGene(plus1.gene);
-                        genesFromSource.Add(plus1.gene.def);
-                        activated = true;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    victim.genes.RemoveGene(plus1.gene);
+                    genesFromSource.Add(plus1.gene.def);
+                    activated = true;                        
                 }
-
-                if (selector2.genes.Count > 0)
+                GenePlus plus2 = null;
+                if (selector2.genes.Count > ii) plus2 = selector2.genes[ii];
+                if ((genesFromDest.Count < amount) && plus2.gene != null && caster.genes.GenesListForReading.Contains(plus2.gene) && selector2.ResonanceDebit(plus2))
                 {
-                    GenePlus plus2 = selector2.genes.RandomElement();
-                    selector2.genes.Remove(plus2);
-
-                    if (plus2.gene != null && caster.genes.GenesListForReading.Contains(plus2.gene) && selector2.ResonanceDebit(plus2))
-                    {
-                        caster.genes.RemoveGene(plus2.gene);
-                        genesFromDest.Add(plus2.gene.def);
-                        activated = true;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    caster.genes.RemoveGene(plus2.gene);
+                    genesFromDest.Add(plus2.gene.def);
+                    activated = true;
                 }
             }
             if (activated)
@@ -185,6 +182,12 @@ namespace OMW_Samhaphage
             if (victim.genes.Xenogenes.Count == 0)
             {
                 reason = $"{victim.LabelShort} has no xenogenes.";
+                return false;
+            }
+
+            if (caster.genes.Xenogenes.Count == 0)
+            {
+                reason = $"{caster.LabelShort} has no xenogenes.";
                 return false;
             }
 
