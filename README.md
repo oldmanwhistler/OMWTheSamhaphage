@@ -1,5 +1,7 @@
 # The Samhaphage
 
+> AI was used while developing this mod. Full explantation at the end. Not vibe coded.
+
 ## "Every corpse is a new friend."
 
 Adds new xenotypes, scenarios and lore based on a "Got to Catch Them All" style gameplay loop around genes and traits. They are intended for player faction as the fun is in harvesting the dead to increase your power. They wouldn't work as a enemy faction because a fresh spawn is weak AF. This is my first mod for RimWorld after about 1300 hours of playing.
@@ -164,7 +166,7 @@ I didn't hardcoded this as conflicts because YMMV, but they conceptually break t
 
 This project was to learn how to mod RimWorld and to gain experience using different gen AI tools I don't use at work.
   
-1. Gen AI was used for brainstorming nomenclature and descriptions.
+1. Brainstorming nomenclature and descriptions.
 2. Coded using VS Code with Intellisense and AI suggestions/review.
    * "Vibe coding" used for batch refactoring, job class, and Window UI classes.
 3. Gen AI used for icon assets and for parts or entirety of workshop screenshots.
