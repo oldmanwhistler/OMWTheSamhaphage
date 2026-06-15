@@ -11,6 +11,7 @@ namespace OMW_Samhaphage
         public float value = 0f;
         public Pawn pawn;
         public string destinationConflictStr = "";
+        public string blockedReason = "";
 
         public TraitPlus(Trait trait, Pawn pawn)
         {
@@ -32,6 +33,22 @@ namespace OMW_Samhaphage
         {
             //var stats = $"\nResonance Value: {this.value}";            
             var tip = $"{this.trait.LabelCap}\n\n{this.trait.TipString(this.pawn)}";
+
+            if (!blockedReason.NullOrEmpty())
+            {
+                tip += $"\n\n<color=#ffcc00>(Blocked: {blockedReason})</color>";
+            }
+
+            if (OMW_BlacklistTraits.BlacklistedTraits.Any(x => x.traitDef == this.trait.def))
+            {
+                // get the reason why it's blacklisted
+                BlacklistTrait bl = OMW_BlacklistTraits.BlacklistedTraits.FirstOrDefault(x => x.traitDef == this.trait.def);
+                if (bl != null)
+                {
+                    tip += $"\n\n<color=#ffcc00>(Blacklisted: {bl.blacklistReason})</color>";
+                }
+            }
+
 
             if (this.trait.Suppressed)
             {
@@ -77,17 +94,6 @@ namespace OMW_Samhaphage
                 tip += $"\n\n<color=#ff6666>(This trait conflicts with {destinationConflictStr})</color>";
             }
 
-            // TODO: fix this to be blocked like for genes
-            if (OMW_BlacklistTraits.BlacklistedTraits.Any<BlacklistTrait>(x => x.traitDef == this.trait.def))
-            {
-                // get the reason why it's blacklisted
-                BlacklistTrait bl = OMW_BlacklistTraits.BlacklistedTraits.FirstOrDefault<BlacklistTrait>(x =>
-                    x.traitDef == this.trait.def);
-                if (bl != null)
-                {
-                    tip += $"\n\n<color=#ffcc00>(Blacklisted: {bl.blacklistReason})</color>";
-                }
-            }
             return tip;
         }
     }

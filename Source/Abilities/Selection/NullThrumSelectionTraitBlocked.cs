@@ -20,16 +20,16 @@ namespace OMW_Samhaphage
 
         public string Str(TraitDef key)
         {
-            string blockedStr;
+            string blockedReason;
             if (this.dict.TryGetValue(key, out var existing))
             {
-                blockedStr = existing;
+                blockedReason = existing;
             }
             else
             {
-                blockedStr = "";
+                blockedReason = "";
             }
-            return blockedStr;
+            return blockedReason;
         }
 
         public int Count

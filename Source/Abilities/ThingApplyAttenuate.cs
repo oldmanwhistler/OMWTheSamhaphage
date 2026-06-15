@@ -44,21 +44,35 @@ namespace OMW_Samhaphage
         protected override NullThrumSelectionTraitBlocked TraitsBlockedFromSelection(Pawn source, Pawn dest)
         {
             NullThrumSelectionTraitBlocked blocked = new();
+            if (source?.story?.traits != null)
+            {
+                foreach (Trait trait in source.story.traits.allTraits)
+                {
+                    bool isBlocked = false;                    
+                    if (trait.sourceGene != null)
+                    {
+                        blocked.Append(trait.def, "From Gene");
+                        isBlocked = true;
+                    }
+
+                    if (OMW_BlacklistTraits.BlacklistedTraitsDontRemove.Contains(trait.def))
+                    {
+                        blocked.Append(trait.def, "Don't Remove");
+                        isBlocked = true;
+                    }
+
+                    if (!isBlocked)
+                    {
+                        Log.Debug($"not blocking {trait.def}");
+                    }
+                }
+            }
             return blocked; 
         }
 
         protected override List<Trait> TraitsToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionTraitBlocked blocked)
         {
-            if (source?.story?.traits == null)
-                return new List<Trait>();
-
-            // For Excise, we don't care about conflicts in the destination 
-            // because we aren't adding the trait to the caster, just removing it.
-            return source.story.traits.allTraits
-                .Where(t => (t.sourceGene == null) &&
-                            !OMW_BlacklistTraits.BlacklistedTraitsDontRemove.Contains(t.def)
-                )
-                .ToList();
+            return source?.story?.traits?.allTraits.Where(t => !blocked.Has(t.def)).ToList() ?? new List<Trait>();
         }
 
         protected override List<TraitDef> ConflictTraitDefs(Pawn source, Pawn dest)

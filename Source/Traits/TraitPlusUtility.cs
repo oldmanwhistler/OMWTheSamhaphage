@@ -7,13 +7,14 @@ namespace OMW_Samhaphage
 {
     public static class TraitPlusUtility
     {
-        public static List<TraitPlus> ConvertToTraitPlus(Pawn pawn, List<Trait> traits, List<TraitDef> destConflicts = null)
+        public static List<TraitPlus> ConvertToTraitPlus(Pawn pawn, List<Trait> traits, NullThrumSelectionTraitBlocked blocked, List<TraitDef> destConflicts = null)
         {
             List<TraitPlus> traitList = new List<TraitPlus>();
 
             foreach (Trait trait in traits)
             {
                 TraitPlus plus = new TraitPlus(trait, pawn);
+                plus.blockedReason = blocked.Str(trait.def);
 
                 List<string> tmpDestConflicts = [];
                 if (destConflicts != null)

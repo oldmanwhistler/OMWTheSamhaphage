@@ -8,7 +8,7 @@ namespace OMW_Samhaphage
     {
         public Gene gene;
         public float value = 0f;
-        public string blockedStr = "";
+        public string blockedReason = "";
         public string destinationConflictStr = "";
         public bool isXenogene;
         
@@ -43,18 +43,11 @@ namespace OMW_Samhaphage
                 tip += $"\n\n<color=#999999>(This gene is overridden by {this.gene.overriddenByGene.LabelCap})</color>";
             }
 
-            if (destinationConflictStr != "")
+            if (blockedReason != "")
             {
-                // Adds a red warning with the specific gene name
-                tip += $"\n\n<color=#ff6666>(This gene conflicts with {destinationConflictStr})</color>";
-            }
-
-            if (blockedStr != "")
-            {
-                tip += $"\n\n<color=#ffcc00>(Blocked: {blockedStr})</color>";
+                tip += $"\n\n<color=#ffcc00>(Blocked: {blockedReason})</color>";
             }
                 
-
             if (OMW_BlacklistGenes.BlacklistedGenes.Any(x => x.geneDef == this.gene.def))
             {
                 // get the reason why it's blacklisted
@@ -65,6 +58,12 @@ namespace OMW_Samhaphage
                 }
             }
 
+            if (destinationConflictStr != "")
+            {
+                // Adds a red warning with the specific gene name
+                tip += $"\n\n<color=#ff6666>(This gene conflicts with {destinationConflictStr})</color>";
+            }
+            
             return tip;
         }
     }

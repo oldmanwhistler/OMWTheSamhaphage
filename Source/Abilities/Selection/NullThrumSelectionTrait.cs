@@ -54,7 +54,7 @@ namespace OMW_Samhaphage
             NullThrumSelectionTraitBlocked blocked = this.TraitsBlockedFromSelection(source, dest);
             List<Trait> traitsToSelectFrom = this.TraitsToSelectFrom(source, dest, blocked);
             List<TraitDef> conflictDefs = this.ConflictTraitDefs(source, dest) ?? new List<TraitDef>();
-            this.traits = TraitPlusUtility.ConvertToTraitPlus(dest, traitsToSelectFrom, conflictDefs);
+            this.traits = TraitPlusUtility.ConvertToTraitPlus(dest, traitsToSelectFrom, blocked, conflictDefs);
             foreach (TraitPlus plus in this.traits)
             {
                 plus.value = this.TraitValue(plus.trait);
@@ -74,7 +74,7 @@ namespace OMW_Samhaphage
             }
 
             List<TraitDef> conflictDefs2 = new List<TraitDef>();
-            this.unselectableTraits = TraitPlusUtility.ConvertToTraitPlus(source, traitsThatCantBeSelected, conflictDefs2);
+            this.unselectableTraits = TraitPlusUtility.ConvertToTraitPlus(source, traitsThatCantBeSelected, blocked, conflictDefs2);
         }
 
         public bool ResonanceDebit(TraitPlus plus)

@@ -17,64 +17,73 @@ namespace OMW_Samhaphage
         protected override NullThrumSelectionTraitBlocked TraitsBlockedFromSelection(Pawn source, Pawn dest)
         {
             NullThrumSelectionTraitBlocked blocked = new();
+            if (source?.story?.traits == null || dest?.story?.traits == null)
+                return blocked;
+
+            HashSet<TraitDef> alreadyHas = dest.story.traits.allTraits.Select(t => t.def).ToHashSet();
+
+            foreach (Trait trait in source.story.traits.allTraits)
+            {
+                bool isBlocked = false;
+                if (trait.sourceGene != null)
+                {
+                    blocked.Append(trait.def, "From Gene");
+                    isBlocked = true;
+                }
+
+                if (OMW_BlacklistTraits.BlacklistedTraitsDontCopy.Contains(trait.def))
+                {
+                    blocked.Append(trait.def, "Don't Copy");
+                    isBlocked = true;
+                }
+
+                if (alreadyHas.Contains(trait.def))
+                {
+                    blocked.Append(trait.def, "Already Has");
+                    isBlocked = true;
+                }
+
+                foreach (TraitDef traitDef in trait.def.conflictingTraits)
+                {
+                    if (alreadyHas.Contains(traitDef))
+                    {
+                        blocked.Append(trait.def, $"Conflict {traitDef.defName}");
+                        isBlocked = true;
+                        break;
+                    }
+                }
+
+                foreach (WorkTypeDef workType in trait.def.requiredWorkTypes)
+                {
+                    if (dest.WorkTypeIsDisabled(workType))
+                    {
+                        blocked.Append(trait.def, $"Requires {workType.label}");
+                        isBlocked = true;
+                        break;
+                    }
+                }
+
+                foreach (SkillDef skill in trait.def.conflictingPassions)
+                {
+                    if (dest.skills.skills.Any(s => s.def == skill))
+                    {
+                        blocked.Append(trait.def, $"Conflict {skill.label}");
+                        isBlocked = true;
+                        break;
+                    }
+                }
+                if (!isBlocked)
+                {
+                    Log.Debug($"not blocking {trait.def}");
+                }
+            }
+
             return blocked;
         }
 
         protected override List<Trait> TraitsToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionTraitBlocked blocked)
         {
-            if (source?.story?.traits == null || dest?.story?.traits == null)
-                return new List<Trait>();
-
-            HashSet<TraitDef> alreadyHas = dest.story.traits.allTraits
-                .Select(t => t.def)
-                .ToHashSet();
-
-            HashSet<TraitDef> conflicts = new HashSet<TraitDef>();
-
-            foreach (Trait trait in source.story.traits.allTraits)
-            {
-                foreach (TraitDef traitDef in trait.def.conflictingTraits)
-                {
-                    if (alreadyHas.Contains(traitDef))
-                    {
-                        conflicts.Add(traitDef);
-                    }
-                }
-            }
-
-            foreach (Trait trait in source.story.traits.allTraits)
-            {
-                foreach (WorkTypeDef workType in trait.def.requiredWorkTypes)
-                {
-                    if (dest.WorkTypeIsDisabled(workType))
-                    {
-                        conflicts.Add(trait.def);
-                    }                
-                }
-            }
-
-            foreach (Trait trait in source.story.traits.allTraits)
-            {
-                foreach (SkillDef skill in trait.def.conflictingPassions)
-                {
-                    if (dest.skills.skills.Any(s => s.def == skill)) 
-                    {
-                        conflicts.Add(trait.def);
-                    }
-                }
-            }
-
-            // No traits they have
-            // No traits that conflict with traits they have
-            // No traits from genes
-            return source.story.traits.allTraits
-                .Where(t => 
-                        (t.sourceGene == null) &&        
-                        !OMW_BlacklistTraits.BlacklistedTraitsDontCopy.Contains(t.def) &&
-                        !alreadyHas.Contains(t.def) &&
-                        !conflicts.Contains(t.def)
-                        )
-                .ToList();
+            return source?.story?.traits?.allTraits.Where(t => !blocked.Has(t.def)).ToList() ?? new List<Trait>();
         }
 
         protected override List<TraitDef> ConflictTraitDefs(Pawn source, Pawn dest)

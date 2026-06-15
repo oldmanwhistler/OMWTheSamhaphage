@@ -17,7 +17,7 @@ namespace OMW_Samhaphage
                 GenePlus plus = new GenePlus(gene);
                 plus.isXenogene = pawn.genes.Xenogenes.Contains(gene);
 
-                plus.blockedStr = blocked?.Str(gene.def) ?? "";
+                plus.blockedReason = blocked?.Str(gene.def) ?? "";
 
                 List<string> tmpDestConflicts = [];
                 if (destConflicts != null)
