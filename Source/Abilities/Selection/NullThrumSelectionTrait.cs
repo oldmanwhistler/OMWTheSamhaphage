@@ -19,7 +19,8 @@ namespace OMW_Samhaphage
 
         // Abstract methods
 
-        protected abstract List<Trait> TraitsToSelectFrom(Pawn source, Pawn dest);
+        protected abstract NullThrumSelectionTraitBlocked TraitsBlockedFromSelection(Pawn source, Pawn dest);
+        protected abstract List<Trait> TraitsToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionTraitBlocked blocked);
         protected abstract List<TraitDef> ConflictTraitDefs(Pawn source, Pawn dest);
 
 
@@ -50,7 +51,8 @@ namespace OMW_Samhaphage
         // TraitPlus is a wrapper class that has useful info for the UI
         private void SetTraitsToSelectFromPlus(Pawn source, Pawn dest)
         {
-            List<Trait> traitsToSelectFrom = this.TraitsToSelectFrom(source, dest);
+            NullThrumSelectionTraitBlocked blocked = this.TraitsBlockedFromSelection(source, dest);
+            List<Trait> traitsToSelectFrom = this.TraitsToSelectFrom(source, dest, blocked);
             List<TraitDef> conflictDefs = this.ConflictTraitDefs(source, dest) ?? new List<TraitDef>();
             this.traits = TraitPlusUtility.ConvertToTraitPlus(dest, traitsToSelectFrom, conflictDefs);
             foreach (TraitPlus plus in this.traits)

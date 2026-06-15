@@ -41,8 +41,13 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         protected override float ResonanceTotalMultiplier => AbilityProp.value;
 
+        protected override NullThrumSelectionTraitBlocked TraitsBlockedFromSelection(Pawn source, Pawn dest)
+        {
+            NullThrumSelectionTraitBlocked blocked = new();
+            return blocked; 
+        }
 
-        protected override List<Trait> TraitsToSelectFrom(Pawn source, Pawn dest)
+        protected override List<Trait> TraitsToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionTraitBlocked blocked)
         {
             if (source?.story?.traits == null)
                 return new List<Trait>();
