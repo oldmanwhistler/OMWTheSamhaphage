@@ -38,12 +38,18 @@ namespace OMW_Samhaphage
         public NullThrumAbilities abilityValue = new NullThrumAbilities();
 
         public float complexityMultiplierHallowbound = 1.5f;
-        public int complexityHallowbound => Mathf.RoundToInt(complexityMultiplierHallowbound * OMWGenes.CalculateComplexity(OMW_XenotypeDefOf.omw_hallowbound));
-        public float complexityMultiplierSamhaphage = 1.5f;
-        public int complexitySamhaphage =>
-            Mathf.RoundToInt(complexityMultiplierSamhaphage * OMWGenes.CalculateComplexity(OMW_XenotypeDefOf.omw_samhaphage));
 
-        
+        public int complexityHallowbound => Mathf.RoundToInt(complexityMultiplierHallowbound *
+                                                             OMWGenes.CalculateComplexity(OMW_XenotypeDefOf
+                                                                 .omw_hallowbound));
+
+        public float complexityMultiplierSamhaphage = 1.5f;
+
+        public int complexitySamhaphage =>
+            Mathf.RoundToInt(complexityMultiplierSamhaphage *
+                             OMWGenes.CalculateComplexity(OMW_XenotypeDefOf.omw_samhaphage));
+
+
 
         public override void ExposeData()
         {
@@ -61,7 +67,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref logHediff, "logHediff", false);
             Scribe_Values.Look(ref disableDissonance, "disableDissonance", false);
             Scribe_Values.Look(ref disableGeneBlacklist, "disableGeneBlacklist", false);
-            Scribe_Values.Look(ref disableTraitBlacklist, "disableTraitBlacklist", false);            
+            Scribe_Values.Look(ref disableTraitBlacklist, "disableTraitBlacklist", false);
             Scribe_Values.Look(ref resonanceMax, "ResonanceMax", DefaultResonanceMax);
             Scribe_Values.Look(ref complexityMultiplierHallowbound, "complexityMultiplierHallowbound", 1.5f);
             Scribe_Values.Look(ref complexityMultiplierSamhaphage, "complexityMultiplierSamhaphage", 1.5f);
@@ -89,7 +95,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref abilityValue.amplify.value, "Amplify", defaults.amplify.value);
             Scribe_Values.Look(ref abilityValue.excise.value, "Excise", defaults.excise.value);
             Scribe_Values.Look(ref abilityValue.render.value, "Render", defaults.render.value);
-            
+
             NullThrumXenotypeLimitPercentage defaultsPercentage = new NullThrumXenotypeLimitPercentage();
             Scribe_Values.Look(ref limitPercentage.enabled, "LimitPercEnabled", defaultsPercentage.enabled);
             Scribe_Values.Look(ref limitPercentage.fluxspawn, "LimitPercFluxSpawn", defaultsPercentage.fluxspawn);
@@ -97,17 +103,22 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref limitPercentage.cradlemold, "LimitPercCradleMold", defaultsPercentage.cradlemold);
             Scribe_Values.Look(ref limitPercentage.hallowbound, "LimitPercHallowbound", defaultsPercentage.hallowbound);
             Scribe_Values.Look(ref limitPercentage.samhaphage, "LimitPercSamhaphage", defaultsPercentage.samhaphage);
-            Scribe_Values.Look(ref limitPercentage.sovereign_stillness, "LimitPercSovereignStillness", defaultsPercentage.sovereign_stillness);
+            Scribe_Values.Look(ref limitPercentage.sovereign_stillness, "LimitPercSovereignStillness",
+                defaultsPercentage.sovereign_stillness);
 
             NullThrumXenotypeLimitMetabolism defaultsMetabolism = new NullThrumXenotypeLimitMetabolism();
             Scribe_Values.Look(ref limitMetabolism.enabled, "LimitMetabolismEnabled", defaultsMetabolism.enabled);
             Scribe_Values.Look(ref limitMetabolism.fluxspawn, "LimitMetabolismFluxSpawn", defaultsMetabolism.fluxspawn);
             Scribe_Values.Look(ref limitMetabolism.echovessel, "LimitMetabolismEchoVessel",
-                defaultsMetabolism.echovessel); 
-            Scribe_Values.Look(ref limitMetabolism.cradlemold, "LimitMetabolismCradleMold", defaultsMetabolism.cradlemold);
-            Scribe_Values.Look(ref limitMetabolism.hallowbound, "LimitMetabolismHallowbound", defaultsMetabolism.hallowbound);
-            Scribe_Values.Look(ref limitMetabolism.samhaphage, "LimitMetabolismSamhaphage", defaultsMetabolism.samhaphage);
-            Scribe_Values.Look(ref limitMetabolism.sovereign_stillness, "LimitMetabolismSovereignStillness", defaultsMetabolism.sovereign_stillness);
+                defaultsMetabolism.echovessel);
+            Scribe_Values.Look(ref limitMetabolism.cradlemold, "LimitMetabolismCradleMold",
+                defaultsMetabolism.cradlemold);
+            Scribe_Values.Look(ref limitMetabolism.hallowbound, "LimitMetabolismHallowbound",
+                defaultsMetabolism.hallowbound);
+            Scribe_Values.Look(ref limitMetabolism.samhaphage, "LimitMetabolismSamhaphage",
+                defaultsMetabolism.samhaphage);
+            Scribe_Values.Look(ref limitMetabolism.sovereign_stillness, "LimitMetabolismSovereignStillness",
+                defaultsMetabolism.sovereign_stillness);
 
             Scribe_Values.Look(ref NullThrumUtility.descMode, "descMode", NullThrumDescriptionMode.DescriptionSimple);
         }
@@ -166,10 +177,26 @@ namespace OMW_Samhaphage
             // Tab headers
             List<TabRecord> tabs = new List<TabRecord>
             {
-                new TabRecord("Main", () => { selectedTab = SettingsTab.Main; scrollPosition = Vector2.zero; }, selectedTab == SettingsTab.Main),
-                new TabRecord("Game Balance", () => { selectedTab = SettingsTab.GameBalance; scrollPosition = Vector2.zero; }, selectedTab == SettingsTab.GameBalance),
-                new TabRecord("Limits", () => { selectedTab = SettingsTab.Limits; scrollPosition = Vector2.zero; }, selectedTab == SettingsTab.Limits),
-                new TabRecord("Debugging", () => { selectedTab = SettingsTab.Debugging; scrollPosition = Vector2.zero; }, selectedTab == SettingsTab.Debugging)
+                new TabRecord("Main", () =>
+                {
+                    selectedTab = SettingsTab.Main;
+                    scrollPosition = Vector2.zero;
+                }, selectedTab == SettingsTab.Main),
+                new TabRecord("Game Balance", () =>
+                {
+                    selectedTab = SettingsTab.GameBalance;
+                    scrollPosition = Vector2.zero;
+                }, selectedTab == SettingsTab.GameBalance),
+                new TabRecord("Limits", () =>
+                {
+                    selectedTab = SettingsTab.Limits;
+                    scrollPosition = Vector2.zero;
+                }, selectedTab == SettingsTab.Limits),
+                new TabRecord("Debugging", () =>
+                {
+                    selectedTab = SettingsTab.Debugging;
+                    scrollPosition = Vector2.zero;
+                }, selectedTab == SettingsTab.Debugging)
             };
 
             Rect tabRect = new Rect(inRect.x, inRect.y, inRect.width, inRect.height);
@@ -177,7 +204,9 @@ namespace OMW_Samhaphage
             TabDrawer.DrawTabs(tabRect, tabs);
 
             // Define a view rectangle that is taller than the window to enable scrolling.
-            float viewHeight = selectedTab == SettingsTab.GameBalance ? 2000f : (selectedTab == SettingsTab.Limits ? 1000f : 600f);
+            float viewHeight = selectedTab == SettingsTab.GameBalance
+                ? 2000f
+                : (selectedTab == SettingsTab.Limits ? 1000f : 600f);
             Rect viewRect = new Rect(0f, 0f, inRect.width - 30f, viewHeight);
 
             Widgets.BeginScrollView(tabRect, ref scrollPosition, viewRect);
@@ -211,22 +240,26 @@ namespace OMW_Samhaphage
                     listing.Label(
                         "Blacklists"
                             .Colorize(Color.yellow));
-                   
+
                     listing.CheckboxLabeled("Disable Gene Blacklist", ref settings.disableGeneBlacklist,
                         "If checkmarked, no genes will be blacklisted.  You have to click 'Regenerate Genes Blacklist' after changing this setting.");
                     listing.CheckboxLabeled("Disable Trait Blacklist", ref settings.disableTraitBlacklist,
                         "If checkmarked, no traits will be blacklisted.  You have to click 'Regenerate Traits Blacklist' after changing this setting.");
                     listing.GapLine();
-                    
-                    listing.Label("Regenerate the gene/trait blacklist after tweaking with other mods or changing the enable/disable (e.g.: Tweaks Galore, Gene Blacklist)");
+
+                    listing.Label(
+                        "Regenerate the gene/trait blacklist after tweaking with other mods or changing the enable/disable (e.g.: Tweaks Galore, Gene Blacklist)");
                     if (listing.ButtonText("Regenerate Gene/Trait Blacklists"))
                     {
                         OMW_BlacklistGenes.RebuildBlacklist();
                         OMW_BlacklistTraits.RebuildBlacklist();
-                        OMW_BlacklistGenes.ExportBlacklistGeneReport();                        
+                        OMW_BlacklistGenes.ExportBlacklistGeneReport();
                         OMW_BlacklistTraits.ExportBlacklistTraitReport();
-                        Messages.Message($"{Prefix} Genes/Traits blacklist regenerated, debugging CSV exported, blacklist xenotype for Genetic Drift exported.", MessageTypeDefOf.TaskCompletion, false);
+                        Messages.Message(
+                            $"{Prefix} Genes/Traits blacklist regenerated, debugging CSV exported, blacklist xenotype for Genetic Drift exported.",
+                            MessageTypeDefOf.TaskCompletion, false);
                     }
+
                     listing.GapLine();
 
                     listing.Gap(20f);
@@ -234,8 +267,10 @@ namespace OMW_Samhaphage
                     {
                         settings.Reset();
                         OMW_BlacklistGenes.RebuildBlacklist(); // Rebuild blacklist as its setting might have changed
-                        Messages.Message($"{Prefix} All settings reset to default values.", MessageTypeDefOf.TaskCompletion, false);
+                        Messages.Message($"{Prefix} All settings reset to default values.",
+                            MessageTypeDefOf.TaskCompletion, false);
                     }
+
                     break;
 
                 case SettingsTab.GameBalance:
@@ -282,14 +317,14 @@ namespace OMW_Samhaphage
                 case SettingsTab.Limits:
 
                     listing.GapLine();
-                    listing.Label("Evolution Complexity Thresholds".Colorize(Color.yellow));
+                    listing.Label("Genetic Complexity Threshold For Evolution (Amplify)".Colorize(Color.yellow));
                     listing.Label(
-                        $"Hallowbound to Samhaphage Multiplier: {settings.complexityMultiplierHallowbound:F2} (Target: {settings.complexityHallowbound})");
+                        $"Required complexity for Hallowbound to Samhaphage to evolve: {settings.complexityMultiplierHallowbound:F2} (Target: {settings.complexityHallowbound})");
                     settings.complexityMultiplierHallowbound =
                         listing.Slider(settings.complexityMultiplierHallowbound, 0.5f, 5.0f);
 
                     listing.Label(
-                        $"Samhaphage to Sovereign Stillness Multiplier: {settings.complexityMultiplierSamhaphage:F2} (Target: {settings.complexitySamhaphage})");
+                        $"Required complexity for Samhaphage to Sovereign Stillness to evolve: {settings.complexityMultiplierSamhaphage:F2} (Target: {settings.complexitySamhaphage})");
                     settings.complexityMultiplierSamhaphage =
                         listing.Slider(settings.complexityMultiplierSamhaphage, 0.5f, 5.0f);
 
@@ -299,42 +334,43 @@ namespace OMW_Samhaphage
                     listing.Gap();
                     listing.Label("Metabolic Limits".Colorize(Color.yellow));
                     listing.Gap();
-                    listing.CheckboxLabeled("Enable Metabolic Limits", ref settings.limitMetabolism.enabled, "Enable means can't acquire new genes when the metabolism is too great");                    
-                    listing.Label("Adjust the allowed metabolic range for different xenotypes.");
+                    listing.CheckboxLabeled("Enable Metabolic Limits", ref settings.limitMetabolism.enabled,
+                        "Enable means pawn can't acquire new genes when they hit the metabolism limit");
+                    listing.Label(
+                        "Adjust the limit for the metabolic range for different xenotypes who can steal genes. Negative metabolism is \"better\" but hungrier.");
                     listing.Gap();
-                    DrawMetabolicLimit(listing, "Fluxspawn", settings.limitMetabolism.fluxspawn, v => settings.limitMetabolism.fluxspawn = v);
-                    DrawMetabolicLimit(listing, "Echovessels", settings.limitMetabolism.echovessel, v => settings.limitMetabolism.echovessel = v);
-                    DrawMetabolicLimit(listing, "Cradlemold", settings.limitMetabolism.cradlemold, v => settings.limitMetabolism.cradlemold = v);
-                    DrawMetabolicLimit(listing, "Hallowbound", settings.limitMetabolism.hallowbound, v => settings.limitMetabolism.hallowbound = v);
-                    DrawMetabolicLimit(listing, "Samhaphages", settings.limitMetabolism.samhaphage, v => settings.limitMetabolism.samhaphage = v);
-                    DrawMetabolicLimit(listing, "Sovereign Stillness", settings.limitMetabolism.sovereign_stillness, 
+                    // These xenotypes don't have a way to acquire genes. Leave them wired up in the settings in case I add them later.
+//                    DrawMetabolicLimit(listing, "Fluxspawn", settings.limitMetabolism.fluxspawn, v => settings.limitMetabolism.fluxspawn = v);
+//                    DrawMetabolicLimit(listing, "Echovessels", settings.limitMetabolism.echovessel, v => settings.limitMetabolism.echovessel = v);
+//                    DrawMetabolicLimit(listing, "Cradlemold", settings.limitMetabolism.cradlemold, v => settings.limitMetabolism.cradlemold = v);
+                    DrawMetabolicLimit(listing, "Hallowbound", settings.limitMetabolism.hallowbound,
+                        v => settings.limitMetabolism.hallowbound = v);
+                    DrawMetabolicLimit(listing, "Samhaphages", settings.limitMetabolism.samhaphage,
+                        v => settings.limitMetabolism.samhaphage = v);
+                    DrawMetabolicLimit(listing, "Sovereign Stillness", settings.limitMetabolism.sovereign_stillness,
                         v => settings.limitMetabolism.sovereign_stillness = v);
 
                     listing.Gap();
                     listing.Label("Population Percentage Limits".Colorize(Color.yellow));
-                    listing.Label("Controls the maximum percentage of the colony that can be of a specific xenotype.");
+                    listing.Label(
+                        "Controls the maximum percentage of the colony that can be of a specific xenotype. Limits evolving everyone to Samhaphages or having so much micromanagement that things stop being fun.");
                     listing.Gap();
                     listing.CheckboxLabeled("Enable Population Control", ref settings.limitPercentage.enabled,
-                        "Enable means can't evolve to different Xenotypes if the colony distribution is becoming unbalanced.");
+                        "Enable means if the colony distribution is becoming unbalanced you won't be able to create more of the xenotype.");
                     listing.Gap();
 
-                    listing.Label($"Percentage of colony who are fluxspawn: {settings.limitPercentage.fluxspawn:F0}%");
-                    settings.limitPercentage.fluxspawn = listing.Slider(settings.limitPercentage.fluxspawn, 0f, 100f);
-
-                    listing.Label($"Percentage of colony who are echovessels: {settings.limitPercentage.echovessel:F0}%");
-                    settings.limitPercentage.echovessel = listing.Slider(settings.limitPercentage.echovessel, 0f, 100f);
-
-                    listing.Label($"Percentage of colony who are cradlemold: {settings.limitPercentage.cradlemold:F0}%");
-                    settings.limitPercentage.cradlemold = listing.Slider(settings.limitPercentage.cradlemold, 0f, 100f);
-
-                    listing.Label($"Percentage of colony who are hallowbound: {settings.limitPercentage.hallowbound:F0}%");
-                    settings.limitPercentage.hallowbound = listing.Slider(settings.limitPercentage.hallowbound, 0f, 100f);
-
-                    listing.Label($"Percentage of colony who are samhaphages: {settings.limitPercentage.samhaphage:F0}%");
-                    settings.limitPercentage.samhaphage = listing.Slider(settings.limitPercentage.samhaphage, 0f, 100f);
-
-                    listing.Label($"Percentage of colony who are sovereign stillness: {settings.limitPercentage.sovereign_stillness:F0}%");
-                    settings.limitPercentage.sovereign_stillness = listing.Slider(settings.limitPercentage.sovereign_stillness, 0f, 100f);
+                    DrawPercentageLimit(listing, "Fluxspawn", settings.limitPercentage.fluxspawn,
+                        v => settings.limitPercentage.fluxspawn = v);
+                    DrawPercentageLimit(listing, "Echovessels", settings.limitPercentage.echovessel,
+                        v => settings.limitPercentage.echovessel = v);
+                    DrawPercentageLimit(listing, "Cradlemold", settings.limitPercentage.cradlemold,
+                        v => settings.limitPercentage.cradlemold = v);
+                    DrawPercentageLimit(listing, "Hallowbound", settings.limitPercentage.hallowbound,
+                        v => settings.limitPercentage.hallowbound = v);
+                    DrawPercentageLimit(listing, "Samhaphages", settings.limitPercentage.samhaphage,
+                        v => settings.limitPercentage.samhaphage = v);
+                    // There can only be one Sovereign Stillness 
+                    // DrawPercentageLimit(listing, "Sovereign Stillness", settings.limitPercentage.sovereign_stillness, v => settings.limitPercentage.sovereign_stillness = v);
 
                     break;
 
@@ -353,40 +389,66 @@ namespace OMW_Samhaphage
                         OMW_BlacklistTraits.ExportBlacklistTraitReport();
                     }
 
-                    listing.Gap();                    
-                    listing.Gap();                    
+                    listing.Gap();
+                    listing.Gap();
                     listing.Label("Debug Logging Categories".Colorize(Color.yellow));
                     listing.Label("Enable these to see detailed technical information in the console.");
                     listing.Gap();
-                    listing.CheckboxLabeled("Log Abilities", ref settings.logAbilities, "Detailed traces for ability application and logic.");
-                    listing.CheckboxLabeled("Log Kill", ref settings.logKill, "Traces for the kill logic for creating shamblers.");
-                    listing.CheckboxLabeled("Log CompAbilityEffect", ref settings.logCompAbilityEffect, "Traces for menu generation and target selection.");
-                    listing.CheckboxLabeled("Log Genes", ref settings.logGenes, "Traces for gene addition, removal, and complexity calculation.");
-                    listing.CheckboxLabeled("Log Resonance", ref settings.logResonance, "Traces for resonance consumption and gains.");
-                    listing.CheckboxLabeled("Log Hediffs", ref settings.logHediffs, "Traces for technical Hediff components (e.g. ZeroWill).");
-                    listing.CheckboxLabeled("Log Jobs", ref settings.logJobs, "Traces for the custom 'Approach and Interact' jobs.");
+                    listing.CheckboxLabeled("Log Abilities", ref settings.logAbilities,
+                        "Detailed traces for ability application and logic.");
+                    listing.CheckboxLabeled("Log Kill", ref settings.logKill,
+                        "Traces for the kill logic for creating shamblers.");
+                    listing.CheckboxLabeled("Log CompAbilityEffect", ref settings.logCompAbilityEffect,
+                        "Traces for menu generation and target selection.");
+                    listing.CheckboxLabeled("Log Genes", ref settings.logGenes,
+                        "Traces for gene addition, removal, and complexity calculation.");
+                    listing.CheckboxLabeled("Log Resonance", ref settings.logResonance,
+                        "Traces for resonance consumption and gains.");
+                    listing.CheckboxLabeled("Log Hediffs", ref settings.logHediffs,
+                        "Traces for technical Hediff components (e.g. ZeroWill).");
+                    listing.CheckboxLabeled("Log Jobs", ref settings.logJobs,
+                        "Traces for the custom 'Approach and Interact' jobs.");
                     listing.CheckboxLabeled("Log UI", ref settings.logUI, "Traces for the UIs added by the mod.");
-                    listing.CheckboxLabeled("Log Mutation", ref settings.logMutation, "Traces for genes getting added by the Random Mutation genes.");
+                    listing.CheckboxLabeled("Log Mutation", ref settings.logMutation,
+                        "Traces for genes getting added by the Random Mutation genes.");
                     listing.CheckboxLabeled("Log Selection", ref settings.logSelection, "Traces for genes selector.");
-                    listing.CheckboxLabeled("Log Hediff", ref settings.logHediff, "Traces for Hediffs (e.g. parasite).");
+                    listing.CheckboxLabeled("Log Hediff", ref settings.logHediff,
+                        "Traces for Hediffs (e.g. parasite).");
                     break;
             }
+
             listing.End();
             Widgets.EndScrollView();
         }
 
-        private void DrawMetabolicLimit(Listing_Standard listing, string label, float value, Action<float> setValue)
+        private void DrawMetabolicLimit(Listing_Standard listing, string label, int value, Action<int> setValue)
         {
-            string metabolicLabel = $"+/- {value:F0}";
-            if (listing.ButtonTextLabeled($"{label} limit", metabolicLabel))
+            string metabolicLabel = $"{value}";
+            if (listing.ButtonTextLabeled($"{label} metabolism limit", metabolicLabel))
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
-                int[] values = { 5, 15, 30, 60, 100, 150, 200, 300, 500, 1000, 10000 };
+                int[] values = { -5, -15, -30, -60, -100, -150, -200, -300, -500, -1000, -10000 };
                 foreach (int val in values)
                 {
-                    float targetVal = val;
-                    options.Add(new FloatMenuOption($"+/- {val}", () => setValue(targetVal)));
+                    int targetVal = val;
+                    options.Add(new FloatMenuOption($"{val}", () => setValue(targetVal)));
                 }
+
+                Find.WindowStack.Add(new FloatMenu(options));
+            }
+        }
+
+        private void DrawPercentageLimit(Listing_Standard listing, string label, int value, Action<int> setValue)
+        {
+            if (listing.ButtonTextLabeled($"{label} population limit", $"{value}%"))
+            {
+                List<FloatMenuOption> options = new List<FloatMenuOption>();
+                for (int i = 0; i <= 100; i += 10)
+                {
+                    int targetVal = i;
+                    options.Add(new FloatMenuOption($"{targetVal}%", () => setValue(targetVal)));
+                }
+
                 Find.WindowStack.Add(new FloatMenu(options));
             }
         }
@@ -403,3 +465,4 @@ namespace OMW_Samhaphage
         public override string SettingsCategory() => "The Samhaphage";
     }
 }
+

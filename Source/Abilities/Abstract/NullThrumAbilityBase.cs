@@ -105,11 +105,11 @@ namespace OMW_Samhaphage
                 return true;
             }
 
-            float maxPercentage = OMW_Mod.settings.limitPercentage.GetLimit(xenotypeDef);
-            float curPercentage = ColonyUtility.PercentageXenotype(xenotypeDef);
+            int maxPercentage = OMW_Mod.settings.limitPercentage.GetLimit(xenotypeDef);
+            int curPercentage = ColonyUtility.PercentageXenotype(xenotypeDef);
             if (curPercentage >= maxPercentage)
             {
-                reason = $"The colony is {curPercentage:F0}% of {xenotypeDef.label} xenotype.";
+                reason = $"The colony has {curPercentage}% of {xenotypeDef.label} xenotype. The maximum is {maxPercentage}%.";
                 return false;
             }
 
@@ -127,11 +127,11 @@ namespace OMW_Samhaphage
 
             XenotypeDef xenotypeDef = pawn.genes.Xenotype;
 
-            float max = -1 * OMW_Mod.settings.limitMetabolism.GetLimit(xenotypeDef);
-            float cur = OMWGenes.CalculateMetabolism(pawn);
+            int max = OMW_Mod.settings.limitMetabolism.GetLimit(xenotypeDef);
+            int cur = OMWGenes.CalculateMetabolism(pawn);
             if (cur < max)
             {
-                reason = $"{pawn.LabelShort} has a metabolism of {cur:0F} which is less than {max:0F} for {xenotypeDef.label}.";
+                reason = $"{pawn.LabelShort} has a metabolism of {cur} which is less than {max} for {xenotypeDef.label}.";
                 return false;
             }
 
@@ -180,11 +180,8 @@ namespace OMW_Samhaphage
 
         public MenuItemIcon NewMenuItemIconDisabled(LocalTargetInfo targetInfo, string reason = null)
         {
-            string msg = $"Can't apply {this.ToString()} on {targetInfo.Label}";
-            if (reason != null)
-            {
-                msg += "\n" + reason;
-            }
+            string msg = $"Can't apply {AbilityName} on {targetInfo.Label}";
+            if (reason != null) msg = reason;
 
             return new MenuItemIcon(this, msg);
         }

@@ -26,11 +26,11 @@ namespace OMW_Samhaphage
         /// <summary>
         /// Returns the percentage (0-100) of the colony that belongs to a specific xenotype.
         /// </summary>
-        public static float PercentageXenotype(XenotypeDef xeno)
+        public static int PercentageXenotype(XenotypeDef xeno)
         {
             int total = TotalColonist();
             if (total == 0) return 0;
-            return (float)TotalXenotype(xeno) / (float)total * 100f;
+            return Mathf.FloorToInt((float)TotalXenotype(xeno) / (float)total * 100f);
         }
     }
 }

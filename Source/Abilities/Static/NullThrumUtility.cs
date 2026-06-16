@@ -318,18 +318,18 @@ namespace OMW_Samhaphage
     public abstract class NullThrumXenotypeLimit
     {
         public bool enabled = true;
-        public float fluxspawn;
-        public float echovessel;
-        public float cradlemold;
-        public float hallowbound;
-        public float samhaphage;
-        public float sovereign_stillness;
+        public int fluxspawn;
+        public int echovessel;
+        public int cradlemold;
+        public int hallowbound;
+        public int samhaphage;
+        public int sovereign_stillness;
 
         public NullThrumXenotypeLimit()
         {
         }
 
-        public float GetLimit(XenotypeDef xenotypeDef)
+        public int GetLimit(XenotypeDef xenotypeDef)
         {
             if (xenotypeDef == OMW_XenotypeDefOf.omw_fluxspawn_brute || 
                 xenotypeDef == OMW_XenotypeDefOf.omw_fluxspawn_flicker || 
@@ -339,7 +339,7 @@ namespace OMW_Samhaphage
             if (xenotypeDef == OMW_XenotypeDefOf.omw_hallowbound) return hallowbound;
             if (xenotypeDef == OMW_XenotypeDefOf.omw_samhaphage) return samhaphage;
             if (xenotypeDef == OMW_XenotypeDefOf.omw_sovereign_stillness) return sovereign_stillness;
-            return 0f;
+            return 0;
         }
     }
 
@@ -347,12 +347,12 @@ namespace OMW_Samhaphage
     {
         public NullThrumXenotypeLimitPercentage()
         {
-            fluxspawn = 100f;
-            echovessel = 100f;
-            cradlemold = 100f;
-            hallowbound = 100f;
-            samhaphage = 100f;
-            sovereign_stillness = 100f;
+            fluxspawn = 100;
+            echovessel = 100;
+            cradlemold = 100;
+            hallowbound = 100;
+            samhaphage = 100;
+            sovereign_stillness = 100;
         }
     }
 
@@ -360,12 +360,12 @@ namespace OMW_Samhaphage
     {
         public NullThrumXenotypeLimitMetabolism()
         {
-            fluxspawn = 5f;
-            echovessel = 5f;
-            cradlemold = 0f;
-            hallowbound = 15f;
-            samhaphage = 100f;
-            sovereign_stillness = 300f;
+            fluxspawn = -5;
+            echovessel = -5;
+            cradlemold = 0;
+            hallowbound = -20;
+            samhaphage = -200;
+            sovereign_stillness = -500;
         }
     }    
     
