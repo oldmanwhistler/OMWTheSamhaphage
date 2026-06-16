@@ -2,6 +2,14 @@ using RimWorld;
 
 namespace OMW_Samhaphage
 {
+    public enum NullThrumLimitPreset
+    {
+        LimitNone,
+        LimitHigh,
+        LimitMedium,
+        LimitLow
+    }
+
     public abstract class NullThrumXenotypeLimit
     {
         public bool enabled = true;
@@ -12,9 +20,12 @@ namespace OMW_Samhaphage
         public int samhaphage;
         public int sovereign_stillness;
 
-        public NullThrumXenotypeLimit()
+        public NullThrumXenotypeLimit(NullThrumLimitPreset setting)
         {
+            SetLimitDefaults(setting);
         }
+
+        public abstract void SetLimitDefaults(NullThrumLimitPreset settings);
 
         public int GetLimit(XenotypeDef xenotypeDef)
         {

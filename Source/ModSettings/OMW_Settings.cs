@@ -29,13 +29,14 @@ namespace OMW_Samhaphage
         public bool disableGeneBlacklist;
         public bool disableTraitBlacklist;
 
-        public NullThrumXenotypeLimitPercentage limitPercentage = new NullThrumXenotypeLimitPercentage();
-        public NullThrumXenotypeLimitMetabolism limitMetabolism = new NullThrumXenotypeLimitMetabolism();
+        public NullThrumLimitPreset limitPreset;
+        public NullThrumXenotypeLimitPercentage limitPercentage;
+        public NullThrumXenotypeLimitMetabolism limitMetabolism;
 
         public float resonanceMax = DefaultResonanceMax;
         private const float DefaultResonanceMax = 1000f;
 
-        public NullThrumAbilities abilityValue = new NullThrumAbilities();
+        public NullThrumAbilities abilityValue;
 
         public float complexityMultiplierHallowbound = 1.5f;
 
@@ -49,8 +50,7 @@ namespace OMW_Samhaphage
             Mathf.RoundToInt(complexityMultiplierSamhaphage *
                              OMWGenes.CalculateComplexity(OMW_XenotypeDefOf.omw_samhaphage));
 
-
-
+        
         public override void ExposeData()
         {
             base.ExposeData();
@@ -96,7 +96,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref abilityValue.excise.value, "Excise", defaults.excise.value);
             Scribe_Values.Look(ref abilityValue.render.value, "Render", defaults.render.value);
 
-            NullThrumXenotypeLimitPercentage defaultsPercentage = new NullThrumXenotypeLimitPercentage();
+            NullThrumXenotypeLimitPercentage defaultsPercentage = new NullThrumXenotypeLimitPercentage(limitPreset);
             Scribe_Values.Look(ref limitPercentage.enabled, "LimitPercEnabled", defaultsPercentage.enabled);
             Scribe_Values.Look(ref limitPercentage.fluxspawn, "LimitPercFluxSpawn", defaultsPercentage.fluxspawn);
             Scribe_Values.Look(ref limitPercentage.echovessel, "LimitPercEchoVessel", defaultsPercentage.echovessel);
@@ -106,7 +106,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref limitPercentage.sovereign_stillness, "LimitPercSovereignStillness",
                 defaultsPercentage.sovereign_stillness);
 
-            NullThrumXenotypeLimitMetabolism defaultsMetabolism = new NullThrumXenotypeLimitMetabolism();
+            NullThrumXenotypeLimitMetabolism defaultsMetabolism = new NullThrumXenotypeLimitMetabolism(limitPreset);
             Scribe_Values.Look(ref limitMetabolism.enabled, "LimitMetabolismEnabled", defaultsMetabolism.enabled);
             Scribe_Values.Look(ref limitMetabolism.fluxspawn, "LimitMetabolismFluxSpawn", defaultsMetabolism.fluxspawn);
             Scribe_Values.Look(ref limitMetabolism.echovessel, "LimitMetabolismEchoVessel",
@@ -123,6 +123,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref NullThrumUtility.descMode, "descMode", NullThrumDescriptionMode.DescriptionSimple);
         }
 
+        // This needs to set all of the default values
         public void Reset()
         {
             logAbilities = false;
@@ -139,13 +140,21 @@ namespace OMW_Samhaphage
             disableDissonance = false;
             disableGeneBlacklist = false;
             disableTraitBlacklist = false;
-            limitPercentage = new NullThrumXenotypeLimitPercentage();
-            limitMetabolism = new NullThrumXenotypeLimitMetabolism();
+            limitPreset = NullThrumLimitPreset.LimitMedium;
+            limitPercentage = new NullThrumXenotypeLimitPercentage(limitPreset);
+            limitMetabolism = new NullThrumXenotypeLimitMetabolism(limitPreset);
             abilityValue = new NullThrumAbilities();
             resonanceMax = DefaultResonanceMax;
             complexityMultiplierHallowbound = 1.5f;
             complexityMultiplierSamhaphage = 1.5f;
             NullThrumUtility.descMode = NullThrumDescriptionMode.DescriptionSimple;
+        }
+
+        public void SetNullThrumLimitPreset(NullThrumLimitPreset preset)
+        {
+            limitPreset = preset;
+            limitPercentage.SetLimitDefaults(preset);
+            limitMetabolism.SetLimitDefaults(preset);
         }
     }
 
@@ -170,6 +179,7 @@ namespace OMW_Samhaphage
         public OMW_Mod(ModContentPack content) : base(content)
         {
             settings = GetSettings<OMW_Settings>();
+            settings.Reset();
         }
 
         public override void DoSettingsWindowContents(Rect inRect)
@@ -217,7 +227,7 @@ namespace OMW_Samhaphage
             switch (selectedTab)
             {
                 case SettingsTab.Main:
-
+                    listing.Gap();
                     listing.Label("Narrative Experience".Colorize(Color.yellow));
                     string currentModeLabel = NullThrumUtility.descMode.ToString().Replace("Description", "");
                     if (listing.ButtonTextLabeled("Ability Description Mode", currentModeLabel))
@@ -314,9 +324,9 @@ namespace OMW_Samhaphage
                     DrawValueSlider(listing, ref settings.abilityValue.harrow);
                     break;
 
-                case SettingsTab.Limits:
-
-                    listing.GapLine();
+                case SettingsTab.Limits:                    
+                    
+                    listing.Gap();
                     listing.Label("Genetic Complexity Threshold For Evolution (Amplify)".Colorize(Color.yellow));
                     listing.Label(
                         $"Required complexity for Hallowbound to Samhaphage to evolve: {settings.complexityMultiplierHallowbound:F2} (Target: {settings.complexityHallowbound})");
@@ -330,6 +340,25 @@ namespace OMW_Samhaphage
 
                     listing.GapLine();
 
+                    listing.Label("Limit Presets".Colorize(Color.yellow));
+                    string currentLimitPreset = settings.limitPreset.ToString().Replace("Limit", "");;
+                    if (listing.ButtonTextLabeled("Limit Preset", currentLimitPreset))
+                    {
+                        List<FloatMenuOption> options = new List<FloatMenuOption>();
+                        foreach (NullThrumLimitPreset preset in Enum.GetValues(typeof(NullThrumLimitPreset)))
+                        {
+                            string label = preset.ToString().Replace("Limit", "");
+                            options.Add(new FloatMenuOption(label, () => { settings.SetNullThrumLimitPreset(preset); }));
+                        }
+
+                        Find.WindowStack.Add(new FloatMenu(options));
+                    }
+
+                    listing.GapLine();
+
+                    listing.Label(
+                        "<color=gray><size=10>Simple: Mechanical/Technical descriptions.\nLore: Flavor/In-universe descriptions.</size></color>");
+                    listing.Gap();                    
                     listing.GapLine();
                     listing.Gap();
                     listing.Label("Metabolic Limits".Colorize(Color.yellow));
@@ -397,7 +426,7 @@ namespace OMW_Samhaphage
                     listing.CheckboxLabeled("Log Abilities", ref settings.logAbilities,
                         "Detailed traces for ability application and logic.");
                     listing.CheckboxLabeled("Log Kill", ref settings.logKill,
-                        "Traces for the kill logic for creating shamblers.");
+                        "Traces for killing victims and destroying corpses.");
                     listing.CheckboxLabeled("Log CompAbilityEffect", ref settings.logCompAbilityEffect,
                         "Traces for menu generation and target selection.");
                     listing.CheckboxLabeled("Log Genes", ref settings.logGenes,
