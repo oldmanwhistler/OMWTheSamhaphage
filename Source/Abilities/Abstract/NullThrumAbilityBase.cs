@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using RimWorld;
 using UnityEngine;
 using Verse;
 
@@ -95,6 +96,48 @@ namespace OMW_Samhaphage
         public abstract void ApplyPawn(Pawn victim, Pawn caster);
 
         public abstract void ApplyCorpse(Corpse corpse, Pawn caster);
+
+        protected bool CanApplyLimitXenotype(XenotypeDef xenotypeDef, out string reason)
+        {
+            if (!OMW_Mod.settings.limitPercentage.enabled)
+            {
+                reason = "";
+                return true;
+            }
+
+            float maxPercentage = OMW_Mod.settings.limitPercentage.GetLimit(xenotypeDef);
+            float curPercentage = ColonyUtility.PercentageXenotype(xenotypeDef);
+            if (curPercentage >= maxPercentage)
+            {
+                reason = $"The colony is {curPercentage:F0}% of {xenotypeDef.label} xenotype.";
+                return false;
+            }
+
+            reason = "";
+            return true;
+        }
+
+        protected bool CanApplyLimitMetabolism(Pawn pawn, out string reason)
+        {
+            if (!OMW_Mod.settings.limitMetabolism.enabled)
+            {
+                reason = "";
+                return true;
+            }
+
+            XenotypeDef xenotypeDef = pawn.genes.Xenotype;
+
+            float max = -1 * OMW_Mod.settings.limitMetabolism.GetLimit(xenotypeDef);
+            float cur = OMWGenes.CalculateMetabolism(pawn);
+            if (cur < max)
+            {
+                reason = $"{pawn.LabelShort} has a metabolism of {cur:0F} which is less than {max:0F} for {xenotypeDef.label}.";
+                return false;
+            }
+
+            reason = "";
+            return true;
+        }
 
         public bool CanApplyOnThing(Thing thing, Pawn caster, out string reason)
         {

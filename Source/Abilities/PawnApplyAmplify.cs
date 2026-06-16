@@ -54,6 +54,14 @@ namespace OMW_Samhaphage
                 reason = $"{caster.LabelShort} does not have enough resonance.";
                 return false;
             }
+
+            if (!CanApplyLimitXenotype(TargetXenotype, out reason))
+            {
+                return false;
+            }
+
+            // Check for complexity
+
             int currentComplexity = OMWGenes.CalculateComplexity(victim);
             if (currentComplexity < RequiredComplexity)
             {

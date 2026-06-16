@@ -28,7 +28,10 @@ namespace OMW_Samhaphage
 
         public bool disableGeneBlacklist;
         public bool disableTraitBlacklist;
-        
+
+        public NullThrumXenotypeLimitPercentage limitPercentage = new NullThrumXenotypeLimitPercentage();
+        public NullThrumXenotypeLimitMetabolism limitMetabolism = new NullThrumXenotypeLimitMetabolism();
+
         public float resonanceMax = DefaultResonanceMax;
         private const float DefaultResonanceMax = 1000f;
 
@@ -83,7 +86,29 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref abilityValue.resurrect.value, "Resurrect", defaults.resurrect.value);
             Scribe_Values.Look(ref abilityValue.stun.value, "Stun", defaults.stun.value);
             Scribe_Values.Look(ref abilityValue.hallowbound.value, "Hallowbound", defaults.hallowbound.value);
+            Scribe_Values.Look(ref abilityValue.amplify.value, "Amplify", defaults.amplify.value);
+            Scribe_Values.Look(ref abilityValue.excise.value, "Excise", defaults.excise.value);
+            Scribe_Values.Look(ref abilityValue.render.value, "Render", defaults.render.value);
             
+            NullThrumXenotypeLimitPercentage defaultsPercentage = new NullThrumXenotypeLimitPercentage();
+            Scribe_Values.Look(ref limitPercentage.enabled, "LimitPercEnabled", defaultsPercentage.enabled);
+            Scribe_Values.Look(ref limitPercentage.fluxspawn, "LimitPercFluxSpawn", defaultsPercentage.fluxspawn);
+            Scribe_Values.Look(ref limitPercentage.echovessel, "LimitPercEchoVessel", defaultsPercentage.echovessel);
+            Scribe_Values.Look(ref limitPercentage.cradlemold, "LimitPercCradleMold", defaultsPercentage.cradlemold);
+            Scribe_Values.Look(ref limitPercentage.hallowbound, "LimitPercHallowbound", defaultsPercentage.hallowbound);
+            Scribe_Values.Look(ref limitPercentage.samhaphage, "LimitPercSamhaphage", defaultsPercentage.samhaphage);
+            Scribe_Values.Look(ref limitPercentage.sovereign_stillness, "LimitPercSovereignStillness", defaultsPercentage.sovereign_stillness);
+
+            NullThrumXenotypeLimitMetabolism defaultsMetabolism = new NullThrumXenotypeLimitMetabolism();
+            Scribe_Values.Look(ref limitMetabolism.enabled, "LimitMetabolismEnabled", defaultsMetabolism.enabled);
+            Scribe_Values.Look(ref limitMetabolism.fluxspawn, "LimitMetabolismFluxSpawn", defaultsMetabolism.fluxspawn);
+            Scribe_Values.Look(ref limitMetabolism.echovessel, "LimitMetabolismEchoVessel",
+                defaultsMetabolism.echovessel); 
+            Scribe_Values.Look(ref limitMetabolism.cradlemold, "LimitMetabolismCradleMold", defaultsMetabolism.cradlemold);
+            Scribe_Values.Look(ref limitMetabolism.hallowbound, "LimitMetabolismHallowbound", defaultsMetabolism.hallowbound);
+            Scribe_Values.Look(ref limitMetabolism.samhaphage, "LimitMetabolismSamhaphage", defaultsMetabolism.samhaphage);
+            Scribe_Values.Look(ref limitMetabolism.sovereign_stillness, "LimitMetabolismSovereignStillness", defaultsMetabolism.sovereign_stillness);
+
             Scribe_Values.Look(ref NullThrumUtility.descMode, "descMode", NullThrumDescriptionMode.DescriptionSimple);
         }
 
@@ -103,6 +128,8 @@ namespace OMW_Samhaphage
             disableDissonance = false;
             disableGeneBlacklist = false;
             disableTraitBlacklist = false;
+            limitPercentage = new NullThrumXenotypeLimitPercentage();
+            limitMetabolism = new NullThrumXenotypeLimitMetabolism();
             abilityValue = new NullThrumAbilities();
             resonanceMax = DefaultResonanceMax;
             complexityMultiplierHallowbound = 1.5f;
@@ -117,6 +144,7 @@ namespace OMW_Samhaphage
         private enum SettingsTab
         {
             Main,
+            Limits,
             GameBalance,
             Debugging
         }
@@ -140,6 +168,7 @@ namespace OMW_Samhaphage
             {
                 new TabRecord("Main", () => { selectedTab = SettingsTab.Main; scrollPosition = Vector2.zero; }, selectedTab == SettingsTab.Main),
                 new TabRecord("Game Balance", () => { selectedTab = SettingsTab.GameBalance; scrollPosition = Vector2.zero; }, selectedTab == SettingsTab.GameBalance),
+                new TabRecord("Limits", () => { selectedTab = SettingsTab.Limits; scrollPosition = Vector2.zero; }, selectedTab == SettingsTab.Limits),
                 new TabRecord("Debugging", () => { selectedTab = SettingsTab.Debugging; scrollPosition = Vector2.zero; }, selectedTab == SettingsTab.Debugging)
             };
 
@@ -148,7 +177,7 @@ namespace OMW_Samhaphage
             TabDrawer.DrawTabs(tabRect, tabs);
 
             // Define a view rectangle that is taller than the window to enable scrolling.
-            float viewHeight = selectedTab == SettingsTab.GameBalance ? 1800f : 600f;
+            float viewHeight = selectedTab == SettingsTab.GameBalance ? 2000f : (selectedTab == SettingsTab.Limits ? 1000f : 600f);
             Rect viewRect = new Rect(0f, 0f, inRect.width - 30f, viewHeight);
 
             Widgets.BeginScrollView(tabRect, ref scrollPosition, viewRect);
@@ -159,6 +188,25 @@ namespace OMW_Samhaphage
             switch (selectedTab)
             {
                 case SettingsTab.Main:
+
+                    listing.Label("Narrative Experience".Colorize(Color.yellow));
+                    string currentModeLabel = NullThrumUtility.descMode.ToString().Replace("Description", "");
+                    if (listing.ButtonTextLabeled("Ability Description Mode", currentModeLabel))
+                    {
+                        List<FloatMenuOption> options = new List<FloatMenuOption>();
+                        foreach (NullThrumDescriptionMode mode in Enum.GetValues(typeof(NullThrumDescriptionMode)))
+                        {
+                            string label = mode.ToString().Replace("Description", "");
+                            options.Add(new FloatMenuOption(label, () => { NullThrumUtility.descMode = mode; }));
+                        }
+
+                        Find.WindowStack.Add(new FloatMenu(options));
+                    }
+
+                    listing.GapLine();
+
+                    listing.Label(
+                        "<color=gray><size=10>Simple: Mechanical/Technical descriptions.\nLore: Flavor/In-universe descriptions.</size></color>");
                     listing.Gap();
                     listing.Label(
                         "Blacklists"
@@ -181,24 +229,6 @@ namespace OMW_Samhaphage
                     }
                     listing.GapLine();
 
-                    listing.Label("Narrative Experience".Colorize(Color.yellow));
-                    string currentModeLabel = NullThrumUtility.descMode.ToString().Replace("Description", "");
-                    if (listing.ButtonTextLabeled("Ability Description Mode", currentModeLabel))
-                    {
-                        List<FloatMenuOption> options = new List<FloatMenuOption>();
-                        foreach (NullThrumDescriptionMode mode in Enum.GetValues(typeof(NullThrumDescriptionMode)))
-                        {
-                            string label = mode.ToString().Replace("Description", "");
-                            options.Add(new FloatMenuOption(label, () => 
-                            {
-                                NullThrumUtility.descMode = mode;
-                            }));
-                        }
-                        Find.WindowStack.Add(new FloatMenu(options));
-                    }
-                    listing.Label("<color=gray><size=10>Simple: Mechanical/Technical descriptions.\nLore: Flavor/In-universe descriptions.</size></color>");
-                    listing.GapLine();
-
                     listing.Gap(20f);
                     if (listing.ButtonText("Reset to Defaults"))
                     {
@@ -218,12 +248,15 @@ namespace OMW_Samhaphage
                     listing.GapLine();
                     listing.Label("Resonance Gains (Credits)".Colorize(Color.yellow));
                     listing.Label("Adjust resonance acquired from harvesting or sacrifices.");
-                    DrawValueSlider(listing, settings.abilityValue.flatten);
-                    DrawValueSlider(listing, settings.abilityValue.scrubCarcinoma);
-                    DrawValueSlider(listing, settings.abilityValue.mute);
+                    DrawValueSlider(listing, ref settings.abilityValue.flatten);
+                    DrawValueSlider(listing, ref settings.abilityValue.amplify);
+                    DrawValueSlider(listing, ref settings.abilityValue.excise);
+                    DrawValueSlider(listing, ref settings.abilityValue.render);
+                    DrawValueSlider(listing, ref settings.abilityValue.scrubCarcinoma);
+                    DrawValueSlider(listing, ref settings.abilityValue.mute);
                     listing.Gap();
-                    DrawValueSlider(listing, settings.abilityValue.scrub);
-                    DrawValueSlider(listing, settings.abilityValue.attenuate);
+                    DrawValueSlider(listing, ref settings.abilityValue.scrub);
+                    DrawValueSlider(listing, ref settings.abilityValue.attenuate);
 
                     // infest is free
                     // settings.abilityValue.infest.value = DrawValueSlider(listing, settings.abilityValue.infest);
@@ -231,19 +264,78 @@ namespace OMW_Samhaphage
                     listing.GapLine();
                     listing.Label("Resonance Costs (Debits)".Colorize(Color.yellow));
                     listing.Label("Adjust the resonance spend (offset or multiplier) for specific abilities.");
-                    DrawValueSlider(listing, settings.abilityValue.unmute);
-                    DrawValueSlider(listing, settings.abilityValue.bootleg);
-                    DrawValueSlider(listing, settings.abilityValue.transpose);
-                    DrawValueSlider(listing, settings.abilityValue.stun);
-                    DrawValueSlider(listing, settings.abilityValue.resurrect);
-                    DrawValueSlider(listing, settings.abilityValue.enwomb);
-                    DrawValueSlider(listing, settings.abilityValue.hallowbound);
+                    DrawValueSlider(listing, ref settings.abilityValue.unmute);
+                    DrawValueSlider(listing, ref settings.abilityValue.bootleg);
+                    DrawValueSlider(listing, ref settings.abilityValue.transpose);
+                    DrawValueSlider(listing, ref settings.abilityValue.stun);
+                    DrawValueSlider(listing, ref settings.abilityValue.resurrect);
+                    DrawValueSlider(listing, ref settings.abilityValue.enwomb);
+                    DrawValueSlider(listing, ref settings.abilityValue.hallowbound);
                     listing.Gap();
-                    DrawValueSlider(listing, settings.abilityValue.retune);
-                    DrawValueSlider(listing, settings.abilityValue.compress);
-                    DrawValueSlider(listing, settings.abilityValue.crosstalk);
-                    DrawValueSlider(listing, settings.abilityValue.sample);
-                    DrawValueSlider(listing, settings.abilityValue.harrow);
+                    DrawValueSlider(listing, ref settings.abilityValue.retune);
+                    DrawValueSlider(listing, ref settings.abilityValue.compress);
+                    DrawValueSlider(listing, ref settings.abilityValue.crosstalk);
+                    DrawValueSlider(listing, ref settings.abilityValue.sample);
+                    DrawValueSlider(listing, ref settings.abilityValue.harrow);
+                    break;
+
+                case SettingsTab.Limits:
+
+                    listing.GapLine();
+                    listing.Label("Evolution Complexity Thresholds".Colorize(Color.yellow));
+                    listing.Label(
+                        $"Hallowbound to Samhaphage Multiplier: {settings.complexityMultiplierHallowbound:F2} (Target: {settings.complexityHallowbound})");
+                    settings.complexityMultiplierHallowbound =
+                        listing.Slider(settings.complexityMultiplierHallowbound, 0.5f, 5.0f);
+
+                    listing.Label(
+                        $"Samhaphage to Sovereign Stillness Multiplier: {settings.complexityMultiplierSamhaphage:F2} (Target: {settings.complexitySamhaphage})");
+                    settings.complexityMultiplierSamhaphage =
+                        listing.Slider(settings.complexityMultiplierSamhaphage, 0.5f, 5.0f);
+
+                    listing.GapLine();
+
+                    listing.GapLine();
+                    listing.Gap();
+                    listing.Label("Metabolic Limits".Colorize(Color.yellow));
+                    listing.Gap();
+                    listing.CheckboxLabeled("Enable Metabolic Limits", ref settings.limitMetabolism.enabled, "Enable means can't acquire new genes when the metabolism is too great");                    
+                    listing.Label("Adjust the allowed metabolic range for different xenotypes.");
+                    listing.Gap();
+                    DrawMetabolicLimit(listing, "Fluxspawn", settings.limitMetabolism.fluxspawn, v => settings.limitMetabolism.fluxspawn = v);
+                    DrawMetabolicLimit(listing, "Echovessels", settings.limitMetabolism.echovessel, v => settings.limitMetabolism.echovessel = v);
+                    DrawMetabolicLimit(listing, "Cradlemold", settings.limitMetabolism.cradlemold, v => settings.limitMetabolism.cradlemold = v);
+                    DrawMetabolicLimit(listing, "Hallowbound", settings.limitMetabolism.hallowbound, v => settings.limitMetabolism.hallowbound = v);
+                    DrawMetabolicLimit(listing, "Samhaphages", settings.limitMetabolism.samhaphage, v => settings.limitMetabolism.samhaphage = v);
+                    DrawMetabolicLimit(listing, "Sovereign Stillness", settings.limitMetabolism.sovereign_stillness, 
+                        v => settings.limitMetabolism.sovereign_stillness = v);
+
+                    listing.Gap();
+                    listing.Label("Population Percentage Limits".Colorize(Color.yellow));
+                    listing.Label("Controls the maximum percentage of the colony that can be of a specific xenotype.");
+                    listing.Gap();
+                    listing.CheckboxLabeled("Enable Population Control", ref settings.limitPercentage.enabled,
+                        "Enable means can't evolve to different Xenotypes if the colony distribution is becoming unbalanced.");
+                    listing.Gap();
+
+                    listing.Label($"Percentage of colony who are fluxspawn: {settings.limitPercentage.fluxspawn:F0}%");
+                    settings.limitPercentage.fluxspawn = listing.Slider(settings.limitPercentage.fluxspawn, 0f, 100f);
+
+                    listing.Label($"Percentage of colony who are echovessels: {settings.limitPercentage.echovessel:F0}%");
+                    settings.limitPercentage.echovessel = listing.Slider(settings.limitPercentage.echovessel, 0f, 100f);
+
+                    listing.Label($"Percentage of colony who are cradlemold: {settings.limitPercentage.cradlemold:F0}%");
+                    settings.limitPercentage.cradlemold = listing.Slider(settings.limitPercentage.cradlemold, 0f, 100f);
+
+                    listing.Label($"Percentage of colony who are hallowbound: {settings.limitPercentage.hallowbound:F0}%");
+                    settings.limitPercentage.hallowbound = listing.Slider(settings.limitPercentage.hallowbound, 0f, 100f);
+
+                    listing.Label($"Percentage of colony who are samhaphages: {settings.limitPercentage.samhaphage:F0}%");
+                    settings.limitPercentage.samhaphage = listing.Slider(settings.limitPercentage.samhaphage, 0f, 100f);
+
+                    listing.Label($"Percentage of colony who are sovereign stillness: {settings.limitPercentage.sovereign_stillness:F0}%");
+                    settings.limitPercentage.sovereign_stillness = listing.Slider(settings.limitPercentage.sovereign_stillness, 0f, 100f);
+
                     break;
 
                 case SettingsTab.Debugging:
@@ -283,7 +375,23 @@ namespace OMW_Samhaphage
             Widgets.EndScrollView();
         }
 
-        private void DrawValueSlider(Listing_Standard listing, NullThrumAbilityProps abilityProps)
+        private void DrawMetabolicLimit(Listing_Standard listing, string label, float value, Action<float> setValue)
+        {
+            string metabolicLabel = $"+/- {value:F0}";
+            if (listing.ButtonTextLabeled($"{label} limit", metabolicLabel))
+            {
+                List<FloatMenuOption> options = new List<FloatMenuOption>();
+                int[] values = { 5, 15, 30, 60, 100, 150, 200, 300, 500, 1000, 10000 };
+                foreach (int val in values)
+                {
+                    float targetVal = val;
+                    options.Add(new FloatMenuOption($"+/- {val}", () => setValue(targetVal)));
+                }
+                Find.WindowStack.Add(new FloatMenu(options));
+            }
+        }
+
+        private void DrawValueSlider(Listing_Standard listing, ref NullThrumAbilityProps abilityProps)
         {
             string label = NullThrumUtility.ToString(abilityProps.abilityType);
             string desc = $"{abilityProps.ToString()}. {NullThrumUtility.DescriptionSimple(abilityProps.abilityType)}";

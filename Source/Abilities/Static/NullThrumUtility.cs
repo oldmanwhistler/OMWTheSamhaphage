@@ -1,6 +1,7 @@
 using System;
 using Verse;
 using System.Collections.Generic;
+using RimWorld;
 
 namespace OMW_Samhaphage
 {
@@ -58,6 +59,7 @@ namespace OMW_Samhaphage
         Excise,
         Render
     }
+
 
     public struct NullThrumAbilityProps
     {
@@ -313,6 +315,60 @@ namespace OMW_Samhaphage
         DescriptionLore
     }
 
+    public abstract class NullThrumXenotypeLimit
+    {
+        public bool enabled = true;
+        public float fluxspawn;
+        public float echovessel;
+        public float cradlemold;
+        public float hallowbound;
+        public float samhaphage;
+        public float sovereign_stillness;
+
+        public NullThrumXenotypeLimit()
+        {
+        }
+
+        public float GetLimit(XenotypeDef xenotypeDef)
+        {
+            if (xenotypeDef == OMW_XenotypeDefOf.omw_fluxspawn_brute || 
+                xenotypeDef == OMW_XenotypeDefOf.omw_fluxspawn_flicker || 
+                xenotypeDef == OMW_XenotypeDefOf.omw_fluxspawn_hiveling) return fluxspawn;
+            if (xenotypeDef == OMW_XenotypeDefOf.omw_echovessel) return echovessel;
+            if (xenotypeDef == OMW_XenotypeDefOf.omw_cradlemold) return cradlemold;
+            if (xenotypeDef == OMW_XenotypeDefOf.omw_hallowbound) return hallowbound;
+            if (xenotypeDef == OMW_XenotypeDefOf.omw_samhaphage) return samhaphage;
+            if (xenotypeDef == OMW_XenotypeDefOf.omw_sovereign_stillness) return sovereign_stillness;
+            return 0f;
+        }
+    }
+
+    public class NullThrumXenotypeLimitPercentage : NullThrumXenotypeLimit
+    {
+        public NullThrumXenotypeLimitPercentage()
+        {
+            fluxspawn = 100f;
+            echovessel = 100f;
+            cradlemold = 100f;
+            hallowbound = 100f;
+            samhaphage = 100f;
+            sovereign_stillness = 100f;
+        }
+    }
+
+    public class NullThrumXenotypeLimitMetabolism : NullThrumXenotypeLimit
+    {
+        public NullThrumXenotypeLimitMetabolism()
+        {
+            fluxspawn = 5f;
+            echovessel = 5f;
+            cradlemold = 0f;
+            hallowbound = 15f;
+            samhaphage = 100f;
+            sovereign_stillness = 300f;
+        }
+    }    
+    
 
     public static class NullThrumUtility
     {

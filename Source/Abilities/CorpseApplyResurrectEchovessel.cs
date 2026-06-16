@@ -64,7 +64,7 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            return true;
+            return CanApplyLimitXenotype(TargetXenotype, out reason);
         }
     }
 }

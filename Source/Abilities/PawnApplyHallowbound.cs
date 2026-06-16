@@ -57,8 +57,8 @@ namespace OMW_Samhaphage
             {
                 return false;
             }
-            
-            return true;
+
+            return CanApplyLimitXenotype(OMW_XenotypeDefOf.omw_hallowbound, out reason);
         }
     }
 

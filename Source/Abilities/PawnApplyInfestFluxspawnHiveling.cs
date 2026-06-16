@@ -18,7 +18,7 @@ namespace OMW_Samhaphage
         public override bool IsLethal => true;
         
         public virtual HediffDef TargetHediffDef => OMW_HediffDefOf.OMW_ParasiticImplantation;
-        public virtual XenotypeDef TargetXenotypeDef => OMW_XenotypeDefOf.omw_fluxspawn_hiveling;        
+        public virtual XenotypeDef TargetXenotype => OMW_XenotypeDefOf.omw_fluxspawn_hiveling;        
 
         public override void ApplyPawn(Pawn victim, Pawn caster)
         {
@@ -41,7 +41,7 @@ namespace OMW_Samhaphage
                 comp.motherDef = caster.kindDef;
                 comp.mother = caster;
                 comp.motherFaction = caster.Faction;
-                comp.motherXenotypeDef = TargetXenotypeDef;
+                comp.motherXenotypeDef = TargetXenotype;
                 comp.numBabiesMin = 2;
                 comp.numBabiesMax = 5;
 
@@ -100,7 +100,7 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            return true;
+            return CanApplyLimitXenotype(TargetXenotype, out reason);
         }
     }
 }

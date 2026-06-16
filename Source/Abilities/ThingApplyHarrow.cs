@@ -186,9 +186,9 @@ namespace OMW_Samhaphage
             {
                 reason = $"{victim.LabelShort} has no genes that can be harrowed.";
                 return false;   
-            }            
+            }
 
-            return true;
+            return CanApplyLimitMetabolism(caster, out reason);
         }
 
         public override bool CanApplyOnCorpse(Corpse corpse, Pawn caster, out string reason)

@@ -226,7 +226,7 @@ namespace OMW_Samhaphage
             }
 
 
-            return true;
+            return CanApplyLimitMetabolism(caster, out reason);
         }
 
         public override bool CanApplyOnCorpse(Corpse corpse, Pawn caster, out string reason)
