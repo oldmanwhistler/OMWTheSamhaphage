@@ -64,6 +64,25 @@
 * When asked to create a new ability, provide both the **C# Class** and the **XML Def**.
 * Always check if a suggested method or field was deprecated in 1.6.
 
+### 8. Adding a New NullThrumAbility
+
+Abilities can apply on `Pawn`, `Corpse`, or `Thing`. Ensure correct target validation by asking the user's intent. Ensure the correct `NullThrumAbilityType` before modifying files.
+
+1.  **Documentation**:
+    *   Validate that `Docs/DESIGN_RULES.md` has the thematic concept and sensory description for the new `NullThrumAbilityType`.
+    *   Validate that `Docs/XENOTYPES.md` has the a short description for `NullThrumAbilityType`.
+    *   Add to `Docs/TESTS.md` to ensure the new ability is verified across target types (Pawn, Corpse, Self).
+
+When adding a new value to the `NullThrumAbilityType` enum, the following files and structures must be updated:
+
+1.  **`Source/Ability/Type/NullThrumAbilityType.cs`**: Add the new member to the `NullThrumAbilityType` enum.
+2.  **`Source/Ability/Type/NullThrumAbility.cs`**: Create the `NullThrumAbilityProp` instance for the new enum member.
+3.  **`Source/Abilities/Static/NullThrumAbilityUtility.cs`**: Update the necessary case statements to support the new enum member.
+4.  **`Source/ModSettings/OMW_Settings.cs`**: Add the necessary mod setting for the `NullThrumAbilityType`
+5.  **Implementation Class**: Create a new class (in `Source/Abilities/Implementations/`) inheriting from `NullThrumAbilityBase`.
+6.  **XML Defs**: Do not manually create new `AbilityDef` files; ensure the logic integrates with the existing `OMW_NullThrumAbility` framework.
+7.  **`Source/CompAbilityEffect/CompAbilityEffect` classes**: Are used the map the ability to specific xenotypes and targets. Leave this alone but remind the user to update it.
+
 ## 7. Memory & References
 
 * **Lore Reference:** `Docs/LORE.md`.
