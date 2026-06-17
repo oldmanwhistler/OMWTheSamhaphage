@@ -79,8 +79,21 @@ namespace OMW_Samhaphage
 
             // Compute the power scale
             float rawValue = 2f + (((comp * 4f) - (meta * 2f) + (arch * 8f)) * Mathf.Sqrt(geneDef.marketValueFactor) / 2.5f);
-
+            if (GeneIsCosmetic(geneDef))
+            {
+                rawValue *= 0.3f;
+            }
             return rawValue;
+        }
+
+        private static bool GeneIsCosmetic(GeneDef geneDef)
+        {
+            if (geneDef.displayCategory.defName.Contains("Cosmetic"))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public static float GeneResonanceValue(GeneDef geneDef)
