@@ -557,6 +557,16 @@ Narrative: Your name ends with your breath; your remaining flesh is merely an un
 
 Sensory: A deep, sickening rumble that makes the ground tremble, accompanied by the wet, bubbling sound of tissue liquefying. The corpse quickly loses its shape, melting in a cloud of thick vapor into perfectly sorted, steaming reservoirs of dense organic slurry and pristine white bone.
 
+### DUB (Thematic Concept)
+
+Thematic: The forced displacement and transfer of a dominant gene. Within the Hive’s network, genetic data is handled like a live signal route—it cannot exist in two places at once, only transferred down the wire. To Dub is to cut a highly refined, overridden gene entirely out of a Samhaphage’s own biological frequency and forcefully imprint it onto another entity, completely masking the recipient's blank or existing genetic code beneath the weight of the incoming signal while leaving a silent vacancy in the original host.
+
+Action: The Samhaphage establishes a direct harmonic link with a Hallowbound or peer entity, initiating a high-amplitude signal handoff. The chosen gene is severed from the Samhaphage's own active frequency and driven down the connection, overwriting the recipient's local biology with the new sequence.
+
+Narrative: Your sequence is far too quiet, so we will surrender our voice to fill your empty spaces. We pass our signal down into your flesh, cutting it away from our own marrow so it may live inside yours. We grow silent in our sacrifice, but you are made loud by our design.
+
+Sensory: A wet, rhythmic clapping sound—like a heavy loop resetting—accompanied by a sudden, jarring shudder through both bodies. The Samhaphage’s physical features instantly dull and collapse where the gene used to be, while the target’s body rapidly distorts and shifts, locking into the newly received genetic expression.
+
 ## HEDIFFS
 
 ### Silent Servitude (Thematic Concept)

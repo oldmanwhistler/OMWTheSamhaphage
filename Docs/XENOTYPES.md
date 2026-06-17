@@ -126,3 +126,7 @@ Excise acts as a surgical harmonic filter that isolates and shears away a specif
 ### Render (Dismantle)
 
 Render uses an intense, low-frequency vibration to rapidly collapse a corpse's cellular structure and separate it into its fundamental biological building blocks. By liquefying and sorting the dead tissue into purified pools of raw biomass, the ability prepares the remains for immediate consumption by the Hive.
+
+### Dub (Override)
+
+Dub allows a Samhaphage to permanently transfer an overridden gene out of their own frequency and inject it directly into another entity. By forcing this signal shift, the recipient's biology is overwritten by the incoming genetic sequence, while the original Samhaphage loses the gene entirely.
