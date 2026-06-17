@@ -32,9 +32,7 @@
 * silent servitude is too strong at recruiting
 * blacklist traits based on total power value
 * blacklist genes based on total power value
-* max # of genes, story mode unlimited
 * max # of traits, story mode unlimited
-* Dissonance: level 1: off, level 2: scales to 0 based off of resonance, level3: fixed amount of time
 * limit number of samhaphage? based on percentage of colony size, configurable setting?
 * the fluxspawn aren't dying fast enough
 * control for what to include in random mutation (e.g. blWretch)
@@ -65,6 +63,7 @@
 
 * add meditation focus types
 * need short descriptions for the Hediffs
+* buffs like healing, speed from resonance
 
 ### Traits
 
