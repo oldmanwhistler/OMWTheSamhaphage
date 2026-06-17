@@ -133,4 +133,4 @@ Finally finished the UI stuff and I have a better understanding of the async nat
 
 ## Week #18 - June 15th, 2026
 
-Sadness. Microsoft Paint is paywalling their Copilot features. The remove background one was actually decent for PNGs. It still worked.
+Holy crap, using Gemini Code Assist had another one of those moments where it went completely off the rails. I need to bite the bullet and get Claude.

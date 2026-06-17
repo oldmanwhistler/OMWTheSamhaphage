@@ -2,6 +2,7 @@
 
 ## Next
 
+* max # traits limit
 * Genetic complexity should be calculated as a percentage * genetic complexity. The percentage could change based on the difficulty presets and the xenotype.
 * render should mute psychic abilities
 * how does WVC make genes always override anything else? Adds a gene class with 
@@ -33,19 +34,21 @@
 * blacklist traits based on total power value
 * blacklist genes based on total power value
 * max # of traits, story mode unlimited
-* limit number of samhaphage? based on percentage of colony size, configurable setting?
 * the fluxspawn aren't dying fast enough
-* control for what to include in random mutation (e.g. blWretch)
 * can genes modify worktags? need a blacklist trigger for randomly mutating those
 * flatten strips genes/traits with Kind?
 * will raising market value of the pawns just make selling fluxspawn into slavery very profitable?
 * Resurrect needs should calculate the genes/traits and then use that to charge the resonance. Ability would have a yes/no selection pop up about continuing.
 
+
 ## BUGS
 
 * replace tetragenic abilities with resonance and add them to the blacklist
 * Excise isn't lethal if target is self
-* Flatten does not return to main menu
+* Flatten does not return to main menu (did I fix this?)
+* Retune called as ability, then hit skip does not return to main menu
+* Why does character editor show a million psychopath traits... need to check save game data.. and it also has a million Psychopaths. Fuck.
+* the conflictsWith logic for traits seems like it isn't by-directional? perhaps scan the entire defdatabase at the start and build up my own list of conflicting traits
 
 ## UI
 
