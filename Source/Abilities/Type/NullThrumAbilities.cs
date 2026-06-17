@@ -156,7 +156,13 @@ namespace OMW_Samhaphage
             NullThrumAbilityType.Render,
             NullThrumResourceType.ResourceTypeCorpse,
             NullThrumResonanceType.ResonanceTypeCredit,
-            NullThrumMathType.MathTypeOffset, 30.0f);        
+            NullThrumMathType.MathTypeOffset, 30.0f);
+
+        public NullThrumAbilityProps dub = new NullThrumAbilityProps(
+            NullThrumAbilityType.Dub,
+            NullThrumResourceType.ResourceTypeGene,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeMultiplier, 1.75f);
 
         public NullThrumAbilities()
         {
@@ -174,6 +180,7 @@ namespace OMW_Samhaphage
             listGeneMulti.Add(crosstalk);
             listTraitMulti.Add(bootleg);
             listTraitMulti.Add(excise);
+            listTraitMulti.Add(dub);            
             listOther.Add(unmute);
             listOther.Add(mute);
             listOther.Add(resurrect);

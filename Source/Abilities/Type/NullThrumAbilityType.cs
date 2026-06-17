@@ -22,6 +22,7 @@ namespace OMW_Samhaphage
         Hallowbound,
         Amplify,
         Excise,
-        Render
+        Render,
+        Dub
     }
 }
