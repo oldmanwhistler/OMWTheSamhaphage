@@ -7,11 +7,6 @@
 	</supportedVersions>
 	<modDependencies>
 		<li>
-			<packageId>deimos.corpseChildrenupdate</packageId>
-			<displayName>Corpse Children 1.6</displayName>
-			<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=3525305141</steamWorkshopUrl>
-		</li>
-		<li>
 			<packageId>redmattis.bigsmall.core</packageId>
 			<displayName>Big and Small - Genes and More</displayName>
 			<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2920751126</steamWorkshopUrl>
@@ -20,12 +15,7 @@
 			<packageId>sarg.alphagenes</packageId>
 			<displayName>Alpha Genes</displayName>
 			<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2891845502</steamWorkshopUrl>
-		</li>				
-		<li>
-			<packageId>wvc.sergkart.races.biotech</packageId>
-			<displayName>WVC - Xenotypes and Genes</displayName>
-			<steamWorkshopUrl>https://steamcommunity.com/sharedfiles/filedetails/?id=2886992038</steamWorkshopUrl>
-		</li>				
+		</li>					
 	</modDependencies>
 	<loadAfter>
 		<li>brrainz.harmony</li>
