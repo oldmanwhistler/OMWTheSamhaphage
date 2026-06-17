@@ -22,7 +22,21 @@
 * Transpose	(Shifting):	Swaps the xenotype for a stored template.
 * Infest (Implanting): Insert eggs for a xenotype into a pawn to create a new hybrid.
 * Enwomb (Reproductive):	Prepares a host to act as a living biological matrix (cradlemold).
+* Nullify (Destroy): Selectively destroy genes to gain resonance.
+* Mute (Awakening): Removes a victim's psylink level to gain resonance.
+* Compress (Compacting): Integrates xenogenes into a subject's endogenic sequence.
+* Attenuate (Silencing): Lethally dissolves a pawn or corpse to gain resonance.
+* Sample (Disguise): Steals cosmetic/appearance genes from a victim.
+* Bootleg (Copy): Steals selected traits from a victim or corpse.
+* Crosstalk (Absorb): Swaps random xenogenes with a target.
+* Resurrect (Rebirth): Resurrects a corpse as a specific xenotype.
+* Stun (Disruption): Momentarily disrupts internal harmony to incapacitate.
+* Hallowbound (Ascension): Transposes the target into a Hallowbound infiltrator.
+* Amplify (Evolve): Elevates the caster into a higher tier of the genetic hierarchy.
 * Unmute (Awakening):	Strips biological filters to awaken psychic potential. They stop generating "noise" and start receiving the frequency.
+* Excise (Remove): Selectively destroy traits to gain resonance.
+* Render (Dismantle): Dissassembles a body into its raw materials for consumption.
+* Dub (Override): Permanently transfer an overridden gene from the Samhaphage to another pawn.
 * Filter (Unused)
 
 ---
@@ -517,16 +531,6 @@ Narrative: We do not tear your genes out; we simply play their opposite note. Wh
 
 Sensory: A chilling, sudden absence of warmth in the host's body, accompanied by a faint visual "negative" effect where the target's skin seems to lose color for a split second. The air drops in temperature as a hollow, wind-like rush of sound signals that the trait has vanished into a stabilized pool of raw energy.
 
-### CROSSFADE (Thematic Concept)
-
-Thematic: A seamless transition of identity. Crossfade is the art of simultaneous biological displacement: as one frequency is lowered in the host, another is raised to take its place, resulting in a perfect swap of genetic traits between two living vessels.
-
-Action: Two subjects are locked in a sympathetic vibration loop; the Samhaphage modulates their internal "mix," causing a specific trait from the target to slide into the user while the user's corresponding genetic "track" slides into the target.
-
-Narrative: Symmetry is the soul of the Absolute Frequency. Why merely take when you can rebalance? We slide the faders of your existence, ensuring that no data is lost—only relocated to a more appropriate instrument.
-
-Sensory: An overlapping, rhythmic pulsing that feels like two heartbeats trying to sync up, accompanied by a dizzying "panning" sensation where the subjects feel their very essence sliding sideways into one another.
-
 ### AMPLIFY (Thematic Concept)
 
 Thematic: The escalation of transmission power. Within the hierarchy of the Sovereign Stillness, evolution is not a matter of mutation, but of volume and bandwidth. To Amplify is to flood a pawn’s biological circuitry with an overwhelming surge of primary Resonance, forcing their physical form to adapt to a vastly higher signal capacity. A Hallowbound—a quiet, passive receiver—is cranked until its hollow frame begins to broadcast, tearing open into a predatory Samhaphage. When a Samhaphage is Amplified again, their local frequency expands exponentially, flattening the surrounding biological noise until they solidify into the monolithic, silent architecture of a Sovereign Stillness.
@@ -557,15 +561,45 @@ Narrative: Your name ends with your breath; your remaining flesh is merely an un
 
 Sensory: A deep, sickening rumble that makes the ground tremble, accompanied by the wet, bubbling sound of tissue liquefying. The corpse quickly loses its shape, melting in a cloud of thick vapor into perfectly sorted, steaming reservoirs of dense organic slurry and pristine white bone.
 
+### RESURRECT (Thematic Concept)
+
+Thematic: The grotesque masterpiece of biological recycling.
+
+Action: The Samhaphage reconstructs a victim from cooling remains, reweaving flesh and bone into a functional vessel.
+
+Narrative: Reanimating the dead to catch the Null-Thrum, creating a new hollow link in the chain of the Stillness.
+
+Sensory: The wet sound of biological re-threading and bone snapping into a new, resonant alignment.
+
+### STUN (Thematic Concept)
+
+Thematic: Disruption of internal biological harmony.
+
+Action: The caster emits a targeted, disorienting frequency.
+
+Narrative: Momentarily shattering the victim's internal frequency, leaving them vulnerable to the hive's will.
+
+Sensory: A sudden, sickening pulse of sub-bass that makes the teeth vibrate and the world go still.
+
+### HALLOWBOUND (Thematic Concept)
+
+Thematic: The ultimate act of biological perversion.
+
+Action: The Samhaphage transforms a subject into a Hallowbound infiltrator.
+
+Narrative: Stripping the identity of the host to create a perfected servant clad in stolen skin.
+
+Sensory: A violent shift in the victim's resonance as their skin takes on a waxy sheen and their movements become clockwork-smooth.
+
 ### DUB (Thematic Concept)
 
-Thematic: The forced displacement and transfer of a dominant gene. Within the Hive’s network, genetic data is handled like a live signal route—it cannot exist in two places at once, only transferred down the wire. To Dub is to cut a highly refined, overridden gene entirely out of a Samhaphage’s own biological frequency and forcefully imprint it onto another entity, completely masking the recipient's blank or existing genetic code beneath the weight of the incoming signal while leaving a silent vacancy in the original host.
+Thematic: The forced displacement and transfer of a dominant gene. Within the Hive’s network, genetic data is handled like a live signal route—it cannot exist in two places at once, only transferred down the wire. To Dub is to cut a highly refined, overridden gene entirely out of a Samhaphage’s own biological frequency and forcefully imprint it onto another living pawn, completely masking the recipient's blank or existing genetic code beneath the weight of the incoming signal while leaving a silent vacancy in the original host.
 
-Action: The Samhaphage establishes a direct harmonic link with a Hallowbound or peer entity, initiating a high-amplitude signal handoff. The chosen gene is severed from the Samhaphage's own active frequency and driven down the connection, overwriting the recipient's local biology with the new sequence.
+Action: The Samhaphage establishes a direct harmonic link with another pawn, initiating a high-amplitude signal handoff. The chosen gene is severed from the Samhaphage's own active frequency and driven down the connection, overwriting the recipient's local biology with the new sequence.
 
 Narrative: Your sequence is far too quiet, so we will surrender our voice to fill your empty spaces. We pass our signal down into your flesh, cutting it away from our own marrow so it may live inside yours. We grow silent in our sacrifice, but you are made loud by our design.
 
-Sensory: A wet, rhythmic clapping sound—like a heavy loop resetting—accompanied by a sudden, jarring shudder through both bodies. The Samhaphage’s physical features instantly dull and collapse where the gene used to be, while the target’s body rapidly distorts and shifts, locking into the newly received genetic expression.
+Sensory: A wet, rhythmic clapping sound—like a heavy loop resetting—accompanied by a sudden, jarring shudder through both bodies. The Samhaphage’s physical features instantly dull and collapse where the gene used to be, while the target pawn’s body rapidly distorts and shifts, locking into the newly received genetic expression.
 
 ## HEDIFFS
 

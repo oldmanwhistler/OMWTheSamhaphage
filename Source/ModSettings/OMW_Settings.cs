@@ -95,6 +95,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref abilityValue.amplify.value, "Amplify", defaults.amplify.value);
             Scribe_Values.Look(ref abilityValue.excise.value, "Excise", defaults.excise.value);
             Scribe_Values.Look(ref abilityValue.render.value, "Render", defaults.render.value);
+            Scribe_Values.Look(ref abilityValue.dub.value, "Dub", defaults.dub.value);
 
             NullThrumXenotypeLimitPercentage defaultsPercentage = new NullThrumXenotypeLimitPercentage(limitPreset);
             Scribe_Values.Look(ref limitPercentage.enabled, "LimitPercEnabled", defaultsPercentage.enabled);
@@ -322,6 +323,7 @@ namespace OMW_Samhaphage
                     DrawValueSlider(listing, ref settings.abilityValue.crosstalk);
                     DrawValueSlider(listing, ref settings.abilityValue.sample);
                     DrawValueSlider(listing, ref settings.abilityValue.harrow);
+                    DrawValueSlider(listing, ref settings.abilityValue.dub);
                     break;
 
                 case SettingsTab.Limits:                    
@@ -494,4 +496,3 @@ namespace OMW_Samhaphage
         public override string SettingsCategory() => "The Samhaphage";
     }
 }
-

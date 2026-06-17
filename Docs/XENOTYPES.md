@@ -129,4 +129,4 @@ Render uses an intense, low-frequency vibration to rapidly collapse a corpse's c
 
 ### Dub (Override)
 
-Dub allows a Samhaphage to permanently transfer an overridden gene out of their own frequency and inject it directly into another entity. By forcing this signal shift, the recipient's biology is overwritten by the incoming genetic sequence, while the original Samhaphage loses the gene entirely.
+Allows a Samhaphage to permanently transfer an overridden gene out of their own frequency and inject it directly into another living pawn.

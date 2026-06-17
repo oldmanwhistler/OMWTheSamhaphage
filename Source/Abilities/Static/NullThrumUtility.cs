@@ -31,6 +31,7 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Amplify: return "Amplify";
                 case NullThrumAbilityType.Excise: return "Excise";
                 case NullThrumAbilityType.Render: return "Render";
+                case NullThrumAbilityType.Dub: return "Dub";
                 default: 
                     Log.Error($"Unknown ability type in NullThrumUtility.ToString({ability})");
                     return "Unknown";
@@ -97,6 +98,7 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Amplify: return NullThrumResonanceType.ResonanceTypeNone;
                 case NullThrumAbilityType.Excise: return NullThrumResonanceType.ResonanceTypeCredit;
                 case NullThrumAbilityType.Render: return NullThrumResonanceType.ResonanceTypeCredit;
+                case NullThrumAbilityType.Dub: return NullThrumResonanceType.ResonanceTypeDebit;
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.ResonanceType({ability})");                                                                
                     return NullThrumResonanceType.ResonanceTypeCredit;
@@ -181,6 +183,9 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Render:
                     return
                         $"{caster} dissassembles the body to it's raw materials. Lethal to {victim}.";
+                case NullThrumAbilityType.Dub:
+                    return
+                        $"{caster} permanently transfers an overridden gene from their own frequency and imprints it onto {victim}.";
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.DescriptionSimple({ability})");
                     return "Unknown ability type.";
@@ -252,6 +257,9 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Render:
                     return
                         $"Render uses an intense, low-frequency vibration to rapidly collapse a corpse's cellular structure and separate it into its fundamental biological building blocks. It renders {victim} in to biomass ready for consumption.";
+                case NullThrumAbilityType.Dub:
+                    return
+                        $"Allows {caster} to permanently transfer an overridden gene out of their own frequency and inject it directly into {victim}.";
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.DescriptionLore({ability})");
                     return "An unknown ability of the Null-Thrum.";

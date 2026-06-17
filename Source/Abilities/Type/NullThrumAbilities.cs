@@ -178,9 +178,9 @@ namespace OMW_Samhaphage
             listGeneMulti.Add(attenuate);
             listGeneMulti.Add(sample);
             listGeneMulti.Add(crosstalk);
+            listGeneMulti.Add(dub);            
             listTraitMulti.Add(bootleg);
             listTraitMulti.Add(excise);
-            listTraitMulti.Add(dub);            
             listOther.Add(unmute);
             listOther.Add(mute);
             listOther.Add(resurrect);
