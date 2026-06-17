@@ -1,21 +1,21 @@
 # The Samhaphage
 
-> AI was used while developing this mod. Full explantation at the end. Not vibe coded.
+> AI was used in developing this mod. Full disclosure at the end. Not vibe coded. 200 hours of playtesting.
 
 ## "Every corpse is a new friend."
 
-Adds new xenotypes, scenarios and lore based on a "Got to Catch Them All" style gameplay loop around genes and traits. They are intended for player faction as the fun is in harvesting the dead to increase your power. They wouldn't work as a enemy faction because a fresh spawn is weak AF. This is my first mod for RimWorld after about 1300 hours of playing.
+Adds new xenotypes, scenarios and lore based on a "Got to Catch Them All" style gameplay loop around genes and traits. Only works as player faction, as the fun is in harvesting the dead to increase your power. This is my first mod for RimWorld after about 1300 hours of playing.
 
 The Perfect Stillness is a faction that introduces several xenotypes that have an interwoven reproduction cycle.
 
-* The Fluxspawn (brood) are naked vibrating slugs that move fast and are tough to hit but also kind of useless. The source of genes and meat when outsiders are scarce.
+* The Fluxspawn (brood) are naked vibrating slugs that move fast and are tough to hit but kind of useless. The source of genes and meat when outsiders are scarce.
   * The Fluxspawn Hivelings are the slug workers.
   * The Fluxspawn Brutes are the slug fighters.
   * The Fluxspawn Flicker are the slug infiltrators.
   * The Cradlemold (factory) are former baseliners that have been hollowed out into factories to grow new fluxspawn.
-* The Echovessel (thrall) are patchwork salvaged from the men who devour brains to learn. (It's just the Corpse Children mod).
-* The Hallowbound (workers) create thralls, maintain the brood, and deal with baseliners and other xenotypes if a non-violent interaction is required.
-* The Samhaphage (elite) are unmakers that harrow the genetic noise to make themselves strong. The strongest of them will evolve and unleash the Absolute Frequency.
+* The Echovessel (thrall) are patchwork creatures salvaged from corpses.
+* The Hallowbound (workers) create thralls, maintain the brood, and deal with baseliners and other xenotypes.
+* The Samhaphage (elite) are unmakers who harvest the genes and traits from their enemies.
 * The Sovereign Stillness (apex) is the Absolute Frequency that will harrow the world. There can only be one.
 
 ![The Samhaphage Logo](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/images/the_samhaphage_logo.png?raw=true)
@@ -26,44 +26,64 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 * [See DESIGN_RULES.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DESIGN_RULES.md) for information about the abilities / genes / xenotypes.
 * [See DEV_DIARY.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DevDiary/DEV_DIARY.md) for my thoughts and experiences while working on it.
 
+## Game Loop
+
+* Biological biotech that you can use without researching anything - have fun with tribal, medieval or progression playstyles.
+* Raiders become lootboxes -- whether they are alive or dead.
+* Why recruit a pawn when you can just steal what makes them good?
+* Convert genes/traits to resource that you can use to steal genes/traits.
+
 ## Game Balance
 
+* This is character editor but with more steps.
+* Four balance presets: Unlimited, Easy, Normal, Hard
+  * The presets just set defaults for all of the other settings. Everything to do with game balance is configurable. You do you.
+* Try to collect every trait and gene in the game on one pawn.
 * These xenotypes start with nerfs that need to be overcome through gene acquisition.
-  * Raid wealth multipliers means with great power comes great risk.
-* There is a genetic resource called "resonance" and gene abilities can add or subtract from it.
-* Try to collect every trait and gene in the game on one pawn. This will not be balanced.
+  * They have raid wealth multipliers to account for how overpowered they can be.
+* There is a genetic resource called "resonance" and the different gene/trait/psylink/resurrection/evolution abilities add or subtract from it.
+
+### Game Balance - Mixed Xenotype Reproductive Cycle
+
 * The Echovessels are easy to create from the dead with no cool-down, but they are limited in their genetic potential.
-* The Fluxspawn breed like crazy and are hard to keep alive. They increase colony wealth beyond their utility and let you gamble that risk on the possibility of random genes. They have serious heat issues in early game and could die of hypothermia. They most definitely will die of cancer unless the tumours are harvested.
-* The Hallowbound approximate baseliners to the naked eye, but have methods for gene acquisition and traits acquisition. With enough genetic complexity they can become Samhaphage.
+* The Fluxspawn breed like crazy but are hard to keep alive.
+  * They increase colony wealth beyond their utility and let you gamble that risk on the possibility of random genes.
+  * They have serious heat issues in early game and could die of hypothermia.
+  * They most definitely will die of cancer unless the tumours are harvested.
+  * Can change between three castes depending on colony needs.
+* The Cradlemold was once a baseliner but is now used to produce more fluxspawn.
+* The Hallowbound approximate baseliners to the naked eye, but have limit abilities of Samhaphage to acquire genes/traits. 
+  * With enough genetic complexity they can become Samhaphage.
 * The Samhaphage run the show with their ability to acquire genes from the living and the dead through biology instead of biotech.
-* When a Samhaphage acquires enough genetic complexity they can become the Sovereign Stillnesss. There can only be one.
-* While the Sovereign Stillness is an apex unit, they do destroy corpses in melee. While they are OP it also means you have less biomass to harvest after a raid.
+  * When a Samhaphage acquires enough genetic complexity they can become the Sovereign Stillnesss. There can only be one.
+* The Sovereign Stillness is the apex unit. You only get one per colony.
 
 ## Tip and Tricks
 
 * Poor aptitudes abound for fresh colonists. Time to harvest some aptitude genes.
 * Scour minds to turn prisoners into psychopaths so they are more "forgiving" of the Perfect Stillness even without Ideology DLC.
-* The Hallowbound and Samhaphage can control when their genetic mutations.
+* Resurrect any dead pawn as an Echovessel if you can afford the cost.
+* The Hallowbound and Samhaphage can control when their genetic mutations happen.
 * The Hallowbound have the chill of the dead and enjoy colder temperatures.
 * The Fluxspawn require heat for their naked, disgusting, fertile bodies.
 * The Fluxspawn mutate new genes daily.
-* The fluxspawn have a short lifespan and a lot of cancers but you can make that work for you with the teratogenic abilities from Alpha Genes.
-* The fluxspawn carcinomas can power the genetic abilities of the Hallowbound and Samhaphage.
-* The more fluxspawn you have the more powerful the chimera-like Silent Stillness becomes thanks to the Hivemind.
-* Breeding your hive to kill them to acquire genes is part of the gameplay loop.
+* The fluxspawn have a short lifespan and a lot of cancers.
+* The fluxspawn carcinomas can be harvested as a source of resonance.
+* (with WVC Biotech) The more fluxspawn you have the more powerful the Silent Stillness becomes thanks to the Hivemind.
+* Breed your hive to the point where either raid wealth or TPS kills you.
 
 ## Inspirations
 
-* The "samhaphage" name comes from a combination of "samhain" and my cat Sam who is 1) one-with-the-void, 2) a devourer of all the food in the house, and 3) keeps biting me.
-* The combination of Gene Ripper and Corpse Children is what lead me to wanting to make a mod like this. Got to harvest them all!
-* If the idea of "biological biotech" interests you then try out the scenarios in "WVC: Xenotypes and Genes".
-* The idea of carcinomas as a resource came from "Alpha Genes". Changed so the abilities count the carcinomas.
-* The random daily mutations came from "Alpha Genes". Changed so the random genes could be harvested or integrated.
+* The "samhaphage" name comes from a combination of "samhain" and my cat Sam who is one-with-the-void and a devourer of all the food in the house.
+* I'd been playing with a combination of `Gene Ripper` and `Corpse Children` and was frustrated with the limits. Got to harvest them all!
+* If the idea of "biological biotech" interests you then try out the different scenarios in `WVC: Xenotypes and Genes`.
+* The idea of carcinomas as a resource came from `Alpha Genes`.
+* The idea of random daily mutations came from `Alpha Genes`.
 * The "lifecycle involves multiple xenotypes" was from Ridley Scott's Alien series and everything it inspired.
 * When I started going from "void" to "frequency" it made me think of the movie Dark City.
-* The visuals of the slugs and eyeless toothy horrors developed naturally when I was picking cosmetic genes from Big & Small and Alpha Genes. I realized the reminded me of Sam Keith's the Maxx and the white and black isz.
+* The visuals of the slugs and eyeless toothy horrors developed naturally when I was picking cosmetic genes from `Big & Small` and `Alpha Genes`. I realized the reminded me of Sam Keith's the Maxx and the white and black isz.
   * Sam Keith died while I was creating this mod and I'd like to dedicate it to him.
-* The weak-to-omnipotent tropes come from litrpg/progression fantasy tropes. Go read Dungeon Crawler Carl and He Who Fights With Monsters.
+* The weak-to-omnipotent tropes come from litrpg/progression fantasy tropes. Go read `Dungeon Crawler Carl` and `He Who Fights With Monsters`.
 
 ## Other Mods
 
@@ -85,6 +105,14 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 * Anomaly will add genes to the Xenotypes.
 * Royalty will add genes to the Xenotypes.
 * Odyssey will add vacuum resistance to the Xenotypes.
+  
+### Major Recommendations
+
+* [WVC: Xenotypes and Genes - 27,252](https://steamcommunity.com/sharedfiles/filedetails/?id=2886992038)
+* [Corpse Children 1.6 - 248 subs](https://steamcommunity.com/sharedfiles/filedetails/?id=3525305141)
+* [Tweaks Galore - 79,830 subs -](https://steamcommunity.com/sharedfiles/filedetails/?id=2695164414) can add a Gene menu when viewing pawns/corpses that makes it much faster to browse genes for genes to steal.
+  * It also has a "Gene Pack Tweaks" section where you can control whether or not every gene can spawns in a genepack.
+  * OMW Samhaphage uses the gene pack settings to determine if a gene can be spawned with random mutations.
 
 ### Optional But Supported
 
@@ -94,14 +122,6 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
   * Pawns will spawn with a couple of random genes.
   * I recommend this as an alternative to [SpawnThoseGenes! - 48,827 subs](https://steamcommunity.com/workshop/filedetails/?id=2898044088) which is no longer maintained.
   * Samhaphage will autogenerate a Xenotype with blacklisted genes that can be used with Genetic Drift. See `Recommended Settings`
-  
-### Major Recommendations
-
-* [WVC: Xenotypes and Genes - 27,252](https://steamcommunity.com/sharedfiles/filedetails/?id=2886992038)
-* [Corpse Children 1.6 - 248 subs](https://steamcommunity.com/sharedfiles/filedetails/?id=3525305141)
-* [Tweaks Galore - 79,830 subs -](https://steamcommunity.com/sharedfiles/filedetails/?id=2695164414) can add a Gene menu when viewing pawns/corpses that makes it much faster to browse genes for genes to steal.
-  * It also has a "Gene Pack Tweaks" section where you can control whether or not every gene can spawns in a genepack.
-  * OMW Samhaphage uses the gene pack settings to determine if a gene can be spawned with random mutations.
 
 ### Minor Recommendations
 
@@ -126,7 +146,7 @@ I didn't hardcoded this as conflicts because YMMV, but they conceptually break t
 
 ### Mod Interactions
 
-* Mods that change the complexity / metabolism costs of a gene will change the resonance cost that fuels the abilities and you may want to use the Settings menu to tweak game balance.
+* Mods that change the complexity / metabolism costs of a gene will change the resonance cost that fuels the abilities. You can use the Mod Settings menu to tweak game balance.
 
 #### Settings for [Tweaks Galore](https://steamcommunity.com/sharedfiles/filedetails/?id=2695164414)
 
@@ -160,19 +180,20 @@ I didn't hardcoded this as conflicts because YMMV, but they conceptually break t
 * Safe to remove from save.
   * Could have some errors on first load after removing, like removing any mod.
 * Safe to upgrade during save.
-  * If new genes were added to the xenotype XMLs then your existing pawns wouldn't have them, like any other biotech mod.
+  * If new genes were added to the XenotypeDef XMLs then your existing pawns wouldn't have them, like any other biotech mod.
 
 ## AI Notice
 
-This project was to learn how to mod RimWorld and to gain experience using different gen AI tools I don't use at work.
-  
+This project was to learn how to mod RimWorld and to gain experience using different gen AI tools I don't use at work. Using AI was kind of the point.
+
+Places where it was used:  
+
 1. Brainstorming nomenclature and descriptions.
 2. Coded using VS Code with Intellisense and AI suggestions/review.
-   * "Vibe coding" used for batch refactoring, job class, and Window UI classes.
 3. Gen AI used for icon assets and for parts or entirety of workshop screenshots.
    * This mod has no graphical assets other than gene icons and ability icons.
 
-Before you comment something anti-AI, witch hunts against people who **actually** disclose AI usage is a bad look. Pick your lane.
+Remember kids, witch hunts against people who **actually** disclose AI usage is a bad look. Pick your lane.
 
 You can look at the [github history](https://github.com/oldmanwhistler/OMWTheSamhaphage/commits/main/) or my [dev diary](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DevDiary/DEV_DIARY.md) to get an idea of how long I spent this. AI is just a tool.
 
