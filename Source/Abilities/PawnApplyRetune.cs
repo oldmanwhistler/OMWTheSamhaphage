@@ -33,12 +33,6 @@ namespace OMW_Samhaphage
                     blocked.Append(gene.def, "Germline");
                     isBlocked = true;
                 }
-                else if (OMW_BlacklistGenes.BlacklistedGenesDontCopy.Contains(gene.def))
-                {
-                    Log.Debug($"blocking {gene.def} because don't copy");
-                    blocked.Append(gene.def, "Don't Copy");
-                    isBlocked = true;
-                }
                 else if (endogeneDefs.Contains(gene.def))
                 {
                     Log.Debug($"blocking {gene.def} because already harmonized");
