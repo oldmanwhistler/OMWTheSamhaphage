@@ -179,5 +179,51 @@ namespace OMW_Samhaphage
                 Log.Error($"{Prefix} Error: Failed to export trait report: " + ex.Message);
             }            
         }
+
+        public static void FixColonistsWithRepeatedTraits()
+        {
+            foreach (Pawn pawn in PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_OfPlayerFaction)
+            {
+                if (pawn.story?.traits == null) continue;
+
+                List<TraitDef> keptTraits = new List<TraitDef>();
+                List<Trait> toRemove = new List<Trait>();
+
+                foreach (Trait trait in pawn.story.traits.allTraits)
+                {
+                    if (trait.sourceGene != null) continue;
+                    
+                    bool isDuplicate = keptTraits.Contains(trait.def);
+                    bool isConflicting = false;
+
+                    if (!isDuplicate)
+                    {
+                        foreach (TraitDef kept in keptTraits)
+                        {
+                            if (trait.def.ConflictsWith(kept) || kept.ConflictsWith(trait.def))
+                            {
+                                isConflicting = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (isDuplicate || isConflicting)
+                    {
+                        toRemove.Add(trait);
+                    }
+                    else
+                    {
+                        keptTraits.Add(trait.def);
+                    }
+                }
+
+                foreach (Trait trait in toRemove)
+                {
+                    pawn.story.traits.RemoveTrait(trait);
+                    Log.Message($"{Prefix} Removed redundant or conflicting trait '{trait.Label}' from {pawn.LabelShort}");
+                }
+            }
+        }
     }
 }
