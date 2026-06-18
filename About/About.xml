@@ -1,7 +1,7 @@
 <ModMetaData>
 	<name>[OMW] The Samhaphage</name>
 	<author>OldManWhistler</author>
-	<packageId>omw.samhaphage</packageId>
+	<packageId>oldmanwhistler.samhaphage</packageId>
 	<supportedVersions>
 		<li>1.6</li>
 	</supportedVersions>
