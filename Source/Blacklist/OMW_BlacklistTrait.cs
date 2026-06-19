@@ -146,7 +146,7 @@ namespace OMW_Samhaphage
                 string path = Path.Combine(GenFilePaths.SaveDataFolderPath, "OMW_Samhaphage_Report_Blacklisted_Traits.csv");
                 StringBuilder sb = new StringBuilder();
 
-                sb.AppendLine("DEFNAME,MOD_NAME,TRAIT_LABEL,DEGREE,DEGREE_LABEL,TRAIT_DESC,DEGREE_DESC");
+                sb.AppendLine("DEFNAME,MOD_NAME,TRAIT_LABEL,DEGREE,DEGREE_LABEL,BLACKLIST_REASON,TRAIT_DESC,DEGREE_DESC");
 
                 foreach (TraitDef traitDef in DefDatabase<TraitDef>.AllDefs)
                 {
@@ -180,14 +180,77 @@ namespace OMW_Samhaphage
             }            
         }
 
+        
         public static void FixColonistsWithRepeatedTraits()
         {
+
             foreach (Pawn pawn in PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_OfPlayerFaction)
             {
                 if (pawn.story?.traits == null) continue;
 
-                List<TraitDef> keptTraits = new List<TraitDef>();
+                HashSet<TraitDef> seen = new HashSet<TraitDef>();
+                HashSet<TraitDef> duplicate = new HashSet<TraitDef>();
+
                 List<Trait> toRemove = new List<Trait>();
+                foreach (Trait trait in pawn.story.traits.allTraits)
+                {
+                    if (seen.Contains(trait.def))
+                    {
+                        duplicate.Add(trait.def);
+                        toRemove.Add(trait);
+                    }
+                    else
+                    {
+                        seen.Add(trait.def);
+                    }
+                }
+
+                foreach (TraitDef traitDef in duplicate)
+                {
+                    Log.Message(
+                        $"{Prefix} trait '{traitDef.label}' has duplicates in {pawn.LabelShort}");
+                }
+
+                foreach (Trait trait in toRemove)
+                {
+                    if (trait.sourceGene == null)
+                    {
+                        pawn.story.traits.RemoveTrait(trait);
+                        Log.Message(
+                            $"{Prefix} Removed redundant or conflicting trait '{trait.Label}' from {pawn.
+                                LabelShort}");
+                    }
+                    else
+                    {
+                        Gene gene = trait.sourceGene;
+                        Log.Message(
+                            $"{Prefix} Can't remove duplicate trait '{trait.Label}' from {pawn.
+                                LabelShort} because it is from gene {gene.Label}");
+                    }
+                }
+
+                continue;
+
+                // Remove suppressed traits
+                foreach (Trait trait in pawn.story.traits.allTraits)
+                {
+                    if (trait.sourceGene != null) continue;
+
+                    if (trait.Suppressed)
+                    {
+                        toRemove.Add(trait);
+                    }
+                }
+
+                foreach (Trait trait in toRemove)
+                {
+                    pawn.story.traits.RemoveTrait(trait);
+                    Log.Message(
+                        $"{Prefix} Removed redundant or conflicting trait '{trait.Label}' from {pawn.LabelShort}");
+                }
+
+                List<TraitDef> keptTraits = new List<TraitDef>();
+                toRemove = new List<Trait>();
 
                 foreach (Trait trait in pawn.story.traits.allTraits)
                 {
