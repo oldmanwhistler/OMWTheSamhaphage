@@ -18,12 +18,6 @@
     <biostatMet>-1</biostatMet>
     <suppressedTraits>
       <li><def>Kind</def></li>
-      <li><def>BodyPurist</def></li>
-      <li><def>Greedy</def></li>
-      <li><def>Jealous</def></li>
-      <li><def>TorturedArtist</def></li>
-  	  <li><def>Gourmand</def></li>
-	    <li><def>Pyromaniac</def></li>
     </suppressedTraits>    
     <forcedTraits>
       <li>        
@@ -34,14 +28,7 @@
     <exclusionTags>
       <li>KindInstinct</li>
       <li>ViolenceDisabled</li>
-      <li MayRequire="obsidiaexpansion.xenos.drakonids">OE_DrakonidsGreed</li>              
-      <li MayRequire="jxw.genefortraits">Gene_Trait_BodyPurist_0</li>
-      <li MayRequire="jxw.genefortraits">Gene_Trait_Greedy_0</li>
       <li MayRequire="jxw.genefortraits">Gene_Trait_Kind_0</li>
-      <li MayRequire="jxw.genefortraits">Gene_Trait_Gourmand_0</li>
-      <li MayRequire="jxw.genefortraits">Gene_Trait_Jealous_0</li>
-      <li MayRequire="jxw.genefortraits">Gene_Trait_Pyromaniac_0</li>
-      <li MayRequire="jxw.genefortraits">Gene_Trait_TorturedArtist_0</li>
     </exclusionTags>
   </GeneDef>
 

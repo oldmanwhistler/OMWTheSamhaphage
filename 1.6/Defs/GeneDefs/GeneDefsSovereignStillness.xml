@@ -41,6 +41,9 @@
       <li>        
         <def>BS_AnimalFriend</def>        
       </li>
+      <exclusionTags>
+      <li>NightOwl</li>
+    </exclusionTags>      
     </forcedTraits>
 
     <modExtensions>
