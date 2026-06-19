@@ -14,7 +14,8 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.infest;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         public override string AbilityDescription(Pawn victim, Pawn caster) => $"Infest {victim.LabelShort} with Fluxspawn embryos.\nThe process is lethal and will birth a litter of Fluxspawn.";
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Infest");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Infest", false) ??
+                                          BaseContent.BadTex;
         public override bool IsLethal => true;
         
         public virtual HediffDef TargetHediffDef => OMW_HediffDefOf.OMW_ParasiticImplantation;

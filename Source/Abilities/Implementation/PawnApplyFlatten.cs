@@ -11,7 +11,8 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.flatten;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         public override string AbilityDescription(Pawn victim, Pawn caster) => $"Scour {victim.LabelShort}'s mind, removing negative memories and preparing them for genetic manipulation.";
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Flatten");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Flatten", false) ??
+                                          BaseContent.BadTex;
 
         private static void PurgeNegativeMemories(Pawn victim)
         {

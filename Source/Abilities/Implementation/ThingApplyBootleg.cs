@@ -106,7 +106,8 @@ namespace OMW_Samhaphage
             return $"Bootleg {victim.LabelShort}'s personality traits, stripping them of their identity to bolster your own.";
         }
 
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Bootleg");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Bootleg", false) ??
+                                          BaseContent.BadTex;
 
         public SelectionBootleg CanApplyBootleg(Pawn victim, Pawn caster)
         {

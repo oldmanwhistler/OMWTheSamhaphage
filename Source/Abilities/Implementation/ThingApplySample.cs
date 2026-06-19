@@ -78,7 +78,8 @@ namespace OMW_Samhaphage
         {
             return $"Sample {victim.LabelShort} and steal their appearance to disguise yourself as one of their kind.";
         }
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Sample");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Sample", false) ??
+                                          BaseContent.BadTex;
         public override void ApplyPawn(Pawn victim, Pawn caster)
         {
             if (victim == null || caster == null) return;

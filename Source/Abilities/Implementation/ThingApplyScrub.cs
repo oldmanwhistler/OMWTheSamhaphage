@@ -70,7 +70,8 @@ namespace OMW_Samhaphage
             return $"Scrub {victim.LabelShort} of their carcinomas and useless genes.\nConverts carcinomas to resonance and opens a menu to destroy deactivated genes.";
         }
 
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Scrub");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Scrub", false) ??
+                                          BaseContent.BadTex;
 
 
         public static void DoAbility(Pawn victim, Pawn caster, System.Action OnComplete)

@@ -74,7 +74,8 @@ namespace OMW_Samhaphage
             return $"Harmonize {victim.LabelShort}'s genetic frequency, integrating their xenogenes into their endogenic sequence.";
         }
 
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Compress");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Compress", false) ??
+                                          BaseContent.BadTex;
 
         public override void ApplyPawn(Pawn victim, Pawn caster)
         {

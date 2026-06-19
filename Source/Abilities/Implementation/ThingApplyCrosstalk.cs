@@ -76,7 +76,8 @@ namespace OMW_Samhaphage
             return $"Induce a genetic crosstalk with {victim.LabelShort}, using resonance to harvest xenogenes at random.";
         }
 
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Crosstalk");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Crosstalk", false) ??
+                                          BaseContent.BadTex;
 
         public override void ApplyPawn(Pawn victim, Pawn caster) => ApplyPawn(victim, caster, null);
 

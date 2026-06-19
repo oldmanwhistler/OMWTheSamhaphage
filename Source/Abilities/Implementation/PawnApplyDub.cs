@@ -89,7 +89,8 @@ namespace OMW_Samhaphage
             return $"Sever a suppressed genetic frequency from {caster.LabelShort} and imprint it onto {victim.LabelShort}.";
         }
 
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Dub");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Dub", false) ??
+                                          BaseContent.BadTex;
 
         public override void ApplyPawn(Pawn victim, Pawn caster)
         {

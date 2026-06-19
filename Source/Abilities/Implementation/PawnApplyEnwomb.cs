@@ -11,7 +11,8 @@ namespace OMW_Samhaphage
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.enwomb;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         public override string AbilityDescription(Pawn victim, Pawn caster) => $"Implant {victim.LabelShort} with a new life.";
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Enwomb");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Enwomb", false) ??
+                                          BaseContent.BadTex;
 
         public virtual HediffDef TargetHediff => null;
         public virtual XenotypeDef TargetXenotype => null;

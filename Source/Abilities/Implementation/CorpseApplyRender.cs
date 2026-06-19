@@ -18,7 +18,8 @@ namespace OMW_Samhaphage
             return $"Render {victim.LabelShort}'s body into raw biomass, ready for consumption.";
         }
 
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Render");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Render", false) ??
+                                          BaseContent.BadTex;
 
         public override void ApplyCorpse(Corpse corpse, Pawn caster)
         {

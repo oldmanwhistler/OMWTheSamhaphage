@@ -68,7 +68,8 @@ namespace OMW_Samhaphage
             return $"Excise a trait from {victim.LabelShort} and convert its frequency into resonance.";
         }
 
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Excise");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Excise", false) ??
+                                          BaseContent.BadTex;
         public override bool IsLethal => true;
         public bool ApplyExcise(Pawn victim, Pawn caster, SelectionExcise selector, List<TraitPlus> selectedList)
         {

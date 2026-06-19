@@ -19,7 +19,8 @@ namespace OMW_Samhaphage
             return $"Harvest the psychic potential of {victim.LabelShort}, stripping their psylink levels to replenish your resonance.\nGain ceases once resonance reaches {MaxResonanceThreshold}.";
         }
 
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Mute");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Mute", false) ??
+                                          BaseContent.BadTex;
 
         public static void DoAbility(Pawn victim, Pawn caster, System.Action OnComplete)
         {

@@ -73,7 +73,8 @@ namespace OMW_Samhaphage
         {
             return $"Nullify {victim.LabelShort} and destroy their genes to gain resonance.";
         }
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Nullify");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Nullify", false) ??
+                                          BaseContent.BadTex;
         public override void ApplyPawn(Pawn victim, Pawn caster)
         {
             Log.Debug($"START::Nullify::ApplyPawn({victim.LabelShort}, {caster.LabelShort})");

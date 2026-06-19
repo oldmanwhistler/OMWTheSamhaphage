@@ -19,7 +19,8 @@ namespace OMW_Samhaphage
                 $"{caster.LabelShort} reaches the genetic threshold to elevate themselves to the next level of the genetic hierarchy and become {TargetXenotype.label}. (Cost: {ResonanceCost} Resonance)";
         }
 
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Amplify");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Amplify", false) ??
+                                          BaseContent.BadTex;
 
         public override void ApplyPawn(Pawn victim, Pawn caster)
         {

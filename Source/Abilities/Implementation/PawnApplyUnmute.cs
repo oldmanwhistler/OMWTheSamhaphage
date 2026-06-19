@@ -15,7 +15,8 @@ namespace OMW_Samhaphage
             return $"Establish a psychic resonance within {victim.LabelShort}'s mind, granting them a psylink level through the frequency of the Null-Thrum.";
         }
 
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Unmute");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Unmute", false) ??
+                                          BaseContent.BadTex;
 
         public override void ApplyPawn(Pawn victim, Pawn caster)
         {

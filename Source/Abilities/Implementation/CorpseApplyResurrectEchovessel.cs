@@ -9,7 +9,8 @@ namespace OMW_Samhaphage
         public override RimWorld.XenotypeDef TargetXenotype => OMW_XenotypeDefOf.omw_echovessel;
         public override bool SacrificeCaster => false;
         public override bool IsLethal => false;
-        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/ResurrectEchovessel");
+        public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/ResurrectEchovessel", false)
+        ?? BaseContent.BadTex;
 
         public override string AbilityDescription(Pawn victim, Pawn caster)
         {
