@@ -36,7 +36,7 @@ namespace OMW_Samhaphage
         public override void CompExposeData()
         {
             base.CompExposeData();
-            Scribe_Collections.Look(ref this.geneDefs, nameof(this.geneDefs));
+            Scribe_Collections.Look(ref this.geneDefs, nameof(this.geneDefs), LookMode.Def);
             Scribe_Values.Look(ref this.Active, nameof(this.Active));
         }
 

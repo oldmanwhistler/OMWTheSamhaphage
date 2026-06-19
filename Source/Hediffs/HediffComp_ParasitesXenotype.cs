@@ -42,6 +42,7 @@ namespace OMW_Samhaphage
             Scribe_Defs.Look(ref this.motherXenotypeDef, nameof(this.motherXenotypeDef));
             Scribe_Values.Look(ref this.numBabiesMin, nameof(this.numBabiesMin));
             Scribe_Values.Look(ref this.numBabiesMax, nameof(this.numBabiesMax));
+            Scribe_Values.Look(ref this.disableHediff, nameof(this.disableHediff), false);
         }
 
 
