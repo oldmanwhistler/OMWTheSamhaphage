@@ -181,111 +181,58 @@ namespace OMW_Samhaphage
         }
 
         
-        public static void FixColonistsWithRepeatedTraits()
+        public static void FixColonistsTraits()
         {
-
+            // Find all traits that come from genes
+            // Remove genes that affect conflicting traits
+            
             foreach (Pawn pawn in PawnsFinder.AllMapsCaravansAndTravellingTransporters_Alive_OfPlayerFaction)
             {
                 if (pawn.story?.traits == null) continue;
 
-                HashSet<TraitDef> seen = new HashSet<TraitDef>();
-                HashSet<TraitDef> duplicate = new HashSet<TraitDef>();
-
-                List<Trait> toRemove = new List<Trait>();
+                List<Gene> sourceGenes = new List<Gene>();
+                List<Gene> addBack = new List<Gene>();
                 foreach (Trait trait in pawn.story.traits.allTraits)
                 {
-                    if (seen.Contains(trait.def))
+                    if (trait.sourceGene != null)
                     {
-                        duplicate.Add(trait.def);
-                        toRemove.Add(trait);
-                    }
-                    else
-                    {
-                        seen.Add(trait.def);
+                        sourceGenes.Add(trait.sourceGene);
                     }
                 }
 
-                foreach (TraitDef traitDef in duplicate)
+                foreach (Gene geneSrc in sourceGenes)
                 {
-                    Log.Message(
-                        $"{Prefix} trait '{traitDef.label}' has duplicates in {pawn.LabelShort}");
-                }
-
-                foreach (Trait trait in toRemove)
-                {
-                    if (trait.sourceGene == null)
+                    GeneDef conflictDef = null;
+                    foreach (Gene geneAdd in addBack)
                     {
-                        pawn.story.traits.RemoveTrait(trait);
-                        Log.Message(
-                            $"{Prefix} Removed redundant or conflicting trait '{trait.Label}' from {pawn.
-                                LabelShort}");
-                    }
-                    else
-                    {
-                        Gene gene = trait.sourceGene;
-                        Log.Message(
-                            $"{Prefix} Can't remove duplicate trait '{trait.Label}' from {pawn.
-                                LabelShort} because it is from gene {gene.Label}");
-                    }
-                }
-
-                continue;
-
-                // Remove suppressed traits
-                foreach (Trait trait in pawn.story.traits.allTraits)
-                {
-                    if (trait.sourceGene != null) continue;
-
-                    if (trait.Suppressed)
-                    {
-                        toRemove.Add(trait);
-                    }
-                }
-
-                foreach (Trait trait in toRemove)
-                {
-                    pawn.story.traits.RemoveTrait(trait);
-                    Log.Message(
-                        $"{Prefix} Removed redundant or conflicting trait '{trait.Label}' from {pawn.LabelShort}");
-                }
-
-                List<TraitDef> keptTraits = new List<TraitDef>();
-                toRemove = new List<Trait>();
-
-                foreach (Trait trait in pawn.story.traits.allTraits)
-                {
-                    if (trait.sourceGene != null) continue;
-                    
-                    bool isDuplicate = keptTraits.Contains(trait.def);
-                    bool isConflicting = false;
-
-                    if (!isDuplicate)
-                    {
-                        foreach (TraitDef kept in keptTraits)
+                        if (geneSrc == geneAdd) continue;
+                        if (geneSrc.def.ConflictsWith(geneAdd.def))
                         {
-                            if (trait.def.ConflictsWith(kept) || kept.ConflictsWith(trait.def))
-                            {
-                                isConflicting = true;
-                                break;
-                            }
+                            conflictDef = geneAdd.def;
                         }
                     }
 
-                    if (isDuplicate || isConflicting)
+                    if (conflictDef != null)
                     {
-                        toRemove.Add(trait);
+                        Log.Message(
+                            $"{Prefix} Removed gene {geneSrc.Label} because it adds a trait but conflicts with {conflictDef.label}.");
                     }
                     else
                     {
-                        keptTraits.Add(trait.def);
+                        addBack.Add(geneSrc);
                     }
                 }
 
-                foreach (Trait trait in toRemove)
+                foreach (Gene geneSrc in sourceGenes)
                 {
-                    pawn.story.traits.RemoveTrait(trait);
-                    Log.Message($"{Prefix} Removed redundant or conflicting trait '{trait.Label}' from {pawn.LabelShort}");
+                    pawn.genes.RemoveGene(geneSrc);
                 }
+                OMWGenes.Refresh(pawn);
+                foreach (Gene geneAdd in addBack)
+                {
+                    pawn.genes.AddGene(geneAdd.def, false);
+                }
+                OMWGenes.Refresh(pawn);
             }
         }
     }

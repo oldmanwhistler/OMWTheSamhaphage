@@ -30,13 +30,14 @@ namespace OMW_Samhaphage
         public bool disableTraitBlacklist;
 
         public NullThrumLimitPreset limitPreset;
-        public NullThrumXenotypeLimitPercentage limitPercentage;
-        public NullThrumXenotypeLimitMetabolism limitMetabolism;
+        public NullThrumXenotypeLimitPercentage limitPercentage = new NullThrumXenotypeLimitPercentage(NullThrumLimitPreset.LimitMedium);
+        public NullThrumXenotypeLimitMetabolism limitMetabolism = new NullThrumXenotypeLimitMetabolism(NullThrumLimitPreset.LimitMedium);
+        public NullThrumXenotypeLimitTraits limitTraits = new NullThrumXenotypeLimitTraits(NullThrumLimitPreset.LimitMedium);
 
         public float resonanceMax = DefaultResonanceMax;
         private const float DefaultResonanceMax = 1000f;
 
-        public NullThrumAbilities abilityValue;
+        public NullThrumAbilities abilityValue = new NullThrumAbilities();
 
         public float complexityMultiplierHallowbound = 1.5f;
 
@@ -68,6 +69,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref disableDissonance, "disableDissonance", false);
             Scribe_Values.Look(ref disableGeneBlacklist, "disableGeneBlacklist", false);
             Scribe_Values.Look(ref disableTraitBlacklist, "disableTraitBlacklist", false);
+            Scribe_Values.Look(ref limitPreset, "limitPreset", NullThrumLimitPreset.LimitMedium);
             Scribe_Values.Look(ref resonanceMax, "ResonanceMax", DefaultResonanceMax);
             Scribe_Values.Look(ref complexityMultiplierHallowbound, "complexityMultiplierHallowbound", 1.5f);
             Scribe_Values.Look(ref complexityMultiplierSamhaphage, "complexityMultiplierSamhaphage", 1.5f);
@@ -121,6 +123,16 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref limitMetabolism.sovereign_stillness, "LimitMetabolismSovereignStillness",
                 defaultsMetabolism.sovereign_stillness);
 
+            NullThrumXenotypeLimitTraits defaultsTraits = new NullThrumXenotypeLimitTraits(limitPreset);
+            Scribe_Values.Look(ref limitTraits.enabled, "LimitTraitsEnabled", defaultsTraits.enabled);
+            Scribe_Values.Look(ref limitTraits.fluxspawn, "LimitTraitsFluxSpawn", defaultsTraits.fluxspawn);
+            Scribe_Values.Look(ref limitTraits.echovessel, "LimitTraitsEchoVessel", defaultsTraits.echovessel);
+            Scribe_Values.Look(ref limitTraits.cradlemold, "LimitTraitsCradleMold", defaultsTraits.cradlemold);
+            Scribe_Values.Look(ref limitTraits.hallowbound, "LimitTraitsHallowbound", defaultsTraits.hallowbound);
+            Scribe_Values.Look(ref limitTraits.samhaphage, "LimitTraitsSamhaphage", defaultsTraits.samhaphage);
+            Scribe_Values.Look(ref limitTraits.sovereign_stillness, "LimitTraitsSovereignStillness",
+                defaultsTraits.sovereign_stillness);
+
             Scribe_Values.Look(ref NullThrumUtility.descMode, "descMode", NullThrumDescriptionMode.DescriptionSimple);
         }
 
@@ -142,8 +154,9 @@ namespace OMW_Samhaphage
             disableGeneBlacklist = false;
             disableTraitBlacklist = false;
             limitPreset = NullThrumLimitPreset.LimitMedium;
-            limitPercentage = new NullThrumXenotypeLimitPercentage(limitPreset);
-            limitMetabolism = new NullThrumXenotypeLimitMetabolism(limitPreset);
+            limitPercentage.SetLimitDefaults(limitPreset);
+            limitMetabolism.SetLimitDefaults(limitPreset);
+            limitTraits.SetLimitDefaults(limitPreset);
             abilityValue = new NullThrumAbilities();
             resonanceMax = DefaultResonanceMax;
             complexityMultiplierHallowbound = 1.5f;
@@ -156,6 +169,7 @@ namespace OMW_Samhaphage
             limitPreset = preset;
             limitPercentage.SetLimitDefaults(preset);
             limitMetabolism.SetLimitDefaults(preset);
+            limitTraits.SetLimitDefaults(preset);
         }
     }
 
@@ -180,7 +194,6 @@ namespace OMW_Samhaphage
         public OMW_Mod(ModContentPack content) : base(content)
         {
             settings = GetSettings<OMW_Settings>();
-            settings.Reset();
         }
 
         public override void DoSettingsWindowContents(Rect inRect)
@@ -217,7 +230,7 @@ namespace OMW_Samhaphage
             // Define a view rectangle that is taller than the window to enable scrolling.
             float viewHeight = selectedTab == SettingsTab.GameBalance
                 ? 2000f
-                : (selectedTab == SettingsTab.Limits ? 1000f : 600f);
+                : (selectedTab == SettingsTab.Limits ? 1500f : 600f);
             Rect viewRect = new Rect(0f, 0f, inRect.width - 30f, viewHeight);
 
             Widgets.BeginScrollView(tabRect, ref scrollPosition, viewRect);
@@ -382,6 +395,28 @@ namespace OMW_Samhaphage
                         v => settings.limitMetabolism.sovereign_stillness = v);
 
                     listing.Gap();
+                    listing.Label("Trait Limits".Colorize(Color.yellow));
+                    listing.Gap();
+                    listing.CheckboxLabeled("Enable Trait Limits", ref settings.limitTraits.enabled,
+                        "Enable means pawn can't acquire new traits when they hit the limit");
+                    listing.Label(
+                        "Adjust the limit for the maximum number of traits for different xenotypes.");
+                    listing.Gap();
+
+                    DrawTraitLimit(listing, "Fluxspawn", settings.limitTraits.fluxspawn,
+                        v => settings.limitTraits.fluxspawn = v);
+                    DrawTraitLimit(listing, "Echovessels", settings.limitTraits.echovessel,
+                        v => settings.limitTraits.echovessel = v);
+                    DrawTraitLimit(listing, "Cradlemold", settings.limitTraits.cradlemold,
+                        v => settings.limitTraits.cradlemold = v);
+                    DrawTraitLimit(listing, "Hallowbound", settings.limitTraits.hallowbound,
+                        v => settings.limitTraits.hallowbound = v);
+                    DrawTraitLimit(listing, "Samhaphages", settings.limitTraits.samhaphage,
+                        v => settings.limitTraits.samhaphage = v);
+                    DrawTraitLimit(listing, "Sovereign Stillness", settings.limitTraits.sovereign_stillness,
+                        v => settings.limitTraits.sovereign_stillness = v);
+
+                    listing.Gap();
                     listing.Label("Population Percentage Limits".Colorize(Color.yellow));
                     listing.Label(
                         "Controls the maximum percentage of the colony that can be of a specific xenotype. Limits evolving everyone to Samhaphages or having so much micromanagement that things stop being fun.");
@@ -406,6 +441,24 @@ namespace OMW_Samhaphage
                     break;
 
                 case SettingsTab.Debugging:
+                    listing.Gap();
+
+                    listing.Label(
+                        "Scan colony pawns for duplicate or conflicting traits and remove them.");
+                    listing.Label(
+                        "Vanilla RimWorld sometimes has issues when adding a Gene that forbids traits with a pawn that has that trait.");
+
+                    if (listing.ButtonText("Remove duplicate/conflicting traits in colony"))
+                    {
+                        OMW_BlacklistTraits.FixColonistsTraits();
+                        Messages.Message(
+                            $"{Prefix} Duplicate/conflicting traits removed from colonists.",
+                            MessageTypeDefOf.TaskCompletion, false);
+                    }
+
+                    listing.Gap();
+                    listing.GapLine();
+
                     listing.Gap();
                     listing.Label("Resonance Calculations".Colorize(Color.yellow));
                     if (listing.ButtonText("Export CSV for debugging resonance calculations"))
@@ -459,6 +512,22 @@ namespace OMW_Samhaphage
             {
                 List<FloatMenuOption> options = new List<FloatMenuOption>();
                 int[] values = { -5, -15, -30, -60, -100, -150, -200, -300, -500, -1000, -10000 };
+                foreach (int val in values)
+                {
+                    int targetVal = val;
+                    options.Add(new FloatMenuOption($"{val}", () => setValue(targetVal)));
+                }
+
+                Find.WindowStack.Add(new FloatMenu(options));
+            }
+        }
+
+        private void DrawTraitLimit(Listing_Standard listing, string label, int value, Action<int> setValue)
+        {
+            if (listing.ButtonTextLabeled($"{label} trait limit", $"{value}"))
+            {
+                List<FloatMenuOption> options = new List<FloatMenuOption>();
+                int[] values = { 3, 5, 8, 13, 15, 20, 25, 30, 35, 40, 45, 50, 60, 100, 1000 };
                 foreach (int val in values)
                 {
                     int targetVal = val;
