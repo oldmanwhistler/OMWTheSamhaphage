@@ -17,7 +17,25 @@ namespace OMW_Samhaphage
         protected override NullThrumSelectionGeneBlocked  GenesBlockedFromSelection(Pawn source, Pawn dest)
         {
             NullThrumSelectionGeneBlocked blocked = new();
-            return blocked;
+            if (source?.genes == null) return blocked;
+
+            foreach (Gene gene in source.genes.GenesListForReading)
+            {
+                bool isBlocked = false;
+                // This will leave the genes from Flatten like Scoured Mind and Random Mutation
+                if (OMW_BlacklistGenes.SamhaphageGenes.Contains(gene.def))
+                {
+                    Log.Debug($"blocking {gene.def} because part of Null-Thrum");
+                    blocked.Append(gene.def, "Null-Thrum");
+                    isBlocked = true;
+                }
+                if (!isBlocked)
+                {
+                    Log.Debug($"not blocking {gene.def}: {gene.Label}");
+                }
+            }
+
+            return blocked;            
         }
 
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionGeneBlocked blocked)
