@@ -29,6 +29,13 @@ namespace OMW_Samhaphage
                     blocked.Append(gene.def, "Null-Thrum");
                     isBlocked = true;
                 }
+
+                if (gene.def.biostatArc > 0)
+                {
+                    Log.Debug($"blocking {gene.def} because Archite");
+                    blocked.Append(gene.def, "Archite");
+                    isBlocked = true;
+                }
                 if (!isBlocked)
                 {
                     Log.Debug($"not blocking {gene.def}: {gene.Label}");
