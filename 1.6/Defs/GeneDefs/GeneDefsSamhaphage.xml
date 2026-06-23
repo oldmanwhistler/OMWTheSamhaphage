@@ -45,7 +45,6 @@
       <exclusionTags>
       <li>NightOwl</li>
     </exclusionTags>      
-    </forcedTraits>
     
     <modExtensions>
       <li Class="BigAndSmall.PawnExtension">
