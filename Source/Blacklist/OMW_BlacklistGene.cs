@@ -177,6 +177,7 @@ namespace OMW_Samhaphage
             // core
             myDontCopy.Add("ViolenceDisabled");
             myDontCopy.Add("KindInstinct");
+            myDontCopy.Add("NightOwl");
             // WVC
             myDontCopy.Add("WVC_Traitless");
             myDontCopy.Add("WVC_Chimera_NullifiedLimit");
