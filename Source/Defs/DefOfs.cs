@@ -51,14 +51,10 @@ namespace OMW_Samhaphage
     [DefOf]
     public static class OMW_GeneDefOf
     {
-        public static GeneDef BS_BirthLitter;
-        public static GeneDef BS_BirthTwins;
-        public static GeneDef AG_Teratogenesis;
         public static GeneDef OMW_ScouredMind;
         public static GeneDef OMW_NullThrum;
         public static GeneDef OMW_Resonance;
 
-        public static GeneDef OMW_Chimera_SovereignStillness_Limit;
         public static GeneDef OMW_UnstableMutationMinor;        
         public static GeneDef OMW_UnstableMutationMajor;
         public static GeneDef OMW_UnstableMutation;
@@ -74,7 +70,7 @@ namespace OMW_Samhaphage
         public static GeneDef OMW_Hallowbound_EntropyWell;
         public static GeneDef OMW_Samhaphage_Frame;
         public static GeneDef OMW_SovereignStillness_Frame;
-        public static GeneDef OMW_PsychicAbility_SovereignStillness;
+        public static GeneDef OMW_PsychicAbility_SovereignStillness;        
 
         static OMW_GeneDefOf()
         {
@@ -98,8 +94,19 @@ namespace OMW_Samhaphage
         public static EffecterDef OMW_YumEffect;
 
         static OMW_EffecterDefOf()
-    {
+        {
             DefOfHelper.EnsureInitializedInCtor(typeof(OMW_EffecterDefOf));
         }
-    }    
+    }
+
+    [DefOf]
+    public static class OMW_BackstoryDefOf
+    {
+        public static BackstoryDef OMW_Flatten_Childhood;
+        public static BackstoryDef OMW_Flatten_Adulthood;
+        static OMW_BackstoryDefOf()
+        {
+            DefOfHelper.EnsureInitializedInCtor(typeof(OMW_BackstoryDefOf));
+        }
+    }
 }    
