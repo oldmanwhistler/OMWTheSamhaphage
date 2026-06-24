@@ -20,28 +20,41 @@ namespace OMW_Samhaphage
             if ((source == null) || (source.genes == null)) return blocked;
 
             HashSet<GeneDef> alreadyHas = dest.genes?.GenesListForReading.Select(g => g.def).ToHashSet() ?? new HashSet<GeneDef>();
+
+            HashSet<GeneDef> sourceActive = source.genes?.GenesListForReading.Where(g => !g.Overridden).Select(g => g.def).ToHashSet() ?? new HashSet<GeneDef>();
+
             foreach (Gene gene in source.genes.GenesListForReading)
             {
                 bool isBlocked = false;
-                if (gene.Overridden)
+                if (!isBlocked && gene.Overridden)
                 {
-                    Log.Debug($"blocking {gene.def} because overridden");
-                    blocked.Append(gene.def, "Overridden");
-                    isBlocked = true;
+                    // this gene is active
+                    if (sourceActive.Contains(gene.def))
+                    {
+                        // if there is active and overridden, then we can harrow the active one
+                    }
+                    else
+                    {
+                        Log.Debug($"blocking {gene.def} because overridden");
+                        blocked.Append(gene.def, "Overridden");
+                        isBlocked = true;
+                    }
                 }
-                if (OMW_BlacklistGenes.BlacklistedGenesDontCopy.Contains(gene.def))
+                if (!isBlocked && OMW_BlacklistGenes.BlacklistedGenesDontCopy.Contains(gene.def))
                 {
                     Log.Debug($"blocking {gene.def} because don't copy");
                     blocked.Append(gene.def, "Don't Copy");
                     isBlocked = true;
                 }
-                if (GeneIsCosmetic(gene))
+
+                if (!isBlocked && GeneIsCosmetic(gene))
                 {
                     Log.Debug($"blocking {gene.def} because cosmetic");
                     blocked.Append(gene.def, "Cosmetic");
                     isBlocked = true;
                 }
-                 if (alreadyHas.Contains(gene.def))
+
+                if (!isBlocked && alreadyHas.Contains(gene.def))
                 {
                     foreach (Gene geneDest in dest.genes?.GenesListForReading.Where(g => g.def == gene.def))
                     {
@@ -52,6 +65,7 @@ namespace OMW_Samhaphage
                         }
                     }
                 }
+
                 if (!isBlocked)
                 {
                     Log.Debug($"not blocking {gene.def}: {gene.Label}");
@@ -63,7 +77,7 @@ namespace OMW_Samhaphage
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionGeneBlocked blocked)
         {
             return source.genes.GenesListForReading
-                .Where(g => !blocked.Has(g.def))
+                .Where(g => !blocked.Has(g.def) && !g.Overridden)
                 .ToList();
         }
 

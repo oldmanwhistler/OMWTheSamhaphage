@@ -20,28 +20,40 @@ namespace OMW_Samhaphage
             NullThrumSelectionGeneBlocked blocked = new();
             if (source?.genes == null) return blocked;
 
+            HashSet<GeneDef> sourceOverridden =
+                source.genes?.GenesListForReading.Where(g => g.Overridden).Select(g => g.def).ToHashSet() ??
+                new HashSet<GeneDef>();
+
             foreach (Gene gene in source.genes.GenesListForReading)
             {
                 bool isBlocked = false;
-                if (OMW_BlacklistGenes.BlacklistedGenesDontRemove.Contains(gene.def))
+                if (!isBlocked && OMW_BlacklistGenes.BlacklistedGenesDontRemove.Contains(gene.def))
                 {
                     Log.Debug($"blocking {gene.def} because don't remove");
                     blocked.Append(gene.def, "Don't Remove");
                     isBlocked = true;
                 }
-                else if (!gene.Overridden)
+                if (!isBlocked && !gene.Overridden)
                 {
-                    Log.Debug($"blocking {gene.def} because active gene");
-                    blocked.Append(gene.def, "Active Gene");
-                    isBlocked = true;
+                    // current gene is active
+                    if (sourceOverridden.Contains(gene.def))
+                    {
+                        // if we have active and overridden, then we can dub the overridden one
+                    }
+                    else
+                    {
+                        Log.Debug($"blocking {gene.def} because active gene");
+                        blocked.Append(gene.def, "Active Gene");
+                        isBlocked = true;
+                    }
                 }
-                else if (gene.def.biostatMet > 0)
+                if (!isBlocked && gene.def.biostatMet > 0)
                 {
                     Log.Debug($"blocking {gene.def} because positive metabolism");
                     blocked.Append(gene.def, "Positive Metabolism");
                     isBlocked = true;
                 }
-                else if (gene.def.biostatMet == 0 && gene.def.biostatCpx <= 0 && gene.def.biostatArc <= 0)
+                if (!isBlocked && gene.def.biostatMet == 0 && gene.def.biostatCpx <= 0 && gene.def.biostatArc <= 0)
                 {
                     Log.Debug($"blocking {gene.def} because zero metabolism");
                     blocked.Append(gene.def, "Zero Metabolism");
@@ -61,7 +73,7 @@ namespace OMW_Samhaphage
         protected override List<Gene> GenesToSelectFrom(Pawn source, Pawn dest, NullThrumSelectionGeneBlocked blocked)
         {
             return source.genes.GenesListForReading
-                .Where(g => !blocked.Has(g.def))
+                .Where(g => !blocked.Has(g.def) && g.Overridden)
                 .ToList();
         }
 
