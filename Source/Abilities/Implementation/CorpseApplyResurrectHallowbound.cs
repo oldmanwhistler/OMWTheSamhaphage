@@ -30,14 +30,14 @@ namespace OMW_Samhaphage
             }
 
             // 2. Is there a pawn inside?
-            Pawn pawn = corpse.InnerPawn;
-            if (pawn == null)
+            Pawn victim = corpse.InnerPawn;
+            if (victim == null)
             {
                 reason = "Corpse is missing InnerPawn or InnerPawn is invalid.";
                 return false;
             }
 
-            if (pawn.RaceProps?.Humanlike != true)
+            if (victim.RaceProps?.Humanlike != true)
             {
                 reason = "Target is not humanlike.";
                 return false;
@@ -45,24 +45,35 @@ namespace OMW_Samhaphage
 
 
             // 4. Is the pawn already being resurrected/interacted with?
-            if (pawn.Spawned && !corpse.Spawned)
+            if (victim.Spawned && !corpse.Spawned)
             {
                 reason = "Pawn is already being processed.";
                 return false;
             }
 
             // 5. Is the head missing? (RimWorld standard resurrection fails without a head)
-            if (pawn.health.hediffSet.GetBrain() == null)
+            if (victim.health.hediffSet.GetBrain() == null)
             {
                 reason = "Vessel is decapitated; the frequency cannot be anchored.";
                 return false;
             }
 
-            if (pawn.health.hediffSet.HasHediff(HediffDef.Named("OMW_Reassembled")))
+            if (victim.health.hediffSet.HasHediff(HediffDef.Named("OMW_Reassembled")))
             {
                 reason = "Vessel has already been reassembled; the frequency cannot be anchored.";
                 return false;
             }
+
+            if (!this.SacrificeCaster)
+            {
+                complexityCost = OMWGenes.CalculateComplexity(victim, true, caster.genes.Xenotype);
+                if (!ResonanceUtility.HasAvailable(caster, complexityCost))
+                {
+                    reason =
+                        $"{caster.LabelShort} does not have enough resonance to resurrect {victim.LabelShort}. Requires {complexityCost} resonance.";
+                    return false;
+                }
+            }            
 
             return CanApplyLimitXenotype(TargetXenotype, out reason);            
         }

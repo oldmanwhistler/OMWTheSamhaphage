@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using RimWorld;
+using UnityEngine;
 using Verse;
 
 namespace OMW_Samhaphage
@@ -35,7 +36,7 @@ namespace OMW_Samhaphage
             return pawn.genes?.Endogenes.Count ?? 0;
         }
 
-        public static int CalculateComplexity(XenotypeDef xenotype)
+        public static int CalculateComplexity(XenotypeDef xenotype, bool multiplier = false)
         {
             int complexity = 0;
             foreach (GeneDef geneDef in xenotype.AllGenes)
@@ -43,10 +44,15 @@ namespace OMW_Samhaphage
                 complexity += geneDef.biostatCpx;
             }
 
+            if (multiplier)
+            {
+                complexity = Mathf.RoundToInt(complexity * OMW_Mod.settings.multiplierComplexity.GetMultiplier(xenotype));
+            }
+
             return complexity;
         }
 
-        public static int CalculateComplexity(Pawn pawn)
+        public static int CalculateComplexity(Pawn pawn, bool multiplier = false, XenotypeDef complexityXenotype = null)
         {
             if (pawn?.genes == null) return 0;
 
@@ -54,6 +60,11 @@ namespace OMW_Samhaphage
             foreach (Gene gene in pawn.genes.GenesListForReading)
             {
                 complexity += gene.def.biostatCpx;
+            }
+            if (multiplier)
+            {
+                XenotypeDef xenotypeForMultiplier = complexityXenotype ?? pawn.genes.Xenotype;
+                complexity = Mathf.RoundToInt(complexity * OMW_Mod.settings.multiplierComplexity.GetMultiplier(xenotypeForMultiplier));
             }
             return complexity;
         }

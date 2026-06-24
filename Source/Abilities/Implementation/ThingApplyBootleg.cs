@@ -98,6 +98,7 @@ namespace OMW_Samhaphage
     public class ThingApplyBootleg : NullThrumAbilityPawnCorpse
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        private SelectionBootleg selectorBootleg;
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.bootleg;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         public override bool IsLethal => true;
@@ -109,18 +110,19 @@ namespace OMW_Samhaphage
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Bootleg", false) ??
                                           BaseContent.BadTex;
 
-        public SelectionBootleg CanApplyBootleg(Pawn victim, Pawn caster)
+        private bool CanApplyBootleg(Pawn victim, Pawn caster)
         {
-            SelectionBootleg selector = new SelectionBootleg(caster, victim, caster);
-            if (selector.traits.Count == 0)
+            if (victim == null || caster == null) return false;
+            if (selectorBootleg == null) selectorBootleg = new SelectionBootleg(caster, victim, caster);
+            if (selectorBootleg.traits.Count == 0)
             {
                 Messages.Message($"{victim.LabelShort} has no traits that can be bootlegged.", MessageTypeDefOf.RejectInput);
-                return null;
+                return false;
             }
-            return selector;
+            return true;
         }
 
-        public bool ApplyBootleg(Pawn victim, Pawn caster, SelectionBootleg selector, List<TraitPlus> selectedList)
+        private bool ApplyBootleg(Pawn victim, Pawn caster, SelectionBootleg selector, List<TraitPlus> selectedList)
         {
             bool activated = false;
             foreach (TraitPlus plus in selectedList)
@@ -151,8 +153,7 @@ namespace OMW_Samhaphage
                 Flatten.ApplyPawn(victim, caster);
             }
 
-            SelectionBootleg selectorBootleg = CanApplyBootleg(victim, caster);
-            if (selectorBootleg == null) return;
+            if (!CanApplyBootleg(victim, caster)) return;
 
             Find.WindowStack.Add(new WindowSelectTraitsForNullThrumAbility(selectorBootleg, onCompleteAction(), (selectedList) =>
             {
@@ -166,8 +167,7 @@ namespace OMW_Samhaphage
             if (corpse?.InnerPawn == null || caster == null) return;
 
             Pawn victim = corpse.InnerPawn;
-            SelectionBootleg selectorBootleg = CanApplyBootleg(victim, caster);
-            if (selectorBootleg == null) return;  
+            if (!CanApplyBootleg(victim, caster)) return;
 
             string msg = $"{victim.LabelShort}'s corpse was destroyed after being bootlegged for their traits and attenuated for their genes.";
             System.Action sacrificeAction = () =>
@@ -190,12 +190,39 @@ namespace OMW_Samhaphage
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
         {
-            if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason)) return false;
+            reason = "unknown reason";
+            if (victim == null || caster == null)
+            {
+                reason = "Invalid pawn.";
+                return false;
+            }
+
+            if (!victim.Dead)
+            {
+                if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason)) return false;
+            }
+
+            int casterTraitCount = TraitPlusUtility.CountTraits(caster);
+            int traitLimit = OMW_Mod.settings.limitTraits.GetLimit(caster.genes?.Xenotype);
+            if (casterTraitCount >= traitLimit)
+            {
+                reason = $"{caster.LabelShort} has {casterTraitCount} traits, reaching the limit of {traitLimit} in settings.";
+                return false;
+            }
+
             if (!ResonanceUtility.HasGene(caster))
             {
                 reason = $"{caster.LabelShort} does not have a supply of resonance.";
                 return false;
             }
+
+
+            if (!CanApplyBootleg(victim, caster))
+            {
+                reason = $"{victim.LabelShort} does not have any traits to bootleg.";
+                return false;
+            }
+
             return true;
         }
 

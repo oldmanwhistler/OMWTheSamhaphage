@@ -29,11 +29,11 @@ namespace OMW_Samhaphage
         public bool disableGeneBlacklist;
         public bool disableTraitBlacklist;
 
-        public NullThrumLimitPreset limitPreset;
-        public NullThrumXenotypeLimitPercentage limitPercentage = new NullThrumXenotypeLimitPercentage(NullThrumLimitPreset.LimitMedium);
-        public NullThrumXenotypeLimitMetabolism limitMetabolism = new NullThrumXenotypeLimitMetabolism(NullThrumLimitPreset.LimitMedium);
-        public NullThrumXenotypeLimitTraits limitTraits = new NullThrumXenotypeLimitTraits(NullThrumLimitPreset.LimitMedium);
-
+        public NullThrumDifficultyPreset limitDifficulties;
+        public NullThrumXenotypeLimitPercentage limitPercentage = new NullThrumXenotypeLimitPercentage(NullThrumDifficultyPreset.DifficultyMedium);
+        public NullThrumXenotypeLimitMetabolism limitMetabolism = new NullThrumXenotypeLimitMetabolism(NullThrumDifficultyPreset.DifficultyMedium);
+        public NullThrumXenotypeLimitTraits limitTraits = new NullThrumXenotypeLimitTraits(NullThrumDifficultyPreset.DifficultyMedium);
+        public NullThrumXenotypeMultiplierComplexity multiplierComplexity = new NullThrumXenotypeMultiplierComplexity(NullThrumDifficultyPreset.DifficultyMedium);
         public float resonanceMax = DefaultResonanceMax;
         private const float DefaultResonanceMax = 1000f;
 
@@ -43,13 +43,13 @@ namespace OMW_Samhaphage
 
         public int complexityHallowbound => Mathf.RoundToInt(complexityMultiplierHallowbound *
                                                              OMWGenes.CalculateComplexity(OMW_XenotypeDefOf
-                                                                 .omw_hallowbound));
+                                                                 .omw_hallowbound, true));
 
         public float complexityMultiplierSamhaphage = 1.5f;
 
         public int complexitySamhaphage =>
             Mathf.RoundToInt(complexityMultiplierSamhaphage *
-                             OMWGenes.CalculateComplexity(OMW_XenotypeDefOf.omw_samhaphage));
+                             OMWGenes.CalculateComplexity(OMW_XenotypeDefOf.omw_samhaphage, true));
 
         
         public override void ExposeData()
@@ -69,7 +69,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref disableDissonance, "disableDissonance", false);
             Scribe_Values.Look(ref disableGeneBlacklist, "disableGeneBlacklist", false);
             Scribe_Values.Look(ref disableTraitBlacklist, "disableTraitBlacklist", false);
-            Scribe_Values.Look(ref limitPreset, "limitPreset", NullThrumLimitPreset.LimitMedium);
+            Scribe_Values.Look(ref limitDifficulties, "limitDifficulties", NullThrumDifficultyPreset.DifficultyMedium);
             Scribe_Values.Look(ref resonanceMax, "ResonanceMax", DefaultResonanceMax);
             Scribe_Values.Look(ref complexityMultiplierHallowbound, "complexityMultiplierHallowbound", 1.5f);
             Scribe_Values.Look(ref complexityMultiplierSamhaphage, "complexityMultiplierSamhaphage", 1.5f);
@@ -99,7 +99,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref abilityValue.render.value, "Render", defaults.render.value);
             Scribe_Values.Look(ref abilityValue.dub.value, "Dub", defaults.dub.value);
 
-            NullThrumXenotypeLimitPercentage defaultsPercentage = new NullThrumXenotypeLimitPercentage(limitPreset);
+            NullThrumXenotypeLimitPercentage defaultsPercentage = new NullThrumXenotypeLimitPercentage(limitDifficulties);
             Scribe_Values.Look(ref limitPercentage.enabled, "LimitPercEnabled", defaultsPercentage.enabled);
             Scribe_Values.Look(ref limitPercentage.fluxspawn, "LimitPercFluxSpawn", defaultsPercentage.fluxspawn);
             Scribe_Values.Look(ref limitPercentage.echovessel, "LimitPercEchoVessel", defaultsPercentage.echovessel);
@@ -109,7 +109,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref limitPercentage.sovereign_stillness, "LimitPercSovereignStillness",
                 defaultsPercentage.sovereign_stillness);
 
-            NullThrumXenotypeLimitMetabolism defaultsMetabolism = new NullThrumXenotypeLimitMetabolism(limitPreset);
+            NullThrumXenotypeLimitMetabolism defaultsMetabolism = new NullThrumXenotypeLimitMetabolism(limitDifficulties);
             Scribe_Values.Look(ref limitMetabolism.enabled, "LimitMetabolismEnabled", defaultsMetabolism.enabled);
             Scribe_Values.Look(ref limitMetabolism.fluxspawn, "LimitMetabolismFluxSpawn", defaultsMetabolism.fluxspawn);
             Scribe_Values.Look(ref limitMetabolism.echovessel, "LimitMetabolismEchoVessel",
@@ -123,7 +123,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref limitMetabolism.sovereign_stillness, "LimitMetabolismSovereignStillness",
                 defaultsMetabolism.sovereign_stillness);
 
-            NullThrumXenotypeLimitTraits defaultsTraits = new NullThrumXenotypeLimitTraits(limitPreset);
+            NullThrumXenotypeLimitTraits defaultsTraits = new NullThrumXenotypeLimitTraits(limitDifficulties);
             Scribe_Values.Look(ref limitTraits.enabled, "LimitTraitsEnabled", defaultsTraits.enabled);
             Scribe_Values.Look(ref limitTraits.fluxspawn, "LimitTraitsFluxSpawn", defaultsTraits.fluxspawn);
             Scribe_Values.Look(ref limitTraits.echovessel, "LimitTraitsEchoVessel", defaultsTraits.echovessel);
@@ -132,6 +132,14 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref limitTraits.samhaphage, "LimitTraitsSamhaphage", defaultsTraits.samhaphage);
             Scribe_Values.Look(ref limitTraits.sovereign_stillness, "LimitTraitsSovereignStillness",
                 defaultsTraits.sovereign_stillness);
+
+            NullThrumXenotypeMultiplierComplexity defaultsComplexity = new NullThrumXenotypeMultiplierComplexity(limitDifficulties);
+            Scribe_Values.Look(ref defaultsComplexity.fluxspawn, "ComplexityFluxSpawn", defaultsComplexity.fluxspawn);
+            Scribe_Values.Look(ref defaultsComplexity.echovessel, "ComplexityEchoVessel", defaultsComplexity.echovessel);
+            Scribe_Values.Look(ref defaultsComplexity.cradlemold, "ComplexityCradleMold", defaultsComplexity.cradlemold);
+            Scribe_Values.Look(ref defaultsComplexity.hallowbound, "ComplexityHallowbound", defaultsComplexity.hallowbound);
+            Scribe_Values.Look(ref defaultsComplexity.samhaphage, "ComplexitySamhaphage", defaultsComplexity.samhaphage);
+            Scribe_Values.Look(ref defaultsComplexity.sovereign_stillness, "ComplexitySovereignStillness", defaultsComplexity.sovereign_stillness);
 
             Scribe_Values.Look(ref NullThrumUtility.descMode, "descMode", NullThrumDescriptionMode.DescriptionSimple);
         }
@@ -153,10 +161,11 @@ namespace OMW_Samhaphage
             disableDissonance = false;
             disableGeneBlacklist = false;
             disableTraitBlacklist = false;
-            limitPreset = NullThrumLimitPreset.LimitMedium;
-            limitPercentage.SetLimitDefaults(limitPreset);
-            limitMetabolism.SetLimitDefaults(limitPreset);
-            limitTraits.SetLimitDefaults(limitPreset);
+            limitDifficulties = NullThrumDifficultyPreset.DifficultyMedium;
+            limitPercentage.SetLimitDefaults(limitDifficulties);
+            limitMetabolism.SetLimitDefaults(limitDifficulties);
+            limitTraits.SetLimitDefaults(limitDifficulties);
+            multiplierComplexity.SetMultiplierDefaults(limitDifficulties);
             abilityValue = new NullThrumAbilities();
             resonanceMax = DefaultResonanceMax;
             complexityMultiplierHallowbound = 1.5f;
@@ -164,12 +173,13 @@ namespace OMW_Samhaphage
             NullThrumUtility.descMode = NullThrumDescriptionMode.DescriptionSimple;
         }
 
-        public void SetNullThrumLimitPreset(NullThrumLimitPreset preset)
+        public void SetNullThrumDifficultyPreset(NullThrumDifficultyPreset preset)
         {
-            limitPreset = preset;
+            limitDifficulties = preset;
             limitPercentage.SetLimitDefaults(preset);
             limitMetabolism.SetLimitDefaults(preset);
             limitTraits.SetLimitDefaults(preset);
+            multiplierComplexity.SetMultiplierDefaults(preset);
         }
     }
 
@@ -356,14 +366,14 @@ namespace OMW_Samhaphage
                     listing.GapLine();
 
                     listing.Label("Limit Presets".Colorize(Color.yellow));
-                    string currentLimitPreset = settings.limitPreset.ToString().Replace("Limit", "");;
-                    if (listing.ButtonTextLabeled("Limit Preset", currentLimitPreset))
+                    string currentLimitDifficulties = settings.limitDifficulties.ToString().Replace("Limit", "");;
+                    if (listing.ButtonTextLabeled("Limit Preset", currentLimitDifficulties))
                     {
                         List<FloatMenuOption> options = new List<FloatMenuOption>();
-                        foreach (NullThrumLimitPreset preset in Enum.GetValues(typeof(NullThrumLimitPreset)))
+                        foreach (NullThrumDifficultyPreset preset in Enum.GetValues(typeof(NullThrumDifficultyPreset)))
                         {
                             string label = preset.ToString().Replace("Limit", "");
-                            options.Add(new FloatMenuOption(label, () => { settings.SetNullThrumLimitPreset(preset); }));
+                            options.Add(new FloatMenuOption(label, () => { settings.SetNullThrumDifficultyPreset(preset); }));
                         }
 
                         Find.WindowStack.Add(new FloatMenu(options));
@@ -437,6 +447,28 @@ namespace OMW_Samhaphage
                         v => settings.limitPercentage.samhaphage = v);
                     // There can only be one Sovereign Stillness 
                     // DrawPercentageLimit(listing, "Sovereign Stillness", settings.limitPercentage.sovereign_stillness, v => settings.limitPercentage.sovereign_stillness = v);
+
+                    listing.Gap();
+                    listing.Label("Genetic Complexity Multiplier".Colorize(Color.yellow));
+                    listing.Gap();
+                    listing.CheckboxLabeled("Enable Genetic Complexity Multiplier", ref settings.multiplierComplexity.enabled,
+                        "Enable means this multiplier will be applied to the genetic complexity calculations.");
+                    listing.Label(
+                        "Affects amplifying to another Xenotype (e.g. evolution) and resurrection costs.");
+                    listing.Gap();
+
+                    DrawMultiplierComplexity(listing, "Fluxspawn", settings.multiplierComplexity.fluxspawn,
+                        v => settings.multiplierComplexity.fluxspawn = v);
+                    DrawMultiplierComplexity(listing, "Echovessels", settings.multiplierComplexity.echovessel,
+                        v => settings.multiplierComplexity.echovessel = v);
+                    DrawMultiplierComplexity(listing, "Cradlemold", settings.multiplierComplexity.cradlemold,
+                        v => settings.multiplierComplexity.cradlemold = v);
+                    DrawMultiplierComplexity(listing, "Hallowbound", settings.multiplierComplexity.hallowbound,
+                        v => settings.multiplierComplexity.hallowbound = v);
+                    DrawMultiplierComplexity(listing, "Samhaphages", settings.multiplierComplexity.samhaphage,
+                        v => settings.multiplierComplexity.samhaphage = v);
+                    DrawMultiplierComplexity(listing, "Sovereign Stillness", settings.multiplierComplexity.sovereign_stillness,
+                        v => settings.multiplierComplexity.sovereign_stillness = v);                    
 
                     break;
 
@@ -552,6 +584,21 @@ namespace OMW_Samhaphage
                 Find.WindowStack.Add(new FloatMenu(options));
             }
         }
+
+        private void DrawMultiplierComplexity(Listing_Standard listing, string label, float value, Action<float> setValue)
+        {
+            if (listing.ButtonTextLabeled($"{label} multiplier", $"{value}"))
+            {
+                List<FloatMenuOption> options = new List<FloatMenuOption>();
+                for (float i = 0.5f; i <= 1.0f; i += 0.5f)
+                {
+                    float targetVal = i;
+                    options.Add(new FloatMenuOption($"{targetVal}%", () => setValue(targetVal)));
+                }
+
+                Find.WindowStack.Add(new FloatMenu(options));
+            }
+        }        
 
         private void DrawValueSlider(Listing_Standard listing, ref NullThrumAbilityProps abilityProps)
         {

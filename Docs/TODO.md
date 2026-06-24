@@ -2,10 +2,9 @@
 
 ## Next
 
-* max # traits limit
-* Genetic complexity should be calculated as a percentage * genetic complexity. The percentage could change based on the difficulty presets and the xenotype.
-* render should mute psychic abilities
-
+* limit for multiplier for archite cost in formulas
+* "default" mod settings will match the game settings
+  
 ## MOD SETTINGS
 
 * A mod setting to control the time of silent servitude and dissonance
@@ -15,12 +14,21 @@
 * silent servitude is too strong at recruiting
 * blacklist traits based on total power value
 * blacklist genes based on total power value
-* max # of traits, story mode unlimited
 * the fluxspawn aren't dying fast enough
 * can genes modify worktags? need a blacklist trigger for randomly mutating those
-* flatten strips genes/traits with Kind?
 * will raising market value of the pawns just make selling fluxspawn into slavery very profitable?
 * Resurrect needs should calculate the genes/traits and then use that to charge the resonance. Ability would have a yes/no selection pop up about continuing.
+
+## GAME SETTINGS
+
+Hook the mod settings to the game settings on a new game.
+
+1. Peaceful - Low
+2. Community Builder - Low
+3. Adventure Story - Medium
+4. Strive to Survive - Medium
+5. Blood and Dust - Hard
+6. Losing Is Fun - Hard
 
 ## UI
 

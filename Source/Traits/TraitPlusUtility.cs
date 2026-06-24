@@ -7,7 +7,8 @@ namespace OMW_Samhaphage
 {
     public static class TraitPlusUtility
     {
-        public static List<TraitPlus> ConvertToTraitPlus(Pawn pawn, List<Trait> traits, NullThrumSelectionTraitBlocked blocked, List<TraitDef> destConflicts = null)
+        public static List<TraitPlus> ConvertToTraitPlus(Pawn pawn, List<Trait> traits,
+            NullThrumSelectionTraitBlocked blocked, List<TraitDef> destConflicts = null)
         {
             List<TraitPlus> traitList = new List<TraitPlus>();
 
@@ -27,12 +28,27 @@ namespace OMW_Samhaphage
                         }
                     }
                 }
+
                 plus.destinationConflictStr = string.Join(", ", tmpDestConflicts);
 
                 traitList.Add(plus);
             }
 
             return traitList;
+        }
+
+        public static int CountTraits(Pawn pawn)
+        {
+            int count = 0;
+            foreach (Trait trait in pawn.story.traits.allTraits)
+            {
+                if (!OMW_BlacklistTraits.BlacklistedTraitsDontCount.Contains(trait.def))
+                {
+                    count++;
+                }
+            }
+
+            return count;
         }
     }
 }

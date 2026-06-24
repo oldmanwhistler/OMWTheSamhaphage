@@ -3,25 +3,25 @@ using RimWorld;
 namespace OMW_Samhaphage
 {
 
-    public abstract class NullThrumXenotypeLimit
+    public abstract class NullThrumXenotypeMultiplier
     {
-        protected int disabled_value = 0;
+        protected float disabled_value = 0;
         public bool enabled = true;        
-        public int fluxspawn;
-        public int echovessel;
-        public int cradlemold;
-        public int hallowbound;
-        public int samhaphage;
-        public int sovereign_stillness;
+        public float fluxspawn;
+        public float echovessel;
+        public float cradlemold;
+        public float hallowbound;
+        public float samhaphage;
+        public float sovereign_stillness;
 
-        public NullThrumXenotypeLimit(NullThrumDifficultyPreset setting)
+        public NullThrumXenotypeMultiplier(NullThrumDifficultyPreset setting)
         {
-            SetLimitDefaults(setting);
+            SetMultiplierDefaults(setting);
         }
 
-        public abstract void SetLimitDefaults(NullThrumDifficultyPreset settings);
+        public abstract void SetMultiplierDefaults(NullThrumDifficultyPreset settings);
 
-        public int GetLimit(XenotypeDef xenotypeDef)
+        public float GetMultiplier(XenotypeDef xenotypeDef)
         {
             if (!enabled) return disabled_value;
             if (xenotypeDef == OMW_XenotypeDefOf.omw_fluxspawn_brute || 

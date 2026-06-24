@@ -101,7 +101,7 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
   
 ### DLC Interactions
 
-* Ideology will add a saved Ideology called "The Absolute Frequency" that fits the lore of these Xenotypes. It's a fluid ideology Raiding meme with sacred Xenotypes.
+* Ideology will add a saved Ideology called "The Absolute Frequency" that fits the lore of these Xenotypes. It's a fluid ideology Raiding meme with sacred Xenotypes. FIXME - not working
 * Anomaly will add genes to the Xenotypes.
 * Royalty will add genes to the Xenotypes.
 * Odyssey will add vacuum resistance to the Xenotypes.
@@ -113,6 +113,8 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 * [Tweaks Galore - 79,830 subs -](https://steamcommunity.com/sharedfiles/filedetails/?id=2695164414) can add a Gene menu when viewing pawns/corpses that makes it much faster to browse genes for genes to steal.
   * It also has a "Gene Pack Tweaks" section where you can control whether or not every gene can spawns in a genepack.
   * OMW Samhaphage uses the gene pack settings to determine if a gene can be spawned with random mutations.
+* [Spellbook - 7,984 subs](https://steamcommunity.com/sharedfiles/filedetails/?id=3727983758)
+  * Customize what abilities appear on your gizmo bar and where they are. Very useful if you are adding new abilities after every raid.
 
 ### Optional But Supported
 
@@ -184,7 +186,7 @@ I didn't hardcoded this as conflicts because YMMV, but they conceptually break t
 
 ## AI Notice
 
-This project was to learn how to mod RimWorld and to gain experience using different gen AI tools I don't use at work. Using AI was kind of the point.
+This project was to learn how to mod RimWorld and to gain experience using different gen AI tools I don't use at work. This is not the place to debate the ethics of AI. 
 
 Places where it was used:  
 
@@ -193,9 +195,11 @@ Places where it was used:
 3. Gen AI used for icon assets and for parts or entirety of workshop screenshots.
    * This mod has no graphical assets other than gene icons and ability icons.
 
-Remember kids, witch hunts against people who **actually** disclose AI usage is a bad look. Pick your lane.
+Being toxic to people who disclose AI usage says more about you than it does about the people using AI.
 
-You can look at the [github history](https://github.com/oldmanwhistler/OMWTheSamhaphage/commits/main/) or my [dev diary](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DevDiary/DEV_DIARY.md) to get an idea of how long I spent this. AI is just a tool.
+You can look at the [github history](https://github.com/oldmanwhistler/OMWTheSamhaphage/commits/main/) or my [dev diary](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DevDiary/DEV_DIARY.md) to get an idea of how long I spent this.
+
+AI is just a tool.
 
 Here's my advice on how to avoid [slop mods](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/RIMWORLD_SLOP.md).
 

@@ -11,6 +11,7 @@ namespace OMW_Samhaphage
 {
     public class PawnApplyInfestFluxspawnHiveling : NullThrumAbilityPawnOnly
     {
+        protected int complexityCost;
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.infest;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         public override string AbilityDescription(Pawn victim, Pawn caster) => $"Infest {victim.LabelShort} with Fluxspawn embryos.\nThe process is lethal and will birth a litter of Fluxspawn.";
@@ -25,12 +26,22 @@ namespace OMW_Samhaphage
         {
             if (victim == null || caster == null) return;
 
+            if (!ResonanceUtility.Decr(caster, complexityCost))
+            {
+                Log.Error(
+                    $"[OMW_Samhaphage] Failed to decrement resonance for {caster.LabelShort} during {AbilityType}. This indicates a logic error where CanApplyOnPawn did not prevent the ability.");
+                doOnComplete();
+                return;
+            }
+
             string msg = $"{victim.LabelShort} has been implanted by {caster.LabelShort} and will die when the egg(s) hatch.";
             // We define the lethal logic as an Action
             System.Action sacrificeAction = () =>
             {
                 // Based on AlphaGenes parasiticStinger https://github.com/juanosarg/AlphaGenes/blob/d6f14ee6106ce01351c86eb369703edde65bce66/1.6/Source/AlphaGenes/AlphaGenes/Ability%20Comps/CompAbilityEffect_ParasiticStinger.cs
-                // (c) juanosarg.
+                // (c)2021 juanosarg.
+
+                // I would have preferred to use the existing parasiticStinger ability, but I needed to tweak it to behave differently for lore reasons and to fit in with how I did the NullThrumAbilities menu.
 
                 HealthUtility.DamageUntilDowned(victim);
 
@@ -45,6 +56,7 @@ namespace OMW_Samhaphage
                 comp.motherXenotypeDef = TargetXenotype;
                 comp.numBabiesMin = 2;
                 comp.numBabiesMax = 5;
+                // FIXME: should change the random range to take into account population limit
 
                 FleckMaker.AttachedOverlay(victim, FleckDefOf.FlashHollow, new Vector3(0f, 0f, 0.26f));
 
@@ -62,9 +74,7 @@ namespace OMW_Samhaphage
 
                     FilthMaker.TryMakeFilth(c, victim.Map, ThingDefOf.Filth_Blood);
                 }
-                Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                // Needs to be false so doesn't get stuck on a loop
-                
+                Messages.Message(msg, MessageTypeDefOf.NegativeEvent);                
             };
 
             // Open the confirmation dialog
@@ -100,6 +110,14 @@ namespace OMW_Samhaphage
                 reason = $"{victim.LabelShort} is part of the Null-Thrum.";
                 return false;
             }
+
+            complexityCost = OMWGenes.CalculateComplexity(victim, true, caster.genes.Xenotype);
+            if (!ResonanceUtility.HasAvailable(caster, complexityCost))
+            {
+                reason =
+                    $"{caster.LabelShort} does not have enough resonance to infect {victim.LabelShort}. Requires {complexityCost} resonance.";
+                return false;
+            }            
 
             return CanApplyLimitXenotype(TargetXenotype, out reason);
         }

@@ -7,6 +7,7 @@ namespace OMW_Samhaphage
     public class PawnApplyHallowbound : NullThrumAbilityPawnOnly
     {
         PawnApplyFlatten Flatten = new PawnApplyFlatten();
+        protected int complexityCost;
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.hallowbound;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/Hallowbound", false) ??
@@ -32,6 +33,12 @@ namespace OMW_Samhaphage
 
             if (!SacrificeCaster)
             {
+                if (!ResonanceUtility.Decr(caster, complexityCost))
+                {
+                    Log.Error($"[OMW_Samhaphage] Failed to decrement resonance for {caster.LabelShort} during {AbilityType}. This indicates a logic error where CanApplyOnPawn did not prevent the ability.");
+                    doOnComplete();
+                    return;
+                }
                 OMWGenes.ChangeXenotype(victim, OMW_XenotypeDefOf.omw_hallowbound);
                 doOnComplete();
                 return;
@@ -42,9 +49,7 @@ namespace OMW_Samhaphage
             {
                 OMWGenes.ChangeXenotype(victim, OMW_XenotypeDefOf.omw_hallowbound);
                 KillUtility.PawnKillDestroy(caster, caster);
-                Messages.Message(msg, MessageTypeDefOf.NegativeEvent);
-                // Needs to be false so doesn't get stuck on a loop
-                
+                Messages.Message(msg, MessageTypeDefOf.NegativeEvent);                
             };
 
             ShowLethalConfirmation(caster, sacrificeAction);
@@ -58,6 +63,17 @@ namespace OMW_Samhaphage
             {
                 return false;
             }
+
+            if (!this.SacrificeCaster)
+            {
+                complexityCost = OMWGenes.CalculateComplexity(victim, true, caster.genes.Xenotype);
+                if (!ResonanceUtility.HasAvailable(caster, complexityCost))
+                {
+                    reason =
+                        $"{caster.LabelShort} does not have enough transpose {victim.LabelShort} to {OMW_XenotypeDefOf.omw_hallowbound.label}. Requires {complexityCost} resonance.";
+                    return false;
+                }
+            }            
 
             return CanApplyLimitXenotype(OMW_XenotypeDefOf.omw_hallowbound, out reason);
         }

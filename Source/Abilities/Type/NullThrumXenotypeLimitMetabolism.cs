@@ -1,10 +1,11 @@
 namespace OMW_Samhaphage
 {
-    public class NullThrumXenotypeLimitMetabolism(NullThrumLimitPreset setting) : NullThrumXenotypeLimit(setting)
+    public class NullThrumXenotypeLimitMetabolism(NullThrumDifficultyPreset setting) : NullThrumXenotypeLimit(setting)
     {
-        public override void SetLimitDefaults(NullThrumLimitPreset settings)
+        public override void SetLimitDefaults(NullThrumDifficultyPreset settings)
         {
-            if (settings == NullThrumLimitPreset.LimitHigh)
+            disabled_value = -10000;
+            if (settings == NullThrumDifficultyPreset.DifficultyHigh)
             {
                 fluxspawn = -5;
                 echovessel = -5;
@@ -13,7 +14,7 @@ namespace OMW_Samhaphage
                 samhaphage = -300;
                 sovereign_stillness = -1000;
             }
-            else if (settings == NullThrumLimitPreset.LimitMedium)
+            else if (settings == NullThrumDifficultyPreset.DifficultyMedium)
             {
                 fluxspawn = -5;
                 echovessel = -5;
@@ -22,7 +23,7 @@ namespace OMW_Samhaphage
                 samhaphage = -200;
                 sovereign_stillness = -500;
             }
-            else if (settings == NullThrumLimitPreset.LimitLow)
+            else if (settings == NullThrumDifficultyPreset.DifficultyLow)
             {
                 fluxspawn = -5;
                 echovessel = -5;
@@ -31,14 +32,14 @@ namespace OMW_Samhaphage
                 samhaphage = -100;
                 sovereign_stillness = -300;
             }
-            else if (settings == NullThrumLimitPreset.LimitNone)
+            else if (settings == NullThrumDifficultyPreset.DifficultyNone)
             {
-                fluxspawn = -10000;
-                echovessel = -10000;
-                cradlemold = -10000;
-                hallowbound = -10000;
-                samhaphage = -10000;
-                sovereign_stillness = -10000;
+                fluxspawn = disabled_value;
+                echovessel = disabled_value;
+                cradlemold = disabled_value;
+                hallowbound = disabled_value;
+                samhaphage = disabled_value;
+                sovereign_stillness = disabled_value;
             }
         }
     }

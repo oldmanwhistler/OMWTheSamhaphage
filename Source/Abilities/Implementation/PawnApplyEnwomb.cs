@@ -8,6 +8,7 @@ namespace OMW_Samhaphage
 {
     public class PawnApplyEnwomb : NullThrumAbilityPawnOnly
     {
+        protected int complexityCost;
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.enwomb;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         public override string AbilityDescription(Pawn victim, Pawn caster) => $"Implant {victim.LabelShort} with a new life.";
@@ -42,6 +43,14 @@ namespace OMW_Samhaphage
         public override void ApplyPawn(Pawn mother, Pawn father)
         {
             if (mother == null || father == null) return;
+
+            if (!SacrificeCaster && !ResonanceUtility.Decr(father, complexityCost))
+            {
+                Log.Error(
+                    $"[OMW_Samhaphage] Failed to decrement resonance for {father.LabelShort} during {AbilityType}. This indicates a logic error where CanApplyOnPawn did not prevent the ability.");
+                doOnComplete();
+                return;
+            }
 
             if (!SacrificeCaster)
             {
@@ -99,10 +108,10 @@ namespace OMW_Samhaphage
             return true;
         }
 
-        public override bool CanApplyOnPawn(Pawn p, Pawn caster, out string reason)
+        public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
         {
             reason = "unknown reason";
-            if (p == null) 
+            if (victim == null) 
             {
                 reason = "Target is null.";
                 return false;
@@ -114,15 +123,26 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            if (!p.RaceProps.Humanlike)
+            if (!victim.RaceProps.Humanlike)
             {
                 reason = "Target is not humanlike.";
                 return false;
             }
-            if (p.health.hediffSet.HasHediff(HediffDefOf.PregnantHuman))
+            if (victim.health.hediffSet.HasHediff(HediffDefOf.PregnantHuman))
             {
                 reason = "Target is already pregnant.";
                 return false;
+            }
+
+            if (!this.SacrificeCaster)
+            {
+                complexityCost = OMWGenes.CalculateComplexity(victim, true, caster.genes.Xenotype);
+                if (!ResonanceUtility.HasAvailable(caster, complexityCost))
+                {
+                    reason =
+                        $"{caster.LabelShort} does not have enough resonance to resurrect {victim.LabelShort}. Requires {complexityCost} resonance.";
+                    return false;
+                }
             }
 
             return CanApplyLimitXenotype(TargetXenotype, out reason);

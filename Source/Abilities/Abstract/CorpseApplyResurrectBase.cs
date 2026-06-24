@@ -8,49 +8,59 @@ namespace OMW_Samhaphage
 {
     public abstract class CorpseApplyResurrectBase: NullThrumAbilityCorpseOnly
     {
+        protected int complexityCost;
+
         public abstract RimWorld.XenotypeDef TargetXenotype { get;  }
         public abstract Verse.HediffDef TargetHediff { get; }    
         public abstract bool SacrificeCaster { get; }
 
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.resurrect;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
-        private bool ApplyResurrect(Corpse corpse)
+        private bool ApplyResurrect(Corpse corpse, Pawn caster)
         {
             if (corpse == null || corpse.InnerPawn == null) return false;
 
-            Pawn pawn = corpse.InnerPawn;
+            Pawn victim = corpse.InnerPawn;
 
-            if (pawn.Faction != Faction.OfPlayer)
+            if (victim.Faction != Faction.OfPlayer)
             {
-                pawn.SetFaction(Faction.OfPlayer);
+                victim.SetFaction(Faction.OfPlayer);
+            }
+
+            if (!SacrificeCaster && !ResonanceUtility.Decr(caster, complexityCost))
+            {
+                Log.Error(
+                    $"[OMW_Samhaphage] Failed to decrement resonance for {caster.LabelShort} during {AbilityType}. This indicates a logic error where CanApplyOnPawn did not prevent the ability.");
+                doOnComplete();
+                return false;
             }
 
             if (this.TargetXenotype != null)
             {
-                OMWGenes.ChangeXenotype(pawn, this.TargetXenotype, false);
+                OMWGenes.ChangeXenotype(victim, this.TargetXenotype, false);
             }
 
             try
             {
-                ResurrectionUtility.TryResurrect(pawn);
+                ResurrectionUtility.TryResurrect(victim);
             }
             catch (System.NullReferenceException e)
             {
-                Log.Error($"[OMW] Resurrection failed during Notify_PostResurrected for {pawn.Label}: {e.Message}");
+                Log.Error($"[OMW] Resurrection failed during Notify_PostResurrected for {victim.Label}: {e.Message}");
             }
 
-            if (!pawn.Spawned) return false;
+            if (!victim.Spawned) return false;
 
-            pawn.health.RestorePart(pawn.RaceProps.body.corePart);
+            victim.health.RestorePart(victim.RaceProps.body.corePart);
 
             if (this.TargetHediff != null)
             {
-                pawn.health.AddHediff(this.TargetHediff);
+                victim.health.AddHediff(this.TargetHediff);
             }
 
-            if (!pawn.health.hediffSet.HasHediff(HediffDef.Named("OMW_Reassembled")))
+            if (!victim.health.hediffSet.HasHediff(HediffDef.Named("OMW_Reassembled")))
             {
-                pawn.health.AddHediff(HediffDef.Named("OMW_Reassembled"));
+                victim.health.AddHediff(HediffDef.Named("OMW_Reassembled"));
             }
 
             return true;
@@ -62,7 +72,7 @@ namespace OMW_Samhaphage
 
             if (!this.SacrificeCaster)
             {
-                ApplyResurrect(corpse);
+                ApplyResurrect(corpse, caster);
                 doOnComplete();
                 return;
             }
@@ -71,15 +81,12 @@ namespace OMW_Samhaphage
             // We define the lethal logic as an Action
             System.Action sacrificeAction = () =>
             {
-                if (ApplyResurrect(corpse))
+                if (ApplyResurrect(corpse, null))
                 {
                     KillUtility.PawnKillDestroy(caster, caster);
                     Messages.Message(msg,
                         MessageTypeDefOf.NegativeEvent);
-                }
-
-                // Needs to be false so doesn't get stuck on a loop
-                
+                }                
             };
 
             // Open the confirmation dialog

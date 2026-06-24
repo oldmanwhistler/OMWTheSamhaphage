@@ -12,6 +12,7 @@ namespace OMW_Samhaphage
     {
         BlDontCopy,
         BlDontRemove,
+        BlDontCount,
         BlMod
     }
 
@@ -56,6 +57,7 @@ namespace OMW_Samhaphage
 
         public static readonly HashSet<TraitDef> BlacklistedTraitsDontCopy = new HashSet<TraitDef>();
         public static readonly HashSet<TraitDef> BlacklistedTraitsDontRemove = new HashSet<TraitDef>();
+        public static readonly HashSet<TraitDef> BlacklistedTraitsDontCount = new HashSet<TraitDef>();
 
 
         static OMW_BlacklistTraits()
@@ -67,7 +69,8 @@ namespace OMW_Samhaphage
         {
             BlacklistedTraits.Clear();
             BlacklistedTraitsDontCopy.Clear();
-            BlacklistedTraitsDontRemove.Clear();            
+            BlacklistedTraitsDontRemove.Clear();
+            BlacklistedTraitsDontCount.Clear();
 
             if (OMW_Mod.settings == null || OMW_Mod.settings.disableTraitBlacklist)
             {
@@ -77,27 +80,32 @@ namespace OMW_Samhaphage
 
             HashSet<BlacklistTraitType> blCanCopy = new HashSet<BlacklistTraitType>();
             HashSet<BlacklistTraitType> blCanRemove = new HashSet<BlacklistTraitType>();
+            HashSet<BlacklistTraitType> blCanCount = new HashSet<BlacklistTraitType>();
 
-            List<string> myBlacklistStrings = new List<string>();
-            myBlacklistStrings.Add("Isekai_Rank_"); // Isekai Leveling
-            myBlacklistStrings.Add("HVT_Awakened"); // Hauts Added Traits' Awakened Psychics
-            myBlacklistStrings.Add("HVT_Test");
+            List<string> myBlacklistIgnore = new List<string>();
+            myBlacklistIgnore.Add("Isekai_Rank_"); // Isekai Leveling
+            myBlacklistIgnore.Add("HVT_Awakened"); // Hauts Added Traits' Awakened Psychics
+            myBlacklistIgnore.Add("HVT_Test");
 
             List<string> myBlacklistDontCopy = new List<string>();
             List<string> myBlacklistDontRemove = new List<string>();
-            foreach (string str in myBlacklistStrings)
+            List<string> myBlacklistDontCount = new List<string>();
+            foreach (string str in myBlacklistIgnore)
             {
                 myBlacklistDontCopy.Add(str);
                 myBlacklistDontRemove.Add(str);
+                myBlacklistDontCount.Add(str);
             }
+            myBlacklistDontCopy.Add("Kind");
+            myBlacklistDontCopy.Add("NightOwl");
+
 
             List<string> myBlacklistMods = new List<string>();
             myBlacklistMods.Add("Shadow Monarch");
             
             blCanCopy.Add(BlacklistTraitType.BlDontRemove);
             blCanRemove.Add(BlacklistTraitType.BlDontCopy);
-
-
+            blCanCount.Add(BlacklistTraitType.BlDontCount);
 
             foreach (TraitDef traitDef in DefDatabase<TraitDef>.AllDefs)
             {
@@ -113,6 +121,10 @@ namespace OMW_Samhaphage
                     if (myBlacklistDontRemove.Any(s => traitDef.defName.Contains(s)))
                     {
                         bl.Add(BlacklistTraitType.BlDontRemove);
+                    }
+                    if (myBlacklistDontCount.Any(s => traitDef.defName.Contains(s)))
+                    {
+                        bl.Add(BlacklistTraitType.BlDontCount);
                     }
 
                     if (myBlacklistMods.Any(s => modName.Contains(s)))
@@ -133,6 +145,11 @@ namespace OMW_Samhaphage
                         if (!bl.BlacklistTraitType.IsSubsetOf(blCanRemove))
                         {
                             BlacklistedTraitsDontRemove.Add(bl.traitDef);
+                        }
+
+                        if (!bl.BlacklistTraitType.IsSubsetOf(blCanCount))
+                        {
+                            BlacklistedTraitsDontCount.Add(bl.traitDef);
                         }
                     }
                 }
