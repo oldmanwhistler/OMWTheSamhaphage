@@ -32,7 +32,7 @@
   </BackstoryDef>
 
   <BackstoryDef>
-    <defName>OMW_Flatten_Unknown_Child</defName>
+    <defName>OMW_Flatten_Childhood</defName>
     <label>Unknown</label>
     <title>Unknown</title>
     <titleShort>Unknown</titleShort>
@@ -45,7 +45,7 @@
 
 
   <BackstoryDef>
-    <defName>OMW_Flatten_Unknown_Adult</defName>
+    <defName>OMW_Flatten_Adulthood</defName>
     <label>Unknown</label>
     <title>Unknown</title>
     <titleShort>Unknown</titleShort>
