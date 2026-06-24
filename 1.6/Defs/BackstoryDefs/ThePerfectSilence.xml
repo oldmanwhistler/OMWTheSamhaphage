@@ -31,4 +31,29 @@
     </requiredWorkTags>
   </BackstoryDef>
 
+  <BackstoryDef>
+    <defName>OMW_Flatten_Unknown_Child</defName>
+    <label>Unknown</label>
+    <title>Unknown</title>
+    <titleShort>Unknown</titleShort>
+    <description>There's something here that [PAWN_nameDef] can't remember.</description>
+    <slot>Childhood</slot>
+    <requiredWorkTags>
+      <li>Violent</li>
+    </requiredWorkTags>
+  </BackstoryDef>
+
+
+  <BackstoryDef>
+    <defName>OMW_Flatten_Unknown_Adult</defName>
+    <label>Unknown</label>
+    <title>Unknown</title>
+    <titleShort>Unknown</titleShort>
+    <description>There's something here that [PAWN_nameDef] can't remember.</description>
+    <slot>Adulthood</slot>
+    <requiredWorkTags>
+      <li>Violent</li>
+    </requiredWorkTags>
+  </BackstoryDef>
+
 </Defs>

@@ -41,11 +41,26 @@ namespace OMW_Samhaphage
             List<Gene> genes = victim.genes.GenesListForReading;
             for (int i = genes.Count - 1; i >= 0; i--)
             {
-                if ((genes[i].def.disabledWorkTags & WorkTags.Violent) != 0)
+                bool removeGene = (genes[i].def.disabledWorkTags & WorkTags.Violent) != 0;
+                if (!removeGene)
                 {
-                    Log.Debug($"Flatten::Purging gene {genes[i].def.defName} from {victim.LabelShort} because it disables violence.");
+                    foreach (GeneticTraitData traitData in genes[i].def.forcedTraits)
+                    {
+                        if (traitData.def == TraitDefOf.Kind)
+                        {
+                            removeGene = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (removeGene)
+                {
+                    Log.Debug(
+                        $"Flatten::Purging gene {genes[i].def.defName} from {victim.LabelShort} because it disables violence.");
                     float value = ResonanceUtility.GeneResonanceValue(genes[i].def);
-                    ResonanceUtility.Incr($"Purging gene that prevents violence: {genes[i].def.defName}", caster, value);
+                    ResonanceUtility.Incr($"Purging gene that prevents violence: {genes[i].def.defName}", caster,
+                        value);
                     victim.genes.RemoveGene(genes[i]);
                 }
             }
@@ -60,9 +75,19 @@ namespace OMW_Samhaphage
             List<Trait> traits = victim.story.traits.allTraits;
             for (int i = traits.Count - 1; i >= 0; i--)
             {
+                bool removeTrait = false;
                 if ((traits[i].def.disabledWorkTags & WorkTags.Violent) != 0)
                 {
-                    Log.Debug($"Flatten::Purging trait {traits[i].def.defName} from {victim.LabelShort} because it disables violence.");
+                    removeTrait = true;
+                }
+                else if (traits[i].def == TraitDefOf.Kind)
+                {
+                    removeTrait = true;
+                }
+
+                if (removeTrait)
+                {
+                    Log.Debug($"Flatten::Purging trait {traits[i].def.defName} from {victim.LabelShort} because it conflicts with Scoured Mind.");
                     float value = ResonanceUtility.TraitResonanceValue(traits[i]);
                     ResonanceUtility.Incr($"Purging trait that prevents violence: {traits[i].def.defName}", caster, value);
                     victim.story.traits.RemoveTrait(traits[i]);
@@ -78,19 +103,47 @@ namespace OMW_Samhaphage
             if (victim?.story == null) return;
 
             // Replace childhood if it disables violence
-            if (victim.story.Childhood != null && (victim.story.Childhood.workDisables & WorkTags.Violent) != 0)
+            if (victim.story.Childhood != null)
             {
-                Log.Debug($"Flatten::Purging childhood backstory {victim.story.Childhood.defName} from {victim.LabelShort} because it disables violence.");
-                // Replace with generic vanilla "Childhood" backstory
-                victim.story.Childhood = DefDatabase<BackstoryDef>.GetNamed("Child6");
+                bool replace = ((victim.story.Childhood.workDisables & WorkTags.Violent) != 0);
+                foreach (BackstoryTrait traitData in victim.story.Childhood.forcedTraits)
+                {
+                    if (traitData.def == TraitDefOf.Kind)
+                    {
+                        replace = true;
+                        break;
+                    }
+                }                
+                if (replace)
+                {
+                    Log.Debug(
+                        $"Flatten::Purging childhood backstory {victim.story.Childhood.defName} from {victim.LabelShort} because it disables violence.");
+                    victim.story.Childhood = OMW_BackstoryDefOf.OMW_Flatten_Childhood;
+                }
             }
 
+
             // Replace adulthood if it disables violence
-            if (victim.story.Adulthood != null && (victim.story.Adulthood.workDisables & WorkTags.Violent) != 0)
+            if (victim.story.Adulthood != null)
             {
-                Log.Debug($"Flatten::Purging adulthood backstory {victim.story.Adulthood.defName} from {victim.LabelShort} because it disables violence.");
-                // Replace with generic vanilla "Colonist" backstory
-                victim.story.Adulthood = DefDatabase<BackstoryDef>.GetNamed("Colonist7");
+                bool replace = ((victim.story.Adulthood.workDisables & WorkTags.Violent) != 0);
+                if (victim.story.Adulthood.forcedTraits != null)
+                {
+                    foreach (BackstoryTrait traitData in victim.story.Adulthood.forcedTraits)
+                    {
+                        if (traitData.def == TraitDefOf.Kind)
+                        {
+                            replace = true;
+                            break;
+                        }
+                    }
+                }
+                if (replace)
+                {
+                    Log.Debug(
+                        $"Flatten::Purging adulthood backstory {victim.story.Adulthood.defName} from {victim.LabelShort} because it disables violence.");
+                    victim.story.Adulthood = OMW_BackstoryDefOf.OMW_Flatten_Adulthood;
+                }
             }
             Log.Debug($"Flatten::DONE::PurgeBackstoryIncapableViolence({victim.LabelShort})");
         }    
