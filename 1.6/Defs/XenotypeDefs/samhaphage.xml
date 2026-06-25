@@ -36,8 +36,7 @@
       <li MayRequire="redmattis.bettergeneinheritance">BGI_DominantGenes</li>
       <li MayRequire="sarg.alphagenes">AG_Teratophilia</li>
       <li MayRequire="sarg.alphagenes">AG_InsanityBlast</li>
-      <li MayRequire="sarg.alphagenes">AG_UnstableMind</li>
-      <li MayRequire="sarg.alphagenes">AG_DangerousRaidPresence</li>
+        <li MayRequire="sarg.alphagenes">AG_DangerousRaidPresence</li>
       <li MayRequire="sarg.alphagenes">AG_PukeBile</li>
       <li MayRequire="sarg.alphagenes,Ludeon.RimWorld.Anomaly">AG_TwistedFlesh</li>
       <li MayRequire="sarg.alphagenes,sarg.alphaskills">AG_BlackChitinLeather</li>
