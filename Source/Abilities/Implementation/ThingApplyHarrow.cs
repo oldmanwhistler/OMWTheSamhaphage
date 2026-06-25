@@ -62,6 +62,7 @@ namespace OMW_Samhaphage
                         {
                             Log.Debug($"blocking {gene.def} because already has it as an active gene");
                             blocked.Append(gene.def, "Already Has");
+                            isBlocked = true;
                         }
                     }
                 }
