@@ -31,47 +31,71 @@ namespace OMW_Samhaphage
                     isBlocked = true;
                 }
 
-                if (OMW_BlacklistTraits.BlacklistedTraitsDontCopy.Contains(trait.def))
+                if (!isBlocked && OMW_BlacklistTraits.BlacklistedTraitsDontCopy.Contains(trait.def))
                 {
                     blocked.Append(trait.def, "Don't Copy");
                     isBlocked = true;
                 }
 
-                if (alreadyHas.Contains(trait.def))
+                if (!isBlocked && alreadyHas.Contains(trait.def))
                 {
                     blocked.Append(trait.def, "Already Has");
                     isBlocked = true;
                 }
 
-                foreach (TraitDef traitDef in trait.def.conflictingTraits)
+                if (!isBlocked)
                 {
-                    if (alreadyHas.Contains(traitDef))
+                    foreach (WorkTypeDef workType in trait.def.requiredWorkTypes)
                     {
-                        blocked.Append(trait.def, $"Conflict {traitDef.defName}");
-                        isBlocked = true;
-                        break;
+                        if (dest.WorkTypeIsDisabled(workType))
+                        {
+                            blocked.Append(trait.def, $"Requires {workType.label}");
+                            isBlocked = true;
+                            break;
+                        }
                     }
                 }
 
-                foreach (WorkTypeDef workType in trait.def.requiredWorkTypes)
+                if (!isBlocked)
                 {
-                    if (dest.WorkTypeIsDisabled(workType))
+                    foreach (SkillDef skill in trait.def.conflictingPassions)
                     {
-                        blocked.Append(trait.def, $"Requires {workType.label}");
-                        isBlocked = true;
-                        break;
+                        if (dest.skills.skills.Any(s => s.def == skill))
+                        {
+                            blocked.Append(trait.def, $"Conflict {skill.label}");
+                            isBlocked = true;
+                            break;
+                        }
                     }
                 }
 
-                foreach (SkillDef skill in trait.def.conflictingPassions)
+                if (!isBlocked)
                 {
-                    if (dest.skills.skills.Any(s => s.def == skill))
+                    foreach (TraitDef traitDef in trait.def.conflictingTraits)
                     {
-                        blocked.Append(trait.def, $"Conflict {skill.label}");
-                        isBlocked = true;
-                        break;
+                        if (alreadyHas.Contains(traitDef))
+                        {
+                            blocked.Append(trait.def, $"Conflict {traitDef.defName}");
+                            isBlocked = true;
+                            break;
+                        }
                     }
                 }
+
+                if (!isBlocked)
+                {
+                    foreach (Trait traitDest in dest.story.traits.allTraits)
+                    {
+                        if (traitDest.def == trait.def) continue;
+                        if (traitDest.def.ConflictsWith(trait.def))
+                        {
+                            blocked.Append(trait.def, $"Conflicts with {traitDest.def}");
+                            isBlocked = true;
+                            break;
+                        }
+                    }
+                }
+
                 if (!isBlocked)
                 {
                     Log.Debug($"not blocking {trait.def}");
@@ -229,12 +253,20 @@ namespace OMW_Samhaphage
         public override bool CanApplyOnCorpse(Corpse corpse, Pawn caster, out string reason)
         {
             reason = "unknown";
-            if (!ResonanceUtility.HasGene(caster))
+            Pawn victim = corpse?.InnerPawn;
+            if (victim == null || caster == null)
             {
-                reason = $"{caster.LabelShort} does not have a supply of resonance.";
+                reason = "Invalid pawn.";
                 return false;
-            }            
-            return true;
+            }
+
+            if (!corpse.InnerPawn.RaceProps.Humanlike)
+            {
+                reason = $"{corpse.InnerPawn.LabelShort} is not humanlike.";
+                return false;
+            }
+
+            return CanApplyOnPawn(victim, caster, out reason);
         }
     }
 }
