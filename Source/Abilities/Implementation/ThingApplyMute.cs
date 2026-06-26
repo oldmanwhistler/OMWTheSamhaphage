@@ -83,7 +83,11 @@ namespace OMW_Samhaphage
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
         {
-            if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason)) return false;
+            reason = "unknown reason";
+            if (!victim.Dead)
+            {
+                if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason)) return false;
+            }
 
             if (!victim.HasPsylink)
             {
@@ -105,6 +109,12 @@ namespace OMW_Samhaphage
             reason = "unknown reason";
             if (corpse == null) return false;
             if (corpse?.InnerPawn == null) return false;
+            if (!corpse.InnerPawn.RaceProps.Humanlike)
+            {
+                reason = $"{corpse.InnerPawn.LabelShort} is not humanlike.";
+                return false;
+            }
+
             return CanApplyOnPawn(corpse.InnerPawn, caster, out reason);
         }
     }
