@@ -163,6 +163,21 @@ namespace OMW_Samhaphage
                 }
             }
 
+            if (activated)
+            {
+                MoteMaker.MakeAttachedOverlay(victim, ThingDefOf.Mote_ResurrectFlash, Vector3.zero);
+                // Damage the victim's brain to represent the psychic trauma of being muted.
+                int brainDamage = selectedList.Count * 4; // Arbitrary damage value per level taken
+                if (victim.health.hediffSet.GetBrain() != null)
+                {
+                    victim.TakeDamage(new DamageInfo(DamageDefOf.Cut, brainDamage, 0, -1, caster,
+                        victim.health.hediffSet.GetBrain()));
+                    Log.Debug($"Applied {brainDamage} brain damage to {victim.LabelShort} due to ability use.");
+                }
+
+                Log.Debug($"Bootlegged traits from {victim.LabelShort}: {selectedList.Count} traits harvested.");
+            }            
+
             return activated;
         }
 
@@ -263,6 +278,12 @@ namespace OMW_Samhaphage
             if (!corpse.InnerPawn.RaceProps.Humanlike)
             {
                 reason = $"{corpse.InnerPawn.LabelShort} is not humanlike.";
+                return false;
+            }
+
+            if (corpse.InnerPawn.health.hediffSet.GetBrain() == null)
+            {
+                reason = "Vessel is decapitated; the frequency cannot be anchored.";
                 return false;
             }
 

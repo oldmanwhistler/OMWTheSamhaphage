@@ -248,6 +248,13 @@ namespace OMW_Samhaphage
                 return false;
             }
 
+            // Don't apply if the pawn isn't part of the colony, a prisoner or a slave. This is to prevent flattening random pawns in the world that are not part of the player's control.
+            if (!victim.IsColonist && !victim.IsPrisoner && !victim.IsSlave)
+            {
+                reason = $"{victim.LabelShort} is not part of the colony, a prisoner or a slave and using this ability would cause hostility.";
+                return false;
+            }
+
             return true; 
         }
     }

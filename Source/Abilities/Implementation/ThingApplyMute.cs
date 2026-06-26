@@ -52,6 +52,11 @@ namespace OMW_Samhaphage
             while (victim.HasPsylink && ResonanceUtility.Total(caster) < MaxResonanceThreshold)
             {
                 int currentLevel = victim.GetPsylinkLevel();
+                if (currentLevel <= 0)
+                {                
+                    OMWHediffs.RemoveHediff(victim, HediffDefOf.PsychicAmplifier);
+                    break;
+                }
                 
                 // ChangePsylinkLevel(-1) reduces the level and handles hediff removal if it reaches 0.
                 victim.ChangePsylinkLevel(-1);
@@ -67,6 +72,14 @@ namespace OMW_Samhaphage
                 MoteMaker.MakeAttachedOverlay(victim, ThingDefOf.Mote_ResurrectFlash, Vector3.zero);
                 Log.Debug($"Muted {victim.LabelShort}: {levelsTaken} psylink levels harvested.");
                 
+                // Damage the victim's brain to represent the psychic trauma of being muted.
+                int brainDamage = levelsTaken * 5; // Arbitrary damage value per level taken
+                if (victim.health.hediffSet.GetBrain() != null)
+                {
+                    victim.TakeDamage(new DamageInfo(DamageDefOf.Cut, brainDamage, 0, -1, caster, victim.health.hediffSet.GetBrain()));
+                    Log.Debug($"Applied {brainDamage} brain damage to {victim.LabelShort} due to muting.");
+                }
+
                 // Apply Genetic Dissonance to prevent repeated harvesting from the same vessel in a short time.
                 OMWGenes.ApplyDissonance(victim, caster);
             }
@@ -114,6 +127,13 @@ namespace OMW_Samhaphage
                 reason = $"{corpse.InnerPawn.LabelShort} is not humanlike.";
                 return false;
             }
+
+            if (corpse.InnerPawn.health.hediffSet.GetBrain() == null)
+            {
+                reason = "Vessel is decapitated; the frequency cannot be anchored.";
+                return false;
+            }
+
 
             return CanApplyOnPawn(corpse.InnerPawn, caster, out reason);
         }

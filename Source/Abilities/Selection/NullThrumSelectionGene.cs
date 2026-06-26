@@ -55,7 +55,10 @@ namespace OMW_Samhaphage
 
             if (gene.def.displayCategory.defName.Contains("Cosmetic"))
             {
-                return true;
+                if (gene.def.biostatArc <= 0 && gene.def.biostatCpx <= 0 && gene.def.biostatMet >= 0)
+                {
+                    return true;
+                }
             }
             return false;
         }
