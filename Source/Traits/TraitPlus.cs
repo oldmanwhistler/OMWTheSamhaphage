@@ -34,6 +34,11 @@ namespace OMW_Samhaphage
             //var stats = $"\nResonance Value: {this.value}";            
             var tip = $"{this.trait.LabelCap}\n\n{this.trait.TipString(this.pawn)}";
 
+            if (this.trait.def.degreeDatas != null && this.trait.def.degreeDatas.Count > 1)
+            {
+                tip += $"\n\nThis is degree {this.trait.Degree} of {this.trait.def.degreeDatas.Count}";
+            }
+
             if (!blockedReason.NullOrEmpty())
             {
                 tip += $"\n\n<color=#ffcc00>(Blocked: {blockedReason})</color>";

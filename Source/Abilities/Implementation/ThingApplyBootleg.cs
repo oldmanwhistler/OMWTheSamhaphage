@@ -37,10 +37,27 @@ namespace OMW_Samhaphage
                     isBlocked = true;
                 }
 
-                if (!isBlocked && alreadyHas.Contains(trait.def))
+                if (!isBlocked)
                 {
-                    blocked.Append(trait.def, "Already Has");
-                    isBlocked = true;
+                    if (alreadyHas.Contains(trait.def))
+                    {
+                        if (trait.def.degreeDatas.Count <= 1)
+                        {
+                            // singleton trait
+                            blocked.Append(trait.def, "Already Has");
+                            isBlocked = true;
+                        }
+                        else
+                        {
+                            // spectrum trait with multiple degrees, check if the destination has a higher or equal degree
+                            List<Trait> duplicates = TraitPlusUtility.GetDuplicateSpectrumTraits(dest, trait);
+                            if (duplicates.Any(d => d.Degree >= trait.Degree))
+                            {
+                                blocked.Append(trait.def, "Already Has");
+                                isBlocked = true;
+                            }
+                        }
+                    }
                 }
 
                 if (!isBlocked)
@@ -149,17 +166,65 @@ namespace OMW_Samhaphage
         private bool ApplyBootleg(Pawn victim, Pawn caster, SelectionBootleg selector, List<TraitPlus> selectedList)
         {
             bool activated = false;
+            HashSet<TraitDef> alreadyHas = caster.story.traits.allTraits.Select(t => t.def).ToHashSet();
             foreach (TraitPlus plus in selectedList)
             {
                 // half-price sale if the victim is alive.
                 if (!victim.Dead) plus.value = plus.value / 2f;
+                bool canApply = true;
                 if (plus.trait != null && (victim.story?.traits?.allTraits.Contains(plus.trait) ?? false) && selector.ResonanceDebit(plus))
                 {
                     victim.story?.traits?.RemoveTrait(plus.trait);
-                    // Create a new trait instance for the caster to avoid reference bugs
-                    caster.story.traits.GainTrait(plus.Copy(), suppressConflicts: false);
-                    Log.Debug($"Bootlegged {plus.trait.LabelCap} from {victim.LabelShort}");
-                    activated = true;
+                    if (alreadyHas.Contains(plus.trait.def))
+                    {
+                        if (plus.trait.def.degreeDatas.Count <= 1)
+                        {
+                            Log.Error($"Bootleg: {caster.LabelShort} already has {plus.trait.def} and it isn't a spectrum trait. Not bootlegging.");
+                            canApply = false;
+                        }
+                        else
+                        {
+                            // spectrum trait with multiple degrees, check if the destination has a higher degree
+                            // There were simpler ways to do this, but I don't want to assume that the destination pawn has only one instance of the trait. So we check all instances and remove any that are lower than the one we're bootlegging.
+                            List<Trait> duplicates = TraitPlusUtility.GetDuplicateSpectrumTraits(caster, plus.trait);
+                            bool removeLowerDegrees = true;
+                            foreach (Trait dupeTrait in duplicates)
+                            {
+                                if (dupeTrait.def == plus.trait.def && dupeTrait.Degree < plus.trait.Degree)
+                                {
+                                    // we can remove this
+                                }
+                                else
+                                {
+                                    removeLowerDegrees = false;
+                                    break;
+                                }
+                            }
+
+                            if (!removeLowerDegrees)
+                            {
+                                Log.Error($"Bootleg: {caster.LabelShort} already has {plus.trait.def} at a higher or equal degree. Not removing any duplicates.");
+                                canApply = false;
+                            }
+                            else
+                            {
+                                Log.Debug($"Bootleg: {caster.LabelShort} already has {plus.trait.def}. So removing lower degree duplicates before bootlegging.");
+                                foreach (Trait dupeTrait in duplicates)
+                                {
+                                    caster.story?.traits?.RemoveTrait(dupeTrait);
+                                    Log.Debug($"Bootleg: Removed {dupeTrait.LabelCap} from {caster.LabelShort}");
+                                }
+                            }
+                        }
+                    }
+
+                    if (canApply)
+                    {
+                        // Create a new trait instance for the caster to avoid reference bugs
+                        caster.story.traits.GainTrait(plus.Copy(), suppressConflicts: false);
+                        Log.Debug($"Bootlegged {plus.trait.LabelCap} from {victim.LabelShort}");
+                        activated = true;
+                    }
                 }
             }
 

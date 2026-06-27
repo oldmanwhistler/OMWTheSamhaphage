@@ -50,5 +50,19 @@ namespace OMW_Samhaphage
 
             return count;
         }
+
+        public static List<Trait> GetDuplicateSpectrumTraits(Pawn pawn, Trait trait)
+        {
+            List<Trait> duplicates = new List<Trait>();
+            foreach (Trait other in pawn.story.traits.allTraits)
+            {
+                if (other.def == trait.def && other.Degree != trait.Degree)
+                {
+                    duplicates.Add(other);
+                }
+            }
+            duplicates.Sort((a, b) => a.Degree.CompareTo(b.Degree));
+            return duplicates;
+        }
     }
 }
