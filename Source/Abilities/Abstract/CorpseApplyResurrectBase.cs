@@ -92,5 +92,57 @@ namespace OMW_Samhaphage
             // Open the confirmation dialog
             ShowLethalConfirmation(caster, sacrificeAction);
         }
+
+        public bool CanApplyResurrect(Corpse corpse, Pawn caster, out string reason)
+        {
+            reason = "unknown reason";
+            if (corpse == null)
+            {
+                reason = "Target is null.";
+                return false;
+            }            
+
+            // Is there a pawn inside?
+            Pawn victim = corpse.InnerPawn;
+            if (victim == null)
+            {
+                reason = "Corpse is missing InnerPawn or InnerPawn is invalid.";
+                return false;
+            }
+
+            if (victim.RaceProps?.Humanlike != true)
+            {
+                reason = "Target is not humanlike.";
+                return false;
+            }
+
+            if (corpse.GetRotStage() == RotStage.Dessicated)
+            {
+                reason = "Vessel is dessicated; the frequency cannot be anchored.";
+                return false;
+            }
+
+            if (corpse.GetRotStage() == RotStage.Rotting)
+            {
+                reason = "Vessel is rotting; the frequency cannot be anchored.";
+                return false;
+            }
+
+            // Is the pawn already being resurrected/interacted with?
+            if (victim.Spawned && !corpse.Spawned)
+            {
+                reason = "Pawn is already being processed.";
+                return false;
+            }
+
+            // Is the head missing? (RimWorld standard resurrection fails without a head)
+            if (victim.health.hediffSet.GetBrain() == null)
+            {
+                reason = "Vessel is decapitated; the frequency cannot be anchored.";
+                return false;
+            }
+
+            return true;
+        }        
     }
 }

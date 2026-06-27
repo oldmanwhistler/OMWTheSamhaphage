@@ -20,45 +20,15 @@ namespace OMW_Samhaphage
                 return $"Resurrect {victim.LabelShort} as an Echovessel.";
         }
 
-
         public override bool CanApplyOnCorpse(Corpse corpse, Pawn caster, out string reason)
         {
             reason = "unknown reason";
-            if (corpse == null)
+
+            if (!CanApplyResurrect(corpse, caster, out reason))
             {
-                reason = "Target is null.";
                 return false;
             }
-
-            // 2. Is there a pawn inside?
             Pawn victim = corpse.InnerPawn;
-            if (victim == null)
-            {
-                reason = "Corpse is missing InnerPawn or InnerPawn is invalid.";
-                return false;
-            }
-
-            if (victim.RaceProps?.Humanlike != true)
-            {
-                reason = "Target is not humanlike.";
-                return false;
-            }
-
-
-            // 4. Is the pawn already being resurrected/interacted with?
-            if (victim.Spawned && !corpse.Spawned)
-            {
-                reason = "Pawn is already being processed.";
-                return false;
-            }
-
-            // 5. Is the head missing? (RimWorld standard resurrection fails without a head)
-            if (victim.health.hediffSet.GetBrain() == null)
-            {
-                reason = "Vessel is decapitated; the frequency cannot be anchored.";
-                return false;
-            }
-
             if (victim.health.hediffSet.HasHediff(HediffDef.Named("OMW_Reassembled")))
             {
                 reason = "Vessel has already been reassembled; the frequency cannot be anchored.";
