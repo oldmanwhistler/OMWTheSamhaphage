@@ -192,6 +192,14 @@ namespace OMW_Samhaphage
                 Log.Debug($"Flatten - {victim.LabelShort} done Silent Servitude hediff");
             }
 
+            int brainDamage = 2;
+            if (victim.health.hediffSet.GetBrain() != null)
+            {
+                victim.TakeDamage(new DamageInfo(DamageDefOf.Cut, brainDamage, 0, -1, caster,
+                    victim.health.hediffSet.GetBrain()));
+                Log.Debug($"Applied {brainDamage} brain damage to {victim.LabelShort} due to ability use.");
+            }
+           
             PurgeNegativeMemories(victim);
 
             Log.Debug($"Flatten - adding Unstable Mutation Minor to {victim.LabelShort}");
