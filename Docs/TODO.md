@@ -3,7 +3,6 @@
 ## Next
 
 * limit for multiplier for archite cost in formulas
-* "default" mod settings will match the game settings
   
 ## MOD SETTINGS
 
@@ -17,7 +16,6 @@
 * the fluxspawn aren't dying fast enough
 * can genes modify worktags? need a blacklist trigger for randomly mutating those
 * will raising market value of the pawns just make selling fluxspawn into slavery very profitable?
-* Resurrect needs should calculate the genes/traits and then use that to charge the resonance. Ability would have a yes/no selection pop up about continuing.
 
 ## GAME SETTINGS
 
@@ -34,6 +32,7 @@ Hook the mod settings to the game settings on a new game.
 
 * don't have search on the ability UI
 * five icons per row
+* for degree traits list the degree
 * stats panel in menu about the selected pawn's genes, traits, hediffs - hediffs would list bionics and psylinks
 
 ## Ideology
@@ -51,16 +50,13 @@ Hook the mod settings to the game settings on a new game.
 ### Traits
 
 * Should handle conflicting traits the same way as I do with genes with respect to the GUI.
-* trait abilities should cause brain damage and be blocked by missing brain
 * need to blacklist traits that disable worktypes
   
 ### Resonance
 
 * resonance level should reduce the time of genetic dissonance
-* gain resonance on kill based on the market value of what you killed / 100?
 * "resonance efficiency" by xenotype. +/- percentage on increases/decreases.
-* "resonance thirst" power up when hit zero resonance? maybe not useful if daily resonance is implemented.
-* Daily resonance based on complexity?
+* Daily resonance? It's there but need to set the stat offset/multiplier per race
 
 ### Backstories
 

@@ -16,12 +16,11 @@
 
 * Flatten called as ability, does not return to main menu
 * Retune called as ability, then hit skip does not return to main menu
-* manual flatten doesn't return to the main menu
 * manual attentuate doesn't return to the main menu
-* Handle spectrum traits properly (acquiring goes through the spectrum like how it does for Corpse Children)
+
 
 ## Minor Bugs
 
 * Excise isn't lethal if target is self, but shows a lethal icon. This is a general fix I need to make to the gui and the Props to make it hand things out properly.
-* saw a scenario where amplifying to samhaphage did not give you the frame ability
+* saw a case where amplifying to samhaphage did not give you the frame ability
 * PawnApplyInfestFluxspawnHiveling doesn't handle population limit
