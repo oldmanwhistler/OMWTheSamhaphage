@@ -186,22 +186,20 @@ I didn't hardcoded this as conflicts because YMMV, but they conceptually break t
 
 ## AI Notice
 
-This project was to learn how to mod RimWorld and to gain experience using different gen AI tools I don't use at work. This is not the place to debate the ethics of AI. 
+This project was to learn how to mod RimWorld and to gain experience using different gen AI tools I don't use at work.
 
 Places where it was used:  
 
-1. Brainstorming nomenclature and descriptions.
+1. Brainstorming nomenclature and descriptions. "Give me 10 verbs in this theme"
 2. Coded using VS Code with Intellisense and AI suggestions/review.
-3. Gen AI used for icon assets and for parts or entirety of workshop screenshots.
+3. Gen AI used for icon assets and for non-screenshot graphics on workshop.
    * This mod has no graphical assets other than gene icons and ability icons.
 
-Being toxic to people who disclose AI usage says more about you than it does about the people using AI.
+Please don't be toxic to people who disclose AI usage. We probably have common ground in some of our opinions, but I place a higher value on understanding the disruptive technology. Boycotts can help shape a technology's adoption but they have never put the genie back in the bottle. Boycotts are good at influencing corporations and shaping how the technology is adopted. Writing mean comments to other people because of their choice of tools isn't activism, it's being a jerk. 
 
-You can look at the [github history](https://github.com/oldmanwhistler/OMWTheSamhaphage/commits/main/) or my [dev diary](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DevDiary/DEV_DIARY.md) to get an idea of how long I spent this.
+You can look at the [github history](https://github.com/oldmanwhistler/OMWTheSamhaphage/commits/main/) or my [dev diary](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DevDiary/DEV_DIARY.md) to get an idea of my experience making this and then you will be more informed to judge me than a knee-jerk reaction to seeing an AI disclosure.
 
-AI is just a tool.
-
-Here's my advice on how to avoid [slop mods](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/RIMWORLD_SLOP.md).
+I agree that AI slop is a problem. Here's my advice on how to avoid [slop mods](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/RIMWORLD_SLOP.md).
 
 ## License
 

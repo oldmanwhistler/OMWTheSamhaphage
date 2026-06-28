@@ -16,6 +16,8 @@
 * the fluxspawn aren't dying fast enough
 * can genes modify worktags? need a blacklist trigger for randomly mutating those
 * will raising market value of the pawns just make selling fluxspawn into slavery very profitable?
+* hallowbound don't amplify to samhaphage, make it so that a fluxspawn has to amplify a host with sufficient genetic complexity
+* fluxspawn can amplify an echovessel to a hallowbound
 
 ## GAME SETTINGS
 

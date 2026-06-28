@@ -134,3 +134,18 @@ Finally finished the UI stuff and I have a better understanding of the async nat
 ## Week #18 - June 15th, 2026
 
 Holy crap, using Gemini Code Assist had another one of those moments where it went completely off the rails. I need to bite the bullet and get Claude.
+
+## Week #19 - June 22nd, 2026
+
+I took a break and tried out ModMixer on a small idea I had: [Shiny Math Rocks](https://steamcommunity.com/sharedfiles/filedetails/?id=3747009272). I was happy with the result. I tried out GPT and while it ran out of the free tier it got the job done really fast and the coding was pretty much a one shot. Sure I spent another 8 hours f'n around and making dice, but I liked the workflow it had for mod testing and it made publishing very simple. ModMixer also has good discord community. 
+
+After that I tried some small ModMixer stuff with the Gemini free tier and it was friggin' awful. Seems like Gemini just isn't very good.
+
+I'm not a huge fan of generating code via CLI instead of via IDE (cuz I am an old fogey who needs to read and modify the code. Vibe coding is hard to adapt to). I'd love to have ModMixer as an MCP in my IDE. The way it disassembles the main game to get the APIs and internals plus gives the LLM a loop where it can self-correct syntax errors is **chef's kiss** .
+
+For VS Code I switched back to GitHub Copilot free after the removed Gemini support for it. I'm using the auto-completions as I type now. I find writing out the comment of what I plan to do usually give a helpful suggestion for the function that will implement it, almost better than the using the agentic chat that can go off the rails too easily when it hallucinates syntax.
+
+Pretty big bug fix to the Bootleg ability that steals traits. It lets you "upgrade" existing spectrum traits. I took a look at the trait counts and the "1 million psychopaths" problem is fixed as well. I think it was a state that could happen when I allowed a trait that was blocked by a gene.
+
+## Week #20 - June 27th, 2026
+
