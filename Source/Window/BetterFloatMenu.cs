@@ -141,6 +141,8 @@ namespace OMW_Samhaphage
         public string SearchString = "";
 
         private readonly List<MenuItemBase> preRenderItems = new List<MenuItemBase>();
+        private readonly PawnInfoPanel casterInfoPanel = new PawnInfoPanel();
+        private readonly PawnInfoPanel targetInfoPanel = new PawnInfoPanel();
         private float lastHeight, lastWidth;
         private Vector2 scroll;
 
@@ -287,7 +289,7 @@ namespace OMW_Samhaphage
 
             Widgets.DrawBox(panelRect);
             Rect innerRect = panelRect.ContractedBy(6f);
-            PawnInfoPanel panel = new PawnInfoPanel();
+            PawnInfoPanel panel = roleLabel == "CASTER" ? casterInfoPanel : targetInfoPanel;
             panel.Draw(innerRect, pawn, roleLabel);
         }
 
