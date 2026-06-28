@@ -4,8 +4,8 @@ Manage the narrative, visual, and mechanical design rules that define the "Perfe
 
 # Local Contracts
 
-- **Thematic Tone**: Adhere to `GEMINI.md` guidelines (Silence, Resonance, Null-Thrum).
-- **Visuals**: Maintain the Sam Kieth / 90s Gritty Comic aesthetic for UI and icons.
+- **Thematic Tone**: Adhere to [WRITING_RULES.md](./WRITING_RULES.md)
+- **Visuals**: Adhere to [VISUAL_RULES.md](./VISUAL_RULES.md)
 
 # Work Guidance
 
