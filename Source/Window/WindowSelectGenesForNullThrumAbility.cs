@@ -123,6 +123,8 @@ namespace OMW_Samhaphage
 
                 // Apply color
                 if (plus.gene.Overridden) GUI.color = Color.gray;
+                else if (plus.isOverriding) GUI.color = Color.cyan;
+                else if (plus.isCosmetic) GUI.color = Color.magenta;
                 if (plus.HasConflict()) GUI.color = Color.red;
 
                 Widgets.Label(labelRect, plus.gene.LabelCap);
@@ -147,6 +149,12 @@ namespace OMW_Samhaphage
                     {
                         selectedGenes.Remove(plus);
                         SoundDefOf.Tick_Low.PlayOneShotOnCamera();
+                    }
+                    else if (selector.ResonanceType == NullThrumResonanceType.ResonanceTypeCredit)
+                    {
+                        // Don't check for max cost if it's a credit. Let credits go over max resonance.
+                        selectedGenes.Add(plus);
+                        SoundDefOf.Tick_High.PlayOneShotOnCamera();
                     }
                     else if (this.SelectionCurCost() < this.selectionMaxCost)
                     {
@@ -224,6 +232,8 @@ namespace OMW_Samhaphage
             Rect confirmRect = new Rect(inRect.width - confirmWidth, footerY, confirmWidth, 35f);
 
             bool canConfirm = selectedGenes.Count > 0 && SelectionCurCost() <= selectionMaxCost;
+            if (selector.ResonanceType == NullThrumResonanceType.ResonanceTypeCredit) canConfirm = true;
+
             GUI.color = canConfirm ? Color.white : Color.gray;
 
             if (Widgets.ButtonText(confirmRect, $"Confirm Selection for {this.SelectionCurCost():F1}"))

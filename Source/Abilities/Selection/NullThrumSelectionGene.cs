@@ -86,9 +86,30 @@ namespace OMW_Samhaphage
                 }
             }
             this.unselectableGenes = GenePlusUtility.ConvertToGenePlus(source, genesThatCantBeSelected, blocked, null);
+
+            List<Gene> genesThatOverride = new List<Gene>();
+            foreach (Gene gene in source.genes.GenesListForReading)
+            {
+                if (gene.overriddenByGene != null)
+                {
+                    if (gene.def != gene.overriddenByGene.def)
+                    {
+                        genesThatOverride.Add(gene.overriddenByGene);
+                    }
+                }
+            }
+            foreach (GenePlus plus in this.genes)
+            {
+                if (genesThatOverride.Contains(plus.gene))
+                {
+                    plus.isOverriding = true;
+                }
+                if (GeneIsCosmetic(plus.gene))
+                {
+                    plus.isCosmetic = true;
+                }
+            }
         }
-
-
 
         public bool ResonanceDebit(GenePlus plus)
         {

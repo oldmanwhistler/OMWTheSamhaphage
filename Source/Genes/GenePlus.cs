@@ -11,6 +11,8 @@ namespace OMW_Samhaphage
         public string blockedReason = "";
         public string destinationConflictStr = "";
         public bool isXenogene;
+        public bool isOverriding;
+        public bool isCosmetic;
         
 
         public GenePlus(Gene gene)
