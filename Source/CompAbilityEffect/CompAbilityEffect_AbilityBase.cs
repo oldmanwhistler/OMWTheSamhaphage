@@ -106,6 +106,7 @@ namespace OMW_Samhaphage
 
         protected bool DoOpenMenu(LocalTargetInfo target, LocalTargetInfo dest, List<MenuItemBase> items)
         {
+            Pawn targetPawn = target.Thing as Pawn ?? dest.Thing as Pawn;
             BetterFloatMenu.Open(items, parent.pawn, (item) => 
             {
                 if ((item is MenuItemIcon menuItem) && (item.Payload is System.Action action))
@@ -121,7 +122,7 @@ namespace OMW_Samhaphage
                         $"DoOpenMenu does not know how to handle item.Payload={item.Payload?.ToString() ?? "null"}");
                 }
                 return false;
-            });
+            }, targetPawn);
             return true;
         }
     }

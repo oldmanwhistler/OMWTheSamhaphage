@@ -8,11 +8,15 @@ namespace OMW_Samhaphage
     {
         protected static Logger Log = new Logger("Selection");
         protected Pawn caster;
+        public Pawn SourcePawn { get; }
+        public Pawn DestPawn { get; }
        
         protected NullThrumSelectionBase(Pawn caster, Pawn source, Pawn dest)
         {
             // Need to store this for calculating resonance value and max selection
             this.caster = caster;
+            this.SourcePawn = source;
+            this.DestPawn = dest;
         }
 
         // Abstract methods

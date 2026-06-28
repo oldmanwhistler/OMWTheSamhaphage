@@ -38,11 +38,12 @@ namespace OMW_Samhaphage
         /// <param name="items">The list of items that the user can choose from.</param>
         /// <param name="onSelected">The method to be called when an item is selected.</param>
         /// <returns>The newly created window.</returns>
-        public static BetterFloatMenu Open(List<MenuItemBase> items, Pawn caster, Func<MenuItemBase, bool> onSelected)
+        public static BetterFloatMenu Open(List<MenuItemBase> items, Pawn caster, Func<MenuItemBase, bool> onSelected, Pawn targetPawn = null)
         {
             var created = new BetterFloatMenu();
             created.Items = items;
             created.Caster = caster;
+            created.TargetPawn = targetPawn;
             created.OnSelected = onSelected;
             created.closeOnAccept = false;
             created.closeOnCancel = true;
@@ -107,6 +108,10 @@ namespace OMW_Samhaphage
         /// </summary>
         public Pawn Caster;
         /// <summary>
+        /// An optional target pawn shown in the info panel above the menu.
+        /// </summary>
+        public Pawn TargetPawn;
+        /// <summary>
         /// Action called when an item is selected (clicked on).
         /// </summary>
         public Func<MenuItemBase, bool> OnSelected;
@@ -139,7 +144,7 @@ namespace OMW_Samhaphage
         private float lastHeight, lastWidth;
         private Vector2 scroll;
 
-        public override Vector2 InitialSize => new Vector2(400f, 500f);
+        public override Vector2 InitialSize => new Vector2(1100f, 700f);
 
         public override void DoWindowContents(Rect inRect)
         {
@@ -152,34 +157,54 @@ namespace OMW_Samhaphage
                 return;
             }
 
-            // Draw search bar if allowed.
+            float panelGap = 10f;
+            float panelWidth = (inRect.width - panelGap * 2f) / 3f;
+            Rect leftPanelRect = new Rect(inRect.x, inRect.y, panelWidth, inRect.height);
+            Rect middlePanelRect = new Rect(leftPanelRect.xMax + panelGap, inRect.y, panelWidth, inRect.height);
+            Rect rightPanelRect = new Rect(middlePanelRect.xMax + panelGap, inRect.y, panelWidth, inRect.height);
+
+            DrawInfoPanel(leftPanelRect, Caster, "CASTER");
+            DrawInfoPanel(rightPanelRect, TargetPawn, "VICTIM");
+
+            GUI.BeginGroup(middlePanelRect);
+            try
+            {
+                DrawCenterContent(new Rect(0f, 0f, middlePanelRect.width, middlePanelRect.height));
+            }
+            finally
+            {
+                GUI.EndGroup();
+            }
+        }
+
+        private void DrawCenterContent(Rect rect)
+        {
             if (CanSearch)
             {
                 float cancelWidth = 70f;
                 float spacing = 6f;
-                Rect searchRect = new Rect(inRect.x, inRect.y, inRect.width - cancelWidth - spacing, 28f);
-                Rect cancelRect = new Rect(searchRect.xMax + spacing, inRect.y, cancelWidth, 28f);
+                Rect searchRect = new Rect(0f, 0f, rect.width - cancelWidth - spacing, 28f);
+                Rect cancelRect = new Rect(searchRect.xMax + spacing, 0f, cancelWidth, 28f);
 
                 SearchString = Widgets.TextField(searchRect, SearchString);
                 if (Widgets.ButtonText(cancelRect, "Cancel"))
                 {
                     Close();
                 }
-                inRect.yMin += 36;
+                rect.yMin += 36f;
             }
 
-            // Draw Resonance Bar
             if (Caster != null)
             {
                 float curRes = ResonanceUtility.Total(Caster);
                 float maxRes = OMW_Mod.settings.resonanceMax;
                 float fillPercent = maxRes > 0 ? Mathf.Clamp01(curRes / maxRes) : 0f;
-                Rect meterRect = new Rect(inRect.x, inRect.y, inRect.width, 26f);
+                Rect meterRect = new Rect(rect.x, rect.y, rect.width, 26f);
                 Widgets.FillableBar(meterRect, fillPercent, SolidColorMaterials.NewSolidColorTexture(new Color(0.4f, 0.1f, 0.6f)), BaseContent.BlackTex, true);
                 Text.Anchor = TextAnchor.MiddleCenter;
                 Widgets.Label(meterRect, $"Resonance: {curRes:F1} / {maxRes:F1}");
                 Text.Anchor = TextAnchor.UpperLeft;
-                inRect.yMin += 36f;
+                rect.yMin += 36f;
             }
 
             if (CanSearch || preRenderItems.Count != Items.Count)
@@ -193,7 +218,7 @@ namespace OMW_Samhaphage
             float maxRowHeight = 0;
             int columnCount = 0;
 
-            Widgets.BeginScrollView(inRect, ref scroll, new Rect(0, 0, lastWidth, lastHeight));
+            Widgets.BeginScrollView(rect, ref scroll, new Rect(0, 0, lastWidth, lastHeight));
             lastWidth = 0;
             lastHeight = 0;
 
@@ -251,6 +276,19 @@ namespace OMW_Samhaphage
             }
 
             Widgets.EndScrollView();
+        }
+
+        private void DrawInfoPanel(Rect panelRect, Pawn pawn, string roleLabel)
+        {
+            if (pawn == null)
+            {
+                return;
+            }
+
+            Widgets.DrawBox(panelRect);
+            Rect innerRect = panelRect.ContractedBy(6f);
+            PawnInfoPanel panel = new PawnInfoPanel();
+            panel.Draw(innerRect, pawn, roleLabel);
         }
 
         /// <summary>

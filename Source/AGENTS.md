@@ -11,7 +11,7 @@ C# codebase for the Samhaphage mod. Handles custom job drivers, ability effects,
 # Work Guidance
 
 - **Compatibility**: Use the `Blacklist/` logic to prevent game-breaking trait/gene combinations.
-- **UI**: Leverage `BetterFloatMenu` for ability selection.
+- **UI**: Leverage `BetterFloatMenu` for ability selection and the reusable `PawnInfoPanel` for pawn detail panels shown beside the menu.
 - **API**: Inherit from `NullThrumAbilityBase` for all custom abilities.
 
 # Child DOX Index

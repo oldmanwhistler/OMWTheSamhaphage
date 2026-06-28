@@ -32,10 +32,8 @@ Hook the mod settings to the game settings on a new game.
 
 ## UI
 
-* don't have search on the ability UI
 * five icons per row
 * for degree traits list the degree
-* stats panel in menu about the selected pawn's genes, traits, hediffs - hediffs would list bionics and psylinks
 
 ## Ideology
 
