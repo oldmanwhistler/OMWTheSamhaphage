@@ -107,6 +107,22 @@ namespace OMW_Samhaphage
         protected bool DoOpenMenu(LocalTargetInfo target, LocalTargetInfo dest, List<MenuItemBase> items)
         {
             Pawn targetPawn = target.Thing as Pawn ?? dest.Thing as Pawn;
+            Corpse targetCorpse = target.Thing as Corpse ?? dest.Thing as Corpse;
+            if (targetPawn == null && targetCorpse == null)
+            {
+                Log.Error($"DoOpenMenu: Neither target nor dest is a Pawn or Corpse. Target: {target}, Dest: {dest}");
+                return false;
+            }
+            if (targetPawn == null && targetCorpse != null)
+            {
+                targetPawn = targetCorpse.InnerPawn;
+            }
+
+            if (targetPawn == parent.pawn)
+            {
+                // target pawn is just the caster, targetting self
+                targetPawn = null;
+            }
             BetterFloatMenu.Open(items, parent.pawn, (item) => 
             {
                 if ((item is MenuItemIcon menuItem) && (item.Payload is System.Action action))

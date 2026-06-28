@@ -124,7 +124,7 @@ namespace OMW_Samhaphage
         /// <summary>
         /// If true, displays a search bar that allows for items to be filtered out.
         /// </summary>
-        public bool CanSearch = true;
+        public bool CanSearch = false;
         /// <summary>
         /// How many items to display per row.
         /// Default value: 4.

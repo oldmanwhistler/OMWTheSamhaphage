@@ -16,7 +16,7 @@ namespace OMW_Samhaphage
 
     public class PawnInfoPanel
     {
-        private PawnInfoTab activeTab = PawnInfoTab.Xenogenes;
+        private PawnInfoTab activeTab = PawnInfoTab.Endogenes;
         private Vector2 xenogeneScrollPosition;
         private Vector2 endogeneScrollPosition;
         private Vector2 traitScrollPosition;
@@ -45,8 +45,36 @@ namespace OMW_Samhaphage
                 Text.Font = GameFont.Small;
                 Widgets.Label(headerRect, pawn.LabelShortCap);
                 Text.Font = GameFont.Tiny;
-                Widgets.Label(new Rect(0f, headerRect.yMax, contentRect.width, 20f), GetFactionLabel(pawn));
-                Widgets.Label(new Rect(0f, headerRect.yMax + 16f, contentRect.width, 20f), GetStatusLabel(pawn));
+
+                XenotypeDef xenotypeDef = pawn.genes?.Xenotype ?? XenotypeDefOf.Baseliner;
+                string statusText = $"{xenotypeDef.LabelCap} {GetStatusLabel(pawn)} of {GetFactionLabel(pawn)}";
+                Widgets.DefIcon(new Rect(0f, headerRect.yMax, 20f, 20f), xenotypeDef);
+                Widgets.Label(new Rect(24f, headerRect.yMax, contentRect.width - 24f, 20f), statusText);
+                Text.Font = GameFont.Tiny;
+                string traitStatus;
+                int traitCount = TraitPlusUtility.CountTraits(pawn);
+                if (OMWGenes.HasNullThrum(pawn))
+                {
+                    int traitLimit = OMW_Mod.settings.limitTraits.GetLimit(pawn.genes?.Xenotype);
+                    if (traitLimit > 1000)
+                    {
+                        traitStatus = $"{traitCount} traits";
+                    }
+                    else
+                    {
+                        traitStatus = $"{traitCount}/{traitLimit} traits";
+                    }
+                }
+                else
+                {
+                    traitStatus = $"{traitCount} traits";
+                }
+
+                int geneCount = pawn.genes?.GenesListForReading.Count ?? 0;
+                int metabolism = OMWGenes.CalculateMetabolism(pawn);
+                int complexity = OMWGenes.CalculateComplexity(pawn);
+                statusText = $"{traitStatus}, {geneCount} genes, {complexity} complexity, {metabolism} metabolism";
+                Widgets.Label(new Rect(0f, headerRect.yMax + 16f, contentRect.width, 20f), statusText);
                 Text.Font = GameFont.Small;
                 curY = headerRect.yMax + 38f;
 
@@ -63,8 +91,8 @@ namespace OMW_Samhaphage
                     new Rect((tabWidth + 2f) * 3f, curY, tabWidth, tabHeight)
                 };
 
-                DrawTabButton(tabRects[0], "Xeno", PawnInfoTab.Xenogenes);
-                DrawTabButton(tabRects[1], "Endo", PawnInfoTab.Endogenes);
+                DrawTabButton(tabRects[0], "Endo", PawnInfoTab.Endogenes);
+                DrawTabButton(tabRects[1], "Xeno", PawnInfoTab.Xenogenes);
                 DrawTabButton(tabRects[2], "Traits", PawnInfoTab.Traits);
                 DrawTabButton(tabRects[3], "Skills", PawnInfoTab.Skills);
                 curY += tabHeight + 6f;
@@ -135,7 +163,21 @@ namespace OMW_Samhaphage
                 }
                 else
                 {
-                    GUI.color = Color.white;
+                    if (gene.def.biostatArc > 0)
+                    {
+                        GUI.color = Color.yellow;
+                    }
+                    else if (gene.def.biostatMet > 0)
+                    {
+                        GUI.color = Color.green;
+                    }
+                    else if (gene.def.biostatMet < 0)
+                    {
+                        GUI.color = Color.red;
+                    }
+                    else {
+                        GUI.color = Color.white;
+                    }
                 }
 
                 Widgets.DefIcon(new Rect(0f, curY, 20f, 20f), gene.def);
@@ -165,8 +207,23 @@ namespace OMW_Samhaphage
                     continue;
                 }
 
+                if (trait.sourceGene != null)
+                {
+                    GUI.color = Color.cyan;
+                }
+                else if (trait.suppressedByTrait)
+                {
+                    GUI.color = Color.gray;
+                }
+                else
+                {
+                    GUI.color = Color.white;
+                }
+
+
                 Widgets.Label(new Rect(0f, curY, viewRect.width, 22f), trait.LabelCap);
                 curY += 24f;
+                GUI.color = Color.white;
             }
             Widgets.EndScrollView();
         }
@@ -190,8 +247,10 @@ namespace OMW_Samhaphage
                 {
                     continue;
                 }
-
-                Widgets.Label(new Rect(0f, curY, viewRect.width - 70f, 22f), skill.def.LabelCap);
+                
+                // need to pad the skill with spaces for alignment
+                Widgets.Label(new Rect(24f, curY, 20f, 22f), $"{skill.GetLevelForUI()}");
+                Widgets.Label(new Rect(48f, curY, viewRect.width - 70f, 22f), skill.def.defName );
                 Widgets.Label(new Rect(viewRect.width - 70f, curY, 70f, 22f), GetPassionLabel(skill.passion));
                 curY += 24f;
             }
@@ -207,29 +266,31 @@ namespace OMW_Samhaphage
         {
             if (pawn.Dead)
             {
-                return "corpse";
+                return "Corpse";
             }
             if (pawn.IsPrisoner)
             {
-                return "prisoner";
+                return "Prisoner";
             }
             if (pawn.IsSlave)
             {
-                return "slave";
+                return "Slave";
             }
-            return "colonist";
+            return "Colonist";
         }
 
         private string GetPassionLabel(Passion passion)
         {
             switch (passion)
             {
+                case Passion.None:
+                    return "";
                 case Passion.Major:
-                    return "Major";
+                    return "**";
                 case Passion.Minor:
-                    return "Minor";
+                    return "*";
                 default:
-                    return "None";
+                    return "?";
             }
         }
     }

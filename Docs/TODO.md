@@ -34,6 +34,12 @@ Hook the mod settings to the game settings on a new game.
 
 * five icons per row
 * for degree traits list the degree
+* PawnInfoUI:
+  * icon for colonist, slave, prisoner, corpse
+  * icon for skill level
+  * how to get skill levels to support alpha genes
+  * should it have tool tips
+  * trait icon support
 
 ## Ideology
 
