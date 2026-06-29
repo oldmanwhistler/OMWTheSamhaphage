@@ -24,7 +24,10 @@ namespace OMW_Samhaphage
                     {
                         if (trait.def == possible || trait.def.ConflictsWith(possible))
                         {
-                            tmpDestConflicts.Add(possible.LabelCap);
+                            foreach (TraitDegreeData data in trait.def.degreeDatas)
+                            {
+                                tmpDestConflicts.Add(data.LabelCap);
+                            }
                         }
                     }
                 }
@@ -56,12 +59,18 @@ namespace OMW_Samhaphage
             List<Trait> duplicates = new List<Trait>();
             foreach (Trait other in pawn.story.traits.allTraits)
             {
-                if (other.def == trait.def && other.Degree != trait.Degree)
+                if (other.def == trait.def)
                 {
                     duplicates.Add(other);
                 }
             }
+            // This needs to be lowest to highest
             duplicates.Sort((a, b) => a.Degree.CompareTo(b.Degree));
+            foreach (Trait traitDef in duplicates)
+            {
+                Log.Message(
+                    $"GetDuplicateSpectrumTraits({pawn.LabelCap}, {trait.LabelCap}) has def: {trait.def.defName}, degree: {trait.Degree}");
+            }
             return duplicates;
         }
     }

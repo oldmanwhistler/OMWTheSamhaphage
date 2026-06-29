@@ -36,7 +36,7 @@ namespace OMW_Samhaphage
 
             if (this.trait.def.degreeDatas != null && this.trait.def.degreeDatas.Count > 1)
             {
-                tip += $"\n\nThis is degree {this.trait.Degree} of {this.trait.def.degreeDatas.Count}";
+                tip += $"\n\n{trait.def.defName} degree {this.trait.CurrentData.degree}. There are {this.trait.def.degreeDatas.Count} possible traits in this spectrum.";
             }
 
             if (!blockedReason.NullOrEmpty())
