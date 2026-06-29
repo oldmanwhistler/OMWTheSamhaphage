@@ -17,22 +17,16 @@ namespace OMW_Samhaphage
                 TraitPlus plus = new TraitPlus(trait, pawn);
                 plus.blockedReason = blocked.Str(trait.def);
 
-                List<string> tmpDestConflicts = [];
                 if (destConflicts != null)
                 {
                     foreach (TraitDef possible in destConflicts)
                     {
                         if (trait.def == possible || trait.def.ConflictsWith(possible))
                         {
-                            foreach (TraitDegreeData data in trait.def.degreeDatas)
-                            {
-                                tmpDestConflicts.Add(data.LabelCap);
-                            }
+                            plus.destinationConflicts.Add(possible);
                         }
                     }
                 }
-
-                plus.destinationConflictStr = string.Join(", ", tmpDestConflicts);
 
                 traitList.Add(plus);
             }

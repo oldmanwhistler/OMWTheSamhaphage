@@ -10,7 +10,7 @@ namespace OMW_Samhaphage
         public Trait trait;
         public float value = 0f;
         public Pawn pawn;
-        public string destinationConflictStr = "";
+        public List<TraitDef> destinationConflicts = new List<TraitDef>();
         public string blockedReason = "";
 
         public TraitPlus(Trait trait, Pawn pawn)
@@ -21,7 +21,7 @@ namespace OMW_Samhaphage
 
         public bool HasConflict()
         {
-            return !this.destinationConflictStr.NullOrEmpty();
+            return this.destinationConflicts.Count > 0;
         }
 
         public Trait Copy()
@@ -92,11 +92,18 @@ namespace OMW_Samhaphage
                 tip +=
                     $"\n\n<color=#999999>Conflicting Skills: {string.Join(", ", this.trait.def.conflictingPassions.Select(s =>  s.defName))}</color>";
             }
-            
-            if (destinationConflictStr != "")
+
+            if (destinationConflicts.Count > 0)
             {
-                // Adds a red warning with the specific gene name
-                tip += $"\n\n<color=#ff6666>(This trait conflicts with {destinationConflictStr})</color>";
+                tip += $"\n\n<color=#ff6666>This trait conflicts with:";
+                foreach (TraitDef traitDef in destinationConflicts)
+                {
+                    foreach (TraitDegreeData data in traitDef.degreeDatas)
+                    {
+                        tip += $"\n{data.LabelCap}";
+                    }
+                }
+                tip += "</color>";
             }
 
             return tip;
