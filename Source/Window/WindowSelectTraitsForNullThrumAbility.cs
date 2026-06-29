@@ -205,6 +205,7 @@ namespace OMW_Samhaphage
 
             Rect confirmRect = new Rect(inRect.width - confirmWidth, footerY, confirmWidth, 35f);
             bool canConfirm = selectedTraits.Count > 0 && SelectionCurCost() <= selectionMaxCost;
+            if (selector.ResonanceType == NullThrumResonanceType.ResonanceTypeCredit) canConfirm = true;
             GUI.color = canConfirm ? Color.white : Color.gray;
 
             if (Widgets.ButtonText(confirmRect, $"Confirm Selection for {this.SelectionCurCost():F1}"))
