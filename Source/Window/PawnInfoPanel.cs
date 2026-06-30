@@ -22,6 +22,19 @@ namespace OMW_Samhaphage
         private Vector2 traitScrollPosition;
         private Vector2 skillScrollPosition;
 
+        private static Texture2D IconColonist => ContentFinder<Texture2D>.Get(
+            "UI/Icons/PawnInfo/colonist",
+            false) ?? BaseContent.BadTex;
+        private static Texture2D IconCorpse => ContentFinder<Texture2D>.Get(
+            "UI/Icons/PawnInfo/corpse",
+            false) ?? BaseContent.BadTex;
+        private static Texture2D IconPrisoner => ContentFinder<Texture2D>.Get(
+            "UI/Icons/PawnInfo/prisoner",
+            false) ?? BaseContent.BadTex;
+        private static Texture2D IconSlave => ContentFinder<Texture2D>.Get(
+            "UI/Icons/PawnInfo/slave",
+            false) ?? BaseContent.BadTex;
+
         public void Draw(Rect rect, Pawn source, Pawn dest, string roleLabel)
         {
             const float padding = 8f;
@@ -43,15 +56,18 @@ namespace OMW_Samhaphage
                 GUI.color = Color.white;
                 curY += 24f;
 
-                Rect headerRect = new Rect(0f, curY, contentRect.width, 48f);
+                Rect headerRect = new Rect(0f, curY, contentRect.width, 24f);
+                curY += 24f;
                 Text.Font = GameFont.Small;
                 Widgets.Label(headerRect, source.LabelCap);
                 Text.Font = GameFont.Tiny;
 
                 XenotypeDef xenotypeDef = source.genes?.Xenotype ?? XenotypeDefOf.Baseliner;
-                string statusText = $"{xenotypeDef.LabelCap} {GetStatusLabel(source)} of {GetFactionLabel(source)}";
-                Widgets.DefIcon(new Rect(0f, headerRect.yMax, 20f, 20f), xenotypeDef);
-                Widgets.Label(new Rect(24f, headerRect.yMax, contentRect.width - 24f, 20f), statusText);
+                Widgets.LabelWithIcon(new Rect(0f, curY, contentRect.width, 20f), "  "+xenotypeDef.LabelCap, xenotypeDef.Icon);
+                curY += 24f;
+                Widgets.LabelWithIcon(new Rect(0f, curY, contentRect.width, 20f), "  "+GetStatusLabel(source),
+                    GetStatusIcon(source));
+                curY += 24f;
                 Text.Font = GameFont.Tiny;
                 string traitStatus;
                 int traitCount = TraitPlusUtility.CountTraits(source);
@@ -75,10 +91,10 @@ namespace OMW_Samhaphage
                 int geneCount = source.genes?.GenesListForReading.Count ?? 0;
                 int metabolism = OMWGenes.CalculateMetabolism(source);
                 int complexity = OMWGenes.CalculateComplexity(source);
-                statusText = $"{traitStatus}, {geneCount} genes, {complexity} complexity, {metabolism} metabolism";
-                Widgets.Label(new Rect(0f, headerRect.yMax + 16f, contentRect.width, 20f), statusText);
-                Text.Font = GameFont.Small;
-                curY = headerRect.yMax + 38f;
+                string statusText = $"{traitStatus}, {geneCount} genes, {complexity} complexity, {metabolism} metabolism";
+                Widgets.Label(new Rect(0f, curY, contentRect.width, 20f), statusText);
+                curY += 24f;
+                Text.Font = GameFont.Small;                
 
                 Widgets.DrawLineHorizontal(0f, curY, contentRect.width);
                 curY += 8f;
@@ -298,6 +314,26 @@ namespace OMW_Samhaphage
                 return "Slave";
             }
             return "Colonist";
+        }
+
+        private Texture2D GetStatusIcon(Pawn pawn)
+        {
+            if (pawn.Dead)
+            {
+                return IconCorpse;
+            }
+
+            if (pawn.IsPrisoner)
+            {
+                return IconPrisoner;
+            }
+
+            if (pawn.IsSlave)
+            {
+                return IconSlave;
+            }
+
+            return IconColonist;            
         }
 
         private string GetPassionLabel(Passion passion)
