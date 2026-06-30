@@ -30,13 +30,20 @@ namespace OMW_Samhaphage
         }
 
         public override string ToString()
-        {
-            //var stats = $"\nResonance Value: {this.value}";            
+        {       
             var tip = $"{this.trait.LabelCap}\n\n{this.trait.TipString(this.pawn)}";
 
             if (this.trait.def.degreeDatas != null && this.trait.def.degreeDatas.Count > 1)
             {
-                tip += $"\n\n{trait.def.defName} degree {this.trait.CurrentData.degree}. There are {this.trait.def.degreeDatas.Count} possible traits in this spectrum.";
+                tip +=
+                    $"\n\nSpectrum Trait:";
+                int count = 1;
+                foreach (TraitDegreeData data in trait.def.degreeDatas)
+                {
+                    tip += $"\n#{count} {data.LabelCap}, degree: {data.degree}";
+                    if (trait.Degree == data.degree) tip += " (this trait)";
+                    count++;
+                }
             }
 
             if (!blockedReason.NullOrEmpty())
@@ -72,30 +79,35 @@ namespace OMW_Samhaphage
             if (!this.trait.def.disabledWorkTypes.NullOrEmpty())
             {
                 tip +=
-                    $"\n\n<color=#999999>Disabled WorkTypes: {string.Join(", ", this.trait.def.disabledWorkTypes.Select(w => w.defName))}</color>";
+                    $"\n\n<color=#999999>Disabled WorkTypes: {string.Join(", ", this.trait.def.disabledWorkTypes.Select(w => w.labelShort))}</color>";
             }
 
             if (!this.trait.def.requiredWorkTypes.NullOrEmpty())
             {
                 tip +=
-                    $"\n\n<color=#999999>Required WorkTypes: {string.Join(", ", this.trait.def.requiredWorkTypes.Select(w => w.defName))}</color>";
+                    $"\n\n<color=#999999>Required WorkTypes: {string.Join(", ", this.trait.def.requiredWorkTypes.Select(w => w.labelShort))}</color>";
             }
 
-            if (!this.trait.def.conflictingTraits.NullOrEmpty())                
+            if (!this.trait.def.conflictingTraits.NullOrEmpty())
             {
-                tip +=
-                    $"\n\n<color=#999999>Conflicting Traits: {string.Join(", ", this.trait.def.conflictingTraits.Select(t =>  t.defName))}</color>";
+                tip += $"\n\n<color=#999999>Conflicting Traits:";
+                foreach (TraitDef traitDef in this.trait.def.conflictingTraits)
+                {
+                    if (traitDef.LabelCap == "") tip += $"\n{traitDef.defName}";
+                    else tip += $"\n{traitDef.LabelCap}";
+                }
+                tip += "\n</color>";
             }
 
             if (!this.trait.def.conflictingPassions.NullOrEmpty())
             {
                 tip +=
-                    $"\n\n<color=#999999>Conflicting Skills: {string.Join(", ", this.trait.def.conflictingPassions.Select(s =>  s.defName))}</color>";
+                    $"\n\n<color=#999999>Conflicting Skills: {string.Join(", ", this.trait.def.conflictingPassions.Select(s =>  s.LabelCap))}</color>";
             }
 
             if (destinationConflicts.Count > 0)
             {
-                tip += $"\n\n<color=#ff6666>This trait conflicts with:";
+                tip += $"\n\n<color=#ff6666>This trait could conflict with these traits:";
                 foreach (TraitDef traitDef in destinationConflicts)
                 {
                     foreach (TraitDegreeData data in traitDef.degreeDatas)
