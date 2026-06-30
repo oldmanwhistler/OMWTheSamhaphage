@@ -22,20 +22,22 @@ namespace OMW_Samhaphage
         private Vector2 traitScrollPosition;
         private Vector2 skillScrollPosition;
 
-        public void Draw(Rect rect, Pawn pawn, string roleLabel)
+        public void Draw(Rect rect, Pawn source, Pawn dest, string roleLabel)
         {
-            if (pawn == null)
-            {
-                return;
-            }
-
             const float padding = 8f;
             Rect contentRect = new Rect(rect.x + padding, rect.y + padding, rect.width - padding * 2f, rect.height - padding * 2f);
+
             GUI.BeginGroup(contentRect);
             try
             {
                 float curY = 0f;
                 Rect typeRect = new Rect(0f, curY, contentRect.width, 22f);
+
+                if (source == null)
+                {
+                    return;
+                }
+
                 GUI.color = new Color(0.9f, 0.8f, 0.2f);
                 Widgets.Label(typeRect, roleLabel.ToUpperInvariant());
                 GUI.color = Color.white;
@@ -43,19 +45,19 @@ namespace OMW_Samhaphage
 
                 Rect headerRect = new Rect(0f, curY, contentRect.width, 48f);
                 Text.Font = GameFont.Small;
-                Widgets.Label(headerRect, pawn.LabelShortCap);
+                Widgets.Label(headerRect, source.LabelCap);
                 Text.Font = GameFont.Tiny;
 
-                XenotypeDef xenotypeDef = pawn.genes?.Xenotype ?? XenotypeDefOf.Baseliner;
-                string statusText = $"{xenotypeDef.LabelCap} {GetStatusLabel(pawn)} of {GetFactionLabel(pawn)}";
+                XenotypeDef xenotypeDef = source.genes?.Xenotype ?? XenotypeDefOf.Baseliner;
+                string statusText = $"{xenotypeDef.LabelCap} {GetStatusLabel(source)} of {GetFactionLabel(source)}";
                 Widgets.DefIcon(new Rect(0f, headerRect.yMax, 20f, 20f), xenotypeDef);
                 Widgets.Label(new Rect(24f, headerRect.yMax, contentRect.width - 24f, 20f), statusText);
                 Text.Font = GameFont.Tiny;
                 string traitStatus;
-                int traitCount = TraitPlusUtility.CountTraits(pawn);
-                if (OMWGenes.HasNullThrum(pawn))
+                int traitCount = TraitPlusUtility.CountTraits(source);
+                if (OMWGenes.HasNullThrum(source))
                 {
-                    int traitLimit = OMW_Mod.settings.limitTraits.GetLimit(pawn.genes?.Xenotype);
+                    int traitLimit = OMW_Mod.settings.limitTraits.GetLimit(source.genes?.Xenotype);
                     if (traitLimit > 1000)
                     {
                         traitStatus = $"{traitCount} traits";
@@ -70,9 +72,9 @@ namespace OMW_Samhaphage
                     traitStatus = $"{traitCount} traits";
                 }
 
-                int geneCount = pawn.genes?.GenesListForReading.Count ?? 0;
-                int metabolism = OMWGenes.CalculateMetabolism(pawn);
-                int complexity = OMWGenes.CalculateComplexity(pawn);
+                int geneCount = source.genes?.GenesListForReading.Count ?? 0;
+                int metabolism = OMWGenes.CalculateMetabolism(source);
+                int complexity = OMWGenes.CalculateComplexity(source);
                 statusText = $"{traitStatus}, {geneCount} genes, {complexity} complexity, {metabolism} metabolism";
                 Widgets.Label(new Rect(0f, headerRect.yMax + 16f, contentRect.width, 20f), statusText);
                 Text.Font = GameFont.Small;
@@ -98,7 +100,7 @@ namespace OMW_Samhaphage
                 curY += tabHeight + 6f;
 
                 Rect contentArea = new Rect(0f, curY, contentRect.width, contentRect.height - curY - 4f);
-                DrawActiveContent(contentArea, pawn);
+                DrawActiveContent(contentArea, source, dest);
             }
             finally
             {
@@ -119,40 +121,53 @@ namespace OMW_Samhaphage
             GUI.color = Color.white;
         }
 
-        private void DrawActiveContent(Rect rect, Pawn pawn)
+        private void DrawActiveContent(Rect rect, Pawn source, Pawn dest)
         {
-            switch (activeTab)
+             switch (activeTab)
             {
                 case PawnInfoTab.Xenogenes:
-                    DrawGeneList(rect, pawn?.genes?.Xenogenes?.ToList() ?? new List<Gene>(), ref xenogeneScrollPosition);
+                    DrawGeneList(rect, source, dest, true, ref xenogeneScrollPosition);
                     break;
                 case PawnInfoTab.Endogenes:
-                    DrawGeneList(rect, pawn?.genes?.Endogenes?.ToList() ?? new List<Gene>(), ref endogeneScrollPosition);
+                    DrawGeneList(rect, source, dest, false, ref endogeneScrollPosition);
                     break;
                 case PawnInfoTab.Traits:
-                    DrawTraitList(rect, pawn?.story?.traits?.allTraits ?? new List<Trait>(), ref traitScrollPosition);
+                    DrawTraitList(rect, source, dest, ref traitScrollPosition);
                     break;
                 case PawnInfoTab.Skills:
-                    DrawSkillList(rect, pawn, ref skillScrollPosition);
+                    DrawSkillList(rect, source, ref skillScrollPosition);
                     break;
             }
         }
 
-        private void DrawGeneList(Rect rect, List<Gene> genes, ref Vector2 scrollPosition)
+        private void DrawGeneList(Rect rect, Pawn source, Pawn dest, bool xenotype, ref Vector2 scrollPosition)
         {
-            if (genes == null || genes.Count == 0)
+            List<Gene> genes;
+
+            if (xenotype)
+            {
+                genes = source?.genes?.Xenogenes ?? new List<Gene>();                   
+            }
+            else
+            {
+                genes = source?.genes?.Endogenes ?? new List<Gene>();
+            }
+
+            if (genes.Count == 0)
             {
                 Widgets.Label(rect, "None");
                 return;
             }
 
+            HashSet<Gene> alreadyHas = dest?.genes?.GenesListForReading.ToHashSet() ?? new HashSet<Gene>();
+
             float listHeight = Mathf.Max(120f, genes.Count * 24f + 4f);
             Rect viewRect = new Rect(0f, 0f, rect.width - 16f, listHeight);
             Widgets.BeginScrollView(rect, ref scrollPosition, viewRect);
             float curY = 0f;
-            foreach (Gene gene in genes)
+            foreach (Gene gene in genes.OrderBy(g => g.LabelCap))
             {
-                if (gene == null || gene.def == null)
+                if (gene.def == null)
                 {
                     continue;
                 }
@@ -160,6 +175,10 @@ namespace OMW_Samhaphage
                 if (gene.Overridden)
                 {
                     GUI.color = Color.gray;
+                }
+                else if (alreadyHas.Contains(gene))
+                {
+                    GUI.color = Color.red;
                 }
                 else
                 {
@@ -188,25 +207,23 @@ namespace OMW_Samhaphage
             Widgets.EndScrollView();
         }
 
-        private void DrawTraitList(Rect rect, List<Trait> traits, ref Vector2 scrollPosition)
+        private void DrawTraitList(Rect rect, Pawn source, Pawn dest, ref Vector2 scrollPosition)
         {
-            if (traits == null || traits.Count == 0)
+            List<Trait> traits = source?.story.traits.allTraits ?? new List<Trait>();
+            if (traits.Count == 0)
             {
                 Widgets.Label(rect, "None");
                 return;
             }
 
+            HashSet<TraitDef> alreadyHas = dest?.story?.traits?.allTraits.Select(t => t.def).ToHashSet() ?? new HashSet<TraitDef>();
+
             float listHeight = Mathf.Max(120f, traits.Count * 24f + 4f);
             Rect viewRect = new Rect(0f, 0f, rect.width - 16f, listHeight);
             Widgets.BeginScrollView(rect, ref scrollPosition, viewRect);
             float curY = 0f;
-            foreach (Trait trait in traits)
+            foreach (Trait trait in traits.OrderBy(t => t.LabelCap))
             {
-                if (trait == null)
-                {
-                    continue;
-                }
-
                 if (trait.sourceGene != null)
                 {
                     GUI.color = Color.cyan;
@@ -214,6 +231,10 @@ namespace OMW_Samhaphage
                 else if (trait.suppressedByTrait)
                 {
                     GUI.color = Color.gray;
+                }
+                else if (alreadyHas.Contains(trait.def))
+                {
+                    GUI.color = Color.red;
                 }
                 else
                 {

@@ -165,8 +165,8 @@ namespace OMW_Samhaphage
             Rect middlePanelRect = new Rect(leftPanelRect.xMax + panelGap, inRect.y, panelWidth, inRect.height);
             Rect rightPanelRect = new Rect(middlePanelRect.xMax + panelGap, inRect.y, panelWidth, inRect.height);
 
-            DrawInfoPanel(leftPanelRect, Caster, "CASTER");
-            DrawInfoPanel(rightPanelRect, TargetPawn, "VICTIM");
+            DrawInfoPanel(leftPanelRect, Caster, null, "CASTER");
+            DrawInfoPanel(rightPanelRect, TargetPawn, Caster, "VICTIM");
 
             GUI.BeginGroup(middlePanelRect);
             try
@@ -280,17 +280,13 @@ namespace OMW_Samhaphage
             Widgets.EndScrollView();
         }
 
-        private void DrawInfoPanel(Rect panelRect, Pawn pawn, string roleLabel)
+        private void DrawInfoPanel(Rect panelRect, Pawn source, Pawn dest, string roleLabel)
         {
-            if (pawn == null)
-            {
-                return;
-            }
 
             Widgets.DrawBox(panelRect);
             Rect innerRect = panelRect.ContractedBy(6f);
             PawnInfoPanel panel = roleLabel == "CASTER" ? casterInfoPanel : targetInfoPanel;
-            panel.Draw(innerRect, pawn, roleLabel);
+            panel.Draw(innerRect, source, dest, roleLabel);
         }
 
         /// <summary>
