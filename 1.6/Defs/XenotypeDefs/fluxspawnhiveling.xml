@@ -5,7 +5,7 @@
     <label>fluxspawn hiveling</label>
     <description>TBS</description>
     <descriptionShort>sdfasdf</descriptionShort>
-    <iconPath>UI/Icons/Xenotypes/Other</iconPath>
+    <iconPath>UI/Icons/Xenotypes/fluxspawn_hiveling</iconPath>
     <inheritable>true</inheritable>
     <genes>
       <li MayRequire="omw.samhaphage">OMW_ScouredMind</li>

@@ -5,7 +5,7 @@
     <label>Sovereign Stillness</label>
     <description>In the flickering glow of your colony's mechanitor hubs, they come with the suffocating whisper of oblivion. They are no mere predators; they are the final judgment of the soul, born from the xenotype's cursed gene-weave, where every baseline samhaphage hungers to ascend into this nightmare incarnate. They are the veil's rent flesh, and your pawns' screams will echo in the void they leave behind until there is nothing left by the hum of the quiet.</description>
     <descriptionShort>SovereignStillnesss are summoned by unchecked gene-drift. Lock the labs. Burn the cribs. And pray the storyteller rolls a baseliner raid tonight.</descriptionShort>
-    <iconPath>WVC/UI/Mecha_Icons/Xeno_ElfVampire_Cyber_v0</iconPath>
+    <iconPath>UI/Icons/Xenotypes/sovereign_stillness</iconPath>
     <inheritable>true</inheritable>
     <genes>
       <li MayRequire="omw.samhaphage">OMW_SovereignStillness_Frame</li>

@@ -6,7 +6,7 @@
     <description>FIXME</description>
     <descriptionShort>FIXME
     </descriptionShort>
-    <iconPath>UI/Icons/Xenotypes/Other</iconPath>
+    <iconPath>UI/Icons/Xenotypes/hallowbound</iconPath>
     <inheritable>false</inheritable>
     <genes>
       <li MayRequire="omw.samhaphage">OMW_CorpseReassembler</li>

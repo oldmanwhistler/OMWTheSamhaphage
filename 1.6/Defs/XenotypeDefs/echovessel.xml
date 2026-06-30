@@ -5,7 +5,7 @@
     <label>echovessel</label>
     <description>FIXME</description>
     <descriptionShort>FIXME</descriptionShort>
-    <iconPath>UI/Icons/Xenotypes/Other</iconPath>
+    <iconPath>UI/Icons/Xenotypes/echovessel</iconPath>
     <inheritable>false</inheritable>
     <genes>
       <li>Beauty_VeryUgly</li>

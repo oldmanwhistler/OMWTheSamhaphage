@@ -5,7 +5,7 @@
     <label>samhaphage</label>
     <description>FIXME</description>
     <descriptionShort>FIXME</descriptionShort>
-    <iconPath>WVC/UI/Mecha_Icons/Xeno_ElfVampire_Horns_v0</iconPath>
+    <iconPath>UI/Icons/Xenotypes/samhaphage</iconPath>
     <inheritable>true</inheritable>
     <genes>
       <li MayRequire="omw.samhaphage">OMW_Samhaphage_Frame</li>

@@ -5,7 +5,7 @@
     <label>cradlemold</label>
     <description>TBS</description>
     <descriptionShort>sdfasdf</descriptionShort>
-    <iconPath>UI/Icons/Xenotypes/Other</iconPath>
+    <iconPath>UI/Icons/Xenotypes/cradlemold</iconPath>
     <inheritable>false</inheritable>
     <genes>
       <li MayRequire="omw.samhaphage">OMW_Fluxspawn_Ferility</li>

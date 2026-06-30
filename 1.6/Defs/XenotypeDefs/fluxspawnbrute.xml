@@ -5,7 +5,7 @@
     <label>fluxspawn brute</label>
     <description>Beneath the shadowed undercrofts of samhaphage nests, where psychic death of soul-threads pulse like dying fireflies along cavern walls, the fluxspawn thrive in fetid vats of nutrient slurry. These are no ordinary vermin, they are small, grotesque slugs the size of a colonist's fist. Their bodies are a mottled slurry of iridescent flesh pocked with tumorous gene-pods that twitch and split at random. Ugly doesn't begin to cover it: slick, asymmetrical, perpetually oozing a thin mucus that smells faintly of ozone and regret. Yet slice one open, sear it quick over a chemfuel flame, and the flavor explodes: rich umami undercut by electric tang, like eating a thunderstorm marinated in aged cheese.</description>
     <descriptionShort>sdfasdf</descriptionShort>
-    <iconPath>UI/Icons/Xenotypes/Other</iconPath>
+    <iconPath>UI/Icons/Xenotypes/fluxspawn_brute</iconPath>
     <inheritable>true</inheritable>
     <genes>
       <li MayRequire="omw.samhaphage">OMW_ScouredMind</li>
