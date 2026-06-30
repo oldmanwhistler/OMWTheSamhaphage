@@ -44,16 +44,21 @@ namespace OMW_Samhaphage
                         if (trait.def.degreeDatas.Count <= 1)
                         {
                             // singleton trait
-                            blocked.Append(trait.def, "Already Has");
+                            blocked.Append(trait.def, $"Already Has {trait.LabelCap}");
                             isBlocked = true;
                         }
                         else
                         {
                             // spectrum trait with multiple degrees, check if the destination has a higher or equal degree
-                            List<Trait> duplicates = TraitPlusUtility.GetDuplicateSpectrumTraits(dest, trait);
-                            if (duplicates.Any(d => d.Degree >= trait.Degree))
+                            Trait dupe = TraitPlusUtility.GetDuplicateSpectrumTraitGreaterThan(dest, trait);                            
+                            if (dupe != null)
                             {
-                                blocked.Append(trait.def, "Already Has");
+                                blocked.Append(trait.def, $"Already Has {dupe.LabelCap}");
+                                isBlocked = true;
+                            }
+                            else
+                            {
+                                blocked.Append(trait.def, $"Already Has {trait.LabelCap}");
                                 isBlocked = true;
                             }
                         }
@@ -66,7 +71,7 @@ namespace OMW_Samhaphage
                     {
                         if (dest.WorkTypeIsDisabled(workType))
                         {
-                            blocked.Append(trait.def, $"Requires {workType.label}");
+                            blocked.Append(trait.def, $"Requires {workType.label} work type");
                             isBlocked = true;
                             break;
                         }
@@ -79,7 +84,7 @@ namespace OMW_Samhaphage
                     {
                         if (dest.skills.skills.Any(s => s.def == skill))
                         {
-                            blocked.Append(trait.def, $"Conflict {skill.label}");
+                            blocked.Append(trait.def, $"Conflict {skill.label} skill");
                             isBlocked = true;
                             break;
                         }
@@ -92,7 +97,9 @@ namespace OMW_Samhaphage
                     {
                         if (alreadyHas.Contains(traitDef))
                         {
-                            blocked.Append(trait.def, $"Conflict {traitDef.defName}");
+                            string label = traitDef.LabelCap;
+                            if (label == "") label = traitDef.defName;
+                            blocked.Append(trait.def, $"Conflict { label }");
                             isBlocked = true;
                             break;
                         }
@@ -106,7 +113,7 @@ namespace OMW_Samhaphage
                         if (traitDest.def == trait.def) continue;
                         if (traitDest.def.ConflictsWith(trait.def))
                         {
-                            blocked.Append(trait.def, $"Conflicts with {traitDest.def}");
+                            blocked.Append(trait.def, $"Conflicts with {traitDest.LabelCap}");
                             isBlocked = true;
                             break;
                         }
@@ -184,36 +191,15 @@ namespace OMW_Samhaphage
                         }
                         else
                         {
+                            Log.Debug(
+                                $"Bootleg: {caster.LabelShort} already has {plus.trait.def}. So removing lower degree duplicates before bootlegging.");
                             // spectrum trait with multiple degrees, check if the destination has a higher degree
                             // There were simpler ways to do this, but I don't want to assume that the destination pawn has only one instance of the trait. So we check all instances and remove any that are lower than the one we're bootlegging.
-                            List<Trait> duplicates = TraitPlusUtility.GetDuplicateSpectrumTraits(caster, plus.trait);
-                            bool removeLowerDegrees = true;
+                            List<Trait> duplicates = TraitPlusUtility.GetDuplicateSpectrumTraitsLessThan(caster, plus.trait);
                             foreach (Trait dupeTrait in duplicates)
-                            {
-                                if (dupeTrait.def == plus.trait.def && dupeTrait.Degree < plus.trait.Degree)
-                                {
-                                    // we can remove this
-                                }
-                                else
-                                {
-                                    removeLowerDegrees = false;
-                                    break;
-                                }
-                            }
-
-                            if (!removeLowerDegrees)
-                            {
-                                Log.Error($"Bootleg: {caster.LabelShort} already has {plus.trait.def} at a higher or equal degree. Not removing any duplicates.");
-                                canApply = false;
-                            }
-                            else
-                            {
-                                Log.Debug($"Bootleg: {caster.LabelShort} already has {plus.trait.def}. So removing lower degree duplicates before bootlegging.");
-                                foreach (Trait dupeTrait in duplicates)
-                                {
-                                    caster.story?.traits?.RemoveTrait(dupeTrait);
-                                    Log.Debug($"Bootleg: Removed {dupeTrait.LabelCap} from {caster.LabelShort}");
-                                }
+                            {                                
+                                caster.story?.traits?.RemoveTrait(dupeTrait);
+                                Log.Debug($"Bootleg: Removed {dupeTrait.LabelCap} from {caster.LabelShort}");
                             }
                         }
                     }
