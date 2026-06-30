@@ -38,8 +38,8 @@ Hook the mod settings to the game settings on a new game.
   * icon for colonist, slave, prisoner, corpse
   * icon for skill level
   * how to get skill levels to support alpha genes
-  * should it have tool tips
   * trait icon support
+* Hierarchy UI that shows all the pawns by xenotype from the races
 
 ## Ideology
 
@@ -55,7 +55,6 @@ Hook the mod settings to the game settings on a new game.
 
 ### Traits
 
-* Should handle conflicting traits the same way as I do with genes with respect to the GUI.
 * need to blacklist traits that disable worktypes
   
 ### Resonance

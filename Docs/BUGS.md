@@ -2,6 +2,7 @@
 
 ## Major Bugs
 
+* can select corpses of animals?
 * Flatten called as ability, does not return to main menu
 * Retune called as ability, then hit skip does not return to main menu
 * manual attentuate doesn't return to the main menu

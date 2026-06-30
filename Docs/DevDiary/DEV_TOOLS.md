@@ -78,3 +78,9 @@ dotnet tool install -g Converter.MarkdownToBBCodeSteam.Tool
 ## Week #17 - June 8th, 2026
 
 * [waif2x upscaler](https://github.com/Moebytes/Waifu2x-Upscaler) apparently this is good for upscaling low res pixel graphics.
+
+## Week #20 - June 27th, 2026
+
+* [Code Grapher](https://github.com/colbymchenry/codegraph) supports C# and lets the LLM understand the code base with less effort.
+* I should try GLM 5.2 and z.ai. Although I've heard it's better the closer to in the "middle of distribution" you are for LLM tasks.
+

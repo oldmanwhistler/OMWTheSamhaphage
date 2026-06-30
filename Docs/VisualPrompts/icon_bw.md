@@ -23,14 +23,3 @@ In the same chat. If you are having trouble then cut-and-paste only the suggesti
 ### Clean it up
 
 Download the image, crop it, load it in paint.net, use the magic wand to set the transparency and resize it.
-
-
-## How I used it
-
-### RimWorld Colony
-
-> 30 ideas for an icon that represents a rimworld village/colony home
-
-> Generate 30 ideas for an icon that represents a rimworld prisoner
-
-> Generate 30 ideas for an icon that represents a rimworld slave

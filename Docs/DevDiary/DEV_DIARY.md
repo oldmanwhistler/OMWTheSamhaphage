@@ -149,3 +149,4 @@ Pretty big bug fix to the Bootleg ability that steals traits. It lets you "upgra
 
 ## Week #20 - June 27th, 2026
 
+I do not friggin understand how to work with spectrum traits properly. Just found another bug where I was treating the degree as the index in the data array. Whoops.
