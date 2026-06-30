@@ -48,7 +48,7 @@ namespace OMW_Samhaphage
             return count;
         }
 
-        public static List<Trait> GetDuplicateSpectrumTraits(Pawn pawn, Trait trait)
+        private static List<Trait> GetDuplicateSpectrumTraits(Pawn pawn, Trait trait)
         {
             List<Trait> duplicates = new List<Trait>();
             foreach (Trait other in pawn.story.traits.allTraits)
@@ -66,6 +66,30 @@ namespace OMW_Samhaphage
                     $"GetDuplicateSpectrumTraits({pawn.LabelCap}, {trait.LabelCap}) has def: {trait.def.defName}, degree: {trait.Degree}");
             }
             return duplicates;
+        }
+
+        // returns null if no greater trait, otherwise returns the greater trait
+        public static Trait GetDuplicateSpectrumTraitGreaterThan(Pawn pawn, Trait trait)
+        {
+            List<Trait> dupes = GetDuplicateSpectrumTraits(pawn, trait);
+            foreach (Trait dupe in dupes)
+            {
+                if (dupe.Degree > trait.Degree) return dupe;
+            }
+
+            return null;
+        }
+
+        // returns list of traits less than the trait.degree
+        public static List<Trait> GetDuplicateSpectrumTraitsLessThan(Pawn pawn, Trait trait)
+        {
+            List<Trait> lessThan = new List<Trait>();
+            List<Trait> dupes = GetDuplicateSpectrumTraits(pawn, trait);
+            foreach (Trait dupe in dupes)
+            {
+                if (dupe.Degree >= trait.Degree) lessThan.Add(dupe);
+            }
+            return lessThan;
         }
     }
 }
