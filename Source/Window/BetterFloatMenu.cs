@@ -166,7 +166,7 @@ namespace OMW_Samhaphage
                 return;
             }
 
-            float panelGap = 10f;
+            float panelGap = 30f;
             float panelWidth = (inRect.width - panelGap * 2f) / 3f;
             Rect leftPanelRect = new Rect(inRect.x, inRect.y, panelWidth, inRect.height);
             Rect middlePanelRect = new Rect(leftPanelRect.xMax + panelGap, inRect.y, panelWidth, inRect.height);
@@ -178,7 +178,7 @@ namespace OMW_Samhaphage
             GUI.BeginGroup(middlePanelRect);
             try
             {
-                DrawCenterContent(new Rect(0f, 0f, middlePanelRect.width, middlePanelRect.height));
+                DrawCenterContent(new Rect(0, panelGap, middlePanelRect.width - panelGap, middlePanelRect.height - panelGap*2f));
             }
             finally
             {
