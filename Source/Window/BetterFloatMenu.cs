@@ -29,6 +29,8 @@ namespace OMW_Samhaphage
     {
         static Logger Log = new Logger("UI");
         private static readonly Texture2D LethalIcon = ContentFinder<Texture2D>.Get("UI/Icons/Medical/Death", false) ?? BaseContent.BadTex;
+        private static readonly Texture2D CustomBG = ContentFinder<Texture2D>.Get("UI/Menu/SamhaphageBG", false);
+        private static readonly Texture2D TranslucentBlackTex = SolidColorMaterials.NewSolidColorTexture(new Color(0f, 0f, 0f, 0.3f));
 
         /// <summary>
         /// Opens a new float menu using the items provided.
@@ -146,10 +148,15 @@ namespace OMW_Samhaphage
         private float lastHeight, lastWidth;
         private Vector2 scroll;
 
-        public override Vector2 InitialSize => new Vector2(1100f, 700f);
+        public override Vector2 InitialSize => new Vector2(1376f, 768f);
 
         public override void DoWindowContents(Rect inRect)
         {
+            if (CustomBG != null)
+            {
+                GUI.DrawTexture(inRect, CustomBG);
+            }
+
             SearchString ??= "";
 
             if (Items == null || Items.Count == 0)
@@ -202,7 +209,8 @@ namespace OMW_Samhaphage
                 float maxRes = OMW_Mod.settings.resonanceMax;
                 float fillPercent = maxRes > 0 ? Mathf.Clamp01(curRes / maxRes) : 0f;
                 Rect meterRect = new Rect(rect.x, rect.y, rect.width, 26f);
-                Widgets.FillableBar(meterRect, fillPercent, SolidColorMaterials.NewSolidColorTexture(new Color(0.4f, 0.1f, 0.6f)), BaseContent.BlackTex, true);
+                // TranslucentBlackTex vs BaseContent.BlackTex
+                Widgets.FillableBar(meterRect, fillPercent, SolidColorMaterials.NewSolidColorTexture(new Color(0.4f, 0.1f, 0.6f)), TranslucentBlackTex, true);
                 Text.Anchor = TextAnchor.MiddleCenter;
                 Widgets.Label(meterRect, $"Resonance: {curRes:F1} / {maxRes:F1}");
                 Text.Anchor = TextAnchor.UpperLeft;
@@ -282,8 +290,9 @@ namespace OMW_Samhaphage
 
         private void DrawInfoPanel(Rect panelRect, Pawn source, Pawn dest, string roleLabel)
         {
-
+            GUI.color = new Color(1f, 1f, 1f, 0.5f);
             Widgets.DrawBox(panelRect);
+            GUI.color = Color.white;
             Rect innerRect = panelRect.ContractedBy(6f);
             PawnInfoPanel panel = roleLabel == "CASTER" ? casterInfoPanel : targetInfoPanel;
             panel.Draw(innerRect, source, dest, roleLabel);
