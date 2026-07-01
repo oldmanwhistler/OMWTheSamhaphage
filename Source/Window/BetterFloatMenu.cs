@@ -8,6 +8,8 @@ using Verse.Sound;
 
 namespace OMW_Samhaphage
 {
+    // I have hacked the living shit out of BetterFloatMenu. Go see the original.
+    
 
     // The MIT License (MIT)
 
@@ -23,7 +25,6 @@ namespace OMW_Samhaphage
 
     /// <summary>
     /// An alternative to the built-in <see cref="FloatMenu"/>.
-    /// Provides a more visual layout, and a search bar.
     /// </summary>
     public class BetterFloatMenu : Window
     {
@@ -31,42 +32,6 @@ namespace OMW_Samhaphage
         private static readonly Texture2D LethalIcon = ContentFinder<Texture2D>.Get("UI/Icons/Medical/Death", false) ?? BaseContent.BadTex;
         private static readonly Texture2D CustomBG = ContentFinder<Texture2D>.Get("UI/Menu/SamhaphageBG", false) ??
                                                      BaseContent.BadTex;
-        private static readonly Texture2D LogoSovereignStillness =
-            ContentFinder<Texture2D>.Get("UI/Menu/LogoSovereignStillness", false) ??
-            BaseContent.BadTex;
-
-        private static readonly Texture2D LogoSamhaphage =
-            ContentFinder<Texture2D>.Get("UI/Menu/LogoSamhaphage", false) ??
-            BaseContent.BadTex;
-
-        private static readonly Texture2D LogoHallowbound =
-            ContentFinder<Texture2D>.Get("UI/Menu/LogoHallowbound", false) ??
-            BaseContent.BadTex;
-
-        private static readonly Texture2D LogoEchovessel =
-            ContentFinder<Texture2D>.Get("UI/Menu/LogoEchovessel", false) ??
-            BaseContent.BadTex;
-
-        private static readonly Texture2D LogoCradlemold =
-            ContentFinder<Texture2D>.Get("UI/Menu/LogoCradlemold", false) ??
-            BaseContent.BadTex;
-
-        private static readonly Texture2D LogoFluxspawnHiveling =
-            ContentFinder<Texture2D>.Get("UI/Menu/LogoFluxspawnHiveling", false) ??
-            BaseContent.BadTex;
-
-        private static readonly Texture2D LogoFluxspawnBrute =
-            ContentFinder<Texture2D>.Get("UI/Menu/LogoFluxspawnBrute", false) ??
-            BaseContent.BadTex;
-
-        private static readonly Texture2D LogoFluxspawnFlicker =
-            ContentFinder<Texture2D>.Get("UI/Menu/LogoFluxspawnFlicker", false) ??
-            BaseContent.BadTex;
-
-        private static readonly Texture2D ResonanceBG =
-            ContentFinder<Texture2D>.Get("UI/Menu/ResonanceBG", false) ??
-            BaseContent.BadTex;        
-
         private static readonly Texture2D TranslucentBlackTex = SolidColorMaterials.NewSolidColorTexture(new Color(0f, 0f, 0f, 0.3f));
 
         /// <summary>
@@ -93,28 +58,6 @@ namespace OMW_Samhaphage
             created.layer = WindowLayer.SubSuper;
             Find.WindowStack.Add(created);
             return created;
-        }
-
-        /// <summary>
-        /// Generic string search and highlighting utility method.
-        /// If it returns null, the search does not match the label.
-        /// If it returns a string, the search succeeded. Furthermore, the return value will be a highlighted version of <paramref name="label"/> using RichText
-        /// if the <paramref name="highlightColor"/> argument is not null, otherwise simply <paramref name="label"/>.
-        /// </summary>
-        /// <param name="label">The string to search in.</param>
-        /// <param name="search">The search input.</param>
-        /// <param name="highlightColor">The Hex format of the color to highlight with. Should be in the format #RRGGBB(AA). Can be null to disable highlighting.</param>
-        /// <returns></returns>
-        public static string SearchMatch(string label, string search, string highlightColor = "#65f065")
-        {
-            int index = label.IndexOf(search, StringComparison.OrdinalIgnoreCase);
-            if (index < 0)
-                return null;
-
-            if (highlightColor == null)
-                return label;
-
-            return label.Insert(index + search.Length, "</color>").Insert(index, $"<color={highlightColor}>");
         }
 
         /// <summary>
@@ -163,7 +106,6 @@ namespace OMW_Samhaphage
         /// <summary>
         /// If true, displays a search bar that allows for items to be filtered out.
         /// </summary>
-        public bool CanSearch = false;
         /// <summary>
         /// How many items to display per row.
         /// Default value: 3.
@@ -232,7 +174,11 @@ namespace OMW_Samhaphage
             GUI.BeginGroup(middlePanelRect);
             try
             {
-                DrawCenterContent(new Rect(panelGap / 2f, panelGap, middlePanelRect.width - panelGap, middlePanelRect.height - panelGap * 2f));
+                // Center the content rect within the middle panel with symmetric padding
+                float contentWidth = middlePanelRect.width - panelGap;
+                float contentX = (middlePanelRect.width - contentWidth) / 2f;
+                Rect centerRect = new Rect(contentX, panelGap, contentWidth, middlePanelRect.height - panelGap * 2f);
+                DrawCenterContent(centerRect);
             }
             finally
             {
@@ -240,99 +186,19 @@ namespace OMW_Samhaphage
             }
         }
 
-        private Texture2D GetXenotypeLogo()
-        {
-            if (Caster == null || Caster.genes == null || Caster.genes.Xenotype == null)
-                return null;
-
-            var xenotype = Caster.genes.Xenotype;
-            if (xenotype == null)
-                return null;
-
-            Texture2D logo = null;
-            switch(xenotype.defName)
-            {
-                case "omw_sovereign_stillness":
-                    logo = LogoSovereignStillness;
-                    break;
-                case "omw_samhaphage":
-                    logo = LogoSamhaphage;
-                    break;
-                case "omw_hallowbound":
-                    logo = LogoHallowbound;
-                    break;
-                case "omw_echovessel":
-                    logo = LogoEchovessel;
-                    break;
-                case "omw_cradlemold":
-                    logo = LogoCradlemold;
-                    break;
-                case "omw_fluxspawn_hiveling":
-                    logo = LogoFluxspawnHiveling;
-                    break;
-                case "omw_fluxspawn_brute":
-                    logo = LogoFluxspawnBrute;
-                    break;
-                case "omw_fluxspawn_flicker":
-                    logo = LogoFluxspawnFlicker;
-                    break;
-            }
-            
-            if (logo == null)
-                return BaseContent.BadTex;
-
-            return logo;
-        }
-
         private void DrawCenterContent(Rect rect)
         {
-            if (CanSearch)
-            {
-                float cancelWidth = 70f;
-                float spacing = 6f;
-                Rect searchRect = new Rect(0f, 0f, rect.width - cancelWidth - spacing, 28f);
-                Rect cancelRect = new Rect(searchRect.xMax + spacing, 0f, cancelWidth, 28f);
-
-                SearchString = Widgets.TextField(searchRect, SearchString);
-                if (Widgets.ButtonText(cancelRect, "Cancel"))
-                {
-                    Close();
-                }
-                rect.yMin += 36f;
-            }
-
-            if (Caster != null)
-            {
-                Texture2D logo = GetXenotypeLogo();
-                if (logo != null)
-                {
-                    float logoWidth = 128f;
-                    float logoHeight = logo.height * (logoWidth / logo.width);
-                    Rect logoRect = new Rect(rect.x + (rect.width - logoWidth) / 2f, rect.y, logoWidth, logoHeight);
-                    Widgets.DrawTextureFitted(logoRect, logo, 1f);
-                    rect.yMin += logoHeight + 6f;
-                }
-            }
-
             if (Caster != null)
             {
                 float curRes = ResonanceUtility.Total(Caster);
                 float maxRes = OMW_Mod.settings.resonanceMax;
                 float fillPercent = maxRes > 0 ? Mathf.Clamp01(curRes / maxRes) : 0f;
                 float barHeight = 52f; // Doubled from 26f
+                // Center the resonance meter bar within the rect
+                float barWidth = rect.width * 0.9f;
+                float barX = rect.x + (rect.width - barWidth) / 2f;                
                 
-                // Draw background texture (centered)                
-                if (ResonanceBG != null)
-                {
-                    float texWidth = 120f;
-                    float texHeight = ResonanceBG.height * (texWidth / ResonanceBG.width);
-                    Rect texRect = new Rect(rect.x + (rect.width - texWidth) / 2f, rect.y, texWidth, texHeight);
-                    GUI.color = new Color(1f, 1f, 1f, 0.3f);
-                    Widgets.DrawTextureFitted(texRect, ResonanceBG, 1f);
-                    GUI.color = Color.white;
-                }
-                
-                Rect meterRect = new Rect(rect.x - 20f, rect.y - 20f, rect.width - 40f, barHeight);
+                Rect meterRect = new Rect(barX, rect.y + 10f, barWidth, barHeight);
                 // TranslucentBlackTex vs BaseContent.BlackTex
                 Widgets.FillableBar(meterRect, fillPercent, SolidColorMaterials.NewSolidColorTexture(new Color(0.4f, 0.1f, 0.6f)), TranslucentBlackTex, true);
                 Text.Anchor = TextAnchor.MiddleCenter;
@@ -340,21 +206,26 @@ namespace OMW_Samhaphage
                 Widgets.Label(meterRect, $"Resonance: {curRes:F1} / {maxRes:F1}");
                 Text.Font = GameFont.Small;
                 Text.Anchor = TextAnchor.UpperLeft;
-                rect.yMin += barHeight + 10f;
+                rect.yMin += barHeight + 50f;
             }
 
-            if (CanSearch || preRenderItems.Count != Items.Count)
+            if (preRenderItems.Count != Items.Count)
             {
                 preRenderItems.Clear();
-                preRenderItems.AddRange(FilteredItems(SearchString));
-            }
-
+                preRenderItems.AddRange(FilteredItems());
+            }            
+            
             float curX = 0;
             float curY = 0;
             float maxRowHeight = 0;
             int columnCount = 0;
 
+            float offsetX = (rect.width - 324f) / 2f; // Adjusted for 3 columns of 96px + padding
+            curX = offsetX; // reset
+
             Widgets.BeginScrollView(rect, ref scroll, new Rect(0, 0, lastWidth, lastHeight));
+           
+           
             lastWidth = 0;
             lastHeight = 0;
 
@@ -401,7 +272,7 @@ namespace OMW_Samhaphage
                 if (columnCount >= Columns)
                 {
                     lastWidth = Mathf.Max(lastWidth, curX);
-                    curX = 0;
+                    curX = offsetX; // reset
                     curY += maxRowHeight + Padding;
                     maxRowHeight = 0;
                     columnCount = 0;
@@ -409,6 +280,7 @@ namespace OMW_Samhaphage
 
                 lastHeight = Mathf.Max(lastHeight, curY + maxRowHeight);
                 lastWidth = Mathf.Max(lastWidth, curX);
+                Log.Debug("lastWidth: " + lastWidth + ", lastHeight: " + lastHeight);
             }
 
             Widgets.EndScrollView();
@@ -427,18 +299,14 @@ namespace OMW_Samhaphage
         /// </summary>
         /// <param name="search">The search string. May be null to return all items.</param>
         /// <returns>An enumeration of all items that match the search.</returns>
-        public virtual IEnumerable<MenuItemBase> FilteredItems(string search)
+        public virtual IEnumerable<MenuItemBase> FilteredItems()
         {
             if (Items == null)
                 yield break;
 
-            bool all = string.IsNullOrWhiteSpace(search);
-            string newSearch = search?.Trim();
-
             foreach (var item in Items)
             {
-                if (all || item.MatchesSearch(newSearch))
-                    yield return item;
+                yield return item;
             }
         }
     }
@@ -474,13 +342,6 @@ namespace OMW_Samhaphage
         /// <typeparam name="T">The type to cast to.</typeparam>
         /// <returns>The payload, cast to a particular type.</returns>
         public T GetPayload<T>() => (T)Payload;
-
-        /// <summary>
-        /// Returns true if this item should be shown when searching for the <paramref name="search"/> string.
-        /// </summary>
-        /// <param name="search">The search string, that comes from the search bar.</param>
-        /// <returns>True if this item should be shown, false to hide.</returns>
-        public abstract bool MatchesSearch(string search);
 
         /// <summary>
         /// Used to sort this item within the window. Only called automatically when using <see cref="BetterFloatMenu.MakeItems{T}(IEnumerable{T}, Func{T, MenuItemBase})"/>.
@@ -556,16 +417,6 @@ namespace OMW_Samhaphage
             this.Payload = null;           
             this.Color = Color.gray;
             this.Disabled = true;
-        }
-
-        public override bool MatchesSearch(string search)
-        {
-            drawLabel = BetterFloatMenu.SearchMatch(Label ?? "", search, null);
-            if (drawLabel == null && Tooltip != null)
-            {
-                drawLabel = BetterFloatMenu.SearchMatch(Tooltip, search, null);
-            }
-            return drawLabel != null;
         }
 
         public override int CompareTo(MenuItemBase other)

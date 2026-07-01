@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using Verse;
+using UnityEngine;
 
 namespace OMW_Samhaphage
 {
@@ -93,5 +94,85 @@ namespace OMW_Samhaphage
                 return true;
             }
         }
+
+        private static readonly Texture2D LogoSovereignStillness =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoSovereignStillness", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D LogoSamhaphage =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoSamhaphage", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D LogoHallowbound =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoHallowbound", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D LogoEchovessel =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoEchovessel", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D LogoCradlemold =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoCradlemold", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D LogoFluxspawnHiveling =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoFluxspawnHiveling", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D LogoFluxspawnBrute =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoFluxspawnBrute", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D LogoFluxspawnFlicker =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoFluxspawnFlicker", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D ResonanceBG =
+            ContentFinder<Texture2D>.Get("UI/Menu/ResonanceBG", false) ??
+            BaseContent.BadTex;
+
+        public static Texture2D GetXenotypeLogo(Pawn pawn)
+        {
+            if (pawn == null || pawn.genes == null || pawn.genes.Xenotype == null)
+                return null;
+
+            var xenotype = pawn.genes.Xenotype;
+            if (xenotype == null)
+                return null;
+
+            Texture2D logo = null;
+            switch (xenotype.defName)
+            {
+                case "omw_sovereign_stillness":
+                    logo = LogoSovereignStillness;
+                    break;
+                case "omw_samhaphage":
+                    logo = LogoSamhaphage;
+                    break;
+                case "omw_hallowbound":
+                    logo = LogoHallowbound;
+                    break;
+                case "omw_echovessel":
+                    logo = LogoEchovessel;
+                    break;
+                case "omw_cradlemold":
+                    logo = LogoCradlemold;
+                    break;
+                case "omw_fluxspawn_hiveling":
+                    logo = LogoFluxspawnHiveling;
+                    break;
+                case "omw_fluxspawn_brute":
+                    logo = LogoFluxspawnBrute;
+                    break;
+                case "omw_fluxspawn_flicker":
+                    logo = LogoFluxspawnFlicker;
+                    break;
+            }
+
+            if (logo == null)
+                return BaseContent.BadTex;
+
+            return logo;
+        }        
     }
 }
