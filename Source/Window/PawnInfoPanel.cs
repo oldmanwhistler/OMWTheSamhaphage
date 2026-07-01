@@ -95,17 +95,15 @@ namespace OMW_Samhaphage
                 int complexity = OMWGenes.CalculateComplexity(source);
 
                 Text.Anchor = TextAnchor.MiddleRight;
-                Widgets.Label(new Rect(rightRect.x, curY, rightRect.width, 20f), $"{traitStatus}");
-                Widgets.Label(new Rect(rightRect.x, curY + 24f, rightRect.width, 20f), $"{geneCount} genes");
-                Widgets.Label(new Rect(rightRect.x, curY + 48f, rightRect.width, 20f), $"{complexity} complexity");
-                Widgets.Label(new Rect(rightRect.x, curY + 72f, rightRect.width, 20f),
+                Widgets.Label(new Rect(rightRect.x, curY, rightRect.width, 16f), $"{traitStatus}");
+                Widgets.Label(new Rect(rightRect.x, curY + 18f, rightRect.width, 16f), $"{geneCount} genes");
+                Widgets.Label(new Rect(rightRect.x, curY + 2*18f, rightRect.width, 16f), $"{complexity} complexity");
+                Widgets.Label(new Rect(rightRect.x, curY + 3*18f, rightRect.width, 16f),
                     $"{metabolism} metabolism");
                 Text.Anchor = TextAnchor.UpperLeft;
-
-                curY += 72f;
                 Text.Font = GameFont.Small;
 
-                curY += 8f;
+                curY += 90f;
 
                 float tabHeight = 24f;
                 float tabWidth = (contentRect.width - 6f) / 4f;
