@@ -44,7 +44,7 @@ namespace OMW_Samhaphage
             try
             {
                 float curY = 0f;
-                Rect typeRect = new Rect(0f, curY, contentRect.width, 22f);
+                Rect typeRect = new Rect(0f, curY, contentRect.width, 48f);
 
                 if (source == null)
                 {
@@ -62,12 +62,12 @@ namespace OMW_Samhaphage
                 // Left column: name, xenotype, status (stacked 3 rows)
                 Text.Font = GameFont.Small;
                 Widgets.Label(new Rect(leftRect.x, curY, leftRect.width, 24f), source.LabelCap);
-                Text.Font = GameFont.Tiny;
 
                 XenotypeDef xenotypeDef = source.genes?.Xenotype ?? XenotypeDefOf.Baseliner;
                 Widgets.LabelWithIcon(new Rect(leftRect.x, curY + 24f, leftRect.width, 20f), "  "+xenotypeDef.LabelCap, xenotypeDef.Icon);
                 Widgets.LabelWithIcon(new Rect(leftRect.x, curY + 48f, leftRect.width, 20f), "  "+GetStatusLabel(source),
                     GetStatusIcon(source));
+                Widgets.Label(new Rect(leftRect.x, curY + 72f, leftRect.width, 20f), "");
 
                 // Right column: stats (right-justified, split into 2 lines)
                 Text.Font = GameFont.Tiny;

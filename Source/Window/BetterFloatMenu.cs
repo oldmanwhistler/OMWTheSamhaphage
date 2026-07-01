@@ -29,7 +29,44 @@ namespace OMW_Samhaphage
     {
         static Logger Log = new Logger("UI");
         private static readonly Texture2D LethalIcon = ContentFinder<Texture2D>.Get("UI/Icons/Medical/Death", false) ?? BaseContent.BadTex;
-        private static readonly Texture2D CustomBG = ContentFinder<Texture2D>.Get("UI/Menu/SamhaphageBG", false);
+        private static readonly Texture2D CustomBG = ContentFinder<Texture2D>.Get("UI/Menu/SamhaphageBG", false) ??
+                                                     BaseContent.BadTex;
+        private static readonly Texture2D LogoSovereignStillness =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoSovereignStillness", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D LogoSamhaphage =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoSamhaphage", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D LogoHallowbound =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoHallowbound", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D LogoEchovessel =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoEchovessel", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D LogoCradlemold =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoCradlemold", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D LogoFluxspawnHiveling =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoFluxspawnHiveling", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D LogoFluxspawnBrute =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoFluxspawnBrute", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D LogoFluxspawnFlicker =
+            ContentFinder<Texture2D>.Get("UI/Menu/LogoFluxspawnFlicker", false) ??
+            BaseContent.BadTex;
+
+        private static readonly Texture2D ResonanceBG =
+            ContentFinder<Texture2D>.Get("UI/Menu/ResonanceBG", false) ??
+            BaseContent.BadTex;        
+
         private static readonly Texture2D TranslucentBlackTex = SolidColorMaterials.NewSolidColorTexture(new Color(0f, 0f, 0f, 0.3f));
 
         /// <summary>
@@ -129,9 +166,9 @@ namespace OMW_Samhaphage
         public bool CanSearch = false;
         /// <summary>
         /// How many items to display per row.
-        /// Default value: 4.
+        /// Default value: 3.
         /// </summary>
-        public int Columns = 4;
+        public int Columns = 3;
         /// <summary>
         /// The amount of padding between items, measured in unscaled pixels.
         /// Default value: 6.
@@ -148,13 +185,30 @@ namespace OMW_Samhaphage
         private float lastHeight, lastWidth;
         private Vector2 scroll;
 
-        public override Vector2 InitialSize => new Vector2(1376f, 768f);
+        public override Vector2 InitialSize => new Vector2(1376+24f, 768+24f);
 
         public override void DoWindowContents(Rect inRect)
         {
             if (CustomBG != null)
             {
-                GUI.DrawTexture(inRect, CustomBG);
+                float aspectRatio = (float)CustomBG.width / CustomBG.height;
+                float rectAspectRatio = inRect.width / inRect.height;
+                
+                Rect centeredRect;
+                if (aspectRatio > rectAspectRatio)
+                {
+                    // Texture is wider than the area, fit to width
+                    float height = inRect.width / aspectRatio;
+                    centeredRect = new Rect(inRect.x, inRect.y + (inRect.height - height) / 2f, inRect.width, height);
+                }
+                else
+                {
+                    // Texture is taller than the area, fit to height
+                    float width = inRect.height * aspectRatio;
+                    centeredRect = new Rect(inRect.x + (inRect.width - width) / 2f, inRect.y, width, inRect.height);
+                }
+                
+                GUI.DrawTexture(centeredRect, CustomBG);
             }
 
             SearchString ??= "";
@@ -186,6 +240,50 @@ namespace OMW_Samhaphage
             }
         }
 
+        private Texture2D GetXenotypeLogo()
+        {
+            if (Caster == null || Caster.genes == null || Caster.genes.Xenotype == null)
+                return null;
+
+            var xenotype = Caster.genes.Xenotype;
+            if (xenotype == null)
+                return null;
+
+            Texture2D logo = null;
+            switch(xenotype.defName)
+            {
+                case "omw_sovereign_stillness":
+                    logo = LogoSovereignStillness;
+                    break;
+                case "omw_samhaphage":
+                    logo = LogoSamhaphage;
+                    break;
+                case "omw_hallowbound":
+                    logo = LogoHallowbound;
+                    break;
+                case "omw_echovessel":
+                    logo = LogoEchovessel;
+                    break;
+                case "omw_cradlemold":
+                    logo = LogoCradlemold;
+                    break;
+                case "omw_fluxspawn_hiveling":
+                    logo = LogoFluxspawnHiveling;
+                    break;
+                case "omw_fluxspawn_brute":
+                    logo = LogoFluxspawnBrute;
+                    break;
+                case "omw_fluxspawn_flicker":
+                    logo = LogoFluxspawnFlicker;
+                    break;
+            }
+            
+            if (logo == null)
+                return BaseContent.BadTex;
+
+            return logo;
+        }
+
         private void DrawCenterContent(Rect rect)
         {
             if (CanSearch)
@@ -205,16 +303,44 @@ namespace OMW_Samhaphage
 
             if (Caster != null)
             {
+                Texture2D logo = GetXenotypeLogo();
+                if (logo != null)
+                {
+                    float logoWidth = 128f;
+                    float logoHeight = logo.height * (logoWidth / logo.width);
+                    Rect logoRect = new Rect(rect.x + (rect.width - logoWidth) / 2f, rect.y, logoWidth, logoHeight);
+                    Widgets.DrawTextureFitted(logoRect, logo, 1f);
+                    rect.yMin += logoHeight + 6f;
+                }
+            }
+
+            if (Caster != null)
+            {
                 float curRes = ResonanceUtility.Total(Caster);
                 float maxRes = OMW_Mod.settings.resonanceMax;
                 float fillPercent = maxRes > 0 ? Mathf.Clamp01(curRes / maxRes) : 0f;
-                Rect meterRect = new Rect(rect.x, rect.y, rect.width, 26f);
+                float barHeight = 52f; // Doubled from 26f
+                
+                // Draw background texture (centered)                
+                if (ResonanceBG != null)
+                {
+                    float texWidth = 120f;
+                    float texHeight = ResonanceBG.height * (texWidth / ResonanceBG.width);
+                    Rect texRect = new Rect(rect.x + (rect.width - texWidth) / 2f, rect.y, texWidth, texHeight);
+                    GUI.color = new Color(1f, 1f, 1f, 0.3f);
+                    Widgets.DrawTextureFitted(texRect, ResonanceBG, 1f);
+                    GUI.color = Color.white;
+                }
+                
+                Rect meterRect = new Rect(rect.x - 20f, rect.y - 20f, rect.width - 40f, barHeight);
                 // TranslucentBlackTex vs BaseContent.BlackTex
-                Widgets.FillableBar(meterRect, fillPercent, SolidColorMaterials.NewSolidColorTexture(new Color(0.4f, 0.1f, 0.6f)), TranslucentBlackTex, false);
+                Widgets.FillableBar(meterRect, fillPercent, SolidColorMaterials.NewSolidColorTexture(new Color(0.4f, 0.1f, 0.6f)), TranslucentBlackTex, true);
                 Text.Anchor = TextAnchor.MiddleCenter;
+                Text.Font = GameFont.Medium;
                 Widgets.Label(meterRect, $"Resonance: {curRes:F1} / {maxRes:F1}");
+                Text.Font = GameFont.Small;
                 Text.Anchor = TextAnchor.UpperLeft;
-                rect.yMin += 36f;
+                rect.yMin += barHeight + 10f;
             }
 
             if (CanSearch || preRenderItems.Count != Items.Count)
@@ -290,9 +416,6 @@ namespace OMW_Samhaphage
 
         private void DrawInfoPanel(Rect panelRect, Pawn source, Pawn dest, string roleLabel)
         {
-            GUI.color = new Color(1f, 1f, 1f, 0.5f);
-            Widgets.DrawBox(panelRect);
-            GUI.color = Color.white;
             Rect innerRect = panelRect.ContractedBy(6f);
             PawnInfoPanel panel = roleLabel == "CASTER" ? casterInfoPanel : targetInfoPanel;
             panel.Draw(innerRect, source, dest, roleLabel);
@@ -384,7 +507,7 @@ namespace OMW_Samhaphage
         /// <summary>
         /// The size of the item.
         /// </summary>
-        public Vector2 Size = new Vector2(64, 84);
+        public Vector2 Size = new Vector2(96, 96+20);
         /// <summary>
         /// The optional tooltip text. Used to filter searches if provided.
         /// </summary>
