@@ -178,7 +178,7 @@ namespace OMW_Samhaphage
             GUI.BeginGroup(middlePanelRect);
             try
             {
-                DrawCenterContent(new Rect(0, panelGap, middlePanelRect.width - panelGap, middlePanelRect.height - panelGap*2f));
+                DrawCenterContent(new Rect(panelGap / 2f, panelGap, middlePanelRect.width - panelGap, middlePanelRect.height - panelGap * 2f));
             }
             finally
             {
@@ -210,7 +210,7 @@ namespace OMW_Samhaphage
                 float fillPercent = maxRes > 0 ? Mathf.Clamp01(curRes / maxRes) : 0f;
                 Rect meterRect = new Rect(rect.x, rect.y, rect.width, 26f);
                 // TranslucentBlackTex vs BaseContent.BlackTex
-                Widgets.FillableBar(meterRect, fillPercent, SolidColorMaterials.NewSolidColorTexture(new Color(0.4f, 0.1f, 0.6f)), TranslucentBlackTex, true);
+                Widgets.FillableBar(meterRect, fillPercent, SolidColorMaterials.NewSolidColorTexture(new Color(0.4f, 0.1f, 0.6f)), TranslucentBlackTex, false);
                 Text.Anchor = TextAnchor.MiddleCenter;
                 Widgets.Label(meterRect, $"Resonance: {curRes:F1} / {maxRes:F1}");
                 Text.Anchor = TextAnchor.UpperLeft;

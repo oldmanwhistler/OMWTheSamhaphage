@@ -56,18 +56,20 @@ namespace OMW_Samhaphage
                 GUI.color = Color.white;
                 curY += 24f;
 
-                Rect headerRect = new Rect(0f, curY, contentRect.width, 24f);
-                curY += 24f;
+                Rect leftRect = new Rect(0f, curY, contentRect.width / 2f - 12f, 24f);
+                Rect rightRect = new Rect(contentRect.width / 2f + 12f, curY, contentRect.width / 2f - 12f, 24f);
+
+                // Left column: name, xenotype, status (stacked 3 rows)
                 Text.Font = GameFont.Small;
-                Widgets.Label(headerRect, source.LabelCap);
+                Widgets.Label(new Rect(leftRect.x, curY, leftRect.width, 24f), source.LabelCap);
                 Text.Font = GameFont.Tiny;
 
                 XenotypeDef xenotypeDef = source.genes?.Xenotype ?? XenotypeDefOf.Baseliner;
-                Widgets.LabelWithIcon(new Rect(0f, curY, contentRect.width, 20f), "  "+xenotypeDef.LabelCap, xenotypeDef.Icon);
-                curY += 24f;
-                Widgets.LabelWithIcon(new Rect(0f, curY, contentRect.width, 20f), "  "+GetStatusLabel(source),
+                Widgets.LabelWithIcon(new Rect(leftRect.x, curY + 24f, leftRect.width, 20f), "  "+xenotypeDef.LabelCap, xenotypeDef.Icon);
+                Widgets.LabelWithIcon(new Rect(leftRect.x, curY + 48f, leftRect.width, 20f), "  "+GetStatusLabel(source),
                     GetStatusIcon(source));
-                curY += 24f;
+
+                // Right column: stats (right-justified, split into 2 lines)
                 Text.Font = GameFont.Tiny;
                 string traitStatus;
                 int traitCount = TraitPlusUtility.CountTraits(source);
@@ -91,12 +93,18 @@ namespace OMW_Samhaphage
                 int geneCount = source.genes?.GenesListForReading.Count ?? 0;
                 int metabolism = OMWGenes.CalculateMetabolism(source);
                 int complexity = OMWGenes.CalculateComplexity(source);
-                string statusText = $"{traitStatus}, {geneCount} genes, {complexity} complexity, {metabolism} metabolism";
-                Widgets.Label(new Rect(0f, curY, contentRect.width, 20f), statusText);
-                curY += 24f;
-                Text.Font = GameFont.Small;                
 
-                Widgets.DrawLineHorizontal(0f, curY, contentRect.width);
+                Text.Anchor = TextAnchor.MiddleRight;
+                Widgets.Label(new Rect(rightRect.x, curY, rightRect.width, 20f), $"{traitStatus}");
+                Widgets.Label(new Rect(rightRect.x, curY + 24f, rightRect.width, 20f), $"{geneCount} genes");
+                Widgets.Label(new Rect(rightRect.x, curY + 48f, rightRect.width, 20f), $"{complexity} complexity");
+                Widgets.Label(new Rect(rightRect.x, curY + 72f, rightRect.width, 20f),
+                    $"{metabolism} metabolism");
+                Text.Anchor = TextAnchor.UpperLeft;
+
+                curY += 72f;
+                Text.Font = GameFont.Small;
+
                 curY += 8f;
 
                 float tabHeight = 24f;
