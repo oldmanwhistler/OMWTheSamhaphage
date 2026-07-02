@@ -67,7 +67,7 @@
 
     <AbilityDef ParentName="OMW_AbilityXenotypeTargetCorpseBase" >
         <defName>OMW_AbilityFluxspawnTargetCorpse</defName>
-        <label>CompProperties_AbilityFluxspawnTargetPawn</label>
+        <label>Corpse</label>
         <description>Manipulate the essence of fluxspawn to produce various effects. The available actions depend on the target.</description>
         <iconPath>UI/Abilities/FluxspawnCorpse</iconPath>
         <comps>
@@ -87,6 +87,40 @@
             </li>
         </comps>
     </AbilityDef>    
+
+    <AbilityDef ParentName="OMW_AbilityXenotypeTargetPawnBase" >
+        <defName>OMW_AbilityCradlemoldTargetPawn</defName>
+        <label>Pawn</label>
+        <description>Manipulate the essence of cradlemold to produce various effects. The available actions depend on the target.</description>
+        <iconPath>UI/Abilities/CradlemoldPawn</iconPath>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilityCradlemoldTargetPawn">
+            </li>
+        </comps>
+    </AbilityDef>
+
+    <AbilityDef ParentName="OMW_AbilityXenotypeTargetCorpseBase" >
+        <defName>OMW_AbilityCradlemoldTargetCorpse</defName>
+        <label>Corpse</label>
+        <description>Manipulate the essence of cradlemold to produce various effects. The available actions depend on the target.</description>
+        <iconPath>UI/Abilities/CradlemoldCorpse</iconPath>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilityCradlemoldTargetCorpse">
+            </li>
+        </comps>
+    </AbilityDef>
+
+
+    <AbilityDef ParentName="OMW_AbilityXenotypeSelfBase" >
+        <defName>OMW_AbilityCradlemoldSelf</defName>
+        <label>Self</label>
+        <description>Manipulate the essence of cradlemold to produce various effects.</description>
+        <iconPath>UI/Abilities/CradlemoldSelf</iconPath>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilityCradlemoldSelf">
+            </li>
+        </comps>
+    </AbilityDef> 
 
     <AbilityDef ParentName="OMW_AbilityXenotypeTargetPawnBase" >
         <defName>OMW_AbilityHallowboundTargetPawn</defName>

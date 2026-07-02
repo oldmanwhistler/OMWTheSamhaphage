@@ -16,9 +16,11 @@
       <li>Body_Thin</li>
       <li>Skin_LightGray</li>
       <li>Learning_Slow</li>
-      <li MayRequire="omw.samhaphage">OMW_CorpseReassembler</li>
+      <li MayRequire="omw.samhaphage">OMW_Echovessel_Frame</li>
+      <li MayRequire="deimos.corpsechildrenupdate,omw.samhaphage">OMW_CorpseReassembler</li>
       <li MayRequire="omw.samhaphage">OMW_ScouredMind</li>
       <li MayRequire="omw.samhaphage">OMW_Resonance</li>      
+      <li MayRequire="omw.samhaphage,wvc.sergkart.races.biotech">OMW_Amnesia</li>
       <li MayRequire="redmattis.bigsmall.core">BS_PilotAssistible</li>      
     </genes>
   </XenotypeDef>

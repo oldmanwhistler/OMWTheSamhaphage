@@ -19,14 +19,8 @@
         <def>Nudist</def>
       </li>
     </forcedTraits>
-    <geneClass>WVC_XenotypesAndGenes.Gene_BackstoryChanger</geneClass>    
-	<modExtensions>
-		<li Class="WVC_XenotypesAndGenes.GeneExtension_Giver">
-			<childBackstoryDef>WVC_RacesBiotech_Amnesia_Child</childBackstoryDef>
-			<adultBackstoryDef>WVC_RacesBiotech_Amnesia_Adult</adultBackstoryDef>
-		</li>
-	</modExtensions>    
   </GeneDef>
+
 
   <GeneDef ParentName="FertilityBase">
     <defName>OMW_Fluxspawn_Ferility</defName>

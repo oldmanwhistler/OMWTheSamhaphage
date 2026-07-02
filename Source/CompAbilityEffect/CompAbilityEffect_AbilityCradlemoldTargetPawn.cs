@@ -6,30 +6,27 @@ using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class CompProperties_AbilityHallowboundTargetPawn : CompProperties_AbilityEffect
+    public class CompProperties_AbilityCradlemoldTargetPawn : CompProperties_AbilityEffect
     {
-        public CompProperties_AbilityHallowboundTargetPawn()
+        public CompProperties_AbilityCradlemoldTargetPawn()
         {
-            this.compClass = typeof(CompAbilityEffect_AbilityHallowboundTargetPawn);
+            this.compClass = typeof(CompAbilityEffect_AbilityCradlemoldTargetPawn);
         }
     }
 
-    public class CompAbilityEffect_AbilityHallowboundTargetPawn :  CompAbilityEffect_AbilityBase
+    public class CompAbilityEffect_AbilityCradlemoldTargetPawn :  CompAbilityEffect_AbilityBase
 
     {
         public override bool OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
 
-            if ((xeno != OMW_XenotypeDefOf.omw_hallowbound) && (xeno != OMW_XenotypeDefOf.omw_echovessel))
+            if (xeno != OMW_XenotypeDefOf.omw_cradlemold)
             {
                 // hybrids lose the ability
-                Messages.Message(
-                    $"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Echovessel orHallowbound abilities.",
-                    MessageTypeDefOf.NegativeEvent);
-                return false;
+                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Cradlemold abilities.", MessageTypeDefOf.NegativeEvent);
+                return false; 
             }
-
 
             List<MenuItemBase> items = new List<MenuItemBase>();
             NullThrumAbilityBase ability;
@@ -41,11 +38,11 @@ namespace OMW_Samhaphage
                 ability = new ThingApplyScrub();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
-                ability = new PawnApplyCompress();
+                ability = new PawnApplyDub();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
-                ability = new ThingApplyCrosstalk();
-                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+                ability = new PawnApplyUnmute();
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));                
                 
                 ability = new PawnApplyInfestFluxspawnHiveling();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));

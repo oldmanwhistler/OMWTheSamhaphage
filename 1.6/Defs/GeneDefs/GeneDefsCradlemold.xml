@@ -36,5 +36,16 @@
         <degree>2</degree>
       </li>
     </forcedTraits>    
+
+		<abilities>
+			<li>OMW_AbilityCradlemoldSelf</li>
+			<li>OMW_AbilityCradlemoldTargetPawn</li>
+			<li>OMW_AbilityCradlemoldTargetCorpse</li>
+		</abilities>
+		<descriptionHyperlinks>
+			<AbilityDef>OMW_AbilityCradlemoldSelf</AbilityDef>
+			<AbilityDef>OMW_AbilityCradlemoldTargetPawn</AbilityDef>
+			<AbilityDef>OMW_AbilityCradlemoldTargetCorpse</AbilityDef>      
+		</descriptionHyperlinks>    
   </GeneDef>
   </Defs>

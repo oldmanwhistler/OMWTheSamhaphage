@@ -9,7 +9,7 @@
     <iconPath>UI/Icons/Xenotypes/hallowbound</iconPath>
     <inheritable>false</inheritable>
     <genes>
-      <li MayRequire="omw.samhaphage">OMW_CorpseReassembler</li>
+      <li MayRequire="deimos.corpsechildrenupdate,omw.samhaphage">OMW_CorpseReassembler</li>
       <li MayRequire="omw.samhaphage">OMW_Hallowbound_Frame</li>
       <li MayRequire="omw.samhaphage,Ludeon.RimWorld.Anomaly">OMW_VoidTrait_Occultist</li>
       <li MayRequire="omw.samhaphage,Ludeon.RimWorld.Anomaly">OMW_VoidTrait_BodyMastery</li>

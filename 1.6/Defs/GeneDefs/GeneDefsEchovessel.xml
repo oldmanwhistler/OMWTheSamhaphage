@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs MayRequire="Ludeon.RimWorld.Biotech">
-  <GeneDef>
+  <GeneDef MayRequire="deimos.corpsechildrenupdate">
     <defName>OMW_CorpseReassembler</defName>
     <label>thrum reassembler</label>
     <displayCategory>OMW_PerfectSilence</displayCategory>
@@ -14,12 +14,36 @@
         <def>CorpseChildren_CorpseChild</def>
       </li>
     </forcedTraits>
-	<geneClass>WVC_XenotypesAndGenes.Gene_BackstoryChanger</geneClass>    
-	<modExtensions>
-		<li Class="WVC_XenotypesAndGenes.GeneExtension_Giver">
-			<childBackstoryDef>WVC_RacesBiotech_Amnesia_Child</childBackstoryDef>
-			<adultBackstoryDef>WVC_RacesBiotech_Amnesia_Adult</adultBackstoryDef>
-		</li>
-	</modExtensions>    
   </GeneDef>
+
+  <GeneDef>
+    <defName>OMW_Echovessel_Frame</defName>
+    <label>TBD</label>
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+   <iconPath>UI/Icons/Genes/BodyEchovessel</iconPath>
+    <description>TBD</description>
+    <displayOrderInCategory>9999</displayOrderInCategory>
+    <biostatCpx>4</biostatCpx>
+    <biostatMet>-3</biostatMet>
+    <biostatArc>1</biostatArc>
+    <selectionWeight>0.3</selectionWeight>
+
+    <statFactors>
+      <SM_BodySizeMultiplier>1.0</SM_BodySizeMultiplier>
+      <EatingSpeed>1.1</EatingSpeed>
+      <MoveSpeed>1.0</MoveSpeed>          
+    </statFactors>
+
+		<abilities>
+			<li>OMW_AbilityHallowboundSelf</li>
+			<li>OMW_AbilityHallowboundTargetPawn</li>
+			<li>OMW_AbilityHallowboundTargetCorpse</li>
+		</abilities>
+		<descriptionHyperlinks>
+			<AbilityDef>OMW_AbilityHallowboundSelf</AbilityDef>
+			<AbilityDef>OMW_AbilityHallowboundTargetPawn</AbilityDef>
+			<AbilityDef>OMW_AbilityHallowboundTargetCorpse</AbilityDef>      
+		</descriptionHyperlinks>
+
+  </GeneDef>  
 </Defs>

@@ -99,7 +99,7 @@
   </GeneDef>
 
   <!-- cheat ability to break WVC Chimera -->
-  <GeneDef ParentName="WVC_XenotypesAndGenes_GeneChimera_SubGenesMetLimit">
+  <GeneDef MayRequire="wvc.sergkart.races.biotech" ParentName="WVC_XenotypesAndGenes_GeneChimera_SubGenesMetLimit">
 	<defName>OMW_Chimera_SovereignStillness_Limit</defName>
 	<label>TBD</label>
 	<description>TBD</description>

@@ -6,25 +6,25 @@ using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class CompProperties_AbilityHallowboundSelf : CompProperties_AbilityEffect
+    public class CompProperties_AbilityCradlemoldSelf : CompProperties_AbilityEffect
     {
-        public CompProperties_AbilityHallowboundSelf()
+        public CompProperties_AbilityCradlemoldSelf()
         {
-            this.compClass = typeof(CompAbilityEffect_AbilityHallowboundSelf);
+            this.compClass = typeof(CompAbilityEffect_AbilityCradlemoldSelf);
         }
     }
 
-    public class CompAbilityEffect_AbilityHallowboundSelf :  CompAbilityEffect_AbilityBase
+    public class CompAbilityEffect_AbilityCradlemoldSelf :  CompAbilityEffect_AbilityBase
 
     {
         public override bool OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
         {
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
 
-            if ((xeno != OMW_XenotypeDefOf.omw_hallowbound) && (xeno != OMW_XenotypeDefOf.omw_echovessel))
+            if (xeno != OMW_XenotypeDefOf.omw_cradlemold)
             {
                 // hybrids lose the ability
-                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Echovessel orHallowbound abilities.", MessageTypeDefOf.NegativeEvent);
+                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Cradlemold abilities.", MessageTypeDefOf.NegativeEvent);
                 return false;                
             }
 
@@ -36,9 +36,6 @@ namespace OMW_Samhaphage
             ability = new PawnApplyCompress();
             items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
             
-            ability = new PawnApplyAmplifyHallowbound();
-            items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
-
             if (items.Count > 0)
             {
                 return DoOpenMenu(target, dest, items);

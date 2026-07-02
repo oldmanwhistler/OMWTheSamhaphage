@@ -22,12 +22,15 @@ namespace OMW_Samhaphage
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
 
 
-            if (xeno != OMW_XenotypeDefOf.omw_hallowbound)
+            if ((xeno != OMW_XenotypeDefOf.omw_hallowbound) && (xeno != OMW_XenotypeDefOf.omw_echovessel))
             {
                 // hybrids lose the ability
-                Messages.Message($"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Hallowbound abilities.", MessageTypeDefOf.NegativeEvent);
+                Messages.Message(
+                    $"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Echovessel orHallowbound abilities.",
+                    MessageTypeDefOf.NegativeEvent);
                 return false;
             }
+
 
             List<MenuItemBase> items = new List<MenuItemBase>();
             NullThrumAbilityBase ability;

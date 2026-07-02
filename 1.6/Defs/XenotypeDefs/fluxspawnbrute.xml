@@ -15,6 +15,7 @@
       <li MayRequire="omw.samhaphage">OMW_NullThrum</li>
       <li MayRequire="omw.samhaphage">OMW_UnstableMutationMajor</li>
       <li MayRequire="omw.samhaphage">OMW_Resonance</li>      
+      <li MayRequire="omw.samhaphage,wvc.sergkart.races.biotech">OMW_Amnesia</li>
       <li MayRequire="redmattis.bigsmall.core">BS_CellPandemonium</li>
       <li MayRequire="redmattis.bigsmall.core">BS_SimpleMind</li>
       <li MayRequire="redmattis.bigsmall.core">BS_Diet_Carnivore</li>
