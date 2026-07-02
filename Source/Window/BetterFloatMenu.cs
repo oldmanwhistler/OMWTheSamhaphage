@@ -34,6 +34,8 @@ namespace OMW_Samhaphage
                                                      BaseContent.BadTex;
         private static readonly Texture2D TranslucentBlackTex = SolidColorMaterials.NewSolidColorTexture(new Color(0f, 0f, 0f, 0.3f));
 
+        protected override float Margin => 0f;
+
         /// <summary>
         /// Opens a new float menu using the items provided.
         /// Note: by default, opening a new window will close existing windows.
@@ -56,6 +58,13 @@ namespace OMW_Samhaphage
             created.doCloseX = true;
             created.forcePause = true;
             created.layer = WindowLayer.SubSuper;
+            created.draggable = true;
+            // Prevents the game from drawing the standard dark UI background
+            created.doWindowBackground = false;
+            // Prevents the window from drawing its drop shadow
+            created.drawShadow = false;
+            // If you don't want a title bar, ensure this is null
+            created.optionalTitle = null;
             Find.WindowStack.Add(created);
             return created;
         }
@@ -116,10 +125,6 @@ namespace OMW_Samhaphage
         /// Default value: 6.
         /// </summary>
         public float Padding = 6;
-        /// <summary>
-        /// The current search string. Set to <see cref="string.Empty"/> or null to reset search bar.
-        /// </summary>
-        public string SearchString = "";
 
         private readonly List<MenuItemBase> preRenderItems = new List<MenuItemBase>();
         private readonly PawnInfoPanel casterInfoPanel = new PawnInfoPanel();
@@ -127,37 +132,34 @@ namespace OMW_Samhaphage
         private float lastHeight, lastWidth;
         private Vector2 scroll;
 
-        public override Vector2 InitialSize => new Vector2(1376+24f, 768+24f);
+        public override Vector2 InitialSize => new Vector2(1376, 768);
 
         public override void DoWindowContents(Rect inRect)
         {
             if (CustomBG != null)
             {
-                float aspectRatio = (float)CustomBG.width / CustomBG.height;
-                float rectAspectRatio = inRect.width / inRect.height;
+                // float aspectRatio = (float)CustomBG.width / CustomBG.height;
+                // float rectAspectRatio = inRect.width / inRect.height;
                 
-                Rect centeredRect;
-                if (aspectRatio > rectAspectRatio)
-                {
-                    // Texture is wider than the area, fit to width
-                    float height = inRect.width / aspectRatio;
-                    centeredRect = new Rect(inRect.x, inRect.y + (inRect.height - height) / 2f, inRect.width, height);
-                }
-                else
-                {
-                    // Texture is taller than the area, fit to height
-                    float width = inRect.height * aspectRatio;
-                    centeredRect = new Rect(inRect.x + (inRect.width - width) / 2f, inRect.y, width, inRect.height);
-                }
+                // Rect centeredRect;
+                // if (aspectRatio > rectAspectRatio)
+                // {
+                //     // Texture is wider than the area, fit to width
+                //     float height = inRect.width / aspectRatio;
+                //     centeredRect = new Rect(inRect.x, inRect.y + (inRect.height - height) / 2f, inRect.width, height);
+                // }
+                // else
+                // {
+                //     // Texture is taller than the area, fit to height
+                //     float width = inRect.height * aspectRatio;
+                //     centeredRect = new Rect(inRect.x + (inRect.width - width) / 2f, inRect.y, width, inRect.height);
+                // }
                 
-                GUI.DrawTexture(centeredRect, CustomBG);
+                GUI.DrawTexture(inRect, CustomBG);
             }
-
-            SearchString ??= "";
 
             if (Items == null || Items.Count == 0)
             {
-                Log.Debug($"Opened a {nameof(BetterFloatMenu)} with no items! Closing...");
                 Close();
                 return;
             }
@@ -280,7 +282,6 @@ namespace OMW_Samhaphage
 
                 lastHeight = Mathf.Max(lastHeight, curY + maxRowHeight);
                 lastWidth = Mathf.Max(lastWidth, curX);
-                Log.Debug("lastWidth: " + lastWidth + ", lastHeight: " + lastHeight);
             }
 
             Widgets.EndScrollView();

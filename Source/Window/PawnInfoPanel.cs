@@ -136,7 +136,7 @@ namespace OMW_Samhaphage
         private void DrawTabButton(Rect rect, string label, PawnInfoTab tab)
         {
             GUI.color = activeTab == tab ? new Color(0.65f, 0.8f, 1f) : Color.white;
-            if (Widgets.ButtonText(rect, label))
+            if (Widgets.ButtonText(rect, label, false))
             {
                 activeTab = tab;
             }
