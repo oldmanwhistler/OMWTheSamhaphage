@@ -29,9 +29,9 @@ namespace OMW_Samhaphage
     [StaticConstructorOnStartup]
     public class BetterFloatMenu : Window
     {
-        static Logger Log = new Logger("UI");
         private static readonly Texture2D LethalIcon = ContentFinder<Texture2D>.Get("UI/Icons/Medical/Death", false) ?? BaseContent.BadTex;
-        private static readonly Texture2D TranslucentBlackTex = SolidColorMaterials.NewSolidColorTexture(new Color(0f, 0f, 0f, 0.3f));
+        private static readonly Texture2D TranslucentBlackTex = SolidColorMaterials.NewSolidColorTexture(new Color(0f, 0f, 0f, 0.75f));
+        private static readonly Texture2D TranslucentPurpleTex = SolidColorMaterials.NewSolidColorTexture(new Color(0.4f, 0.1f, 0.6f, 0.65f));
 
         /// <summary>
         /// Opens a new float menu using the items provided.
@@ -133,10 +133,11 @@ namespace OMW_Samhaphage
 
         public override Vector2 InitialSize => new Vector2(1376, 768);
 
-        public override void DoWindowContents(Rect inRect)
+        private bool DebugBorders = false;
+
+        public override void DoWindowContents(Rect outRect)
         {
             Texture2D CustomBG = NullThrumAbilityMenu.GetMenuBackground(Caster);
-            Log.Debug($"BetterFloatMenu.DoWindowContents, CustomBG: {CustomBG}, Caster: {Caster?.Name}");
             if (CustomBG != null)
             {
                 // float aspectRatio = (float)CustomBG.width / CustomBG.height;
@@ -156,7 +157,7 @@ namespace OMW_Samhaphage
                 //     centeredRect = new Rect(inRect.x + (inRect.width - width) / 2f, inRect.y, width, inRect.height);
                 // }
                 
-                GUI.DrawTexture(inRect, CustomBG);
+                GUI.DrawTexture(outRect, CustomBG);
             }
 
             if (Items == null || Items.Count == 0)
@@ -165,13 +166,21 @@ namespace OMW_Samhaphage
                 return;
             }
 
-            Rect offsetRect = new Rect(inRect.x + 5f, inRect.y + 5f, inRect.width - 10f, inRect.height - 10f);
+            float offsetL = 18f;
+            float offsetR = 18f;
 
+            float width = outRect.width - 1376f;
+            float height = outRect.height - 768f;
+            Rect inRect = new Rect(outRect.x + (width/2f), outRect.y + (height/2f), outRect.width - width, outRect.height - height);
+            if (DebugBorders) Widgets.DrawBox(inRect, 1);
             float panelGap = 30f;
             float panelWidth = (inRect.width - panelGap * 2f) / 3f;
-            Rect leftPanelRect = new Rect(inRect.x, inRect.y, panelWidth, inRect.height);
+            Rect leftPanelRect = new Rect(inRect.x + offsetL, inRect.y, panelWidth - offsetL, inRect.height);
+            if (DebugBorders) Widgets.DrawBox(leftPanelRect, 1);
             Rect middlePanelRect = new Rect(leftPanelRect.xMax + panelGap, inRect.y, panelWidth, inRect.height);
-            Rect rightPanelRect = new Rect(middlePanelRect.xMax + panelGap, inRect.y, panelWidth, inRect.height);
+            if (DebugBorders) Widgets.DrawBox(middlePanelRect, 1);
+            Rect rightPanelRect = new Rect(middlePanelRect.xMax + panelGap + offsetR, inRect.y, panelWidth - offsetR, inRect.height);
+            if (DebugBorders) Widgets.DrawBox(rightPanelRect, 1);
 
             DrawInfoPanel(leftPanelRect, Caster, null, "CASTER");
             DrawInfoPanel(rightPanelRect, TargetPawn, Caster, "VICTIM");
@@ -183,6 +192,7 @@ namespace OMW_Samhaphage
                 float contentWidth = middlePanelRect.width - panelGap;
                 float contentX = (middlePanelRect.width - contentWidth) / 2f;
                 Rect centerRect = new Rect(contentX, panelGap, contentWidth, middlePanelRect.height - panelGap * 2f);
+                if (DebugBorders) Widgets.DrawBox(centerRect, 1);
                 DrawCenterContent(centerRect);
             }
             finally
@@ -200,18 +210,18 @@ namespace OMW_Samhaphage
                 float fillPercent = maxRes > 0 ? Mathf.Clamp01(curRes / maxRes) : 0f;
                 float barHeight = 52f; // Doubled from 26f
                 // Center the resonance meter bar within the rect
-                float barWidth = rect.width * 0.9f;
-                float barX = rect.x + (rect.width - barWidth) / 2f;                
-                
-                Rect meterRect = new Rect(barX, rect.y + 10f, barWidth, barHeight);
-                // TranslucentBlackTex vs BaseContent.BlackTex
-                Widgets.FillableBar(meterRect, fillPercent, SolidColorMaterials.NewSolidColorTexture(new Color(0.4f, 0.1f, 0.6f)), TranslucentBlackTex, true);
+                float barWidth = rect.width * 0.9f - 20f;
+                float barX = rect.x + (rect.width - barWidth) / 2f;
+                float offsetY = 8f;
+                Rect meterRect = new Rect(barX, rect.y + offsetY, barWidth, barHeight);
+                if (DebugBorders) Widgets.DrawBox(meterRect, 1);
+                Widgets.FillableBar(meterRect, fillPercent, TranslucentPurpleTex, TranslucentBlackTex, false);
                 Text.Anchor = TextAnchor.MiddleCenter;
                 Text.Font = GameFont.Medium;
                 Widgets.Label(meterRect, $"Resonance: {curRes:F1} / {maxRes:F1}");
                 Text.Font = GameFont.Small;
                 Text.Anchor = TextAnchor.UpperLeft;
-                rect.yMin += barHeight + 50f;
+                rect.yMin += barHeight + 76f;
             }
 
             if (preRenderItems.Count != Items.Count)
@@ -225,10 +235,12 @@ namespace OMW_Samhaphage
             float maxRowHeight = 0;
             int columnCount = 0;
 
-            float offsetX = (rect.width - 324f) / 2f; // Adjusted for 3 columns of 96px + padding
+            float offsetX = (rect.width - 324f) / 2f + 9f; // Adjusted for 3 columns of 96px + padding
             curX = offsetX; // reset
 
-            Widgets.BeginScrollView(rect, ref scroll, new Rect(0, 0, lastWidth, lastHeight));
+            Rect centerRect = new Rect(0, 0, lastWidth, lastHeight);
+            if (DebugBorders) Widgets.DrawBox(centerRect, 1);
+            Widgets.BeginScrollView(rect, ref scroll, centerRect);
            
            
             lastWidth = 0;

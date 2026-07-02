@@ -28,33 +28,36 @@ namespace OMW_Samhaphage
             BaseContent.BadTex;
 
         private static readonly Texture2D Samhaphage =
-            ContentFinder<Texture2D>.Get("UI/Menu/SamhaphageBG", true) ??
+            ContentFinder<Texture2D>.Get("UI/Menu/SamhaphageBG", false) ??
             BaseContent.BadTex;
 
         private static readonly Texture2D Hallowbound =
-            ContentFinder<Texture2D>.Get("UI/Menu/HallowboundBG", true) ??
+            ContentFinder<Texture2D>.Get("UI/Menu/HallowboundBG", false) ??
             BaseContent.BadTex;
 
         private static readonly Texture2D Echovessel =
-            ContentFinder<Texture2D>.Get("UI/Menu/EchovesselBG", true) ??
+            ContentFinder<Texture2D>.Get("UI/Menu/EchovesselBG", false) ??
             BaseContent.BadTex;
 
         private static readonly Texture2D Cradlemold =
-            ContentFinder<Texture2D>.Get("UI/Menu/CradlemoldBG", true) ??
+            ContentFinder<Texture2D>.Get("UI/Menu/CradlemoldBG", false) ??
             BaseContent.BadTex;
 
         private static readonly Texture2D FluxspawnHiveling =
-            ContentFinder<Texture2D>.Get("UI/Menu/FluxspawnHivelingBG", true) ??
+            ContentFinder<Texture2D>.Get("UI/Menu/FluxspawnHivelingBG", false) ??
             BaseContent.BadTex;
 
         private static readonly Texture2D FluxspawnBrute =
-            ContentFinder<Texture2D>.Get("UI/Menu/FluxspawnBruteBG", true) ??
+            ContentFinder<Texture2D>.Get("UI/Menu/FluxspawnBruteBG", false) ??
             BaseContent.BadTex;
 
         private static readonly Texture2D FluxspawnFlicker =
-            ContentFinder<Texture2D>.Get("UI/Menu/FluxspawnFlickerBG", true) ??
+            ContentFinder<Texture2D>.Get("UI/Menu/FluxspawnFlickerBG", false) ??
             BaseContent.BadTex;
 
+        private static readonly Texture2D Glass =
+            ContentFinder<Texture2D>.Get("UI/Menu/GlassBG", false) ??
+            BaseContent.BadTex;        
 
         public static Texture2D GetMenuBackgroundXenotype(Pawn pawn)
         {
@@ -103,7 +106,7 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityMenuType.ByXenotype:
                     return GetMenuBackgroundXenotype(pawn);
                 case NullThrumAbilityMenuType.None:
-                    return BaseContent.BadTex;
+                    return Glass;
                 case NullThrumAbilityMenuType.FluxspawnHiveling:
                     return FluxspawnHiveling;
                 case NullThrumAbilityMenuType.FluxspawnBrute:

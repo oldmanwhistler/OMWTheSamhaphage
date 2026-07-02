@@ -119,9 +119,9 @@ namespace OMW_Samhaphage
                 DrawTabButton(tabRects[1], "Xeno", PawnInfoTab.Xenogenes);
                 DrawTabButton(tabRects[2], "Traits", PawnInfoTab.Traits);
                 DrawTabButton(tabRects[3], "Skills", PawnInfoTab.Skills);
-                curY += tabHeight + 6f;
+                curY += tabHeight + 22f;
 
-                Rect contentArea = new Rect(0f, curY, contentRect.width, contentRect.height - curY - 4f);
+                Rect contentArea = new Rect(0f, curY, contentRect.width, contentRect.height - curY - 22f);
                 DrawActiveContent(contentArea, source, dest);
             }
             finally
