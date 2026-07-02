@@ -31,7 +31,7 @@ namespace OMW_Samhaphage
     {
         private static readonly Texture2D LethalIcon = ContentFinder<Texture2D>.Get("UI/Icons/Medical/Death", false) ?? BaseContent.BadTex;
         private static readonly Texture2D TranslucentBlackTex = SolidColorMaterials.NewSolidColorTexture(new Color(0f, 0f, 0f, 0.75f));
-        private static readonly Texture2D TranslucentPurpleTex = SolidColorMaterials.NewSolidColorTexture(new Color(0.4f, 0.1f, 0.6f, 0.65f));
+        private static readonly Texture2D TranslucentPurpleTex = SolidColorMaterials.NewSolidColorTexture(new Color(0.4f, 0.1f, 0.6f, 0.45f));
 
         /// <summary>
         /// Opens a new float menu using the items provided.

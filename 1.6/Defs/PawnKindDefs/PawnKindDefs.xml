@@ -4,9 +4,7 @@
     <defName>OMW_SovereignStillnessKind</defName>
     <label>sovereign stillness</label>
     <race>Human</race>
-    <defaultFactionType>omw_perfect_silence</defaultFactionType>
     <combatPower>250</combatPower>
-
     <xenotypeSet>
       <xenotypeChances>
         <omw_sovereign_stillness>1.0</omw_sovereign_stillness>
