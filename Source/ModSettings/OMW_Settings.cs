@@ -52,6 +52,8 @@ namespace OMW_Samhaphage
                              OMWGenes.CalculateComplexity(OMW_XenotypeDefOf.omw_samhaphage, true));
 
         
+        public NullThrumAbilityMenuType abilityMenuType;
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -142,6 +144,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref defaultsComplexity.sovereign_stillness, "ComplexitySovereignStillness", defaultsComplexity.sovereign_stillness);
 
             Scribe_Values.Look(ref NullThrumUtility.descMode, "descMode", NullThrumDescriptionMode.DescriptionSimple);
+            Scribe_Values.Look(ref abilityMenuType, "abilityMenuType", NullThrumAbilityMenuType.ByXenotype);
         }
 
         // This needs to set all of the default values
@@ -171,6 +174,7 @@ namespace OMW_Samhaphage
             complexityMultiplierHallowbound = 1.5f;
             complexityMultiplierSamhaphage = 1.5f;
             NullThrumUtility.descMode = NullThrumDescriptionMode.DescriptionSimple;
+            abilityMenuType = NullThrumAbilityMenuType.ByXenotype;
         }
 
         public void SetNullThrumDifficultyPreset(NullThrumDifficultyPreset preset)
@@ -189,6 +193,7 @@ namespace OMW_Samhaphage
         private enum SettingsTab
         {
             Main,
+            UI,
             Limits,
             GameBalance,
             Debugging
@@ -216,6 +221,11 @@ namespace OMW_Samhaphage
                     selectedTab = SettingsTab.Main;
                     scrollPosition = Vector2.zero;
                 }, selectedTab == SettingsTab.Main),
+                new TabRecord("UI", () =>
+                {
+                    selectedTab = SettingsTab.UI;
+                    scrollPosition = Vector2.zero;
+                }, selectedTab == SettingsTab.UI),
                 new TabRecord("Game Balance", () =>
                 {
                     selectedTab = SettingsTab.GameBalance;
@@ -305,6 +315,22 @@ namespace OMW_Samhaphage
                             MessageTypeDefOf.TaskCompletion, false);
                     }
 
+                    break;
+
+                case SettingsTab.UI:
+                    listing.Gap();
+                    if (listing.ButtonTextLabeled($"Ability Menu", $"{settings.abilityMenuType}"))
+                    {
+                        List<FloatMenuOption> options = new List<FloatMenuOption>();
+                        foreach (NullThrumAbilityMenuType preset in Enum.GetValues(typeof(NullThrumAbilityMenuType)))
+                        {
+                            string label = preset.ToString();
+                            options.Add(new FloatMenuOption(label,
+                                () => { settings.abilityMenuType = preset; }));
+                        }
+
+                        Find.WindowStack.Add(new FloatMenu(options));
+                    }
                     break;
 
                 case SettingsTab.GameBalance:

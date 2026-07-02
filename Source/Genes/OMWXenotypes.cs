@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace OMW_Samhaphage
 {
+    [StaticConstructorOnStartup]
     public static class OMWXenotypes
     {
         private static Pawn theSovereignStillness = null;

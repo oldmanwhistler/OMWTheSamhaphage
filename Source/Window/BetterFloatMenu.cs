@@ -26,15 +26,12 @@ namespace OMW_Samhaphage
     /// <summary>
     /// An alternative to the built-in <see cref="FloatMenu"/>.
     /// </summary>
+    [StaticConstructorOnStartup]
     public class BetterFloatMenu : Window
     {
         static Logger Log = new Logger("UI");
         private static readonly Texture2D LethalIcon = ContentFinder<Texture2D>.Get("UI/Icons/Medical/Death", false) ?? BaseContent.BadTex;
-        private static readonly Texture2D CustomBG = ContentFinder<Texture2D>.Get("UI/Menu/SamhaphageBG", false) ??
-                                                     BaseContent.BadTex;
         private static readonly Texture2D TranslucentBlackTex = SolidColorMaterials.NewSolidColorTexture(new Color(0f, 0f, 0f, 0.3f));
-
-        protected override float Margin => 0f;
 
         /// <summary>
         /// Opens a new float menu using the items provided.
@@ -132,10 +129,14 @@ namespace OMW_Samhaphage
         private float lastHeight, lastWidth;
         private Vector2 scroll;
 
+        protected override float Margin => 0f;
+
         public override Vector2 InitialSize => new Vector2(1376, 768);
 
         public override void DoWindowContents(Rect inRect)
         {
+            Texture2D CustomBG = NullThrumAbilityMenu.GetMenuBackground(Caster);
+            Log.Debug($"BetterFloatMenu.DoWindowContents, CustomBG: {CustomBG}, Caster: {Caster?.Name}");
             if (CustomBG != null)
             {
                 // float aspectRatio = (float)CustomBG.width / CustomBG.height;
@@ -163,6 +164,8 @@ namespace OMW_Samhaphage
                 Close();
                 return;
             }
+
+            Rect offsetRect = new Rect(inRect.x + 5f, inRect.y + 5f, inRect.width - 10f, inRect.height - 10f);
 
             float panelGap = 30f;
             float panelWidth = (inRect.width - panelGap * 2f) / 3f;
