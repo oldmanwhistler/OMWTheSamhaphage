@@ -6,15 +6,15 @@ using UnityEngine;
 
 namespace OMW_Samhaphage
 {
-    public class CompProperties_AbilityHallowboundTargetCorpse : CompProperties_AbilityEffect
+    public class CompProperties_AbilityEchovesselTargetCorpse : CompProperties_AbilityEffect
     {
-        public CompProperties_AbilityHallowboundTargetCorpse()
+        public CompProperties_AbilityEchovesselTargetCorpse()
         {
-            this.compClass = typeof(CompAbilityEffect_AbilityHallowboundTargetCorpse);
+            this.compClass = typeof(CompAbilityEffect_AbilityEchovesselTargetCorpse);
         }
     }
 
-    public class CompAbilityEffect_AbilityHallowboundTargetCorpse :  CompAbilityEffect_AbilityBase
+    public class CompAbilityEffect_AbilityEchovesselTargetCorpse :  CompAbilityEffect_AbilityBase
 
     {
         public override bool OpenMenu(LocalTargetInfo target, LocalTargetInfo dest)
@@ -22,11 +22,11 @@ namespace OMW_Samhaphage
             XenotypeDef xeno = parent.pawn.genes.Xenotype;
 
 
-            if (xeno != OMW_XenotypeDefOf.omw_hallowbound)
+            if (xeno != OMW_XenotypeDefOf.omw_echovessel)
             {
                 // hybrids lose the ability
                 Messages.Message(
-                    $"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Hallowbound abilities.",
+                    $"{parent.pawn.LabelShort} is a {xeno} Xenotype and can't use Echovessel abilities.",
                     MessageTypeDefOf.NegativeEvent);
                 return false;
             }
@@ -36,20 +36,14 @@ namespace OMW_Samhaphage
             NullThrumAbilityBase ability;
 
             if (target.Thing is Corpse corpse)
-            {
-                ability = new ThingApplySample();
-                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));                
-                
+            {                           
                 ability = new ThingApplyScrub();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
-                ability = new ThingApplyCrosstalk();
+                ability = new ThingApplyBootleg();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
-                ability = new ThingApplyHarrow();
-                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
-
-                ability = new ThingApplyAttenuate();
+                ability = new CorpseApplyRender();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
                 ability = new CorpseApplyResurrectEchovessel();

@@ -35,14 +35,14 @@
     </statFactors>
 
 		<abilities>
-			<li>OMW_AbilityHallowboundSelf</li>
-			<li>OMW_AbilityHallowboundTargetPawn</li>
-			<li>OMW_AbilityHallowboundTargetCorpse</li>
+			<li>OMW_AbilityEchovesselSelf</li>
+			<li>OMW_AbilityEchovesselTargetPawn</li>
+			<li>OMW_AbilityEchovesselTargetCorpse</li>
 		</abilities>
 		<descriptionHyperlinks>
-			<AbilityDef>OMW_AbilityHallowboundSelf</AbilityDef>
-			<AbilityDef>OMW_AbilityHallowboundTargetPawn</AbilityDef>
-			<AbilityDef>OMW_AbilityHallowboundTargetCorpse</AbilityDef>      
+			<AbilityDef>OMW_AbilityEchovesselSelf</AbilityDef>
+			<AbilityDef>OMW_AbilityEchovesselTargetPawn</AbilityDef>
+			<AbilityDef>OMW_AbilityEchovesselTargetCorpse</AbilityDef>      
 		</descriptionHyperlinks>
 
   </GeneDef>  

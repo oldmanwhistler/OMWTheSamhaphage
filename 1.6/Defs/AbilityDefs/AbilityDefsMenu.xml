@@ -157,6 +157,41 @@
     </AbilityDef>    
 
     <AbilityDef ParentName="OMW_AbilityXenotypeTargetPawnBase" >
+        <defName>OMW_AbilityEchovesselTargetPawn</defName>
+        <label>Pawn</label>
+        <description>Manipulate the essence of Echovessel to produce various effects. The available actions depend on the target.</description>
+        <iconPath>UI/Abilities/EchovesselPawn</iconPath>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilityEchovesselTargetPawn">
+            </li>
+        </comps>
+    </AbilityDef>
+
+    <AbilityDef ParentName="OMW_AbilityXenotypeTargetCorpseBase" >
+        <defName>OMW_AbilityEchovesselTargetCorpse</defName>
+        <label>Corpse</label>
+        <description>Manipulate the essence of Echovessel to produce various effects. The available actions depend on the target.</description>
+        <iconPath>UI/Abilities/EchovesselCorpse</iconPath>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilityEchovesselTargetCorpse">
+            </li>
+        </comps>
+    </AbilityDef>
+
+
+    <AbilityDef ParentName="OMW_AbilityXenotypeSelfBase" >
+        <defName>OMW_AbilityEchovesselSelf</defName>
+        <label>Self</label>
+        <description>Manipulate the essence of Echovessel to produce various effects.</description>
+        <iconPath>UI/Abilities/EchovesselSelf</iconPath>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilityEchovesselSelf">
+            </li>
+        </comps>
+    </AbilityDef>    
+
+
+    <AbilityDef ParentName="OMW_AbilityXenotypeTargetPawnBase" >
         <defName>OMW_AbilitySamhaphageTargetPawn</defName>
         <label>Pawn</label>
         <iconPath>UI/Abilities/SamhaphagePawn</iconPath>        
