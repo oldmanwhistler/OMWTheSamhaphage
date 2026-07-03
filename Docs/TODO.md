@@ -32,13 +32,11 @@ Hook the mod settings to the game settings on a new game.
 
 ## UI
 
-* five icons per row
 * for degree traits list the degree
 * PawnInfoUI:
-  * icon for colonist, slave, prisoner, corpse
   * icon for skill level
   * how to get skill levels to support alpha genes
-  * trait icon support
+  * trait icon support?
 * Hierarchy UI that shows all the pawns by xenotype from the races
 
 ## Ideology
@@ -75,16 +73,19 @@ Hook the mod settings to the game settings on a new game.
 * Implement echovessel abilities if CorpseChildren isn't available
 * give resonance for the destroyed genes
 * some kind of desiccation / rotting/ undead from B&S?
+* undeath affinity?
 
 ### Cradlemold
 
 * Implement custom initiate lovin' (psychite goggles) if none of the other mods that implement it are available?
 * Just don't include cradlemold without a lovin' system?
+* use base game lovin' but have it do brain damage?
 
 ### Hallowbound
 
 ### Fluxspawn
 
+* abilities that can give resonance
 * replace tetragenic abilities with resonance and add them to the blacklist
 * flicker stun needs to be a separate ability so it can be used while drafted
 * Still working on flicker
@@ -93,6 +94,8 @@ Hook the mod settings to the game settings on a new game.
 * Smoke Cloud
 
 ### Samhaphage
+
+* change the evolution system
 
 ### Sovereign Stillness
 
