@@ -21,7 +21,17 @@ namespace OMW_Samhaphage
         {
             if (HasGene(pawn))
             {
+                if (null == pawn.genes.GetGene(OMW_GeneDefOf.OMW_Resonance))
+                {
+                    Log.Error($"OMW Samhaphage Internal Mod Error: Pawn {pawn.LabelShort} is missing OMW_Resonance gene. Contact mod author.");
+                    return false;
+                }
                 Gene_Resource resonance = pawn.genes.GetGene(OMW_GeneDefOf.OMW_Resonance) as Gene_Resource;
+                if (resonance == null)
+                {
+                    Log.Error($"OMW Samhaphage Internal Mod Error: Pawn {pawn.LabelShort} has the OMW_Resonance gene but it is not a Gene_Resource. Contact mod author.");
+                    return false;
+                }
                 Log.Debug($"{pawn.LabelShort} has {resonance.Value} available resonance, checking if they have {requiredAmount}.");
                 return resonance.Value >= requiredAmount;
             }
