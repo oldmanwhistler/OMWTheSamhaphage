@@ -23,7 +23,7 @@
 
 
   <GeneDef ParentName="FertilityBase">
-    <defName>OMW_Fluxspawn_Ferility</defName>
+    <defName>OMW_Fluxspawn_Fertility</defName>
     <label>disgustingly fertile</label>
     <description>The slugs just... don't... stop... ugh.</description>
     <iconPath>UI/Icons/Genes/OMW_DisgustinglyFertile</iconPath>

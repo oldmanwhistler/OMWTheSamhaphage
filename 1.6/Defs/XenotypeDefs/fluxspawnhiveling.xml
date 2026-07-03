@@ -10,7 +10,7 @@
     <genes>
       <li MayRequire="omw.samhaphage">OMW_ScouredMind</li>
       <li MayRequire="omw.samhaphage">OMW_Fluxspawn_Nudist</li>
-      <li MayRequire="omw.samhaphage">OMW_Fluxspawn_Ferility</li>
+      <li MayRequire="omw.samhaphage">OMW_Fluxspawn_Fertility</li>
       <li MayRequire="omw.samhaphage">OMW_FluxSpawn_Hiveling_Frame</li>
       <li MayRequire="omw.samhaphage">OMW_NullThrum</li>
       <li MayRequire="omw.samhaphage">OMW_Mutation_5_PhaseRupture</li>
