@@ -101,4 +101,43 @@
         </requiredGenes>
     </ThoughtDef>
 
+    <ThoughtDef>
+        <defName>OMW_PhaseLock_Flush</defName>
+        <thoughtClass>Thought_MemorySocial</thoughtClass>
+        <showBubble>true</showBubble>
+        <durationDays>20</durationDays>
+        <stackedEffectMultiplier>0.98</stackedEffectMultiplier>
+        <stackLimit>10</stackLimit>
+        <stackLimitForSameOtherPawn>5</stackLimitForSameOtherPawn>
+        <stages>
+        <li>
+            <label>phase-lock flush</label>
+            <labelSocial>intoxicating presence</labelSocial>
+            <description>A warm, electric trace remains where our nervous systems crossed. It was invasive, intense, and absolutely unforgettable.</description>
+            <baseMoodEffect>10</baseMoodEffect>
+            <baseOpinionOffset>-10</baseOpinionOffset>
+        </li>   
+        </stages>
+    </ThoughtDef>
+
+    <ThoughtDef>
+        <defName>OMW_PhaseLock_Surrender</defName>
+        <thoughtClass>Thought_MemorySocial</thoughtClass>
+        <showBubble>true</showBubble>
+        <durationDays>60</durationDays>
+        <stackedEffectMultiplier>0.98</stackedEffectMultiplier>
+        <stackLimit>10</stackLimit>
+        <stackLimitForSameOtherPawn>5</stackLimitForSameOtherPawn>
+        <stages>
+        <li>
+            <label>sublime surrender</label>
+            <labelSocial>captivating master</labelSocial>
+            <description>The phase lock left behind a profound, heavy quiet. Being near them makes me feel perfectly safe, empty, and strangely complete.</description>
+            <baseMoodEffect>10</baseMoodEffect>
+            <baseOpinionOffset>200</baseOpinionOffset>
+        </li>      
+        </stages>
+    </ThoughtDef>
+
+
 </Defs>

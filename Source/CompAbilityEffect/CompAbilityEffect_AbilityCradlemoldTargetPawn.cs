@@ -42,8 +42,11 @@ namespace OMW_Samhaphage
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
                 ability = new PawnApplyUnmute();
-                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));                
-                
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+
+                ability = new PawnApplyPhaseLock();
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+
                 ability = new PawnApplyInfestFluxspawnHiveling();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
             }

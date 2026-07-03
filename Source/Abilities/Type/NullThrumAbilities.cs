@@ -164,6 +164,13 @@ namespace OMW_Samhaphage
             NullThrumResonanceType.ResonanceTypeDebit,
             NullThrumMathType.MathTypeMultiplier, 1.75f);
 
+        public NullThrumAbilityProps phaselock = new NullThrumAbilityProps(
+            NullThrumAbilityType.PhaseLock,
+            NullThrumResourceType.ResourceTypeAbility,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeMultiplier, 1.0f);
+
+
         public NullThrumAbilities()
         {
             listGeneFixed.Add(flatten);

@@ -130,3 +130,7 @@ Render uses an intense, low-frequency vibration to rapidly collapse a corpse's c
 ### Dub (Override)
 
 Allows a Samhaphage to permanently transfer an overridden gene out of their own frequency and inject it directly into another living pawn.
+
+### Phase Lock (Reproduction)
+
+The female Cradlemold forces a male target's reproductive clock into absolute synchronization with her own, freezing his cellular autonomy through an inescapable harmonic lock. By overriding his internal systems, she extracts the precise biological keys required to ignite her own pregnancy.

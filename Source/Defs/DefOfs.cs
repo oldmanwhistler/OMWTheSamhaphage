@@ -109,4 +109,16 @@ namespace OMW_Samhaphage
             DefOfHelper.EnsureInitializedInCtor(typeof(OMW_BackstoryDefOf));
         }
     }
+
+    [DefOf]
+    public static class OMW_ThoughtDefOf
+    {
+        public static ThoughtDef OMW_PhaseLock_Flush;
+        public static ThoughtDef OMW_PhaseLock_Surrender;
+
+        static OMW_ThoughtDefOf()
+        {
+            DefOfHelper.EnsureInitializedInCtor(typeof(OMW_ThoughtDefOf));
+        }
+    }    
 }    

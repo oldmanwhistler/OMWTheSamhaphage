@@ -86,26 +86,27 @@ namespace OMW_Samhaphage
 
             if (TargetXenotype != null)
             {
-                OMWGenes.ChangeXenotype(mother, TargetXenotype);
+                OMWGenes.ChangeXenotype(mother, TargetXenotype, false);
             }
 
             OMWGenes.Refresh(mother);
 
+            // this makes the new Cradlemold pawn inherit the genes of the caster.
             this.PregnancyGenesTransfer(mother, father);            
 
-            Hediff_Pregnant hediff_Pregnant =
-                (Hediff_Pregnant)HediffMaker.MakeHediff(HediffDefOf.PregnantHuman, mother);
-            hediff_Pregnant.Severity = PregnancyUtility.GeneratedPawnPregnancyProgressRange.TrueMin;
-            hediff_Pregnant.SetParents(mother, father, null);
-            mother.health.AddHediff(hediff_Pregnant);
-
-            if (TargetHediff != null && !mother.health.hediffSet.HasHediff(TargetHediff))
+            if (ColonyUtility.CradlemoldPregenancy(mother, father))
             {
-                mother.health.AddHediff(TargetHediff);
+                if (TargetHediff != null && !mother.health.hediffSet.HasHediff(TargetHediff))
+                {
+                    mother.health.AddHediff(TargetHediff);
+                }
+
+                MoteMaker.MakeStaticMote(mother.TrueCenter(), mother.Map, ThingDefOf.Mote_ThoughtBad);
+
+                return true;
             }
-            
-            MoteMaker.MakeStaticMote(mother.TrueCenter(), mother.Map, ThingDefOf.Mote_ThoughtBad);
-            return true;
+
+            return false;
         }
 
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)

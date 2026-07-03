@@ -23,6 +23,7 @@ namespace OMW_Samhaphage
         Amplify,
         Excise,
         Render,
-        Dub
+        Dub,
+        PhaseLock
     }
 }

@@ -65,6 +65,10 @@ Hook the mod settings to the game settings on a new game.
 
 * some kind of ability that wipes out backstories and relationships? and social mood? maybe take that out of flatten
 
+### Factions
+
+* could set these guys up as an enemy faction by having them remove the bad apptitude genes and then spawn with a bunch of random genes
+
 ## Xenotypes
 
 ### EchoVessel
@@ -80,6 +84,7 @@ Hook the mod settings to the game settings on a new game.
 * Implement custom initiate lovin' (psychite goggles) if none of the other mods that implement it are available?
 * Just don't include cradlemold without a lovin' system?
 * use base game lovin' but have it do brain damage?
+* if the cradlemold is Phase Locking on to someone with enough genetic complexity that can birth a samhaphage, or would it be a seperate ability that sacrifices the cradlemold?
 
 ### Hallowbound
 
@@ -105,7 +110,6 @@ Hook the mod settings to the game settings on a new game.
 
 * add a table to food area
 
-## Requirements
+## Cleanup
 
-* base requirements only AlphaGenes and Big&Small
-* CorpseChildren and WVC should be Major Recommendations
+### Thoughtdef descriptions

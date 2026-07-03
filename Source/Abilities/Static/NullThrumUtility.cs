@@ -32,6 +32,7 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Excise: return "Excise";
                 case NullThrumAbilityType.Render: return "Render";
                 case NullThrumAbilityType.Dub: return "Dub";
+                case NullThrumAbilityType.PhaseLock: return "Phase Lock";
                 default: 
                     Log.Error($"Unknown ability type in NullThrumUtility.ToString({ability})");
                     return "Unknown";
@@ -99,6 +100,7 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Excise: return NullThrumResonanceType.ResonanceTypeCredit;
                 case NullThrumAbilityType.Render: return NullThrumResonanceType.ResonanceTypeCredit;
                 case NullThrumAbilityType.Dub: return NullThrumResonanceType.ResonanceTypeDebit;
+                case NullThrumAbilityType.PhaseLock: return NullThrumResonanceType.ResonanceTypeDebit;
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.ResonanceType({ability})");                                                                
                     return NullThrumResonanceType.ResonanceTypeCredit;
@@ -186,6 +188,9 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Dub:
                     return
                         $"{caster} permanently transfers an overridden gene from their own frequency and imprints it onto {victim}.";
+                case NullThrumAbilityType.PhaseLock:
+                    return
+                        $"{caster} seduces {victim} for their genetic material to ignite her own pregnancy.";
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.DescriptionSimple({ability})");
                     return "Unknown ability type.";
@@ -260,6 +265,8 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Dub:
                     return
                         $"Allows {caster} to permanently transfer an overridden gene out of their own frequency and inject it directly into {victim}.";
+                case NullThrumAbilityType.PhaseLock:
+                    return $"The female Cradlemold forces {victim}'s reproductive clock into absolute synchronization with her own, freezing his cellular autonomy through an inescapable harmonic lock. By overriding his internal systems, she extracts the precise biological keys required to ignite her own pregnancy.";
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.DescriptionLore({ability})");
                     return "An unknown ability of the Null-Thrum.";
