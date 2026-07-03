@@ -26,7 +26,7 @@
     <defName>OMW_Fluxspawn_Ferility</defName>
     <label>disgustingly fertile</label>
     <description>The slugs just... don't... stop... ugh.</description>
-    <iconPath>UI/Icons/Genes/Gene_Fertile</iconPath>
+    <iconPath>UI/Icons/Genes/OMW_DisgustinglyFertile</iconPath>
     <displayOrderInCategory>110</displayOrderInCategory>
     <biostatCpx>4</biostatCpx>
     <biostatMet>4</biostatMet>

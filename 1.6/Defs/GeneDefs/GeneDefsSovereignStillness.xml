@@ -76,7 +76,7 @@
     <label>null-thrum psy-sensitive</label>
     <labelShortAdj>psy-extreme</labelShortAdj>
     <description>Carriers of this gene have synchronized to the Null-Thrum and achieved Stillness.</description>
-    <iconPath>UI/Icons/Genes/Gene_ExtremePsychicAbility</iconPath>
+    <iconPath>UI/Icons/Genes/OMW_NullThrumPsychic</iconPath>
     <displayOrderInCategory>30</displayOrderInCategory>
     <statOffsets>
       <PsychicSensitivity>0.4</PsychicSensitivity>
