@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs MayRequire="Ludeon.RimWorld.Biotech">
 
-  <GeneDef>
+  <GeneDef ParentName="OMW_SamhaphageGeneBase">
     <defName>OMW_Cradlemold_Frame</defName>
     <label>cradlemold frame</label>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
     <iconPath>UI/Icons/Genes/BodyCradlemold</iconPath>
     <description>TBD</description>
     <displayOrderInCategory>9999</displayOrderInCategory>

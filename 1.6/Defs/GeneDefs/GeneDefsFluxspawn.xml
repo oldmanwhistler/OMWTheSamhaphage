@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs MayRequire="Ludeon.RimWorld.Biotech">
 
-  <GeneDef>
+  <GeneDef ParentName="OMW_SamhaphageGeneBase">
     <defName>OMW_Fluxspawn_Nudist</defName>
     <label>slime-slicked</label>
     <displayCategory>OMW_PerfectSilence</displayCategory>
@@ -25,7 +25,6 @@
   <GeneDef ParentName="FertilityBase">
     <defName>OMW_Fluxspawn_Ferility</defName>
     <label>disgustingly fertile</label>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
     <description>The slugs just... don't... stop... ugh.</description>
     <iconPath>UI/Icons/Genes/Gene_Fertile</iconPath>
     <displayOrderInCategory>110</displayOrderInCategory>
@@ -34,12 +33,18 @@
     <statFactors>
       <Fertility>20</Fertility>
     </statFactors>
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+		<modExtensions>
+			<li Class="VEF.Genes.GeneExtension">
+				<backgroundPathEndogenes>UI/Icons/Genes/OMW_Samhaphage_Endogenes</backgroundPathEndogenes>
+				<backgroundPathXenogenes>UI/Icons/Genes/OMW_Samhaphage_Xenogenes</backgroundPathXenogenes>
+			</li>
+		</modExtensions>    
   </GeneDef>
 
-  <GeneDef>
+  <GeneDef ParentName="OMW_SamhaphageGeneBase">
     <defName>OMW_FluxSpawn_Hiveling_Frame</defName>
     <label>null condensation</label>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
     <iconPath>UI/Icons/Genes/BodyFluxspawnHiveling</iconPath>
     <description>Hyper-condensed genome. This gene reduces the carrier to a small scale, trading physical durability for extreme elusiveness. Despite their fist-sized stature, their muscles vibrate with the strength of the Null-Thrum, allowing them to haul twice the weight of a full-grown man. They function as the sensory fringe of the Pulsing Silence, vibrating so rapidly that they appear as neon-purple smears against the landscape.</description>
     <displayOrderInCategory>9999</displayOrderInCategory>
@@ -80,10 +85,9 @@
 		</descriptionHyperlinks>
   </GeneDef>
 
-  <GeneDef>
+  <GeneDef ParentName="OMW_SamhaphageGeneBase">
     <defName>OMW_FluxSpawn_Brute_Frame</defName>
     <label>TBD</label>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
    <iconPath>UI/Icons/Genes/BodyFluxspawnBrute</iconPath>
     <description>TBD</description>
     <displayOrderInCategory>9999</displayOrderInCategory>
@@ -123,10 +127,9 @@
 
   </GeneDef>  
 
-  <GeneDef>
+  <GeneDef ParentName="OMW_SamhaphageGeneBase">
     <defName>OMW_FluxSpawn_Flicker_Frame</defName>
     <label>null condensation</label>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
    <iconPath>UI/Icons/Genes/BodyFluxspawnFlicker</iconPath>
     <description>Hyper-condensed genome. This gene reduces the carrier to a small scale, trading physical durability for extreme elusiveness. Despite their fist-sized stature, their muscles vibrate with the strength of the Null-Thrum, allowing them to haul twice the weight of a full-grown man. They function as the sensory fringe of the Pulsing Silence, vibrating so rapidly that they appear as neon-purple smears against the landscape.</description>
     <displayOrderInCategory>9999</displayOrderInCategory>

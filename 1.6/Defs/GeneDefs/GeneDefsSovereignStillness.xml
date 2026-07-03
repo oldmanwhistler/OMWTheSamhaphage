@@ -4,7 +4,6 @@
   <GeneDef>
     <defName>OMW_SovereignStillness_Frame</defName>
     <label>TBD</label>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
     <iconPath>UI/Icons/Genes/BodySovereignStillness</iconPath>
     <description>TBD</description>
     <displayOrderInCategory>9999</displayOrderInCategory>
@@ -46,7 +45,12 @@
       <li>NightOwl</li>
     </exclusionTags>      
 
-    <modExtensions>
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+		<modExtensions>
+			<li Class="VEF.Genes.GeneExtension">
+				<backgroundPathEndogenes>UI/Icons/Genes/OMW_Samhaphage_Endogenes</backgroundPathEndogenes>
+				<backgroundPathXenogenes>UI/Icons/Genes/OMW_Samhaphage_Xenogenes</backgroundPathXenogenes>
+			</li>
       <li Class="BigAndSmall.PawnExtension">
 				<applyBodyHediff><li><hediff>BS_SoulSize</hediff></li></applyBodyHediff>
 			</li>
@@ -71,7 +75,6 @@
     <defName>OMW_PsychicAbility_SovereignStillness</defName>
     <label>null-thrum psy-sensitive</label>
     <labelShortAdj>psy-extreme</labelShortAdj>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
     <description>Carriers of this gene have synchronized to the Null-Thrum and achieved Stillness.</description>
     <iconPath>UI/Icons/Genes/Gene_ExtremePsychicAbility</iconPath>
     <displayOrderInCategory>30</displayOrderInCategory>
@@ -96,6 +99,13 @@
         </li>
       </prefixSymbols>
     </symbolPack>
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+		<modExtensions>
+			<li Class="VEF.Genes.GeneExtension">
+				<backgroundPathEndogenes>UI/Icons/Genes/OMW_Samhaphage_Endogenes</backgroundPathEndogenes>
+				<backgroundPathXenogenes>UI/Icons/Genes/OMW_Samhaphage_Xenogenes</backgroundPathXenogenes>
+			</li>
+		</modExtensions>    
   </GeneDef>
 
   <!-- cheat ability to break WVC Chimera -->
@@ -104,16 +114,20 @@
 	<label>TBD</label>
 	<description>TBD</description>
 	<iconPath>WVC/UI/Genes3/Gene_Chimera_MetLimit_5x0c</iconPath>
-  <displayCategory>OMW_PerfectSilence</displayCategory>  
 	<displayOrderInCategory>60</displayOrderInCategory>
 	<biostatMet>2</biostatMet>
 	<customEffectDescriptions>
 		<li>Chimera req. total metabolism &lt;color=#8a8ae6&gt;from -100 to 100&lt;/color&gt;.</li>
 	</customEffectDescriptions>
+   <displayCategory>OMW_PerfectSilence</displayCategory>
 	<modExtensions>
+			<li Class="VEF.Genes.GeneExtension">
+				<backgroundPathEndogenes>UI/Icons/Genes/OMW_Samhaphage_Endogenes</backgroundPathEndogenes>
+				<backgroundPathXenogenes>UI/Icons/Genes/OMW_Samhaphage_Xenogenes</backgroundPathXenogenes>
+			</li>
 		<li Class="WVC_XenotypesAndGenes.GeneExtension_Giver">
 			<intervalRange>-1000~1000</intervalRange>
 		</li>
-	</modExtensions>
+		</modExtensions>  
   </GeneDef>
 </Defs>

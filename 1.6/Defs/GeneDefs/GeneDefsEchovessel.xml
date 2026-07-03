@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs MayRequire="Ludeon.RimWorld.Biotech">
-  <GeneDef MayRequire="deimos.corpsechildrenupdate">
+  <GeneDef MayRequire="deimos.corpsechildrenupdate" ParentName="OMW_SamhaphageGeneBase">
     <defName>OMW_CorpseReassembler</defName>
     <label>thrum reassembler</label>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
     <description>Infected with a self-assembling xenovirus, these carriers treat the dead as both a pharmacy and a nursery. By recycling necrotic tissue, they can repair their own forms or stitch together 'reborn' progeny from fresh casualties. These new beings are biological echoes—physically mature, but mentally hollowed of their previous lives, existing only as a fresh start for the viral strain.</description>
     <iconPath>UI/Icons/Genes/CorpseReassembler</iconPath>
     <displayOrderInCategory>1</displayOrderInCategory>
@@ -16,11 +15,10 @@
     </forcedTraits>
   </GeneDef>
 
-  <GeneDef>
+  <GeneDef ParentName="OMW_SamhaphageGeneBase">
     <defName>OMW_Echovessel_Frame</defName>
     <label>TBD</label>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
-   <iconPath>UI/Icons/Genes/BodyEchovessel</iconPath>
+    <iconPath>UI/Icons/Genes/BodyEchovessel</iconPath>
     <description>TBD</description>
     <displayOrderInCategory>9999</displayOrderInCategory>
     <biostatCpx>4</biostatCpx>

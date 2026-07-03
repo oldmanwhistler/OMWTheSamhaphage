@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs MayRequire="Ludeon.RimWorld.Anomaly">
 
-  <GeneDef MayRequire="Ludeon.RimWorld.Anomaly">
+  <GeneDef MayRequire="Ludeon.RimWorld.Anomaly"  ParentName="OMW_SamhaphageGeneBase">
     <defName>OMW_VoidTrait_Occultist</defName>
     <label>thrum obsession</label>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
     <description>TBD</description>
       <iconPath>UI/Icons/Genes/Occultist</iconPath>
     <displayOrderInCategory>1</displayOrderInCategory>
@@ -22,10 +21,9 @@
     </exclusionTags>
   </GeneDef>
 
-  <GeneDef MayRequire="Ludeon.RimWorld.Anomaly">
+  <GeneDef MayRequire="Ludeon.RimWorld.Anomaly" ParentName="OMW_SamhaphageGeneBase">
     <defName>OMW_VoidTrait_BodyMastery</defName>
     <label>thrum memorization</label>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
     <description>TBD</description>
       <iconPath>UI/Icons/Genes/BodyMastery</iconPath>
     <displayOrderInCategory>1</displayOrderInCategory>
@@ -49,7 +47,6 @@
 	<description>Carriers of this gene are dominated by the Null-Thrum. They are completely disconnected from human concerns of family, friendship, and love.</description>
 	<iconPath>UI/Icons/Genes/OMW_Inhumanized</iconPath>
 	<selectionWeight>0.00022</selectionWeight>
-  <displayCategory>OMW_PerfectSilence</displayCategory>
 	<displayOrderInCategory>1</displayOrderInCategory>
 	<biostatCpx>1</biostatCpx>
 	<biostatArc>0</biostatArc>
@@ -63,7 +60,12 @@
 	  <li>Inhumanized</li>
 	</exclusionTags>
   	<geneClass>WVC_XenotypesAndGenes.Gene_Inhumanized</geneClass>
-	<modExtensions>
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+		<modExtensions>
+			<li Class="VEF.Genes.GeneExtension">
+				<backgroundPathEndogenes>UI/Icons/Genes/OMW_Samhaphage_Endogenes</backgroundPathEndogenes>
+				<backgroundPathXenogenes>UI/Icons/Genes/OMW_Samhaphage_Xenogenes</backgroundPathXenogenes>
+			</li>
 		<li Class="WVC_XenotypesAndGenes.GeneExtension_Giver">
 			<hediffDefName>Inhumanized</hediffDefName>
 		</li>

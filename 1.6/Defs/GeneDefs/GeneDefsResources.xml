@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs MayRequire="Ludeon.RimWorld.Biotech">
-    <GeneDef>
+    <GeneDef ParentName="OMW_SamhaphageGeneBase">
         <defName>OMW_Resonance</defName>
         <label>resonance</label>
         <description>Carriers of this gene possess a specialized neural architecture that allows them to store and manipulate resonance. Without a source of replenishment, this energy will naturally dissipate into the Null-Thrum.</description>
-        <geneClass>OMW_Samhaphage.Gene_ResourceResonance</geneClass>
         <iconPath>UI/Icons/Genes/Resonance</iconPath>
         <resourceGizmoType>OMW_Samhaphage.GeneGizmo_ResourceResonance</resourceGizmoType>        
         <showGizmoOnWorldView>true</showGizmoOnWorldView>
@@ -16,7 +15,6 @@
             <li>0.75</li>
         </resourceGizmoThresholds>
         <resourceDescription>The measure of stored biological vibrations. Used to power 'Retune' and other Null-Thrum distortions.</resourceDescription>
-        <displayCategory>OMW_PerfectSilence</displayCategory>
         <symbolPack>
             <prefixSymbols>
                 <li>
@@ -28,6 +26,6 @@
             </prefixSymbols>
         </symbolPack>
         <selectionWeight>0</selectionWeight>
-        <minAgeActive>3</minAgeActive>
+        <minAgeActive>0</minAgeActive>
     </GeneDef>
 </Defs>

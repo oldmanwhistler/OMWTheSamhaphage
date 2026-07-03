@@ -4,7 +4,6 @@
   <GeneDef>
     <defName>OMW_Samhaphage_Frame</defName>
     <label>TBD</label>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
     <iconPath>UI/Icons/Genes/BodySamhaphage</iconPath>
     <description>TBD</description>
     <displayOrderInCategory>9999</displayOrderInCategory>
@@ -45,8 +44,13 @@
       <exclusionTags>
       <li>NightOwl</li>
     </exclusionTags>      
-    
-    <modExtensions>
+
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+		<modExtensions>
+			<li Class="VEF.Genes.GeneExtension">
+				<backgroundPathEndogenes>UI/Icons/Genes/OMW_Samhaphage_Endogenes</backgroundPathEndogenes>
+				<backgroundPathXenogenes>UI/Icons/Genes/OMW_Samhaphage_Xenogenes</backgroundPathXenogenes>
+			</li>
       <li Class="BigAndSmall.PawnExtension">
 				<applyBodyHediff><li><hediff>BS_SoulSize</hediff></li></applyBodyHediff>
 			</li>

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs MayRequire="Ludeon.RimWorld.Biotech">
 
-  <GeneDef>
+  <GeneDef ParentName="OMW_SamhaphageGeneBase">
     <defName>OMW_Hallowbound_Frame</defName>
     <label>harrowed geometry</label>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
    <iconPath>UI/Icons/Genes/BodyHallowbound</iconPath>
     <description>The subjects physiology has been "harrowed" into a lanky frame. By stripping away the soft markers of individuality, the skeleton is elongated and thinned until the body possesses an unsettling grace. Their face is featureless except for the facial ridges that ripple when the creature consumes.</description>
     <displayOrderInCategory>9999</displayOrderInCategory>
@@ -36,10 +35,9 @@
 
   </GeneDef>
 
-  <GeneDef>
+  <GeneDef ParentName="OMW_SamhaphageGeneBase">
     <defName>OMW_Hallowbound_EntropyWell</defName>
     <label>entropy well</label>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
     <description>Their metabolism operates at a frequency so low that molecular friction and body heat are negligible. It makes their flesh takes on the texture of cold, waxy tallow. They are unsettling to the touch but it allows them to work tirelessly in sub-zero temperatures where baseliners would fail.</description>
     <iconPath>UI/Icons/Genes/EntropyWell</iconPath>
     <displayOrderInCategory>1</displayOrderInCategory>

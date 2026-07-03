@@ -6,10 +6,19 @@
     <displayPriorityInXenotype>1</displayPriorityInXenotype>
   </GeneCategoryDef>
 
-  <GeneDef>
+  <GeneDef Name="OMW_SamhaphageGeneBase" Abstract="True">
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+		<modExtensions>
+			<li Class="VEF.Genes.GeneExtension">
+				<backgroundPathEndogenes>UI/Icons/Genes/OMW_Samhaphage_Endogenes</backgroundPathEndogenes>
+				<backgroundPathXenogenes>UI/Icons/Genes/OMW_Samhaphage_Xenogenes</backgroundPathXenogenes>
+			</li>
+		</modExtensions>
+</GeneDef>
+
+  <GeneDef ParentName="OMW_SamhaphageGeneBase">
     <defName>OMW_ScouredMind</defName>
     <label>Scoured Mind</label>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
     <description>They have seen the true nature of the Samhaphage and the value of a single human life has withered away. This gene marks those whose hearts have 'gone silent.' They can watch a friend fall or a stranger burn with the same detached curiosity one might feel watching a sunset. They are not cruel because cruelty requires an understanding of pain. They are simply empty.
     </description>
       <iconPath>UI/Icons/Genes/ScouredMind</iconPath>
@@ -32,12 +41,11 @@
     </exclusionTags>
   </GeneDef>
 
-  <GeneDef>
+  <GeneDef ParentName="OMW_SamhaphageGeneBase">
     <defName>OMW_NullThrum</defName>
     <label>null-thrum</label>
     <description>The carrier’s skeletal structure has been 'harrowed' to vibrate at a frequency below human hearing. This constant, rhythmic thrum is the voice of the Sovereign Stillness. It drowns out individual thought and physical pain, leaving only a hollow, vibrating peace. And an emptiness that no amount of blood and meat can fill.</description>
     <iconPath>UI/Icons/Genes/NullThrum</iconPath>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
     <statOffsets>
       <PainShockThreshold>0.3</PainShockThreshold>
       <PsychicSensitivity>0.5</PsychicSensitivity>
@@ -47,14 +55,19 @@
   <GeneDef MayRequire="wvc.sergkart.races.biotech">
     <defName>OMW_Amnesia</defName>
     <label>TBD</label>
-    <displayCategory>OMW_PerfectSilence</displayCategory>
     <description>TBD</description>
     <iconPath>UI/Icons/Genes/TBD</iconPath>
     <displayOrderInCategory>1</displayOrderInCategory>
     <biostatCpx>0</biostatCpx>
     <biostatMet>0</biostatMet>
     <geneClass>WVC_XenotypesAndGenes.Gene_BackstoryChanger</geneClass>    
-	  <modExtensions>
+    
+    <displayCategory>OMW_PerfectSilence</displayCategory>
+		<modExtensions>
+			<li Class="VEF.Genes.GeneExtension">
+				<backgroundPathEndogenes>UI/Icons/Genes/OMW_Samhaphage_Endogenes</backgroundPathEndogenes>
+				<backgroundPathXenogenes>UI/Icons/Genes/OMW_Samhaphage_Xenogenes</backgroundPathXenogenes>
+			</li>
     <li Class="WVC_XenotypesAndGenes.GeneExtension_Giver">
 			<childBackstoryDef>WVC_RacesBiotech_Amnesia_Child</childBackstoryDef>
 			<adultBackstoryDef>WVC_RacesBiotech_Amnesia_Adult</adultBackstoryDef>
