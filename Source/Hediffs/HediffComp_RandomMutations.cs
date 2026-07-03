@@ -2,13 +2,15 @@ using System.Collections.Generic;
 using System.Linq;
 using Verse;
 
-// Inspired by AlphaGenes' RandomMutation hediff comp (c) juanosarg. 
+// Based onAlphaGenes' RandomMutation hediff comp (c)2021 juanosarg. License CC-BY-NC-ND.
 // See original at: https://github.com/juanosarg/AlphaGenes/blob/d6f14ee6106ce01351c86eb369703edde65bce66/1.6/Source/AlphaGenes/AlphaGenes/HediffComps/HediffComp_RandomMutation.cs
 
 // The difference from Alpha Genes:
 // - uses my own "random gene blacklist control", although if you look at OMW_BlacklistGenes mine respects the WretchBlacklistDef.
 // - the genes are only removed if they remained xenogenes.
 // - it can filter out genes not within the min/max metabolism range.
+//
+// With thanks to juanosarg for the original code and inspiration. With the original code, the genes would be removed even if they were copied to another Pawn (although duplicating the gene from the gene.def would solve that). I want these random genes to be something that could be harvested or used to build stronger pawns, so I only remove the genes if they are still xenogenes.
 
 namespace OMW_Samhaphage
 {

@@ -6,7 +6,12 @@ using System.Collections.Generic;
 using RimWorld.Planet;
 using AlphaGenes;
 
-// Based on AlphaGenes HediffComp_Parasites, but the eggs will belong to a specific xenotype, that doesn't need to match either xenotype. e.g. Alien movies.
+// Based onAlphaGenes' Parasite hediff comp (c)2021 juanosarg. License CC-BY-NC-ND.
+// See original at: https://github.com/juanosarg/AlphaGenes/blob/d6f14ee6106ce01351c86eb369703edde65bce66/1.6/Source/AlphaGenes/AlphaGenes/HediffComps/HediffComp_Parasites.cs
+
+// The differences from AlphaGenes
+// - has a targetXenotype that can be neither the mother nor the father, since multiple xenotypes can be used to create fluxspawn through infestation.
+// - has a min/max number of babies that can be spawned, since the fluxspawn are born via litter.
 
 namespace OMW_Samhaphage
 {
