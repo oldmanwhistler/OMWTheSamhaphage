@@ -17,7 +17,7 @@
       <li MayRequire="omw.samhaphage">OMW_ScouredMind</li>
       <li MayRequire="omw.samhaphage">OMW_NullThrum</li>
       <li MayRequire="omw.samhaphage">OMW_Hallowbound_EntropyWell</li>
-      <li MayRequire="omw.samhaphage">OMW_UnstableMutation</li>       
+      <li MayRequire="omw.samhaphage">OMW_Mutation_1_FrequencyBleed</li>       
       <li MayRequire="omw.samhaphage">OMW_Resonance</li>
       <li MayRequire="redmattis.bigsmall.core">BS_Passioned_Learning_Gene</li>
       <li MayRequire="redmattis.bigsmall.core">BS_VeryFastAging</li>

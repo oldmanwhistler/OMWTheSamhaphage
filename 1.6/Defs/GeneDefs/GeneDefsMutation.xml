@@ -1,35 +1,70 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Defs MayRequire="Ludeon.RimWorld.Biotech">
-    <GeneDef>
-        <defName>OMW_UnstableMutation</defName>
-        <label>unstable mutation</label>
-        <description>Carriers of this gene can force an unstable mutation on their bodies once per day. This mutation will activate a new random gene for 12 hours. The genes will only deactivate if they are an xenogene. Endogenes will persist.</description>
-        <iconPath>UI/Icons/Genes/AG_UnstableMutation</iconPath>
+    <GeneDef ParentName="OMW_SamhaphageGeneBase">
+        <defName>OMW_Mutation_1_FrequencyBleed</defName>
+        <label>Frequency Bleed</label>
+        <description>
+        Once per day, the carrier can force a volatile, random genetic signal to manifest within their flesh. This temporary broadcast runs for exactly 12 hours. The manifested signal is a superficial xenogene, and lacks the foundational grounding to sustain itself. After 12 hours, the transmission loses amplitude, the channel closes, and the gene fades back into quiet static</description>
+        <customEffectDescriptions>
+            <li>If the xenogene is converted to an endogene, it will persist.</li>
+        </customEffectDescriptions>        
+        <iconPath>UI/Icons/Genes/OMW_Mutation_1_FrequencyBleed</iconPath>
         <statFactors>
             <CancerRate>3</CancerRate>
         </statFactors>
         <abilities>
-            <li>OMW_UnstableMutation</li>
+            <li>OMW_Mutation_1_FrequencyBleed</li>
         </abilities>
         <exclusionTags>
-            <li>AG_UnstableMutations</li>
+            <li>OMW_Mutation_1_FrequencyBleed</li>
         </exclusionTags>
         <selectionWeight>0</selectionWeight>
         <descriptionHyperlinks>
-            <AbilityDef>OMW_UnstableMutation</AbilityDef>
+            <AbilityDef>OMW_Mutation_1_FrequencyBleed</AbilityDef>
         </descriptionHyperlinks>
         <biostatMet>-2</biostatMet>
         <biostatCpx>1</biostatCpx>
     </GeneDef>
     
-    <GeneDef>
-        <defName>OMW_UnstableMutationMinor</defName>
-        <label>unstable mutation, minor</label>
+    <GeneDef ParentName="OMW_SamhaphageGeneBase">
+        <defName>OMW_Mutation_2_SpectrumInterference</defName>
+        <label>Spectrum Interference</label>
+        <statFactors>
+            <CancerRate>10</CancerRate>
+        </statFactors>
         <exclusionTags>
             <li>AG_UnstableMutations</li>
         </exclusionTags>
-        <description>Carriers of this gene will suffer an unstable mutation on their bodies once per day. This mutation will activate new random genes for the whole day. Next day, new genes will take their place. The genes will only deactivate if they are an xenogene. Endogenes will persist.</description>
-        <iconPath>UI/Icons/Genes/AG_UnstableMutation</iconPath>
+        <description>Every 24 hours, a massive wave of external static sweeps through the host's sequence, washing away the previous day's aberrations and forcing a completely new, randomized suite of xenogenes into active expression.</description>
+                <customEffectDescriptions>
+            <li>If the xenogene is converted to an endogene, it will persist.</li>
+        </customEffectDescriptions>  
+        <iconPath>UI/Icons/Genes/OMW_Mutation_2_SpectrumInterference</iconPath>
+        <displayOrderInCategory>114.1</displayOrderInCategory>
+        <biostatMet>0</biostatMet>
+        <biostatCpx>0</biostatCpx>
+        <selectionWeight>0</selectionWeight>
+        <displayCategory>OMW_PerfectSilence</displayCategory>
+		<modExtensions>
+			<li Class="VEF.Genes.GeneExtension">
+				<backgroundPathEndogenes>UI/Icons/Genes/OMW_Samhaphage_Endogenes</backgroundPathEndogenes>
+				<backgroundPathXenogenes>UI/Icons/Genes/OMW_Samhaphage_Xenogenes</backgroundPathXenogenes>
+                <hediffToWholeBody>OMW_Mutation_2_SpectrumInterference</hediffToWholeBody>
+            </li>
+        </modExtensions>
+    </GeneDef>
+
+    <GeneDef ParentName="OMW_SamhaphageGeneBase">
+        <defName>OMW_Mutation_3_StrayFrequency</defName>
+        <label>Stray Frequency</label>
+        <exclusionTags>
+            <li>AG_UnstableMutations</li>
+        </exclusionTags>
+        <description>Every 24 hours, a massive wave of external static sweeps through the host's sequence, washing away the previous day's aberrations and forcing a completely new, randomized suite of xenogenes into active expression.</description>
+            <customEffectDescriptions>
+            <li>If the xenogene is converted to an endogene, it will persist.</li>
+        </customEffectDescriptions>          
+        <iconPath>UI/Icons/Genes/OMW_Mutation_3_StrayFrequency</iconPath>
         <displayOrderInCategory>114</displayOrderInCategory>
         <statFactors>
             <CancerRate>5</CancerRate>
@@ -42,19 +77,22 @@
 			<li Class="VEF.Genes.GeneExtension">
 				<backgroundPathEndogenes>UI/Icons/Genes/OMW_Samhaphage_Endogenes</backgroundPathEndogenes>
 				<backgroundPathXenogenes>UI/Icons/Genes/OMW_Samhaphage_Xenogenes</backgroundPathXenogenes>
-                <hediffToWholeBody>OMW_UnstableMutationMinor</hediffToWholeBody>
+                <hediffToWholeBody>OMW_Mutation_3_StrayFrequency</hediffToWholeBody>
             </li>
         </modExtensions>
     </GeneDef>
 
-    <GeneDef>
-        <defName>OMW_UnstableMutationMajor</defName>
-        <label>unstable mutation, major</label>
+    <GeneDef ParentName="OMW_SamhaphageGeneBase">
+        <defName>OMW_Mutation_4_HarmonicDistortion</defName>
+        <label>Harmonic Distortion</label>
         <exclusionTags>
             <li>AG_UnstableMutations</li>
         </exclusionTags>
-        <description>Carriers of this gene will suffer an unstable mutation on their bodies once per day. This mutation will activate new random genes for the whole day. Next day, new genes will take their place. The genes will only deactivate if they are an xenogene. Endogenes will persist.</description>
-        <iconPath>UI/Icons/Genes/AG_UnstableMutationMajor</iconPath>
+        <description>Every 24 hours, a massive wave of external static sweeps through the host's sequence, washing away the previous day's aberrations and forcing a completely new, randomized suite of xenogenes into active expression.</description>
+            <customEffectDescriptions>
+            <li>If the xenogene is converted to an endogene, it will persist.</li>
+        </customEffectDescriptions>  
+        <iconPath>UI/Icons/Genes/OMW_Mutation_4_HarmonicDistortion</iconPath>
         <displayOrderInCategory>114</displayOrderInCategory>
         <statFactors>
             <CancerRate>10</CancerRate>
@@ -67,25 +105,25 @@
 			<li Class="VEF.Genes.GeneExtension">
 				<backgroundPathEndogenes>UI/Icons/Genes/OMW_Samhaphage_Endogenes</backgroundPathEndogenes>
 				<backgroundPathXenogenes>UI/Icons/Genes/OMW_Samhaphage_Xenogenes</backgroundPathXenogenes>
-                <hediffToWholeBody>OMW_UnstableMutationMajor</hediffToWholeBody>
+                <hediffToWholeBody>OMW_Mutation_4_HarmonicDistortion</hediffToWholeBody>
             </li>
         </modExtensions>
     </GeneDef>
 
-    <GeneDef>
-        <defName>OMW_UnstableMutationCatastrophic</defName>
-        <label>unstable mutation, catastrophic</label>
+    <GeneDef ParentName="OMW_SamhaphageGeneBase">
+        <defName>OMW_Mutation_5_PhaseRupture</defName>
+        <label>Phase Rupture</label>
         <exclusionTags>
             <li>AG_UnstableMutations</li>
         </exclusionTags>
-        <description>Carriers of this gene will suffer a very powerful unstable mutation on their bodies once per day. This mutation will activate new random genes for the whole day.  The genes will only deactivate if they are an xenogene. Endogenes will persist.</description>
+        <description>Every 24 hours, a massive wave of external static sweeps through the host's sequence, washing away the previous day's aberrations and forcing a completely new, randomized suite of xenogenes into active expression.</description>
         <customEffectDescriptions>
-            <li>This mutation can be incredibly harmful, and potentially lethal.</li>
+            <li>This mutation can be incredibly harmful, and potentially lethal. If the xenogene is converted to an endogene, it will persist.</li>
         </customEffectDescriptions>
         <statFactors>
             <CancerRate>15</CancerRate>
         </statFactors>
-        <iconPath>UI/Icons/Genes/AG_UnstableMutationCatastrophic</iconPath>
+        <iconPath>UI/Icons/Genes/OMW_Mutation_5_PhaseRupture</iconPath>
         <displayOrderInCategory>114.1</displayOrderInCategory>
         <biostatMet>10</biostatMet>
         <biostatCpx>3</biostatCpx>
@@ -95,33 +133,9 @@
 			<li Class="VEF.Genes.GeneExtension">
 				<backgroundPathEndogenes>UI/Icons/Genes/OMW_Samhaphage_Endogenes</backgroundPathEndogenes>
 				<backgroundPathXenogenes>UI/Icons/Genes/OMW_Samhaphage_Xenogenes</backgroundPathXenogenes>
-                <hediffToWholeBody>OMW_UnstableMutationCatastrophic</hediffToWholeBody>
+                <hediffToWholeBody>OMW_Mutation_5_PhaseRupture</hediffToWholeBody>
             </li>
         </modExtensions>
     </GeneDef>
 
-    <GeneDef>
-        <defName>OMW_UnstableMutationPositive</defName>
-        <label>unstable mutation, Positive</label>
-        <statFactors>
-            <CancerRate>10</CancerRate>
-        </statFactors>
-        <exclusionTags>
-            <li>AG_UnstableMutations</li>
-        </exclusionTags>
-        <description>Carriers of this gene will suffer a unstable mutation on their bodies once per day. This mutation will activate new random genes for the whole day.  The genes will only deactivate if they are an xenogene. Endogenes will persist.</description>
-        <iconPath>UI/Icons/Genes/AG_UnstableMutation</iconPath>
-        <displayOrderInCategory>114.1</displayOrderInCategory>
-        <biostatMet>0</biostatMet>
-        <biostatCpx>0</biostatCpx>
-        <selectionWeight>0</selectionWeight>
-        <displayCategory>OMW_PerfectSilence</displayCategory>
-		<modExtensions>
-			<li Class="VEF.Genes.GeneExtension">
-				<backgroundPathEndogenes>UI/Icons/Genes/OMW_Samhaphage_Endogenes</backgroundPathEndogenes>
-				<backgroundPathXenogenes>UI/Icons/Genes/OMW_Samhaphage_Xenogenes</backgroundPathXenogenes>
-                <hediffToWholeBody>OMW_UnstableMutationPositive</hediffToWholeBody>
-            </li>
-        </modExtensions>
-    </GeneDef>
 </Defs>

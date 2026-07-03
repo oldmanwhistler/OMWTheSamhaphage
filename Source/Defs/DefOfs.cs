@@ -55,11 +55,11 @@ namespace OMW_Samhaphage
         public static GeneDef OMW_NullThrum;
         public static GeneDef OMW_Resonance;
 
-        public static GeneDef OMW_UnstableMutationMinor;        
-        public static GeneDef OMW_UnstableMutationMajor;
-        public static GeneDef OMW_UnstableMutation;
-        public static GeneDef OMW_UnstableMutationCatastrophic;
-        public static GeneDef OMW_UnstableMutationPositive;
+        public static GeneDef OMW_Mutation_3_StrayFrequency;        
+        public static GeneDef OMW_Mutation_4_HarmonicDistortion;
+        public static GeneDef OMW_Mutation_1_FrequencyBleed;
+        public static GeneDef OMW_Mutation_5_PhaseRupture;
+        public static GeneDef OMW_Mutation_2_SpectrumInterference;
         public static GeneDef OMW_Cradlemold_Frame;
         public static GeneDef OMW_Fluxspawn_Nudist;
         public static GeneDef OMW_Fluxspawn_Ferility;

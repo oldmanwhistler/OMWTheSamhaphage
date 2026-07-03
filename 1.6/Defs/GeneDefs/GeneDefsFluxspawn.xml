@@ -6,7 +6,7 @@
     <label>slime-slicked</label>
     <displayCategory>OMW_PerfectSilence</displayCategory>
     <description>The epidermal layer of this subspecies is a semi-permeable, hyper-active membrane. Constant mutagenic secretion and rapid cellular flux mean the body’s volume fluctuates by several liters per hour. To these creatures, clothing is not just a nuisance — it is a restrictive, suffocating cage that becomes a sodden, abrasive hazard within minutes of being donned.</description>
-    <iconPath>UI/Icons/Genes/FluxFerility</iconPath>
+    <iconPath>UI/Icons/Genes/OMW_SlugNudity</iconPath>
     <displayOrderInCategory>1</displayOrderInCategory>
     <biostatCpx>3</biostatCpx>
     <biostatMet>3</biostatMet>

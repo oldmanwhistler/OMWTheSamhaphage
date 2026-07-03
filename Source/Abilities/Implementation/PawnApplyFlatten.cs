@@ -203,7 +203,7 @@ namespace OMW_Samhaphage
             PurgeNegativeMemories(victim);
 
             Log.Debug($"Flatten - adding Unstable Mutation Minor to {victim.LabelShort}");
-            victim.genes.AddGene(OMW_GeneDefOf.OMW_UnstableMutationMinor, xenogene: true);
+            victim.genes.AddGene(OMW_GeneDefOf.OMW_Mutation_3_StrayFrequency, xenogene: true);
 
             Log.Debug($"Flatten - refreshing dirty graphics on {victim.LabelShort}");
             OMWGenes.Refresh(victim);

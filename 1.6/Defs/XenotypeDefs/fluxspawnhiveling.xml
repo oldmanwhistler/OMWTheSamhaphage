@@ -13,7 +13,7 @@
       <li MayRequire="omw.samhaphage">OMW_Fluxspawn_Ferility</li>
       <li MayRequire="omw.samhaphage">OMW_FluxSpawn_Hiveling_Frame</li>
       <li MayRequire="omw.samhaphage">OMW_NullThrum</li>
-      <li MayRequire="omw.samhaphage">OMW_UnstableMutationCatastrophic</li>
+      <li MayRequire="omw.samhaphage">OMW_Mutation_5_PhaseRupture</li>
       <li MayRequire="omw.samhaphage">OMW_Resonance</li>
       <li MayRequire="omw.samhaphage,wvc.sergkart.races.biotech">OMW_Amnesia</li>             
       <li MayRequire="redmattis.bigsmall.core">BS_CellPandemonium</li>
@@ -38,8 +38,6 @@
       <li MayRequire="sarg.alphagenes">AG_JellyFlesh</li>
       <li MayRequire="sarg.alphagenes">AG_Teratogenesis</li>
       <li MayRequire="sarg.alphagenes">AG_HealingTouch</li>
-      <li MayRequire="sarg.alphagenes">AG_TeratogenicManipulation</li>
-      <li MayRequire="sarg.alphagenes">AG_TeratogenicSwiftness</li>
       <li MayRequire="sarg.alphagenes">AG_EfficientMandibles</li>
       <li MayRequire="sarg.alphagenes">AG_ToxResist_Vulnerability</li>
       <li MayRequire="sarg.alphagenes">AG_UnsettlingAppearance</li>

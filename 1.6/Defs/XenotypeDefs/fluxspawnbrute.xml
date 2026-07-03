@@ -13,7 +13,7 @@
       <li MayRequire="omw.samhaphage">OMW_Fluxspawn_Ferility</li>
       <li MayRequire="omw.samhaphage">OMW_FluxSpawn_Brute_Frame</li>
       <li MayRequire="omw.samhaphage">OMW_NullThrum</li>
-      <li MayRequire="omw.samhaphage">OMW_UnstableMutationMajor</li>
+      <li MayRequire="omw.samhaphage">OMW_Mutation_4_HarmonicDistortion</li>
       <li MayRequire="omw.samhaphage">OMW_Resonance</li>      
       <li MayRequire="omw.samhaphage,wvc.sergkart.races.biotech">OMW_Amnesia</li>
       <li MayRequire="redmattis.bigsmall.core">BS_CellPandemonium</li>
@@ -41,12 +41,8 @@
       <li MayRequire="sarg.alphagenes">AG_JellyFlesh</li>
       <li MayRequire="sarg.alphagenes">AG_VFEI_AdrenalSecretors</li>
       <li MayRequire="sarg.alphagenes">AG_Teratogenesis</li>
-      <li MayRequire="sarg.alphagenes">AG_TeratogenicHealing</li>
-      <li MayRequire="sarg.alphagenes">AG_TeratogenicStamina</li>
-      <li MayRequire="sarg.alphagenes">AG_TeratogenicBurst</li>
       <li MayRequire="sarg.alphagenes">AG_EfficientMandibles</li>
       <li MayRequire="sarg.alphagenes">AG_UnstableRegeneration</li>
-      <li MayRequire="sarg.alphagenes">AG_UnstableMutationMajor</li>
       <li MayRequire="sarg.alphagenes">AG_ToxResist_Vulnerability</li>
       <li MayRequire="sarg.alphagenes">AG_UnsettlingAppearance</li>
       <li MayRequire="sarg.alphagenes">AG_SlugFace</li>

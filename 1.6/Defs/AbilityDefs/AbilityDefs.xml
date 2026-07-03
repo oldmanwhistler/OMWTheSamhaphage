@@ -2,15 +2,15 @@
 <Defs>
 
     <AbilityDef ParentName="AG_NoTargetAbilities">
-        <defName>OMW_UnstableMutation</defName>
-        <label>unstable mutation</label>
+        <defName>OMW_Mutation_1_FrequencyBleed</defName>
+        <label>Spectrum Interference</label>
         <description>Forces an unstable mutation on the caster's body. This mutation will activate a new random gene for 12 hours. After that period passes, the gene will deactivate.</description>
         <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
-        <iconPath>UI/Icons/Genes/AG_UnstableMutation</iconPath>
+        <iconPath>UI/Icons/Genes/OMW_Mutation_1_FrequencyBleed</iconPath>
         <cooldownTicksRange>60000</cooldownTicksRange>
         <comps>
             <li Class="AlphaGenes.CompProperties_GiveHediff">
-                <hediffDef>OMW_UnstableMutation</hediffDef>
+                <hediffDef>OMW_Mutation_1_FrequencyBleed</hediffDef>
             </li>
         </comps>
     </AbilityDef>
