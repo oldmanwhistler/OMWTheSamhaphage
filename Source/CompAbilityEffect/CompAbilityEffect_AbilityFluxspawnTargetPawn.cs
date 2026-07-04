@@ -31,11 +31,6 @@ namespace OMW_Samhaphage
             NullThrumAbilityBase ability;
             if (target.Thing is Pawn otherPawn)
             {
-                if (xeno == OMW_XenotypeDefOf.omw_fluxspawn_flicker)
-                {
-                    ability = new FluxspawnFlickerStun();
-                    items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
-                }
                 ability = new PawnApplyEnwombSacrifice();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 

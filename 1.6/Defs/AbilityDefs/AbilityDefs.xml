@@ -6,7 +6,7 @@
         <label>Spectrum Interference</label>
         <description>Forces an unstable mutation on the caster's body. This mutation will activate a new random gene for 12 hours. After that period passes, the gene will deactivate.</description>
         <casterMustBeCapableOfViolence>false</casterMustBeCapableOfViolence>
-        <iconPath>UI/Icons/Genes/OMW_Mutation_1_FrequencyBleed</iconPath>
+        <iconPath>UI/Abilities/OMW_Mutation_1_FrequencyBleed</iconPath>     
         <cooldownTicksRange>60000</cooldownTicksRange>
         <comps>
             <li Class="AlphaGenes.CompProperties_GiveHediff">
@@ -14,5 +14,37 @@
             </li>
         </comps>
     </AbilityDef>
-    
+
+    <AbilityDef Name="OMW_AbilityFluxspawnStun">
+        <defName>OMW_AbilityFluxspawnStun</defName>
+        <label>Stun</label>
+        <description>Stuns a target for a short duration to give the Flicker time to parasitize them.</description>
+        <hostile>true</hostile>
+        <verbProperties >
+            <verbClass>Verb_CastAbility</verbClass>
+            <range>200</range >
+            <warmupTime>2</warmupTime>
+	        <requireLineOfSight>true</requireLineOfSight>            
+            <targetParams>
+                <canTargetSelf>false</canTargetSelf>
+                <canTargetPawns>true</canTargetPawns>
+                <canTargetBuildings>false</canTargetBuildings>
+                <canTargetCorpses>false</canTargetCorpses>
+                <canTargetMechs>false</canTargetMechs>
+                <canTargetAnimals>true</canTargetAnimals>
+            </targetParams>
+        </verbProperties>
+        <iconPath>UI/Abilities/OMW_FluxspawnStun</iconPath>     
+        <cooldownTicksRange>1250</cooldownTicksRange>
+        <canUseAoeToGetTargets>false</canUseAoeToGetTargets>        
+        <displayGizmoWhileUndrafted>false</displayGizmoWhileUndrafted>
+        <disableGizmoWhileUndrafted>true</disableGizmoWhileUndrafted>            
+        <category>OMW_SamhaphageAbility</category>
+        <uiOrder>2</uiOrder>
+        <comps>
+            <li Class = "OMW_Samhaphage.CompProperties_AbilityFluxspawnStun">
+            </li>
+        </comps>        
+    </AbilityDef>
+
 </Defs>

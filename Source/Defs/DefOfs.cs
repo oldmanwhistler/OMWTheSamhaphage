@@ -10,6 +10,7 @@ namespace OMW_Samhaphage
         public static HediffDef OMW_SilentServitude;
         public static HediffDef OMW_GeneticDissonance;
         public static HediffDef OMW_ParasiticImplantation;
+        public static HediffDef OMW_TemporaryUnconscious;
 
         static OMW_HediffDefOf()
         {
@@ -62,7 +63,7 @@ namespace OMW_Samhaphage
         public static GeneDef OMW_Mutation_2_SpectrumInterference;
         public static GeneDef OMW_Cradlemold_Frame;
         public static GeneDef OMW_Fluxspawn_Nudist;
-        public static GeneDef OMW_Fluxspawn_Ferility;
+        public static GeneDef OMW_Fluxspawn_Fertility;
         public static GeneDef OMW_FluxSpawn_Hiveling_Frame;
         public static GeneDef OMW_FluxSpawn_Brute_Frame;
         public static GeneDef OMW_FluxSpawn_Flicker_Frame;

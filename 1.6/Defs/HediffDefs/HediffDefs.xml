@@ -169,4 +169,32 @@
         <initialSeverity>1.0</initialSeverity>
     </HediffDef>
 
+    <HediffDef>
+        <defName>OMW_TemporaryUnconscious</defName>
+        <label>frequency-induced torpor</label>
+        <description>This pawn has been rendered unconscious by a frequency-based attack. They will awaken after a short period of time.</description>        
+        <hediffClass>HediffWithComps</hediffClass>
+        <initialSeverity>1.0</initialSeverity>
+        <isBad>true</isBad>
+        
+        <comps>
+            <li Class="HediffCompProperties_Disappears">
+                <disappearsAfterTicks>1250</disappearsAfterTicks>
+                <showRemainingTime>True</showRemainingTime>
+            </li>
+        </comps>
+        
+        <stages>
+            <li>
+                <label>unconscious</label>
+                <capMods>
+                    <li>
+                        <capacity>Consciousness</capacity>
+                        <setMax>0.2</setMax>
+                    </li>
+                </capMods>
+            </li>
+        </stages>
+    </HediffDef>
+
 </Defs>

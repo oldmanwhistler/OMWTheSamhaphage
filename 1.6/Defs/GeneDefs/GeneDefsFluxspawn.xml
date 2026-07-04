@@ -159,11 +159,13 @@
     </statFactors>
 
 		<abilities>
+    	<li>OMW_AbilityFluxspawnStun</li>
 			<li>OMW_AbilityFluxspawnSelf</li>
 			<li>OMW_AbilityFluxspawnTargetPawn</li>
 			<li>OMW_AbilityFluxspawnTargetCorpse</li>
 		</abilities>
 		<descriptionHyperlinks>
+      <AbilityDef>OMW_AbilityFluxspawnStun</AbilityDef>
 			<AbilityDef>OMW_AbilityFluxspawnSelf</AbilityDef>
 			<AbilityDef>OMW_AbilityFluxspawnTargetPawn</AbilityDef>
 			<AbilityDef>OMW_AbilityFluxspawnTargetCorpse</AbilityDef>      
