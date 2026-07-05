@@ -9,15 +9,13 @@ namespace OMW_Samhaphage
 {
     public class PawnApplyPhaseLock : NullThrumAbilityPawnOnly
     {
-        protected int complexityCost;
         public override NullThrumAbilityProps AbilityProp => OMW_Mod.settings.abilityValue.phaselock;
         public override NullThrumAbilityType AbilityType => AbilityProp.abilityType;
         public override string AbilityDescription(Pawn victim, Pawn caster) => $"Phase lock {victim.LabelShort} with Fluxspawn embryos.\nThe process is lethal and will birth a litter of Fluxspawn.";
         public override Texture2D Icon => ContentFinder<Texture2D>.Get("UI/Abilities/OMW/PhaseLock", false) ??
                                           BaseContent.BadTex;
-        public override bool IsLethal => true;
+        public override bool IsLethal => false;
         
-        public virtual HediffDef TargetHediffDef => OMW_HediffDefOf.OMW_ParasiticImplantation;
         public virtual XenotypeDef TargetXenotype => OMW_XenotypeDefOf.omw_fluxspawn_hiveling;        
 
         public override void ApplyPawn(Pawn victim, Pawn caster)
@@ -63,7 +61,25 @@ namespace OMW_Samhaphage
                 // Send a message to the player in-game explaining why the ability failed
                 Messages.Message($"There are no valid double beds available for {victim.LabelShort}.", MessageTypeDefOf.RejectInput, false);
                 return;
-            }            
+            }
+
+            int cost = victim.relations.OpinionOf(caster);
+            if (cost > 0)
+            {
+                // victim has high opinion so give resonance
+                ResonanceUtility.Incr($"Phase locking someone who likes you", caster, cost);
+            } 
+            else
+            {
+                cost = -1 * cost;
+                if (!ResonanceUtility.Decr(caster, cost))
+                {
+                    Log.Error(
+                        $"[OMW_Samhaphage] Failed to decrement resonance for {caster.LabelShort} during {AbilityType}. This indicates a logic error where CanApplyOnPawn did not prevent the ability.");
+                    doOnComplete();
+                    return;
+                }
+            }
 
             var job = JobMaker.MakeJob(JobDefOf.Lovin, victim, foundBed);
             caster.jobs.StartJob(job, JobCondition.InterruptForced, resumeCurJobAfterwards: false);
@@ -179,13 +195,17 @@ namespace OMW_Samhaphage
                 return false;
             }
             
-            complexityCost = OMWGenes.CalculateComplexity(victim, true, caster.genes.Xenotype);
-            if (!ResonanceUtility.HasAvailable(caster, complexityCost))
+            // How friendly is the victim to the caster
+            int cost = -1 * victim.relations.OpinionOf(caster);
+            if (cost > 0)
             {
-                reason =
-                    $"{caster.LabelShort} does not have enough resonance to phase lock {victim.LabelShort}. Requires {complexityCost} resonance.";
-                return false;
-            }            
+                if (!ResonanceUtility.HasAvailable(caster, cost))
+                {
+                    reason =
+                        $"{caster.LabelShort} does not have enough resonance to phase lock {victim.LabelShort}. Requires {cost} resonance.";
+                    return false;
+                }
+            }
 
             return CanApplyLimitXenotype(TargetXenotype, out reason);
         }
