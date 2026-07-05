@@ -21,7 +21,8 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 ## Design Documents
 
 * [See LORE.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/LORE.md) for the descriptions and ideas behind this.
-* [See DESIGN_RULES.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DESIGN_RULES.md) for information about the abilities / genes / xenotypes.
+* [See REPRODUCTION.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/REPRODUCTION.md) for information the cross-xenotype reproductive cycle.
+* [See ABILITIES.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/ABILTIES.md) for information about the abilities.
 * [See DEV_DIARY.md](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DevDiary/DEV_DIARY.md) for my thoughts and experiences while working on it.
 
 ## Game Loop
@@ -199,3 +200,4 @@ Inspirations from:
 
 * Unstable Mutations [AlphaGenes (c)2021 juanosarg](https://github.com/juanosarg/AlphaGenes) [License CC-BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 * Parasitic Implantation [AlphaGenes (c)2021 juanosarg](https://github.com/juanosarg/AlphaGenes) [License CC-BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+* Lovin job [Hospitality: Room Service](https://steamcommunity.com/sharedfiles/filedetails/?id=3756771316)
