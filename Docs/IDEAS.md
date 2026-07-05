@@ -37,6 +37,10 @@ samhaphage need to be able to space walk?
 - Slither
 - "Just a little guy" fluxspawn
 - Legally Blonde by a Cradlemold with a Fluxspawn in a purse
+
+## Easter Eggs
+
+- xenotype collector cards pin-up style
   
 ## Scenarios Description
 

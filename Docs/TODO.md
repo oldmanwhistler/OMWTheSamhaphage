@@ -102,12 +102,11 @@ Hook the mod settings to the game settings on a new game.
 ### Temple
 
 * add a table to food area
+* more shelves for stone cutting
+* double bedrolls
 
 ## Cleanup
 
 - translation keying?
 - XML descriptions
 
-## Making more work for myself
-
-- xenotype collector cards pin-up style
