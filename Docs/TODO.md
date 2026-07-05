@@ -2,7 +2,7 @@
 
 ## Next
 
-* limit for multiplier for archite cost in formulas
+* replace tetragenic abilities with resonance and add them to the blacklist
   
 ## MOD SETTINGS
 
@@ -10,6 +10,7 @@
 
 ## BALANCE
 
+* limit for multiplier for archite cost in formulas
 * silent servitude is too strong at recruiting
 * blacklist traits based on total power value
 * blacklist genes based on total power value
@@ -32,12 +33,11 @@ Hook the mod settings to the game settings on a new game.
 
 ## UI
 
-* for degree traits list the degree
 * PawnInfoUI:
   * icon for skill level
-  * how to get skill levels to support alpha genes
+  * how to get skill levels to support alpha skills
   * trait icon support?
-* Hierarchy UI that shows all the pawns by xenotype from the races
+* Hierarchy UI that shows all the pawns by xenotype from the races, for samhaphage and sovereign could also have a checkbox for pawns to harvest resonance from.
 
 ## Ideology
 
@@ -67,40 +67,35 @@ Hook the mod settings to the game settings on a new game.
 
 ### Factions
 
-* could set these guys up as an enemy faction by having them remove the bad apptitude genes and then spawn with a bunch of random genes
+* could set these guys up as an enemy faction by having them remove the bad aptitude genes and then spawn with a bunch of random genes
 
 ## Xenotypes
 
 ### EchoVessel
 
-* prevent raising damaged brain or too desiccated / rotting
-* Implement echovessel abilities if CorpseChildren isn't available
-* give resonance for the destroyed genes
-* some kind of desiccation / rotting/ undead from B&S?
-* undeath affinity?
+* Make these guys still work without corpse children
+* Have the trait stealing ability
+* body part stealing?
+* skill stealing?
+* passion steal?
 
 ### Cradlemold
 
-* Implement custom initiate lovin' (psychite goggles) if none of the other mods that implement it are available?
-* Just don't include cradlemold without a lovin' system?
-* use base game lovin' but have it do brain damage?
-* if the cradlemold is Phase Locking on to someone with enough genetic complexity that can birth a samhaphage, or would it be a seperate ability that sacrifices the cradlemold?
+* phaselock gives them a psychic boost hediff?
+* * daily integration of random xenogene
+* cradlemold can consume fluxspawn to get their genes, if a cradlemold has enough complexity they can become samhaphage? Mommy loves you
 
 ### Hallowbound
 
 ### Fluxspawn
 
-* abilities that can give resonance
-* replace tetragenic abilities with resonance and add them to the blacklist
-* flicker stun needs to be a separate ability so it can be used while drafted
-* Still working on flicker
-* Faster speed
-* Stun
-* Smoke Cloud
-
 ### Samhaphage
 
 * change the evolution system
+* resonance feeding like blood feeding... requires other pawns?
+* other xenotypes have daily gains.. they have daily loss
+* render counter
+* copy uncapped metabolism settings from WVC if people aren't using it as a dependency?
 
 ### Sovereign Stillness
 
@@ -112,4 +107,9 @@ Hook the mod settings to the game settings on a new game.
 
 ## Cleanup
 
-### Thoughtdef descriptions
+- translation keying?
+- XML descriptions
+
+## Making more work for myself
+
+- xenotype collector cards pin-up style

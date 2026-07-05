@@ -1,20 +1,18 @@
 # The Samhaphage
 
-> AI was used in developing this mod. Full disclosure at the end. Not vibe coded. 200 hours of playtesting.
-
 ## "Every corpse is a new friend."
 
 Adds new xenotypes, scenarios and lore based on a "Got to Catch Them All" style gameplay loop around genes and traits. Only works as player faction, as the fun is in harvesting the dead to increase your power. This is my first mod for RimWorld after about 1300 hours of playing.
 
 The Perfect Stillness is a faction that introduces several xenotypes that have an interwoven reproduction cycle.
 
+* The Echovessel (thrall) are patchwork creatures salvaged from corpses.
+* The Hallowbound (workers) create thralls, maintain the brood, and deal with baseliners and other xenotypes.
 * The Fluxspawn (brood) are naked vibrating slugs that move fast and are tough to hit but kind of useless. The source of genes and meat when outsiders are scarce.
   * The Fluxspawn Hivelings are the slug workers.
   * The Fluxspawn Brutes are the slug fighters.
   * The Fluxspawn Flicker are the slug infiltrators.
   * The Cradlemold (factory) are former baseliners that have been hollowed out into factories to grow new fluxspawn.
-* The Echovessel (thrall) are patchwork creatures salvaged from corpses.
-* The Hallowbound (workers) create thralls, maintain the brood, and deal with baseliners and other xenotypes.
 * The Samhaphage (elite) are unmakers who harvest the genes and traits from their enemies.
 * The Sovereign Stillness (apex) is the Absolute Frequency that will harrow the world. There can only be one.
 
@@ -46,16 +44,17 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 ### Game Balance - Mixed Xenotype Reproductive Cycle
 
 * The Echovessels are easy to create from the dead with no cool-down, but they are limited in their genetic potential.
+* The Hallowbound approximate baseliners to the naked eye, but have limited abilities to acquire genes/traits.
+  * The caretakers.
 * The Fluxspawn breed like crazy but are hard to keep alive.
   * They increase colony wealth beyond their utility and let you gamble that risk on the possibility of random genes.
   * They have serious heat issues in early game and could die of hypothermia.
   * They most definitely will die of cancer unless the tumours are harvested.
   * Can change between three castes depending on colony needs.
 * The Cradlemold was once a baseliner but is now used to produce more fluxspawn.
-* The Hallowbound approximate baseliners to the naked eye, but have limit abilities of Samhaphage to acquire genes/traits. 
-  * With enough genetic complexity they can become Samhaphage.
+  * With enough genetic complexity from feeding on their young they can become Samhaphage.
 * The Samhaphage run the show with their ability to acquire genes from the living and the dead through biology instead of biotech.
-  * When a Samhaphage acquires enough genetic complexity they can become the Sovereign Stillnesss. There can only be one.
+  * When a Samhaphage has defeated enough enemies and acquired enough genetic complexity they can become the Sovereign Stillnesss. There can only be one.
 * The Sovereign Stillness is the apex unit. You only get one per colony.
 
 ## Tip and Tricks
@@ -75,15 +74,15 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 ## Inspirations
 
 * The "samhaphage" name comes from a combination of "samhain" and my cat Sam who is one-with-the-void and a devourer of all the food in the house.
-* I'd been playing with a combination of `Gene Ripper` and `Corpse Children` and was frustrated with the limits. Got to harvest them all!
+* I'd been playing with a combination of `Gene Ripper` and `Corpse Children` and was frustrated with their limits. Got to harvest them all!
 * If the idea of "biological biotech" interests you then try out the different scenarios in `WVC: Xenotypes and Genes`.
 * The idea of carcinomas as a resource came from `Alpha Genes`.
 * The idea of random daily mutations came from `Alpha Genes`.
 * The "lifecycle involves multiple xenotypes" was from Ridley Scott's Alien series and everything it inspired.
-* When I started going from "void" to "frequency" it made me think of the movie Dark City.
-* The visuals of the slugs and eyeless toothy horrors developed naturally when I was picking cosmetic genes from `Big & Small` and `Alpha Genes`. I realized the reminded me of Sam Keith's the Maxx and the white and black isz.
+* Using "frequency" as eldritch horror made me think of the movie Dark City.
+* The visuals of the slugs and eyeless toothy horrors developed naturally when I was picking cosmetic genes from `Big & Small` and `Alpha Genes`. 
+  * Unintentionally inspired by Sam Keith's the Maxx and the white and black isz.
   * Sam Keith died while I was creating this mod and I'd like to dedicate it to him.
-* The weak-to-omnipotent tropes come from litrpg/progression fantasy tropes. Go read `Dungeon Crawler Carl` and `He Who Fights With Monsters`.
 
 ## Other Mods
 
@@ -109,7 +108,6 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 ### Major Recommendations
 
 * [WVC: Xenotypes and Genes - 27,252](https://steamcommunity.com/sharedfiles/filedetails/?id=2886992038)
-* [Corpse Children 1.6 - 248 subs](https://steamcommunity.com/sharedfiles/filedetails/?id=3525305141)
 * [Tweaks Galore - 79,830 subs -](https://steamcommunity.com/sharedfiles/filedetails/?id=2695164414) can add a Gene menu when viewing pawns/corpses that makes it much faster to browse genes for genes to steal.
   * It also has a "Gene Pack Tweaks" section where you can control whether or not every gene can spawns in a genepack.
   * OMW Samhaphage uses the gene pack settings to determine if a gene can be spawned with random mutations.
@@ -118,6 +116,8 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 
 ### Optional But Supported
 
+* [Corpse Children 1.6 - 248 subs](https://steamcommunity.com/sharedfiles/filedetails/?id=3525305141)
+  * The Echovessels will also be Corpse Children.
 * [Better Gene Inheritance - 100,001 subs](https://steamcommunity.com/sharedfiles/filedetails/?id=3046776238)
   * changes how genes are inherited in pregnancy.
 * [Genetic Drift 1.6 - 4,499 subs](https://steamcommunity.com/sharedfiles/filedetails/?id=3522332727)
@@ -138,13 +138,12 @@ The Perfect Stillness is a faction that introduces several xenotypes that have a
 
 ### Mod Conflicts
 
-I didn't hardcoded this as conflicts because YMMV, but they conceptually break the game balance of this mod.
+I didn't hardcoded these as conflicts because YMMV, but they break the game balance of this mod.
 
 * [No Metabolic Efficiency - 8732 subs](https://steamcommunity.com/sharedfiles/filedetails/?id=3345995667)
   * Because it removes metabolism from all genes it will screw up all the math in my mod for game balance.
 * [Gene for Traits - 336 subs](https://steamcommunity.com/sharedfiles/filedetails/?id=3681376854)
   * I ran into crash-to-desktop problems with this and traits from other mods.
-
 
 ### Mod Interactions
 
@@ -184,26 +183,13 @@ I didn't hardcoded this as conflicts because YMMV, but they conceptually break t
 * Safe to upgrade during save.
   * If new genes were added to the XenotypeDef XMLs then your existing pawns wouldn't have them, like any other biotech mod.
 
-## AI Notice
-
-This project was to learn how to mod RimWorld and to gain experience using different gen AI tools I don't use at work.
-
-Places where it was used:  
-
-1. Brainstorming nomenclature and descriptions. "Give me 10 verbs in this theme"
-2. Coded using VS Code with Intellisense and AI suggestions/review.
-3. Gen AI used for icon assets and for non-screenshot graphics on workshop.
-   * This mod has no graphical assets other than gene icons and ability icons.
-
-Please don't be toxic to people who disclose AI usage. We probably have common ground in some of our opinions, but I place a higher value on understanding the disruptive technology. Boycotts can help shape a technology's adoption but they have never put the genie back in the bottle. Boycotts are good at influencing corporations and shaping how the technology is adopted. Writing mean comments to other people because of their choice of tools isn't activism, it's being a jerk. 
-
-You can look at the [github history](https://github.com/oldmanwhistler/OMWTheSamhaphage/commits/main/) or my [dev diary](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/DevDiary/DEV_DIARY.md) to get an idea of my experience making this and then you will be more informed to judge me than a knee-jerk reaction to seeing an AI disclosure.
-
-I agree that AI slop is a problem. Here's my advice on how to avoid [slop mods](https://github.com/oldmanwhistler/OMWTheSamhaphage/blob/main/Docs/RIMWORLD_SLOP.md).
-
 ## License
 
 This project and the work it was derived is free software. You can redistribute it and/or modify it under the terms of the MIT License.
+
+If a new version of RimWorld comes out and I am no longer maintaining the mod then you have my permission to fork it from github and release an update.
+
+[https://github.com/oldmanwhistler/OMWTheSamhaphage](https://github.com/oldmanwhistler/OMWTheSamhaphage)
 
 Includes modified code from the following mods:
 
@@ -211,5 +197,5 @@ Includes modified code from the following mods:
 
 Inspirations from:
 
-* Unstable Mutations based on [AlphaGenes (c)2021 juanosarg](https://github.com/juanosarg/AlphaGenes) [License CC-BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)
-* Parasitic Implantation based on [AlphaGenes (c)2021 juanosarg](https://github.com/juanosarg/AlphaGenes) [License CC-BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+* Unstable Mutations [AlphaGenes (c)2021 juanosarg](https://github.com/juanosarg/AlphaGenes) [License CC-BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+* Parasitic Implantation [AlphaGenes (c)2021 juanosarg](https://github.com/juanosarg/AlphaGenes) [License CC-BY-NC-ND](https://creativecommons.org/licenses/by-nc-nd/4.0/)
