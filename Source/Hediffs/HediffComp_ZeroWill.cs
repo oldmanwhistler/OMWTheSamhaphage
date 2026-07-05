@@ -24,9 +24,6 @@ namespace OMW_Samhaphage
                 }
                 if (this.parent.pawn.ideo != null && this.parent.pawn.Ideo != Faction.OfPlayer.ideos.PrimaryIdeo)
                 {
-                    // Get their current certainty (0.0 to 1.0)
-                    float currentCertainty = this.parent.pawn.ideo.Certainty;
-
                     // Reduce it by 5% (0.05)
                     // OffsetCertainty handles the math and ensures it doesn't go below 0
                     this.parent.pawn.ideo.OffsetCertainty(-0.05f);
@@ -63,6 +60,7 @@ namespace OMW_Samhaphage
         //     }
         // }
     }
+
     public class HediffCompProperties_ZeroWill : HediffCompProperties
     {
         public HediffCompProperties_ZeroWill()
