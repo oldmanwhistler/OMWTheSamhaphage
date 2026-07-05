@@ -37,7 +37,6 @@ namespace OMW_Samhaphage
             }
         }
 
-        // I have zero idea what this does
         public override void CompExposeData()
         {
             base.CompExposeData();
