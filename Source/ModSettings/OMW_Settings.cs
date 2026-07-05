@@ -43,7 +43,7 @@ namespace OMW_Samhaphage
 
         public int complexityCradlemold => Mathf.RoundToInt(complexityMultiplierCradlemold *
                                                              OMWGenes.CalculateComplexity(OMW_XenotypeDefOf
-                                                                 .omw_hallowbound, true));
+                                                                 .omw_cradlemold, true));
 
         public float complexityMultiplierSamhaphage = 1.5f;
 
