@@ -32,6 +32,9 @@ namespace OMW_Samhaphage
             NullThrumAbilityBase ability;
             if (target.Thing is Pawn otherPawn)
             {
+                ability = new PawnApplyFlatten();
+                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+
                 ability = new ThingApplySample();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
