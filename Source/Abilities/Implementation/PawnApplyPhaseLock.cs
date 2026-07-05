@@ -1,10 +1,8 @@
 using RimWorld;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 using Verse.AI;
-using Verse.Sound;
 using AlphaGenes;
 
 namespace OMW_Samhaphage

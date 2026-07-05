@@ -47,7 +47,7 @@ namespace OMW_Samhaphage
             string msg = $"{caster.LabelShort} has died making {victim.LabelShort} a Hallowbound.";
             System.Action sacrificeAction = () =>
             {
-                OMWGenes.ChangeXenotype(victim, OMW_XenotypeDefOf.omw_hallowbound);
+                OMWGenes.ChangeXenotype(victim, OMW_XenotypeDefOf.omw_hallowbound, false);
                 KillUtility.PawnKillDestroy(caster, caster);
                 Messages.Message(msg, MessageTypeDefOf.NegativeEvent);                
             };
