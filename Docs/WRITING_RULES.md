@@ -50,10 +50,13 @@
 3. Use **vibrational/frequency metaphors** consistently
 4. Frame xenotypes as **transcendent**, not evil
 5. Emphasize **biological systems thinking** - bodies as machinery
-6. The **hierarchy is unambiguous**: Samhaphage > Hallowbound > Echovessel > Fluxspawn (in sophistication, not capability)
+6. The **hierarchy is unambiguous**: Samhaphage > Cradlemold > Hallowbound > Fluxspawn > Echovessel (in sophistication, not capability)
 7. **Every description should echo the Null-Thrum** - resonance, harmony, silence, frequency
 8. The **player is the villain** - but a righteous, inevitable villain
 
 ## FURTHER DESIGN RULES
 
 See [DESIGN_RULES.md](./DESIGN_RULES.md)
+See [LORE.md](./LORE.md)
+See [XENOTYPES.md](.XENOTYPES.md)
+See [ABILITIES.md](./ABILITIES.md)

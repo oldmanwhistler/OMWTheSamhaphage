@@ -24,6 +24,9 @@ namespace OMW_Samhaphage
         Excise,
         Render,
         Dub,
-        PhaseLock
+        PhaseLock,
+        Calibrate,
+        Overdrive,
+        Assimilate    
     }
 }

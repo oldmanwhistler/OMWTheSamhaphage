@@ -240,6 +240,36 @@ Narrative: Individual choice is silenced by the absolute precision of the signal
 
 Sensory: A jarring, high-frequency chime that resonates deep within the bones, followed by a sudden, freezing stillness where both pawns' heartbeats are forced into an unnatural, metronomic synchronization. The male target experiences a brief, hollow ache as if a fundamental current has been diverted from his core, while the user feels a heavy, vibrant surge of re-channeled genetic data anchoring deep within her flesh.
 
+## CALIBRATE (Thematic Concept)
+
+Thematic: Fresh trauma and fractured bones are viewed by the hivemind as erratic, chaotic disruptions that ruin the body's functional layout. To Calibrate a pawn is to forcefully iron out these jagged physical spikes, forcing torn flesh and shattered bone fragments to instantly align with a strict, mathematically perfect anatomical blueprint.
+
+Action: The Samhaphage projects a heavy, low-frequency oscillation directly into the site of acute injury. This intense, targeted resonance forces separated tissues and fractured bone edges to violently vibrate, slide, and lock back into their proper physical coordinates, instantly welding broken structural frames and sealing open wounds.
+
+Narrative: Bleeding out and collapsing from trauma is merely a failure to maintain structural discipline. We do not gently stitch the flesh; we blast it with the baseline frequency of the hive until the shattered pieces have no choice but to snap back into alignment. The body is an instrument, and it will be forced to hold its shape cleanly, no matter how badly it has been broken.
+
+Sensory: A deep, sub-bass rumble that vibrates the teeth and turns breath into a fine mist. Beneath the skin, there is a sudden, violent shifting sensation—like heavy cogs being forcefully forced back into place—followed by a series of sharp, overlapping biological "clicks" as bones and muscles snap back into alignment, leaving the mended area feeling rigidly frozen and numb.
+
+## OVERDRIVE (Thematic Concept)
+
+Thematic: The deliberate amplification of the body's neural and motor circuits far past their intended safety thresholds. Overdrive treats the nervous system as an acoustic signal cranked into extreme gain, intentionally distorting the baseline biology to achieve a frantic, hyper-accelerated surge of physical performance.
+
+Action: The user forces a massive influx of raw energy into their own neuromuscular pathways, overloading the biological machinery. This power surge forces the brain and muscle tissues to process motor data at impossible speeds, granting a massive spike to coordination, reflex speed, and swiftness.
+
+Narrative: The natural body is an instrument built for a quiet, limited performance; to engage Overdrive is to turn the dial until the entire framework shakes. We do not accept the sluggish, safe pacing of natural evolution. By uncoupling the nervous system's limiters, we flood the biological loop with power, forcing the flesh to move with a crisp, terrifyingly unnatural grace, regardless of the strain on the machine.
+
+Sensory: A piercing, high-pitched electrical whine that drowns out all ambient sound, accompanied by a sudden rush of searing, chemical heat racing down the spine. The muscles tighten to an absolute, trembling tension as a buzzing vibration takes over the limbs, locking the mind into a hyper-focused clarity where the surrounding world appears to slow to a crawl.
+
+## ASSIMILATE (Thematic Concept)
+
+Thematic: The total dissolution and structural erasure of externalized biological units. To Assimilate is to view the Fluxspawn brood not as individual offspring, but as temporary, external storage nodes whose unique genetic mutations must be pulled back into the master sequence before they degrade.
+
+Action: The Cradlemold drops her internal genetic shielding and projects an aggressive, predatory signal loop that forces the cellular walls of her nearby brood to instantly collapse. Their biological structures dissolve, allowing her to rapidly absorb the raw genetic data and integrate their useful traits directly into her own lineage.
+
+Narrative: There is no room for sentimental divergence in the hive. The Fluxspawn are merely temporary vessels sent out to gather, mutate, and test new genetic frequencies in the field. Once their purpose is served, the parent organism reclaims the investment, melting the minor channels away and folding their useful codes back into the primary broadcast until no trace of the independent brood remains.
+
+Sensory: A sudden, low-frequency hum that makes the surrounding air taste thick and metallic, followed by the quiet, synchronized sound of cellular membranes rupturing. The Cradlemold experiences a chilling, rapid influx of complex biological data rushing through her veins, while the physical forms of the brood collapse into an orderly genetic slurry that is smoothly drawn back into her chassis, leaving behind a profound sense of internal density.
+
 ## HEDIFFS
 
 ### Silent Servitude (Thematic Concept)

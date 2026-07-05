@@ -24,7 +24,7 @@ Samhaphage -> Sovereign Stillness (genetic metamorphosis)
 
 ## Abilities
 
-### Flatten	(Clearing)
+### Flatten (Clearing)
 
 The psychological peaks are ironed out. They no longer resist the biological overhaul.
 
@@ -79,13 +79,9 @@ Prepares a host to act as a living biological matrix (cradlemold).
 
 Attenuate temporarily suppresses a living host's physical amplitude, dampening their body into a weakened, translucent state without killing them. By dialing down the target's biological volume, the ability safely extracts the frequency of their active traits and converts them into harvestable Resonance.
 
-- Requires a scoured mind and blocked by dissonance.
+### Sample (Imitate)
 
-### Sample (Disguise)
-
-TODO: Desc
-
-- Caster can steal the appearance from a Victim or Corpse.
+This ability isolates a target's local biological frequency to cleanly slice away and steal their appearance without harming the host. The captured aesthetic signal is instantly loaded into the user's internal genetic buffer, allowing them to permanently catalog, manipulate, or replicate the source's external visual traits.
 
 ### Compress (Compacting)
 
@@ -134,3 +130,15 @@ Allows a Samhaphage to permanently transfer an overridden gene out of their own 
 ### Phase Lock (Reproduction)
 
 The female Cradlemold forces a male target's reproductive clock into absolute synchronization with her own, freezing his cellular autonomy through an inescapable harmonic lock. By overriding his internal systems, she extracts the precise biological keys required to ignite her own pregnancy.
+
+### Calibrate (Healing)
+
+The Samhaphage emits a heavy, low-frequency resonance that forces torn flesh and shattered bone fragments to violently vibrate back into strict structural alignment. By locking the jagged, chaotic edges of acute trauma onto a mathematically perfect biological grid, this intense correction instantly welds fractured limbs and seals open wounds.
+
+### Overdrive (Buffing)
+
+The Samhaphage floods the host's neuromuscular pathways with an overdriven frequency, forcing motor data processing far past its natural safety limits. This intense biological power surge grants the pawn hyper-accelerated reflexes and unnatural swiftness at the cost of immense structural strain.
+
+### Assimilate (Integrate)
+
+The Cradlemold projects a predatory signal loop that forces the cellular membranes of her Fluxspawn brood to instantly collapse and liquefy. By re-absorbing this high-density genetic slurry, she strips away their brief independence to permanently fold their mutated genes back into her own master frequency.

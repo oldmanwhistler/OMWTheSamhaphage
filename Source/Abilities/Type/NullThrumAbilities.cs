@@ -170,6 +170,24 @@ namespace OMW_Samhaphage
             NullThrumResonanceType.ResonanceTypeDebit,
             NullThrumMathType.MathTypeMultiplier, 1.0f);
 
+        public NullThrumAbilityProps calibrate = new NullThrumAbilityProps(
+            NullThrumAbilityType.Calibrate,
+            NullThrumResourceType.ResourceTypeAbility,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeMultiplier, 1.0f);
+
+        public NullThrumAbilityProps overdrive = new NullThrumAbilityProps(
+            NullThrumAbilityType.Overdrive,
+            NullThrumResourceType.ResourceTypeAbility,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeMultiplier, 1.0f);
+
+        public NullThrumAbilityProps assimilate = new NullThrumAbilityProps(
+            NullThrumAbilityType.Assimilate,
+            NullThrumResourceType.ResourceTypeAbility,
+            NullThrumResonanceType.ResonanceTypeDebit,
+            NullThrumMathType.MathTypeMultiplier, 1.0f);
+
 
         public NullThrumAbilities()
         {
@@ -196,6 +214,10 @@ namespace OMW_Samhaphage
             listOther.Add(scrubCarcinoma);
             listOther.Add(amplify);
             listOther.Add(render);
+            listOther.Add(phaselock);
+            listOther.Add(calibrate);
+            listOther.Add(overdrive);
+            listOther.Add(assimilate);
         }
     }
 }

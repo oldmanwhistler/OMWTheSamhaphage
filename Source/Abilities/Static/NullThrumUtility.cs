@@ -33,6 +33,9 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Render: return "Render";
                 case NullThrumAbilityType.Dub: return "Dub";
                 case NullThrumAbilityType.PhaseLock: return "Phase Lock";
+                case NullThrumAbilityType.Calibrate: return "Calibrate";
+                case NullThrumAbilityType.Overdrive: return "Overdrive";
+                case NullThrumAbilityType.Assimilate: return "Assimilate";
                 default: 
                     Log.Error($"Unknown ability type in NullThrumUtility.ToString({ability})");
                     return "Unknown";
@@ -101,6 +104,9 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Render: return NullThrumResonanceType.ResonanceTypeCredit;
                 case NullThrumAbilityType.Dub: return NullThrumResonanceType.ResonanceTypeDebit;
                 case NullThrumAbilityType.PhaseLock: return NullThrumResonanceType.ResonanceTypeDebit;
+                case NullThrumAbilityType.Calibrate: return NullThrumResonanceType.ResonanceTypeDebit;
+                case NullThrumAbilityType.Overdrive: return NullThrumResonanceType.ResonanceTypeDebit;
+                case NullThrumAbilityType.Assimilate: return NullThrumResonanceType.ResonanceTypeDebit; 
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.ResonanceType({ability})");                                                                
                     return NullThrumResonanceType.ResonanceTypeCredit;
@@ -174,9 +180,9 @@ namespace OMW_Samhaphage
                 case NullThrumAbilityType.Resurrect:
                     return $"{caster} resurrects a corpse as a specific xenotype. Lethal if {caster} is a Fluxspawn.";
                 case NullThrumAbilityType.Stun:
-                    return $"Stuns the target.";
+                    return "Stuns the target.";
                 case NullThrumAbilityType.Hallowbound:
-                    return $"Transposes the target into a Hallowbound.";
+                    return "Transposes the target into a Hallowbound.";
                 case NullThrumAbilityType.Amplify:
                     return $"{caster} amplifies themselves to the xenotype specified by the ability.";
                 case NullThrumAbilityType.Excise:
@@ -184,13 +190,22 @@ namespace OMW_Samhaphage
                         $"{caster} may selectively destroy traits to gain resonance.";
                 case NullThrumAbilityType.Render:
                     return
-                        $"{caster} dissassembles the body to it's raw materials. Lethal to {victim}.";
+                        $"{caster} disassembles the body to it's raw materials. Lethal to {victim}.";
                 case NullThrumAbilityType.Dub:
                     return
                         $"{caster} permanently transfers an overridden gene from their own frequency and imprints it onto {victim}.";
                 case NullThrumAbilityType.PhaseLock:
                     return
                         $"{caster} seduces {victim} for their genetic material to ignite her own pregnancy.";
+                case NullThrumAbilityType.Calibrate:
+                    return
+                        $"{caster} calibrates {victim}'s body, healing acute damage.";
+                case NullThrumAbilityType.Overdrive:
+                    return
+                        $"{caster} overdrives {victim}'s body, increasing conciousness, manipulation and speed.";
+                case NullThrumAbilityType.Assimilate:
+                    return
+                        $"{caster} assimilates {victim}'s biological material and genes into their own frequency.";
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.DescriptionSimple({ability})");
                     return "Unknown ability type.";
@@ -267,6 +282,15 @@ namespace OMW_Samhaphage
                         $"Allows {caster} to permanently transfer an overridden gene out of their own frequency and inject it directly into {victim}.";
                 case NullThrumAbilityType.PhaseLock:
                     return $"The female Cradlemold forces {victim}'s reproductive clock into absolute synchronization with her own, freezing his cellular autonomy through an inescapable harmonic lock. By overriding his internal systems, she extracts the precise biological keys required to ignite her own pregnancy.";
+                case NullThrumAbilityType.Calibrate:
+                    return
+                        $"{caster} emits a heavy, low-frequency resonance that forces torn flesh and shattered bone fragments to violently vibrate back into strict structural alignment. By locking the jagged, chaotic edges of acute trauma onto a mathematically perfect biological grid, this intense correction instantly welds fractured limbs and seals open wounds.";
+                case NullThrumAbilityType.Overdrive:
+                    return
+                        $"{caster} floods {victim}'s body with a high-frequency resonance that forces their internal systems to operate at maximum capacity. By overclocking their biological processes, this intense stimulation temporarily increases {victim}'s speed, manipulation, and consciousness, allowing them to perform feats of extraordinary physical and mental prowess.";
+                case NullThrumAbilityType.Assimilate:
+                    return
+                        $"{caster} projects a predatory signal loop that forces the cellular membranes of {victim} to instantly collapse and liquefy. By re-absorbing this high-density genetic slurry, she strips away their brief independence to permanently fold their mutated genes back into her own master frequency.";
                 default:
                     Log.Error($"Unknown ability type in NullThrumUtility.DescriptionLore({ability})");
                     return "An unknown ability of the Null-Thrum.";
