@@ -89,7 +89,23 @@ namespace OMW_Samhaphage
             }
         }
 
-        public bool RemoveCarcinomas(Pawn victim, Pawn caster)
+        protected bool HasCarcinomas(Pawn victim)
+        {
+            HediffDef hediffDef = HediffDefOf.Carcinoma;
+
+            List<Hediff> carcinomas = new List<Hediff>();
+            foreach (Hediff hediffToCheck in victim.health.hediffSet.hediffs)
+            {
+                if (hediffToCheck.def == hediffDef)
+                {
+                    carcinomas.Add(hediffToCheck);
+                }
+            }
+
+            return (carcinomas.Count > 0);
+        }
+
+        protected bool RemoveCarcinomas(Pawn victim, Pawn caster)
         {
             Log.Debug($"Scrub::RemoveCarcinomas({victim.LabelShort}, {caster.LabelShort})");
 
@@ -153,6 +169,12 @@ namespace OMW_Samhaphage
                 selectorScrub = new SelectionScrub(caster, victim, victim);
             }
 
+            if (selectorScrub.genes.Count == 0)
+            {
+                onAbilityComplete?.Invoke();
+                return;
+            }
+
             Log.Debug($"Scrub::Going to open scrub for {victim.LabelShort}");
 
             Find.WindowStack.Add(new WindowSelectGenesForNullThrumAbility(selectorScrub, onAbilityComplete,selectedList =>
@@ -197,6 +219,11 @@ namespace OMW_Samhaphage
                 {
                     return false;
                 }
+            }
+
+            if (HasCarcinomas(victim))
+            {
+                return true;
             }
 
             if (selectorScrub == null)
