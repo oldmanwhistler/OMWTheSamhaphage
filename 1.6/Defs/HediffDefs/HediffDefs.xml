@@ -221,6 +221,95 @@
                 <label>Mommy loves you</label>        
             </li>
         </stages>
-    </HediffDef>    
+    </HediffDef>
+
+    <HediffDef>
+        <defName>OMW_CradlemoldAttunement</defName>
+        <label>Null-Thrum resonance attunement</label>
+        <description>Each phase lock adds another harmonic layer to their psychic sensitivity. The resonance fades over time as their frequency destabilizes.
+
+"Their mind is no longer a closed room, but an open chamber. We have taught the walls to vibrate in our key. Now, even a whisper in the void reaches them as a shout."</description>
+        <hediffClass>HediffWithComps</hediffClass>
+        <allowMothballIfLowPriorityWorldPawn>true</allowMothballIfLowPriorityWorldPawn>
+        <scenarioCanAdd>false</scenarioCanAdd>
+        <initialSeverity>0.05</initialSeverity>
+        <isBad>false</isBad>
+        <comps>
+            <li Class="HediffCompProperties_SeverityPerDay">
+                <severityPerDay>-0.1</severityPerDay>
+            </li>
+        </comps>
+        <stages>
+            <li>
+                <label>first harmonic</label>
+                <statOffsets>
+                    <PsychicSensitivity>0.1</PsychicSensitivity>
+                </statOffsets>
+            </li>
+            <li>
+                <minSeverity>0.15</minSeverity>
+                <label>second harmonic</label>
+                <statOffsets>
+                    <PsychicSensitivity>0.2</PsychicSensitivity>
+                </statOffsets>
+            </li>
+            <li>
+                <minSeverity>0.25</minSeverity>
+                <label>third harmonic</label>
+                <statOffsets>
+                    <PsychicSensitivity>0.3</PsychicSensitivity>
+                </statOffsets>
+            </li>
+            <li>
+                <minSeverity>0.35</minSeverity>
+                <label>fourth harmonic</label>
+                <statOffsets>
+                    <PsychicSensitivity>0.4</PsychicSensitivity>
+                </statOffsets>
+            </li>
+            <li>
+                <minSeverity>0.45</minSeverity>
+                <label>fifth harmonic</label>
+                <statOffsets>
+                    <PsychicSensitivity>0.5</PsychicSensitivity>
+                </statOffsets>
+            </li>
+            <li>
+                <minSeverity>0.55</minSeverity>
+                <label>sixth harmonic</label>
+                <statOffsets>
+                    <PsychicSensitivity>0.6</PsychicSensitivity>
+                </statOffsets>
+            </li>
+            <li>
+                <minSeverity>0.65</minSeverity>
+                <label>seventh harmonic</label>
+                <statOffsets>
+                    <PsychicSensitivity>0.7</PsychicSensitivity>
+                </statOffsets>
+            </li>
+            <li>
+                <minSeverity>0.75</minSeverity>
+                <label>eighth harmonic</label>
+                <statOffsets>
+                    <PsychicSensitivity>0.8</PsychicSensitivity>
+                </statOffsets>
+            </li>
+            <li>
+                <minSeverity>0.85</minSeverity>
+                <label>ninth harmonic</label>
+                <statOffsets>
+                    <PsychicSensitivity>0.9</PsychicSensitivity>
+                </statOffsets>
+            </li>
+            <li>
+                <minSeverity>0.95</minSeverity>
+                <label>tenth harmonic</label>
+                <statOffsets>
+                    <PsychicSensitivity>1.0</PsychicSensitivity>
+                </statOffsets>
+            </li>
+        </stages>
+    </HediffDef>
 
 </Defs>

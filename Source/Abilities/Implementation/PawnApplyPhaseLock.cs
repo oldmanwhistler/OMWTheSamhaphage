@@ -121,6 +121,19 @@ namespace OMW_Samhaphage
             {
                 MoteMaker.MakeStaticMote(caster.TrueCenter(), caster.Map, ThingDefOf.Mote_ThoughtBad);
             }
+
+            // Increase Cradlemold attunement severity - the act of phase lock resonates through the caster
+            // Each successful phase lock adds one harmonic layer (+0.1 severity = one stage)
+            float newSeverity = 0.1f;
+            Hediff existingAttunement = caster.health.hediffSet.GetFirstHediffOfDef(OMW_HediffDefOf.OMW_CradlemoldAttunement);
+            if (existingAttunement != null)
+            {
+                newSeverity = existingAttunement.Severity + 0.1f;
+            }
+            // Clamp at max 1.0 (tenth harmonic)
+            newSeverity = Mathf.Min(newSeverity, 1.0f);
+            HealthUtility.AdjustSeverity(caster, OMW_HediffDefOf.OMW_CradlemoldAttunement, newSeverity - (existingAttunement?.Severity ?? 0f));
+            Log.Debug($"Phase lock attunement: {caster.LabelShort} resonance adjusted to {newSeverity:F2}");
         }
 
 

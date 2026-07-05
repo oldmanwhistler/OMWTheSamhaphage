@@ -12,6 +12,7 @@ namespace OMW_Samhaphage
         public static HediffDef OMW_ParasiticImplantation;
         public static HediffDef OMW_TemporaryUnconscious;
         public static HediffDef OMW_Assimilator;
+        public static HediffDef OMW_CradlemoldAttunement;
 
         static OMW_HediffDefOf()
         {
