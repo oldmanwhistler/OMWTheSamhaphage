@@ -26,7 +26,7 @@
         <biostatCpx>1</biostatCpx>
     </GeneDef>
     
-    <GeneDef ParentName="OMW_SamhaphageGeneBase">
+    <GeneDef>
         <defName>OMW_Mutation_2_SpectrumInterference</defName>
         <label>Spectrum Interference</label>
         <statFactors>
@@ -54,7 +54,7 @@
         </modExtensions>
     </GeneDef>
 
-    <GeneDef ParentName="OMW_SamhaphageGeneBase">
+    <GeneDef>
         <defName>OMW_Mutation_3_StrayFrequency</defName>
         <label>Stray Frequency</label>
         <exclusionTags>
@@ -82,7 +82,7 @@
         </modExtensions>
     </GeneDef>
 
-    <GeneDef ParentName="OMW_SamhaphageGeneBase">
+    <GeneDef>
         <defName>OMW_Mutation_4_HarmonicDistortion</defName>
         <label>Harmonic Distortion</label>
         <exclusionTags>
@@ -110,7 +110,7 @@
         </modExtensions>
     </GeneDef>
 
-    <GeneDef ParentName="OMW_SamhaphageGeneBase">
+    <GeneDef>
         <defName>OMW_Mutation_5_PhaseRupture</defName>
         <label>Phase Rupture</label>
         <exclusionTags>
