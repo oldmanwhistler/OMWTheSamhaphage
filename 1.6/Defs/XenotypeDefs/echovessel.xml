@@ -21,6 +21,7 @@
       <li MayRequire="omw.samhaphage">OMW_ScouredMind</li>
       <li MayRequire="omw.samhaphage">OMW_Resonance</li>      
       <li MayRequire="omw.samhaphage,wvc.sergkart.races.biotech">OMW_Amnesia</li>
+      <li MayRequire="redmattis.bigsmall.core">BS_Deathlike</li>
       <li MayRequire="redmattis.bigsmall.core">BS_PilotAssistible</li>      
     </genes>
   </XenotypeDef>
