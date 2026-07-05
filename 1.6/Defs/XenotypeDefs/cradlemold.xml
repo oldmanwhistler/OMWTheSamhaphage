@@ -6,7 +6,7 @@
     <description>TBS</description>
     <descriptionShort>sdfasdf</descriptionShort>
     <iconPath>UI/Icons/Xenotypes/cradlemold</iconPath>
-    <inheritable>true</inheritable>
+    <inheritable>false</inheritable>
     <genes>
       <li MayRequire="omw.samhaphage">OMW_Cradlemold_Frame</li>
       <li MayRequire="omw.samhaphage">OMW_Mutation_2_SpectrumInterference</li>
