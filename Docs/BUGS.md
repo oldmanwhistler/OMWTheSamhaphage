@@ -5,7 +5,7 @@
 * Flatten called as ability, does not return to main menu
 * Retune called as ability, then hit skip does not return to main menu
 * manual attenuate doesn't return to the main menu
-* random mutations aren't working on fluxspawn
+* assimiliation isn't storing the num slugs eaten
 
 ## Minor Bugs
 

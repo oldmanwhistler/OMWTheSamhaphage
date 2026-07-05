@@ -49,7 +49,7 @@ Hook the mod settings to the game settings on a new game.
 
 * add meditation focus types
 * need short descriptions for the Hediffs
-* buffs like healing, speed from resonance
+* buffs like healing, speed from resonance need to be able to trigger from drafted
 
 ### Traits
 
@@ -60,6 +60,7 @@ Hook the mod settings to the game settings on a new game.
 * resonance level should reduce the time of genetic dissonance
 * "resonance efficiency" by xenotype. +/- percentage on increases/decreases.
 * Daily resonance? It's there but need to set the stat offset/multiplier per race
+* dynamic resonance increase like One With Death?
 
 ### Backstories
 
@@ -71,6 +72,11 @@ Hook the mod settings to the game settings on a new game.
 
 ## Xenotypes
 
+### Lifecycle
+
+* need to diagram the lifecycle
+* what if fluxspawn hatch when a null-thrum pawn dies and get rid of parasitic implantation? Rank increases the amount of fluxspawn? Fluxspawn can create hallowbound or cradlemold which retriggers the cycle?
+
 ### EchoVessel
 
 * Make these guys still work without corpse children
@@ -81,11 +87,13 @@ Hook the mod settings to the game settings on a new game.
 
 ### Cradlemold
 
-* phaselock gives them a psychic boost hediff?
+* reduce the cost to assimilate
 
 ### Hallowbound
 
 ### Fluxspawn
+
+* stun should cause resonance
 
 ### Samhaphage
 
@@ -97,6 +105,8 @@ Hook the mod settings to the game settings on a new game.
 
 ### Sovereign Stillness
 
+* Instead of resurrect echovessel, resurrect hallowbound?
+
 ## Scenario
 
 ### Temple
@@ -104,6 +114,7 @@ Hook the mod settings to the game settings on a new game.
 * add a table to food area
 * more shelves for stone cutting
 * double bedrolls
+* baby spots in the hot room
 
 ## Cleanup
 

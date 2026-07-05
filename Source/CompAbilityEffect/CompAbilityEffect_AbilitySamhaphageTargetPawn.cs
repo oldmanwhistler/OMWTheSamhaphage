@@ -86,11 +86,15 @@ namespace OMW_Samhaphage
                 ability = new ThingApplyAttenuate();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
-                ability = new PawnApplyHallowbound();
-                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+                if ((xeno == OMW_XenotypeDefOf.omw_sovereign_stillness))
+                {
+                    // only the sovereign stillness can bypass the normal mechanisms
+                    ability = new PawnApplyHallowbound();
+                    items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
-                ability = new PawnApplyInfestFluxspawnHiveling();
-                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+                    ability = new PawnApplyInfestFluxspawnHiveling();
+                    items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+                }
             }
 
             if (items.Count > 0)

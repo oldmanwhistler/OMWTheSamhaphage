@@ -46,9 +46,6 @@ namespace OMW_Samhaphage
 
                 ability = new ThingApplyCrosstalk();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
-                
-                ability = new PawnApplyInfestFluxspawnHiveling();
-                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
             }
 
             if (items.Count > 0)
