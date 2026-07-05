@@ -76,9 +76,9 @@ namespace OMW_Samhaphage
     }
 
 
-    public class PawnApplyAmplifyHallowbound : PawnApplyAmplifyBase
+    public class PawnApplyAmplifyCradlemold : PawnApplyAmplifyBase
     {
-        public override int RequiredComplexity => OMW_Mod.settings.complexityHallowbound;
+        public override int RequiredComplexity => OMW_Mod.settings.complexityCradlemold;
         public override XenotypeDef TargetXenotype => OMW_XenotypeDefOf.omw_samhaphage;
     }
 

@@ -41,9 +41,6 @@ namespace OMW_Samhaphage
                 ability = new PawnApplyDub();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
-                ability = new PawnApplyUnmute();
-                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
-
                 ability = new PawnApplyPhaseLock();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 

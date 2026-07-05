@@ -97,6 +97,12 @@ namespace OMW_Samhaphage
         public override bool CanApplyOnPawn(Pawn victim, Pawn caster, out string reason)
         {
             reason = "unknown reason";
+
+            if (!ModsConfig.RoyaltyActive)
+            {
+                reason = "Missing Royalty DLC";
+                return false;
+            }
             if (!victim.Dead)
             {
                 if (!Flatten.HasOrCanApplyOnPawn(victim, caster, out reason)) return false;

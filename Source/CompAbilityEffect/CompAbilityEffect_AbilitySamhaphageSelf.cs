@@ -50,8 +50,11 @@ namespace OMW_Samhaphage
             ability = new ThingApplyExcise();
             items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
 
-            ability = new PawnApplyUnmute();
-            items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
+            if (ModsConfig.RoyaltyActive)
+            {
+                ability = new PawnApplyUnmute();
+                items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
+            }
 
             if (xeno == OMW_XenotypeDefOf.omw_samhaphage)
             {

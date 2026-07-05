@@ -39,9 +39,9 @@ namespace OMW_Samhaphage
 
         public NullThrumAbilities abilityValue = new NullThrumAbilities();
 
-        public float complexityMultiplierHallowbound = 1.5f;
+        public float complexityMultiplierCradlemold = 1.5f;
 
-        public int complexityHallowbound => Mathf.RoundToInt(complexityMultiplierHallowbound *
+        public int complexityCradlemold => Mathf.RoundToInt(complexityMultiplierCradlemold *
                                                              OMWGenes.CalculateComplexity(OMW_XenotypeDefOf
                                                                  .omw_hallowbound, true));
 
@@ -73,7 +73,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref disableTraitBlacklist, "disableTraitBlacklist", false);
             Scribe_Values.Look(ref limitDifficulties, "limitDifficulties", NullThrumDifficultyPreset.DifficultyMedium);
             Scribe_Values.Look(ref resonanceMax, "ResonanceMax", DefaultResonanceMax);
-            Scribe_Values.Look(ref complexityMultiplierHallowbound, "complexityMultiplierHallowbound", 1.5f);
+            Scribe_Values.Look(ref complexityMultiplierCradlemold, "complexityMultiplierCradlemold", 1.5f);
             Scribe_Values.Look(ref complexityMultiplierSamhaphage, "complexityMultiplierSamhaphage", 1.5f);
 
             // Use a fresh instance as the default reference for Scribe
@@ -139,7 +139,7 @@ namespace OMW_Samhaphage
             Scribe_Values.Look(ref defaultsComplexity.fluxspawn, "ComplexityFluxSpawn", defaultsComplexity.fluxspawn);
             Scribe_Values.Look(ref defaultsComplexity.echovessel, "ComplexityEchoVessel", defaultsComplexity.echovessel);
             Scribe_Values.Look(ref defaultsComplexity.cradlemold, "ComplexityCradleMold", defaultsComplexity.cradlemold);
-            Scribe_Values.Look(ref defaultsComplexity.hallowbound, "ComplexityHallowbound", defaultsComplexity.hallowbound);
+            Scribe_Values.Look(ref defaultsComplexity.hallowbound, "ComplexityCradlemold", defaultsComplexity.hallowbound);
             Scribe_Values.Look(ref defaultsComplexity.samhaphage, "ComplexitySamhaphage", defaultsComplexity.samhaphage);
             Scribe_Values.Look(ref defaultsComplexity.sovereign_stillness, "ComplexitySovereignStillness", defaultsComplexity.sovereign_stillness);
 
@@ -171,7 +171,7 @@ namespace OMW_Samhaphage
             multiplierComplexity.SetMultiplierDefaults(limitDifficulties);
             abilityValue = new NullThrumAbilities();
             resonanceMax = DefaultResonanceMax;
-            complexityMultiplierHallowbound = 1.5f;
+            complexityMultiplierCradlemold = 1.5f;
             complexityMultiplierSamhaphage = 1.5f;
             NullThrumUtility.descMode = NullThrumDescriptionMode.DescriptionSimple;
             abilityMenuType = NullThrumAbilityMenuType.ByXenotype;
@@ -380,9 +380,9 @@ namespace OMW_Samhaphage
                     listing.Gap();
                     listing.Label("Genetic Complexity Threshold For Evolution (Amplify)".Colorize(Color.yellow));
                     listing.Label(
-                        $"Required complexity for Hallowbound to Samhaphage to evolve: {settings.complexityMultiplierHallowbound:F2} (Target: {settings.complexityHallowbound})");
-                    settings.complexityMultiplierHallowbound =
-                        listing.Slider(settings.complexityMultiplierHallowbound, 0.5f, 5.0f);
+                        $"Required complexity for Hallowbound to Samhaphage to evolve: {settings.complexityMultiplierCradlemold:F2} (Target: {settings.complexityCradlemold})");
+                    settings.complexityMultiplierCradlemold =
+                        listing.Slider(settings.complexityMultiplierCradlemold, 0.5f, 5.0f);
 
                     listing.Label(
                         $"Required complexity for Samhaphage to Sovereign Stillness to evolve: {settings.complexityMultiplierSamhaphage:F2} (Target: {settings.complexitySamhaphage})");

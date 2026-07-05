@@ -46,8 +46,11 @@ namespace OMW_Samhaphage
                 ability = new ThingApplyHarrow();
                 items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
 
-                ability = new ThingApplyMute();
-                items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
+                if (ModsConfig.RoyaltyActive)
+                {
+                    ability = new ThingApplyMute();
+                    items.Add(ability.NewMenuItemIconCorpse(target, corpse, parent.pawn));
+                }
 
                 if ((xeno == OMW_XenotypeDefOf.omw_sovereign_stillness))
                 {

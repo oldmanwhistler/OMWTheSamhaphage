@@ -74,11 +74,14 @@ namespace OMW_Samhaphage
                     items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
                 }
 
-                ability = new ThingApplyMute();
-                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+                if (ModsConfig.RoyaltyActive)
+                {
+                    ability = new ThingApplyMute();
+                    items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
 
-                ability = new PawnApplyUnmute();
-                items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+                    ability = new PawnApplyUnmute();
+                    items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));
+                }
 
                 ability = new ThingApplyAttenuate();
                 items.Add(ability.NewMenuItemIconPawn(target, otherPawn, parent.pawn));

@@ -31,8 +31,14 @@ namespace OMW_Samhaphage
             List<MenuItemBase> items = new List<MenuItemBase>();
             NullThrumAbilityBase ability;
 
-            ability = new PawnApplyUnmute();
-            items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));          
+            if (ModsConfig.RoyaltyActive)
+            {
+                ability = new PawnApplyUnmute();
+                items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
+            }
+
+            ability = new PawnApplyAmplifyCradlemold();
+            items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
             
             if (items.Count > 0)
             {

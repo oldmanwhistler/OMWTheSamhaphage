@@ -38,6 +38,12 @@ namespace OMW_Samhaphage
         {
             reason = "unknown reason";
 
+            if (!ModsConfig.RoyaltyActive)
+            {
+                reason = "Missing Royalty DLC";
+                return false;
+            }
+
             if (victim.HasPsylink)
             {
                 reason = $"{victim.LabelShort} already possesses a psylink.";
