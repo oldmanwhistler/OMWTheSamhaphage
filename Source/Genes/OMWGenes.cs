@@ -210,12 +210,14 @@ namespace OMW_Samhaphage
             if (targetXenotype == null)
             {
                 reason = "targetXenotype is null";
+                Log.Error($"{pawn.LabelShort}.ChangeXenotype not possible: {reason}");
                 return false;
             }
 
             if (pawn.genes == null)
             {
                 reason = $"{pawn.LabelShort} has pawn.genes == null";
+                Log.Error($"{pawn.LabelShort}.ChangeXenotype not possible: {reason}");
                 return false;
             }
 
@@ -228,6 +230,7 @@ namespace OMW_Samhaphage
             if (targetXenotype == OMW_XenotypeDefOf.omw_sovereign_stillness)
             {
                 reason = $"There already is a Sovereign Stillness and there can only be one.";
+                Log.Error($"{pawn.LabelShort}.ChangeXenotype not possible: {reason}");
                 return !OMWXenotypes.IsSovereignStillnessInPlayerFaction();
             }
             return true;
@@ -238,7 +241,6 @@ namespace OMW_Samhaphage
             string reason;
             if (!CanChangeXenotype(pawn, targetXenotype, out reason))
             {
-                Log.Error($"{pawn.LabelShort}.ChangeXenotype not possible: {reason}");
                 return false;
             }
 
@@ -260,7 +262,6 @@ namespace OMW_Samhaphage
             string reason;
             if (!CanChangeXenotype(pawn, targetXenotype, out reason))
             {
-                Log.Error($"{pawn.LabelShort}.ChangeXenotype not possible: {reason}");
                 return false;
             }
 
