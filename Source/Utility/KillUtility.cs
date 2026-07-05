@@ -10,9 +10,10 @@ namespace OMW_Samhaphage
     {
         static Logger Log = new Logger("Kill");
 
-        public static bool ApplyBrainDamage(Pawn victim, Pawn caster)
+        public static void KillWithBrainDamage(Pawn victim, Pawn caster)
         {
-            if (victim == null) return false;
+            if (victim == null) return;
+            if (victim.Dead) return;            
 
             BodyPartRecord brain = victim.health.hediffSet.GetNotMissingParts()
                 .FirstOrDefault(x => x.def == BodyPartDefOf.Head);
@@ -31,10 +32,10 @@ namespace OMW_Samhaphage
                 DamageInfo.SourceCategory.ThingOrUnknown,
                 victim // Intended Target
             );
-            victim.TakeDamage(dinfo);
 
-
-            return true;
+            Hediff exactCulpritHediff = new Hediff();
+            exactCulpritHediff.pawn = caster;
+            victim.Kill(dinfo, exactCulpritHediff);
         }
 
         public static void PurgeBionics(Pawn victim)
@@ -66,21 +67,20 @@ namespace OMW_Samhaphage
                     Messages.Message($"Rendered {victim.LabelShort} and extracted {hediff.def.spawnThingOnRemoved.label}.", MessageTypeDefOf.PositiveEvent);
                 }
 
-                BodyPartRecord part = hediff.Part;
                 victim.health.RemoveHediff(hediff);
 
                 // For AddedParts (like bionic limbs), removal results in a missing part.
                 // We restore the biological part to keep the victim intact but "natural".
-                if (part != null && hediff is Hediff_AddedPart)
-                {
-                    victim.health.RestorePart(part);
-                }
+                // BodyPartRecord part = hediff.Part;
+                // if (part != null && hediff is Hediff_AddedPart)
+                // {
+                //     victim.health.RestorePart(part);
+                // }
             }
 
             Log.Debug($"PurgeBionics::DONE::({victim.LabelShort})");
         }
 
-        // safe shamblerization of corpses only if AnomalyDLC is present.
         public static bool CorpseDestroy(Corpse corpse)
         {
             if (corpse == null)
@@ -92,7 +92,6 @@ namespace OMW_Samhaphage
             Yum(corpse.InnerPawn);
             corpse.Destroy();
             return true;
-            // }
         }
 
 
@@ -104,35 +103,19 @@ namespace OMW_Samhaphage
                 return false;
             }
 
-            if (ApplyBrainDamage(victim, caster))
+            KillWithBrainDamage(victim, caster);
+            Log.Debug($"PawnKillDestroy killed {victim.LabelShort}");
+            Yum(victim);
+            if (victim.Dead)
             {
-
-                Log.Debug($"PawnKillDestroy is killing {victim.LabelShort} brain damage");
-                return true;
+                victim.Corpse.Destroy();
             }
             else
             {
-
-                Log.Debug($"PawnKillDestroy is killing {victim.LabelShort} with misc damage");
-                // we couldn't apply damage!?
-                DamageInfo dinfo = new DamageInfo(
-                    DamageDefOf.ExecutionCut,
-                    999f, // Amount
-                    999f, // Armor Penetration
-                    -1f, // Angle (Calculated automatically if -1)
-                    caster, // THE INSTIGATOR
-                    null, // The specific part
-                    null, // Weapon (null if it's a psychic/gene power)
-                    DamageInfo.SourceCategory.ThingOrUnknown,
-                    victim // Intended Target
-                );
-                Hediff exactCulpritHediff = new Hediff();
-                exactCulpritHediff.pawn = caster;
-                victim.Kill(dinfo, exactCulpritHediff);
-                Yum(victim);
                 victim.Destroy();
-                return true;
             }
+
+            return true;
         }
 
         private static void Yum(Pawn victim)
