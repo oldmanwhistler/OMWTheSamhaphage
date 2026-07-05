@@ -82,8 +82,6 @@ Hook the mod settings to the game settings on a new game.
 ### Cradlemold
 
 * phaselock gives them a psychic boost hediff?
-* * daily integration of random xenogene
-* cradlemold can consume fluxspawn to get their genes, if a cradlemold has enough complexity they can become samhaphage? Mommy loves you
 
 ### Hallowbound
 

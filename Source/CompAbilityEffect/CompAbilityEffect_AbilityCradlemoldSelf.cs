@@ -30,11 +30,9 @@ namespace OMW_Samhaphage
 
             List<MenuItemBase> items = new List<MenuItemBase>();
             NullThrumAbilityBase ability;
-            ability = new PawnApplyRetune();
-            items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
 
-            ability = new PawnApplyCompress();
-            items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));
+            ability = new PawnApplyUnmute();
+            items.Add(ability.NewMenuItemIconPawn(target, parent.pawn, parent.pawn));          
             
             if (items.Count > 0)
             {
